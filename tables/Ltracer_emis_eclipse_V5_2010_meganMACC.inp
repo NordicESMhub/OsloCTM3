@@ -1,0 +1,656 @@
+----- Emissions for Oslo CTM3 -----------------------------------------------
+Lists the emissions used in monthly emission tables. In addition there are
+some hard coded emissions, which you define by setting the following flags.
+They are hard coded because they have their own arrays, and do not use the
+emission arrays E2DS and E3DS, and may be updated more often.
+--- IMPORTANT!!! ------------------------------------------------------------
+Nothing special yet.
+--- Aircraft emission data --------------------------------------------------
+  AirScen NONE 0000        #NONE/REACT4C_5a/Quantify_MA8/TradeOff_1e
+  AirEmisPath '/work/projects/cicero/ctm_input/EMIS/aircraft_emis/'
+--- Lightning emission data -------------------------------------------------
+  1       No. of species with lightning sources; emissions in Tg/yr
+  'NO'       14.0D0   5.0000D+00  0
+-2D-- 2D emissions ----------------------------------------------------------
+filename / description  (See detailed description below)
+  ID     SCALE       RES MONTH YEAR  CAT TYPE UNIT DIURN VERT DATASET_NAME SCENYEAR
+    SPECIES SCALING ('xxx' to close dataset)
+
+'/work/projects/cicero/ctm_input/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_NOx_2010.nc'
+  401    1.0000d+00  HLF   99  9999  AGR   0    0    0    0   'emis_awb'    0000
+    NO 0.62608694d0   # Convert from NO2 to NO: 30/46 * 0.96
+   NO2 0.04d0         # 0.04 as NO2
+    xxx 0 To close this data set
+
+'/work/projects/cicero/ctm_input/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_NOx_2010.nc'
+  401    1.0000d+00  HLF   99  9999  RES   0    0    0    0   'emis_dom'    0000
+    NO 0.62608694d0   # Convert from NO2 to NO: 30/46 * 0.96
+   NO2 0.04d0         # 0.04 as NO2
+    xxx 0 To close this data set
+
+'/work/projects/cicero/ctm_input/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_NOx_2010.nc'
+  401    1.0000d+00  HLF   99  9999  POW   0    0    0    0   'emis_ene'    0000
+    NO 0.62608694d0   # Convert from NO2 to NO: 30/46 * 0.96
+   NO2 0.04d0         # 0.04 as NO2
+    xxx 0 To close this data set
+
+'/work/projects/cicero/ctm_input/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_NOx_2010.nc'
+  401    1.0000d+00  HLF   99  9999  INC   0    0    0    0   'emis_ind'    0000
+    NO 0.62608694d0   # Convert from NO2 to NO: 30/46 * 0.96
+   NO2 0.04d0         # 0.04 as NO2
+    xxx 0 To close this data set
+
+'/work/projects/cicero/ctm_input/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_NOx_2010.nc'
+  401    1.0000d+00  HLF   99  9999  TRA   0    0    0    0   'emis_tra'    0000
+    NO 0.62608694d0   # Convert from NO2 to NO: 30/46 * 0.96
+   NO2 0.04d0         # 0.04 as NO2
+    xxx 0 To close this data set
+
+'/work/projects/cicero/ctm_input/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_NOx_2010.nc'
+  401    1.0000d+00  HLF   99  9999  WAS   0    0    0    0   'emis_wst'    0000
+    NO 0.62608694d0   # Convert from NO2 to NO: 30/46 * 0.96
+   NO2 0.04d0         # 0.04 as NO2
+    xxx 0 To close this data set
+
+'/work/projects/cicero/ctm_input/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_CO_2010.nc'
+  401    1.0000d+00  HLF   99  9999  AGR   0    0    0    0   'emis_awb'    0000
+    CO 1.d0
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_CO_2010.nc'
+  401    1.0000d+00  HLF   99  9999  RES   0    0    0    0   'emis_dom'    0000
+    CO 1.d0
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_CO_2010.nc'
+  401    1.0000d+00  HLF   99  9999  POW   0    0    0    0   'emis_ene'    0000
+    CO 1.d0
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_CO_2010.nc'
+  401    1.0000d+00  HLF   99  9999  INC   0    0    0    0   'emis_ind'    0000
+    CO 1.d0
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_CO_2010.nc'
+  401    1.0000d+00  HLF   99  9999  TRA   0    0    0    0   'emis_tra'    0000
+    CO 1.d0
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_CO_2010.nc'
+  401    1.0000d+00  HLF   99  9999  WAS   0    0    0    0   'emis_wst'    0000
+    CO 1.d0
+    xxx 0 To close this data set
+
+
+'/work/projects/cicero/ctm_input/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_SO2_2010.nc'
+  401    1.0000d+00  HLF   99  9999  AGR   0    0    0    0   'emis_awb'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_SO2_2010.nc'
+  401    1.0000d+00  HLF   99  9999  RES   0    0    0    0   'emis_dom'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_SO2_2010.nc'
+  401    1.0000d+00  HLF   99  9999  POW   0    0    0    0   'emis_ene'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_SO2_2010.nc'
+  401    1.0000d+00  HLF   99  9999  INC   0    0    0    0   'emis_ind'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_SO2_2010.nc'
+  401    1.0000d+00  HLF   99  9999  TRA   0    0    0    0   'emis_tra'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_SO2_2010.nc'
+  401    1.0000d+00  HLF   99  9999  WAS   0    0    0    0   'emis_wst'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+
+
+
+'/work/projects/cicero/ctm_input/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_NH3_2010.nc'
+  401    1.0000d+00  HLF   99  9999  AGR   0    0    0    0   'emis_agr'    0000
+    NH3 1.d0
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_NH3_2010.nc'
+  401    1.0000d+00  HLF   99  9999  AGR   0    0    0    0   'emis_awb'    0000
+    NH3 1.d0
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_NH3_2010.nc'
+  401    1.0000d+00  HLF   99  9999  RES   0    0    0    0   'emis_dom'    0000
+    NH3 1.d0
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_NH3_2010.nc'
+  401    1.0000d+00  HLF   99  9999  POW   0    0    0    0   'emis_ene'    0000
+    NH3 1.d0
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_NH3_2010.nc'
+  401    1.0000d+00  HLF   99  9999  INC   0    0    0    0   'emis_ind'    0000
+    NH3 1.d0
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_NH3_2010.nc'
+  401    1.0000d+00  HLF   99  9999  TRA   0    0    0    0   'emis_tra'    0000
+    NH3 1.d0
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_NH3_2010.nc'
+  401    1.0000d+00  HLF   99  9999  WAS   0    0    0    0   'emis_wst'    0000
+    NH3 1.d0
+    xxx 0 To close this data set
+
+
+'/work/projects/cicero/ctm_input/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_VOC_2010.nc'
+  401    1.0000d+00  HLF   99  9999  AGR   0    0    0    0   'emis_awb'    0000
+     C2H4 0.118076d0
+     C2H6 0.044981d0
+     C3H6 0.047793d0
+     C3H8 0.012651d0
+    C4H10 0.004232d0
+    C6H14 0.023770d0 # hexanes_and_higher_alkanes
+     CH2O 0.099802d0
+   CH3CHO 0.044949d0 # other_alkanals
+    C6HXR 0.114342d0 # other_aromatics + benzene + xylene + trimethyl_benzenes + toluene
+ Tolmatic 0.056227d0 # other_aromatics + toluene
+  Benzene 0.032330d0 # benzene
+C6HXR_SOA 0.005623d0 # xylene + trimethyl_benzenes
+  ACETONE 0.056301d0 # ketones
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_VOC_2010.nc'
+  401    1.0000d+00  HLF   99  9999  RES   0    0    0    0   'emis_dom'    0000
+     C2H4 0.155149d0
+     C2H6 0.073554d0
+     C3H6 0.069012d0
+     C3H8 0.027796d0
+    C4H10 0.018122d0
+    C6H14 0.012318d0 # hexanes_and_higher_alkanes
+     CH2O 0.015754d0
+   CH3CHO 0.026678d0 # other_alkanals
+    C6HXR 0.203424d0 # other_aromatics + benzene + xylene + trimethyl_benzenes + toluene
+ Tolmatic 0.049554d0 # other_aromatics + toluene
+  Benzene 0.098485d0 # benzene
+C6HXR_SOA 0.012492d0 # xylene + trimethyl_benzenes
+  ACETONE 0.006668d0 # ketones
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_VOC_2010.nc'
+  401    1.0000d+00  HLF   99  9999  POW   0    0    0    0   'emis_ene'    0000
+     C2H4 0.004727d0
+     C2H6 0.008916d0
+     C3H6 0.004727d0
+     C3H8 0.068035d0
+    C4H10 0.179398d0
+    C6H14 0.125799d0 # hexanes_and_higher_alkanes
+     CH2O 0.090846d0
+   CH3CHO 0.007286d0 # other_alkanals
+    C6HXR 0.401163d0 # other_aromatics + benzene + xylene + trimethyl_benzenes + toluene
+ Tolmatic 0.129569d0 # other_aromatics + toluene
+  Benzene 0.076768d0 # benzene
+C6HXR_SOA 0.147551d0 # xylene + trimethyl_benzenes
+  ACETONE 0.013332d0 # ketones
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_VOC_2010.nc'
+  401    1.0000d+00  HLF   99  9999  INC   0    0    0    0   'emis_ind'    0000
+     C2H4 0.006830d0
+     C2H6 0.012945d0
+     C3H6 0.006830d0
+     C3H8 0.061547d0
+    C4H10 0.159148d0
+    C6H14 0.144157d0 # hexanes_and_higher_alkanes
+     CH2O 0.073887d0
+   CH3CHO 0.005304d0 # other_alkanals
+    C6HXR 0.474994d0 # other_aromatics + benzene + xylene + trimethyl_benzenes + toluene
+ Tolmatic 0.155762d0 # other_aromatics + toluene
+  Benzene 0.069447d0 # benzene
+C6HXR_SOA 0.201152d0 # xylene + trimethyl_benzenes
+  ACETONE 0.009706d0 # ketones
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_VOC_2010.nc'
+  401    1.0000d+00  HLF   99  9999  TRA   0    0    0    0   'emis_slv'    0000
+    C6H14 0.646855d0 # hexanes_and_higher_alkanes
+    C6HXR 0.409190d0 # other_aromatics + benzene + xylene + trimethyl_benzenes + toluene
+ Tolmatic 0.202537d0 # other_aromatics + toluene
+C6HXR_SOA 0.175832d0 # xylene + trimethyl_benzenes
+  ACETONE 0.145408d0 # ketones
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_VOC_2010.nc'
+  401    1.0000d+00  HLF   99  9999  TRA   0    0    0    0   'emis_tra'    0000
+     C2H4 0.067942d0
+     C2H6 0.014170d0
+     C3H6 0.023384d0
+     C3H8 0.012650d0
+    C4H10 0.163158d0
+    C6H14 0.205941d0 # hexanes_and_higher_alkanes
+     CH2O 0.007090d0
+   CH3CHO 0.005334d0 # other_alkanals
+    C6HXR 0.475389d0 # other_aromatics + benzene + xylene + trimethyl_benzenes + toluene
+ Tolmatic 0.210974d0 # other_aromatics + toluene
+  Benzene 0.034991d0 # benzene
+C6HXR_SOA 0.184757d0 # xylene + trimethyl_benzenes
+  ACETONE 0.005551d0 # ketones
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_VOC_2010.nc'
+  401    1.0000d+00  HLF   99  9999  WAS   0    0    0    0   'emis_wst'    0000
+     C2H4 0.112263d0
+     C2H6 0.066575d0
+     C3H6 0.047351d0
+     C3H8 0.046878d0
+    C4H10 0.081629d0
+    C6H14 0.108925d0 # hexanes_and_higher_alkanes
+     CH2O 0.008611d0
+   CH3CHO 0.015939d0 # other_alkanals
+    C6HXR 0.206489d0 # other_aromatics + benzene + xylene + trimethyl_benzenes + toluene
+ Tolmatic 0.073160d0 # other_aromatics + toluene
+  Benzene 0.063414d0 # benzene
+C6HXR_SOA 0.036018d0 # xylene + trimethyl_benzenes
+  ACETONE 0.011381d0 # ketones
+    xxx 0 To close this data set
+
+'/work/projects/cicero/ctm_input/EMIS/ECLIPSE_V5/MONTHLY/ECLIPSE_V5_CLE_base_bio_BC_2010.nc' 
+  401    1.0000d+00  HLF   99  9999  RES   0    0    0    0   'emis_dombio'    0000
+    bcBF1fob 0.8d0    # 80% on hydrophobic
+    bcBF1fil 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/ECLIPSE_V5/MONTHLY/ECLIPSE_V5_CLE_base_bio_BC_2010.nc' 
+  401    1.0000d+00  HLF   99  9999  RES   0    0    0    0   'emis_domff'    0000
+    bcFF1fob 0.8d0    # 80% on hydrophobic
+    bcFF1fil 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/ECLIPSE_V5/MONTHLY/ECLIPSE_V5_CLE_base_bio_BC_2010.nc' 
+  401    1.0000d+00  HLF   99  9999  RES   0    0    0    0   'emis_domoth'    0000
+    bcBF1fob 0.8d0    # 80% on hydrophobic
+    bcBF1fil 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/ECLIPSE_V5/MONTHLY/ECLIPSE_V5_CLE_base_bio_BC_2010.nc' 
+  401    1.0000d+00  HLF   99  9999  POW   0    0    0    0   'emis_ene'    0000
+    bcFF1fob 0.8d0    # 80% on hydrophobic
+    bcFF1fil 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/ECLIPSE_V5/MONTHLY/ECLIPSE_V5_CLE_base_bio_BC_2010.nc' 
+  401    1.0000d+00  HLF   99  9999  POW   0    0    0    0   'emis_ppbio'    0000
+    bcBF1fob 0.8d0    # 80% on hydrophobic
+    bcBF1fil 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/ECLIPSE_V5/MONTHLY/ECLIPSE_V5_CLE_base_bio_BC_2010.nc' 
+  401    1.0000d+00  HLF   99  9999  POW   0    0    0    0   'emis_ppff'    0000
+    bcFF1fob 0.8d0    # 80% on hydrophobic
+    bcFF1fil 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/ECLIPSE_V5/MONTHLY/ECLIPSE_V5_CLE_base_bio_BC_2010.nc' 
+  401    1.0000d+00  HLF   99  9999  POW   0    0    0    0   'emis_ppoth'    0000
+    bcFF1fob 0.8d0    # 80% on hydrophobic
+    bcFF1fil 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/ECLIPSE_V5/MONTHLY/ECLIPSE_V5_CLE_base_bio_BC_2010.nc' 
+  401    1.0000d+00  HLF   99  9999  INC   0    0    0    0   'emis_indbio'    0000
+    bcBF1fob 0.8d0    # 80% on hydrophobic
+    bcBF1fil 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/ECLIPSE_V5/MONTHLY/ECLIPSE_V5_CLE_base_bio_BC_2010.nc' 
+  401    1.0000d+00  HLF   99  9999  INC   0    0    0    0   'emis_indff'    0000
+    bcFF1fob 0.8d0    # 80% on hydrophobic
+    bcFF1fil 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/ECLIPSE_V5/MONTHLY/ECLIPSE_V5_CLE_base_bio_BC_2010.nc' 
+  401    1.0000d+00  HLF   99  9999  INC   0    0    0    0   'emis_indoth'    0000
+    bcFF1fob 0.8d0    # 80% on hydrophobic
+    bcFF1fil 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/ECLIPSE_V5/MONTHLY/ECLIPSE_V5_CLE_base_bio_BC_2010.nc' 
+  401    1.0000d+00  HLF   99  9999  TRA   0    0    0    0   'emis_tra'    0000
+    bcFF1fob 0.8d0    # 80% on hydrophobic
+    bcFF1fil 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/ECLIPSE_V5/MONTHLY/ECLIPSE_V5_CLE_base_bio_BC_2010.nc' 
+  401    1.0000d+00  HLF   99  9999  WAS   0    0    0    0   'emis_wst'    0000
+    bcBF1fob 0.8d0    # 80% on hydrophobic
+    bcBF1fil 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/ECLIPSE_V5/MONTHLY/ECLIPSE_V5_CLE_base_bio_BC_2010.nc' 
+  401    1.0000d+00  HLF   99  9999  WAS   0    0    0    0   'emis_awb'    0000
+    bcBB1fob 0.8d0    # 80% on hydrophobic
+    bcBB1fil 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+
+'/work/projects/cicero/ctm_input/EMIS/ECLIPSE_V5/MONTHLY/ECLIPSE_V5_CLE_base_bio_OM_2010.nc' 
+  401    1.0000d+00  HLF   99  9999  RES   0    0    0    0   'emis_dombio'    0000
+    omBF1fob 0.5d0    # 50% on hydrophobic
+    omBF1fil 0.5d0    # 50% on hydrophilic
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/ECLIPSE_V5/MONTHLY/ECLIPSE_V5_CLE_base_bio_OM_2010.nc' 
+  401    1.0000d+00  HLF   99  9999  RES   0    0    0    0   'emis_domff'    0000
+    omFF1fob 0.5d0    # 50% on hydrophobic
+    omFF1fil 0.5d0    # 50% on hydrophilic
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/ECLIPSE_V5/MONTHLY/ECLIPSE_V5_CLE_base_bio_OM_2010.nc' 
+  401    1.0000d+00  HLF   99  9999  RES   0    0    0    0   'emis_domoth'    0000
+    omBF1fob 0.5d0    # 50% on hydrophobic
+    omBF1fil 0.5d0    # 50% on hydrophilic
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/ECLIPSE_V5/MONTHLY/ECLIPSE_V5_CLE_base_bio_OM_2010.nc' 
+  401    1.0000d+00  HLF   99  9999  POW   0    0    0    0   'emis_ene'    0000
+    omFF1fob 0.5d0    # 50% on hydrophobic
+    omFF1fil 0.5d0    # 50% on hydrophilic
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/ECLIPSE_V5/MONTHLY/ECLIPSE_V5_CLE_base_bio_OM_2010.nc' 
+  401    1.0000d+00  HLF   99  9999  POW   0    0    0    0   'emis_ppbio'    0000
+    omBF1fob 0.5d0    # 50% on hydrophobic
+    omBF1fil 0.5d0    # 50% on hydrophilic
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/ECLIPSE_V5/MONTHLY/ECLIPSE_V5_CLE_base_bio_OM_2010.nc' 
+  401    1.0000d+00  HLF   99  9999  POW   0    0    0    0   'emis_ppff'    0000
+    omFF1fob 0.5d0    # 50% on hydrophobic
+    omFF1fil 0.5d0    # 50% on hydrophilic
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/ECLIPSE_V5/MONTHLY/ECLIPSE_V5_CLE_base_bio_OM_2010.nc' 
+  401    1.0000d+00  HLF   99  9999  POW   0    0    0    0   'emis_ppoth'    0000
+    omFF1fob 0.5d0    # 50% on hydrophobic
+    omFF1fil 0.5d0    # 50% on hydrophilic
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/ECLIPSE_V5/MONTHLY/ECLIPSE_V5_CLE_base_bio_OM_2010.nc' 
+  401    1.0000d+00  HLF   99  9999  INC   0    0    0    0   'emis_indbio'    0000
+    omBF1fob 0.5d0    # 50% on hydrophobic
+    omBF1fil 0.5d0    # 50% on hydrophilic
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/ECLIPSE_V5/MONTHLY/ECLIPSE_V5_CLE_base_bio_OM_2010.nc' 
+  401    1.0000d+00  HLF   99  9999  INC   0    0    0    0   'emis_indff'    0000
+    omFF1fob 0.5d0    # 50% on hydrophobic
+    omFF1fil 0.5d0    # 50% on hydrophilic
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/ECLIPSE_V5/MONTHLY/ECLIPSE_V5_CLE_base_bio_OM_2010.nc' 
+  401    1.0000d+00  HLF   99  9999  INC   0    0    0    0   'emis_indoth'    0000
+    omFF1fob 0.5d0    # 50% on hydrophobic
+    omFF1fil 0.5d0    # 50% on hydrophilic
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/ECLIPSE_V5/MONTHLY/ECLIPSE_V5_CLE_base_bio_OM_2010.nc' 
+  401    1.0000d+00  HLF   99  9999  TRA   0    0    0    0   'emis_tra'    0000
+    omFF1fob 0.5d0    # 50% on hydrophobic
+    omFF1fil 0.5d0    # 50% on hydrophilic
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/ECLIPSE_V5/MONTHLY/ECLIPSE_V5_CLE_base_bio_OM_2010.nc' 
+  401    1.0000d+00  HLF   99  9999  WAS   0    0    0    0   'emis_wst'    0000
+    omBF1fob 0.5d0    # 50% on hydrophobic
+    omBF1fil 0.5d0    # 50% on hydrophilic
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/ECLIPSE_V5/MONTHLY/ECLIPSE_V5_CLE_base_bio_OM_2010.nc' 
+  401    1.0000d+00  HLF   99  9999  WAS   0    0    0    0   'emis_awb'    0000
+    omBB1fob 0.5d0    # 50% on hydrophobic
+    omBB1fil 0.5d0    # 50% on hydrophilic
+    xxx 0 To close this data set
+
+
+'/work/projects/cicero/ctm_input/EMIS/ECLIPSE_V5/ship_CLE_emis_2010.nc'
+  402    1.0000d+06  1x1   99  9999  SHI   0    2    0    0   'VOC'    0000
+     C2H4 0.151333d0
+     C2H6 0.006936d0
+     C3H6 0.165814d0
+     C3H8 0.019240d0
+    C4H10 0.020355d0
+    C6H14 0.179447d0 # hexanes_and_higher_alkanes
+    C6HXR 0.151600d0 # other_aromatics + benzene + xylene + trimethyl_benzenes + toluene
+ Tolmatic 0.004112d0 # other_aromatics + toluene
+  Benzene 0.067414d0 # benzene
+C6HXR_SOA 0.055248d0 # xylene + trimethyl_benzenes
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/ECLIPSE_V5/ship_CLE_emis_2010.nc'
+  402    1.0000d+06  1x1   99  9999  SHI   0    2    0    0   'CO'    0000
+     CO 1.d0
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/ECLIPSE_V5/ship_CLE_emis_2010.nc'
+  402    1.0000d+06  1x1   99  9999  SHI   0    2    0    0   'NOx'    0000
+     NO 0.62608694d0   # Convert from NO2 to NO: 30/46 * 0.96
+    NO2 0.04d0         # 0.04 as NO2
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/ECLIPSE_V5/ship_CLE_emis_2010.nc'
+  402    1.0000d+06  1x1   99  9999  SHI   0    2    0    0   'SO2'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/ECLIPSE_V5/ship_CLE_emis_2010.nc'
+  402    1.0000d+06  1x1   99  9999  SHI   0    2    0    0   'BC'    0000
+    bcFF1fob 0.8d0    # 80% on hydrophobic
+    bcFF1fil 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/ECLIPSE_V5/ship_CLE_emis_2010.nc'
+  402    1.6000d+06  1x1   99  9999  SHI   0    2    0    0   'OC'    0000
+    omFF1fob 0.5d0    # 50% on hydrophobic, 1.6 factor for OC->OM
+    omFF1fil 0.5d0    # 50% on hydrophilic
+    xxx 0 To close this data set
+
+
+
+'/work/projects/cicero/ctm_input/EMIS/MEGAN_MACC/YrByYr/MEGAN-MACC_biogenic_CO_2010.nc' 'MEGAN CO'
+  401    1.0000d+00  HLF   99  9999  NAT   2    0    0    0   'MEGAN_MACC'    0000
+    CO 1.d0
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/MEGAN_MACC/YrByYr/MEGAN-MACC_biogenic_ethene_2010.nc' 'MEGAN C2H4'
+  401    1.0000d+00  HLF   99  9999  NAT   2    0    0    0    'MEGAN_MACC'    0000
+    C2H4 1.d0
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/MEGAN_MACC/YrByYr/MEGAN-MACC_biogenic_ethane_2010.nc' 'MEGAN C2H6'
+  401    1.0000d+00  HLF   99  9999  NAT   2    0    0    0    'MEGAN_MACC'    0000
+    C2H6 1.d0
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/MEGAN_MACC/YrByYr/MEGAN-MACC_biogenic_propene_2010.nc' 'MEGAN C3H6'
+  401    1.0000d+00  HLF   99  9999  NAT   2    0    0    0    'MEGAN_MACC'    0000
+    C3H6 1.d0
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/MEGAN_MACC/YrByYr/MEGAN-MACC_biogenic_propane_2010.nc' 'MEGAN C3H8'
+  401    1.0000d+00  HLF   99  9999  NAT   2    0    0    0   'MEGAN_MACC'    0000
+    C3H8 1.d0
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/MEGAN_MACC/YrByYr/MEGAN-MACC_biogenic_butanes_and_higher_alkanes_2010.nc' 'MEGAN C4H10'
+  401    1.0000d+00  HLF   99  9999  NAT   2    0    0    0   'MEGAN_MACC'    0000
+    C4H10 1.d0
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/MEGAN_MACC/YrByYr/MEGAN-MACC_biogenic_toluene_2010.nc' 'MEGAN C6HXR'
+  401    1.1500d+00  HLF   99  9999  NAT   2    0    0    0    'MEGAN_MACC'    0000
+    C6HXR 1.d0    #1.1500d+00=Aromatic     Mass of xylene with equal aromatic rings
+    C6HXR_SOA 1.d0    #1.1500d+00=Aromatic Mass of xylene with equal aromatic rings
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/MEGAN_MACC/YrByYr/MEGAN-MACC_biogenic_formaldehyde_2010.nc' 'MEGAN CH2O'
+  401    1.0000d+00  HLF   99  9999  NAT   2    0    0    0   'MEGAN_MACC'    0000
+    CH2O 1.d0
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/MEGAN_MACC/YrByYr/MEGAN-MACC_biogenic_acetaldehyde_2010.nc' 'MEGAN CH3CHO'
+  401    1.0000d+00  HLF   99  9999  NAT   2    0    0    0   'MEGAN_MACC'    0000
+    CH3CHO 1.d0
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/MEGAN_MACC/YrByYr/MEGAN-MACC_biogenic_isoprene_2010.nc' 'MEGAN ISOPRENE'
+  401    0.4400d+00  HLF   99  9999  NAT   2    0    0    0   'MEGAN_MACC'    0000
+    ISOPRENE 1.d0    # 0.44 = 220/500 as in CTM2 1.0000d+00=Isoprene
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/MEGAN_MACC/YrByYr/MEGAN-MACC_biogenic_acetone_2010.nc' 'MEGAN ACETONE'
+  401    1.0000d+00  HLF   99  9999  NAT   2    0    0    0   'MEGAN_MACC'    0000
+    ACETONE 1.d0
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/MEGAN_MACC/YrByYr/MEGAN-MACC_biogenic_other_ketones_2010.nc' 'MEGAN KETONES'
+  401    1.0000d+00  HLF   99  9999  NAT   2    0    0    0   'MEGAN_MACC'    0000
+    ACETONE 1.d0
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/MEGAN_MACC/YrByYr/MEGAN-MACC_biogenic_other_aldehydes_2010.nc' 'MEGAN CH3CHO'
+  401    1.0000d+00  HLF   99  9999  NAT   2    0    0    0   'MEGAN_MACC'    0000
+    CH3CHO 1.d0     # Could use RCOHCO with scale 74/44
+    xxx 0 To close this data set
+
+
+'/work/projects/cicero/ctm_input/EMIS/MEGAN_MACC/YrByYr/MEGAN-MACC_biogenic_monoterpenes_2010.nc' 'MEGAN MONOTERPENES'
+  401    1.0000d+00  HLF   99  9999  NAT   2    0    3    0   'MEGAN_MACC'    0000
+    Apine    0.35d0
+    Bpine    0.23d0
+    Limon    0.23d0
+    Myrcene  0.05d0
+    Sabine   0.05d0
+    D3carene 0.04d0
+    Ocimene  0.02d0
+    Trpolene 0.02d0
+    Trpinene 0.01d0
+    xxx 0 To close this data set
+
+'/work/projects/cicero/ctm_input/EMIS/MEGAN_MACC/YrByYr/MEGAN-MACC_biogenic_sesquiterpenes_2010.nc' 'MEGAN SESQIOTERPENES'
+  401    1.0000d+00  HLF   99  9999  NAT   2    0    3    0   'MEGAN_MACC'    0000
+    TrpAlc   0.1155d0    # 0.09*154/(12*10) Griffin, GRL1999, 10 C's
+    Sestrp   0.0567d0    # 0.05*204/(12*15) Griffin, GRL1999, 15 C's
+    Trp_Ket  0.0507d0    # 0.04*152/(12*10) Griffin, GRL1999, 10 C's
+    xxx 0 To close this data set
+
+
+
+'/work/projects/cicero/ctm_input/EMIS/RETROEMIS_NEW/soils.nox.nc'
+  601    1.0000d+00  1x1   99  9999  BIO   1    1    0    0   'bio'    0000
+    NO  0.96d0      # molecules on file, emis_unit handles molecular weights
+    NO2 0.04d0      # Soil NOx not included in MEGAN
+    xxx 0 To close this data set
+
+'/work/projects/cicero/ctm_input/EMIS/RETROEMIS_NEW/oceans.co.nc'
+  601    1.0000d+00  1x1   99  9999  OCE   1    1    0    0   'oceans'    0000
+    CO 1.d0         # Oceanic emissions not included in MEGAN
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/RETROEMIS_NEW/oceans.c2h4.nc'
+  601    1.0000d+00  1x1   99  9999  OCE   1    1    0    0   'oceans'    0000
+    C2H4 1.d0         # Oceanic emissions not included in MEGAN
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/RETROEMIS_NEW/oceans.c2h6.nc'
+  601    1.0000d+00  1x1   99  9999  OCE   1    1    0    0   'oceans'    0000
+    C2H6 1.d0         # Oceanic emissions not included in MEGAN
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/RETROEMIS_NEW/oceans.c3h6.nc'
+  601    1.0000d+00  1x1   99  9999  OCE   1    1    0    0   'oceans'    0000
+    C3H6 1.d0         # Oceanic emissions not included in MEGAN
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/RETROEMIS_NEW/oceans.c3h8.nc'
+  601    1.0000d+00  1x1   99  9999  OCE   1    1    0    0   'oceans'    0000
+    C3H8 1.d0         # Oceanic emissions not included in MEGAN
+    xxx 0 To close this data set
+
+
+
+
+
+'/work/projects/cicero/ctm_input/EMIS/NH3/NH3geia1997.nc'
+  601    1.0000d+00  1x1   99  9999  NAT   0    0    0    0   'emiss_wilan'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/NH3/NH3geia1997.nc'
+  601    1.0000d+00  1x1   99  9999  NAT   0    0    0    0   'emiss_natveg'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/NH3/NH3geia1997.nc'
+  601    1.0000d+00  1x1   99  9999  OCE   0    0    0    0   'emiss_oce'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/SULFUR/H2Sveg.1x1'
+  551    1.0000d+00  1x1   99  9999  NAT   1    1    0    0   'H2S_veg'    0000
+    H2S 1.d0
+    xxx 0 To close this data set
+'/work/projects/cicero/ctm_input/EMIS/SULFUR/H2Ssol.1x1'
+  551    1.0000d+00  1x1   99  9999  NAT   1    1    0    0   'H2S_soil'    0000
+    H2S 1.d0
+    xxx 0 To close this data set
+
+
+'end2D' 'end2D' -------------------------------------------------------------
+-3D-- Emissions 3-D ---------------------------------------------------------
+filename / description
+  ID     SCALE       RES MONTH YEAR  CAT TYPE UNIT DIURN DATASET_NAME
+
+'end3D' 'end3D' -------------------------------------------------------------
+-STV- Used for short time variations; only one species per field ------------
+format(char)/name for 2d-variable/tracer info
+
+'/work/projects/cicero/ctm_input/EMIS/SULFUR/DMSconc_Kettle2.1x1'
+  551    1.0000d+00  1x1   99  9999  NAT   2   -1    0   'DMSseaconc'
+    DMS     # Unit is nmol*m2/L, handeled by read-in
+'/work/projects/cicero/ctm_input/EMIS/SULFUR/contineous_volc.1x1'
+  554    1.0000d+00  1x1   99  9999  NAT   2   -1    0   '---'
+    SO2     # Unit is kg/year, changed to kg/s in read-in
+'Indata_CTM3/oceanemis/'
+  555    1.0000d+00  HLF   99  9999  OCN   0   -1    0   '---'
+  ---   #This section just turns on the OC oceanic emissions
+
+'DEAD_Mineral_Dust_Mobilisation_Dataset_Name'
+  556    2.1994d-04  HLF   99  9999  NAT   0   -1    0   'mbl_bsn_fct'
+  ---   #This section sets mobilisation map name and fudge factor for DUST
+
+-END- -END-  ----------------------------------------------------------------
+
+-BBB- Used for biomass burning (GFEDv4) - may list several species ----------
+filename / description
+  ID     SCALE       RES MONTH YEAR  CAT TYPE UNIT DIURN DATASET_NAME
+'/work/projects/cicero/ctm_input/EMIS/GFEDv4/'
+  567    1.0000d-00  HLF   99  9999  NAT   0   -1    0   'biomass_burning'
+  #CTMname    GFEDname        Scaling    Part.factor (SAVA/BORF/TEMF/DEFO/PEAT/AGRI)
+   'CO'       'CO'             1.0000d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 1.00d0
+   'NO'       'NOx'            0.9000d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 1.00d0
+   'NO2'      'NOx'            0.1533d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 1.00d0
+   'CH4'      'CH4'            0.0000d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 1.00d0
+   'C2H4'     'C2H4'           1.0000d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 1.00d0
+   'C2H6'     'C2H6'           1.0000d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 1.00d0
+   'C3H6'     'C3H6'           1.0000d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 1.00d0
+   'C4H10'    'NMHC'           0.0000d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 1.00d0
+   'C6H14'    'Higher_Alkanes' 1.0000d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 1.00d0
+   'C6HXR'    'Toluene_lump'   1.0000d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 1.00d0
+   'Tolmatic' 'Toluene_lump'   1.0000d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 1.00d0
+   'CH2O'     'CH2O'           1.0000d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 1.00d0
+   'CH3CHO'   'C2H4O'          1.0000d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 1.00d0
+   'ISOPRENE' 'C5H8'           1.0000d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 1.00d0
+   'C3H8'     'C3H8'           1.0000d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 1.00d0
+   'ACETONE'  'C3H6O'          1.0000d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 1.00d0
+   'NH3'      'NH3'            1.0000d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 1.00d0
+   'SO2'      'SO2'            0.9750d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 1.00d0
+   'SO4'      'SO2'            0.0375d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 1.00d0
+   'bcBB1fob' 'BC'             0.8000d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 0.00d0
+   'bcBB1fil' 'BC'             0.2000d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 0.00d0
+   'omBB1fob' 'OC'             1.3000d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 0.00d0
+   'omBB1fil' 'OC'             1.3000d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 0.00d0
+   '---'      '---'            0.0000d0   0.00d0 0.00d0 0.00d0 0.00d0 0.00d0 0.00d0
+'endFF' 'endFF'  -------------------------------------------------------------
+
+
+==============================================================================
+DESCRIPTION OF FILE SETTINGS
+==============================================================================
+----- Variables to set above -----
+ID:    ID number to control read-in, connected to the file structure
+SCALE: Dataset scaling factor. No scaling when 1.d0.
+RES:   Resolution of input data (character)
+       1x1 = 1x1 degree, HLF = half; 0.5x0.5, ZP1 = zero point 1; 0.1:0.1
+MONTH: Month which the emissions apply for (99 = all months)
+YEAR:  Year which the emissions apply for (9999 = all years)
+CAT:   Category of the emissions (for diagnostics)
+TYPE:  Read into ETYP
+       0: Use data as is
+       1: Data is per cm2, multiply with area (m2)*1.d4
+       2: Data is per m2, multiply with area (m2)
+UNIT:  Read into EUNIT
+       0: kg/s (or kg/area/s when ETYP=1,2)
+       1: molec/s (or molec/area/s when ETYP=1,2)
+       2: kg/y (or kg/area/y when ETYP=1,2)
+       3: kg/month (or kg/area/month when ETYP=1,2)
+DIURN: Flag for diurnal variation, local hour or based on 2D field.
+       0: No diurnal variation
+       1: RETRO variations (TNO)
+       2: +50% from 8am to 7pm, -50% from 8pm to 7am (e.g. for BCOC)
+       3: Scale with both sunlight and temperature
+       4: Scale with sunlight
+       5: Scale with heating degree day (HDD)
+VERT:  Distribute 2D emissions on a few layers
+       Alt 0-16/16-41/41-77/77-128
+       1: 0.250/0.125/0.125/0.500  (typical power/industrial combustion)
+       2: 0.600/0.200/0.200/0.000  (typical residential heating)
+       3: 0.300/0.400/0.300/0.000  (typical ships)
+DATASET_NAME: Name of dataset (e.g. in netCDF files).
+SPECIES: The name of the species to use the listed dataset.
+SCALING: Separate scaling factor for the listed species.
+         Used in addition to SCALE above, which applies for the dataset.
+           Normal usage:
+         If the units of the input data on file is other than molecules
+         per time and/or area, you have to scale the data to correct for
+         differences in molecular mass.
+         If input is molecules, you should *not* scale with molecular mass.
+
+         If you specify a category not on file, the program will stop.
+
+
+EDGAR category definitios:
+http://edgar.jrc.ec.europa.eu/methodology.php

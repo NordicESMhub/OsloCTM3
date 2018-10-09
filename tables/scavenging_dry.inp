@@ -1,0 +1,13 @@
+UCI Dry Deposition Params (rev Prather & Neu, 1/2008)    
+(i2,1x,a10,3e9.1)
+06 tracers     DEPLA    DEPOC    DEPCR
+01 O3          2.6d-01  5.0d-02  5.0d-02  01  O3         
+02 NO2         9.0d-02  8.0d-02  8.0d-02  02  NO2        
+03 HNO3        2.0d 00  1.0d 00  1.0d 00  03  HONO2 (OSLO)
+04 H2O2        9.0d-01  1.0d 00  1.0d 00  04  H2O2 (OSLO)
+05 PAN         1.0d-01  2.0d-02  2.0d-02  05  PAN        
+06 HNO3s       2.0d 00  1.0d 00  1.0d 00  06  HONO2 (solid OSLO)
+06 tracer      DEPLA    DEPOC    DEPCR
+
+Explanation
+Simple (UCI) deposition over LAnd, OCean and CRyosphere(ice)

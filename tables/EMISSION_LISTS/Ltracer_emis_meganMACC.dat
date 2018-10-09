@@ -1,0 +1,77 @@
+Emissions from MEGAN-MACC.
+Listed here as 2005. Other years are available.
+
+'/projects/geo/EMIS/MEGAN_MACC/YrByYr/MEGAN-MACC_biogenic_CO_2005.nc' 'MEGAN CO'
+  401    1.0000d+00  HLF   99  9999  NAT   2    0    0    0   'MEGAN_MACC'    0000
+    CO 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/MEGAN_MACC/YrByYr/MEGAN-MACC_biogenic_ethene_2005.nc' 'MEGAN C2H4'
+  401    1.0000d+00  HLF   99  9999  NAT   2    0    0    0    'MEGAN_MACC'    0000
+    C2H4 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/MEGAN_MACC/YrByYr/MEGAN-MACC_biogenic_ethane_2005.nc' 'MEGAN C2H6'
+  401    1.0000d+00  HLF   99  9999  NAT   2    0    0    0    'MEGAN_MACC'    0000
+    C2H6 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/MEGAN_MACC/YrByYr/MEGAN-MACC_biogenic_propene_2005.nc' 'MEGAN C3H6'
+  401    1.0000d+00  HLF   99  9999  NAT   2    0    0    0    'MEGAN_MACC'    0000
+    C3H6 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/MEGAN_MACC/YrByYr/MEGAN-MACC_biogenic_propane_2005.nc' 'MEGAN C3H8'
+  401    1.0000d+00  HLF   99  9999  NAT   2    0    0    0   'MEGAN_MACC'    0000
+    C3H8 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/MEGAN_MACC/YrByYr/MEGAN-MACC_biogenic_butanes_and_higher_alkanes_2005.nc' 'MEGAN C4H10'
+  401    1.0000d+00  HLF   99  9999  NAT   2    0    0    0   'MEGAN_MACC'    0000
+    C4H10 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/MEGAN_MACC/YrByYr/MEGAN-MACC_biogenic_toluene_2005.nc' 'MEGAN C6HXR'
+  401    1.1500d+00  HLF   99  9999  NAT   2    0    0    0    'MEGAN_MACC'    0000
+    C6HXR 1.d0    #1.1500d+00=Aromatic     Mass of xylene with equal aromatic rings
+    C6HXR_SOA 1.d0    #1.1500d+00=Aromatic Mass of xylene with equal aromatic rings
+    xxx 0 To close this data set
+'/projects/geo/EMIS/MEGAN_MACC/YrByYr/MEGAN-MACC_biogenic_formaldehyde_2005.nc' 'MEGAN CH2O'
+  401    1.0000d+00  HLF   99  9999  NAT   2    0    0    0   'MEGAN_MACC'    0000
+    CH2O 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/MEGAN_MACC/YrByYr/MEGAN-MACC_biogenic_acetaldehyde_2005.nc' 'MEGAN CH3CHO'
+  401    1.0000d+00  HLF   99  9999  NAT   2    0    0    0   'MEGAN_MACC'    0000
+    CH3CHO 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/MEGAN_MACC/YrByYr/MEGAN-MACC_biogenic_isoprene_2005.nc' 'MEGAN ISOPRENE'
+  401    0.4400d+00  HLF   99  9999  NAT   2    0    0    0   'MEGAN_MACC'    0000
+    ISOPRENE 1.d0    # 0.44 = 220/500 as in CTM2 1.0000d+00=Isoprene
+    xxx 0 To close this data set
+'/projects/geo/EMIS/MEGAN_MACC/YrByYr/MEGAN-MACC_biogenic_acetone_2005.nc' 'MEGAN ACETONE'
+  401    1.0000d+00  HLF   99  9999  NAT   2    0    0    0   'MEGAN_MACC'    0000
+    ACETONE 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/MEGAN_MACC/YrByYr/MEGAN-MACC_biogenic_other_ketones_2005.nc' 'MEGAN KETONES'
+  401    1.0000d+00  HLF   99  9999  NAT   2    0    0    0   'MEGAN_MACC'    0000
+    ACETONE 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/MEGAN_MACC/YrByYr/MEGAN-MACC_biogenic_other_aldehydes_2005.nc' 'MEGAN CH3CHO'
+  401    1.0000d+00  HLF   99  9999  NAT   2    0    0    0   'MEGAN_MACC'    0000
+    CH3CHO 1.d0     # Could use RCOHCO with scale 74/44
+    xxx 0 To close this data set
+
+
+'/projects/geo/EMIS/MEGAN_MACC/YrByYr/MEGAN-MACC_biogenic_monoterpenes_2005.nc' 'MEGAN MONOTERPENES'
+  401    1.0000d+00  HLF   99  9999  NAT   2    0    3    0   'MEGAN_MACC'    0000
+    Apine    0.35d0
+    Bpine    0.23d0
+    Limon    0.23d0
+    Myrcene  0.05d0
+    Sabine   0.05d0
+    D3carene 0.04d0
+    Ocimene  0.02d0
+    Trpolene 0.02d0
+    Trpinene 0.01d0
+    xxx 0 To close this data set
+
+'/projects/geo/EMIS/MEGAN_MACC/YrByYr/MEGAN-MACC_biogenic_sesquiterpenes_2005.nc' 'MEGAN SESQIOTERPENES'
+  401    1.0000d+00  HLF   99  9999  NAT   2    0    3    0   'MEGAN_MACC'    0000
+    TrpAlc   0.377d0    # 0.09*154/(12*10) Griffin, GRL1999, 10 C's
+    Sestrp   0.278d0    # 0.05*204/(12*15) Griffin, GRL1999, 15 C's
+    Trp_Ket  0.166d0    # 0.04*152/(12*10) Griffin, GRL1999, 10 C's
+    xxx 0 To close this data set

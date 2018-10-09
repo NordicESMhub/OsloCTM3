@@ -1,0 +1,778 @@
+Here are the EDGAR v4.2 files; note that the VOCs are separated into
+several species.
+
+'/projects/geo/EMIS/EDGAR4/CH4_v4.2/v42_CH4_2006_IPCC_1A1_1A2.0.1x0.1.nc'
+  602    1.0450d+00  ZP1   99  9999  POW   2    0    0    0   'emi_ch4'    0000
+   CH4  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/CH4_v4.2/v42_CH4_2006_IPCC_1A3a_c_d_e.0.1x0.1.nc'
+  602    1.0450d+00  ZP1   99  9999  TRA   2    0    0    0   'emi_ch4'    0000
+   CH4  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/CH4_v4.2/v42_CH4_2006_IPCC_1A3b.0.1x0.1.nc'
+  602    1.0450d+00  ZP1   99  9999  TRA   2    0    0    0   'emi_ch4'    0000
+   CH4  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/CH4_v4.2/v42_CH4_2006_IPCC_1A4.0.1x0.1.nc'
+  602    1.0450d+00  ZP1   99  9999  RES   2    0    0    0   'emi_ch4'    0000
+   CH4  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/CH4_v4.2/v42_CH4_2006_IPCC_1B1.0.1x0.1.nc'
+  602    1.0450d+00  ZP1   99  9999  POW   2    0    0    0   'emi_ch4'    0000
+   CH4  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/CH4_v4.2/v42_CH4_2006_IPCC_1B2a.0.1x0.1.nc'
+  602    1.0450d+00  ZP1   99  9999  POW   2    0    0    0   'emi_ch4'    0000
+   CH4  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/CH4_v4.2/v42_CH4_2006_IPCC_1B2b.0.1x0.1.nc'
+  602    1.0450d+00  ZP1   99  9999  POW   2    0    0    0   'emi_ch4'    0000
+   CH4  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/CH4_v4.2/v42_CH4_2006_IPCC_2.0.1x0.1.nc'
+  602    1.0450d+00  ZP1   99  9999  INC   2    0    0    0   'emi_ch4'    0000
+   CH4  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/CH4_v4.2/v42_CH4_2006_IPCC_4A.0.1x0.1.nc'
+  602    1.0450d+00  ZP1   99  9999  AGR   2    0    0    0   'emi_ch4'    0000
+   CH4  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/CH4_v4.2/v42_CH4_2006_IPCC_4B.0.1x0.1.nc'
+  602    1.0450d+00  ZP1   99  9999  AGR   2    0    0    0   'emi_ch4'    0000
+   CH4  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/CH4_v4.2/v42_CH4_2006_IPCC_4C_4D.0.1x0.1.nc'
+  602    1.0450d+00  ZP1   99  9999  AGR   2    0    0    0   'emi_ch4'    0000
+   CH4  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/CH4_v4.2/v42_CH4_2006_IPCC_4F.0.1x0.1.nc'
+  602    1.0450d+00  ZP1   99  9999  AGR   2    0    0    0   'emi_ch4'    0000
+   CH4  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/CH4_v4.2/v42_CH4_2006_IPCC_6A_6C.0.1x0.1.nc'
+  602    1.0450d+00  ZP1   99  9999  WAS   2    0    0    0   'emi_ch4'    0000
+   CH4  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/CH4_v4.2/v42_CH4_2006_IPCC_6B.0.1x0.1.nc'
+  602    1.0450d+00  ZP1   99  9999  WAS   2    0    0    0   'emi_ch4'    0000
+   CH4  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/CH4_v4.2/v42_CH4_2006_IPCC_7A.0.1x0.1.nc'
+  602    1.0450d+00  ZP1   99  9999  EXF   2    0    0    0   'emi_ch4'    0000
+   CH4  1.d0
+    xxx 0 To close this data set
+
+
+
+'/projects/geo/EMIS/EDGAR4/NOx_v4.2/v42_NOx_2006_IPCC_1A1a.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   99  9999  POW   2    0    0    0   'emi_nox'    0000
+    NO  2.142857142857142857d0   # Convert from N to NO: 30/14
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NOx_v4.2/v42_NOx_2006_IPCC_1A2.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   99  9999  INC   2    0    0    0   'emi_nox'    0000
+    NO  2.142857142857142857d0   # Convert from N to NO: 30/14
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NOx_v4.2/v42_NOx_2006_IPCC_1A3a_c_d_e.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   99  9999  TRA   2    0    0    0   'emi_nox'    0000
+    NO  2.142857142857142857d0   # Convert from N to NO: 30/14
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NOx_v4.2/v42_NOx_2006_IPCC_1A3b.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   99  9999  TRA   2    0    0    0   'emi_nox'    0000
+    NO  2.142857142857142857d0   # Convert from N to NO: 30/14
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NOx_v4.2/v42_NOx_2006_IPCC_1A4.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   99  9999  RES   2    0    0    0   'emi_nox'    0000
+    NO  2.142857142857142857d0   # Convert from N to NO: 30/14
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NOx_v4.2/v42_NOx_2006_IPCC_1B2a_c_1A1b_c.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   99  9999  POW   2    0    0    0   'emi_nox'    0000
+    NO  2.142857142857142857d0   # Convert from N to NO: 30/14
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NOx_v4.2/v42_NOx_2006_IPCC_2.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   99  9999  INC   2    0    0    0   'emi_nox'    0000
+    NO  2.142857142857142857d0   # Convert from N to NO: 30/14
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NOx_v4.2/v42_NOx_2006_IPCC_4B.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   99  9999  AGR   2    0    0    0   'emi_nox'    0000
+    NO  2.142857142857142857d0   # Convert from N to NO: 30/14
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NOx_v4.2/v42_NOx_2006_IPCC_4C_4D.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   99  9999  AGR   2    0    0    0   'emi_nox'    0000
+    NO  2.142857142857142857d0   # Convert from N to NO: 30/14
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NOx_v4.2/v42_NOx_2006_IPCC_4F.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   99  9999  AGR   2    0    0    0   'emi_nox'    0000
+    NO  2.142857142857142857d0   # Convert from N to NO: 30/14
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NOx_v4.2/v42_NOx_2006_IPCC_6A_6C.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   99  9999  WAS   2    0    0    0   'emi_nox'    0000
+    NO  2.142857142857142857d0   # Convert from N to NO: 30/14
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NOx_v4.2/v42_NOx_2006_IPCC_7A.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   99  9999  EXF   2    0    0    0   'emi_nox'    0000
+    NO  2.142857142857142857d0   # Convert from N to NO: 30/14
+    xxx 0 To close this data set
+
+
+'/projects/geo/EMIS/EDGAR4/CO_v4.2/v42_CO_2006_IPCC_1A1a_6.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   99  9999  POW   2    0    0    0   'emi_co'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/CO_v4.2/v42_CO_2006_IPCC_1A2.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   99  9999  INC   2    0    0    0   'emi_co'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/CO_v4.2/v42_CO_2006_IPCC_1A3a_c_d_e.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   99  9999  TRA   2    0    0    0   'emi_co'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/CO_v4.2/v42_CO_2006_IPCC_1A3b.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   99  9999  TRA   2    0    0    0   'emi_co'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/CO_v4.2/v42_CO_2006_IPCC_1A4.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   99  9999  RES   2    0    0    0   'emi_co'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/CO_v4.2/v42_CO_2006_IPCC_1B2a_c_1A1b_c.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   99  9999  POW   2    0    0    0   'emi_co'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/CO_v4.2/v42_CO_2006_IPCC_2A_2B_2D.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   99  9999  INC   2    0    0    0   'emi_co'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/CO_v4.2/v42_CO_2006_IPCC_2C.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   99  9999  INC   2    0    0    0   'emi_co'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/CO_v4.2/v42_CO_2006_IPCC_4F.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   99  9999  AGR   2    0    0    0   'emi_co'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/CO_v4.2/v42_CO_2006_IPCC_7A.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   99  9999  EXF   2    0    0    0   'emi_co'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+
+
+'/projects/geo/EMIS/EDGAR4/SO2_v4.2/v42_SO2_2006_IPCC_1A1a_6C.0.1x0.1.nc'
+  602    1.9981d+00  ZP1   99  9999  POW   2    0    0    0   'emi_so2'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(S)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/SO2_v4.2/v42_SO2_2006_IPCC_1A2.0.1x0.1.nc'
+  602    1.9981d+00  ZP1   99  9999  INC   2    0    0    0   'emi_so2'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(S)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/SO2_v4.2/v42_SO2_2006_IPCC_1A3a_c_d_e.0.1x0.1.nc'
+  602    1.9981d+00  ZP1   99  9999  TRA   2    0    0    0   'emi_so2'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(S)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/SO2_v4.2/v42_SO2_2006_IPCC_1A3b.0.1x0.1.nc'
+  602    1.9981d+00  ZP1   99  9999  TRA   2    0    0    0   'emi_so2'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(S)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/SO2_v4.2/v42_SO2_2006_IPCC_1A4.0.1x0.1.nc'
+  602    1.9981d+00  ZP1   99  9999  RES   2    0    0    0   'emi_so2'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(S)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/SO2_v4.2/v42_SO2_2006_IPCC_1B1_1B2_1A1b_c.0.1x0.1.nc'
+  602    1.9981d+00  ZP1   99  9999  POW   2    0    0    0   'emi_so2'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(S)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/SO2_v4.2/v42_SO2_2006_IPCC_2B_2D.0.1x0.1.nc'
+  602    1.9981d+00  ZP1   99  9999  INC   2    0    0    0   'emi_so2'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(S)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/SO2_v4.2/v42_SO2_2006_IPCC_2C.0.1x0.1.nc'
+  602    1.9981d+00  ZP1   99  9999  INC   2    0    0    0   'emi_so2'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(S)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/SO2_v4.2/v42_SO2_2006_IPCC_4F.0.1x0.1.nc'
+  602    1.9981d+00  ZP1   99  9999  AGR   2    0    0    0   'emi_so2'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(S)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/SO2_v4.2/v42_SO2_2006_IPCC_7A.0.1x0.1.nc'
+  602    1.9981d+00  ZP1   99  9999  EXF   2    0    0    0   'emi_so2'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(S)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+
+
+'/projects/geo/EMIS/EDGAR4/NH3_v4.2/v42_NH3_2006_IPCC_1A1a_6.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   99  9999  POW   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NH3_v4.2/v42_NH3_2006_IPCC_1A1b_c.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   99  9999  POW   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NH3_v4.2/v42_NH3_2006_IPCC_1A2.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   99  9999  INC   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NH3_v4.2/v42_NH3_2006_IPCC_1A3.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   99  9999  TRA   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NH3_v4.2/v42_NH3_2006_IPCC_1A4.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   99  9999  RES   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NH3_v4.2/v42_NH3_2006_IPCC_2A.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   99  9999  INC   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NH3_v4.2/v42_NH3_2006_IPCC_2B.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   99  9999  INC   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NH3_v4.2/v42_NH3_2006_IPCC_4B.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   99  9999  AGR   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NH3_v4.2/v42_NH3_2006_IPCC_4C_4D.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   99  9999  AGR   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NH3_v4.2/v42_NH3_2006_IPCC_4F.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   99  9999  AGR   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+
+
+
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_ethane_2006.nc'
+  602    1.0000d+00  HLF   99  9999  AGR   2    0    0    0   'emiss_awb'    0000
+   C2H6  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_ethane_2006.nc'
+  602    1.0000d+00  HLF   99  9999  RES   2    0    0    0   'emiss_dom'    0000
+   C2H6  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_ethane_2006.nc'
+  602    1.0000d+00  HLF   99  9999  POW   2    0    0    0   'emiss_ene'    0000
+   C2H6  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_ethane_2006.nc'
+  602    1.0000d+00  HLF   99  9999  INC   2    0    0    0   'emiss_ind'    0000
+   C2H6  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_ethane_2006.nc'
+  602    1.0000d+00  HLF   99  9999  SOL   2    0    0    0   'emiss_slv'    0000
+   C2H6  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_ethane_2006.nc'
+  602    1.0000d+00  HLF   99  9999  TRA   2    0    0    0   'emiss_tra'    0000
+   C2H6  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_ethane_2006.nc'
+  602    1.0000d+00  HLF   99  9999  WAS   2    0    0    0   'emiss_wst'    0000
+   C2H6  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_ethane_2006.nc'
+  602    1.0000d+00  HLF   99  9999  SHI   2    0    0    0   'emiss_shp'    0000
+   C2H6  1.d0
+    xxx 0 To close this data set
+
+
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_ethene_2006.nc'
+  602    1.0000d+00  HLF   99  9999  AGR   2    0    0    0   'emiss_awb'    0000
+   C2H4  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_ethene_2006.nc'
+  602    1.0000d+00  HLF   99  9999  RES   2    0    0    0   'emiss_dom'    0000
+   C2H4  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_ethene_2006.nc'
+  602    1.0000d+00  HLF   99  9999  POW   2    0    0    0   'emiss_ene'    0000
+   C2H4  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_ethene_2006.nc'
+  602    1.0000d+00  HLF   99  9999  INC   2    0    0    0   'emiss_ind'    0000
+   C2H4  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_ethene_2006.nc'
+  602    1.0000d+00  HLF   99  9999  SOL   2    0    0    0   'emiss_slv'    0000
+   C2H4  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_ethene_2006.nc'
+  602    1.0000d+00  HLF   99  9999  TRA   2    0    0    0   'emiss_tra'    0000
+   C2H4  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_ethene_2006.nc'
+  602    1.0000d+00  HLF   99  9999  WAS   2    0    0    0   'emiss_wst'    0000
+   C2H4  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_ethene_2006.nc'
+  602    1.0000d+00  HLF   99  9999  SHI   2    0    0    0   'emiss_shp'    0000
+   C2H4  1.d0
+    xxx 0 To close this data set
+
+
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_formaldehyde_2006.nc'
+  602    1.0000d+00  HLF   99  9999  AGR   2    0    0    0   'emiss_awb'    0000
+   CH2O  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_formaldehyde_2006.nc'
+  602    1.0000d+00  HLF   99  9999  RES   2    0    0    0   'emiss_dom'    0000
+   CH2O  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_formaldehyde_2006.nc'
+  602    1.0000d+00  HLF   99  9999  POW   2    0    0    0   'emiss_ene'    0000
+   CH2O  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_formaldehyde_2006.nc'
+  602    1.0000d+00  HLF   99  9999  INC   2    0    0    0   'emiss_ind'    0000
+   CH2O  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_formaldehyde_2006.nc'
+  602    1.0000d+00  HLF   99  9999  SOL   2    0    0    0   'emiss_slv'    0000
+   CH2O  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_formaldehyde_2006.nc'
+  602    1.0000d+00  HLF   99  9999  TRA   2    0    0    0   'emiss_tra'    0000
+   CH2O  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_formaldehyde_2006.nc'
+  602    1.0000d+00  HLF   99  9999  WAS   2    0    0    0   'emiss_wst'    0000
+   CH2O  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_formaldehyde_2006.nc'
+  602    1.0000d+00  HLF   99  9999  SHI   2    0    0    0   'emiss_shp'    0000
+   CH2O  1.d0
+    xxx 0 To close this data set
+
+
+
+
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_propane_2006.nc'
+  602    1.0000d+00  HLF   99  9999  AGR   2    0    0    0   'emiss_awb'    0000
+   C3H8  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_propane_2006.nc'
+  602    1.0000d+00  HLF   99  9999  RES   2    0    0    0   'emiss_dom'    0000
+   C3H8  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_propane_2006.nc'
+  602    1.0000d+00  HLF   99  9999  POW   2    0    0    0   'emiss_ene'    0000
+   C3H8  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_propane_2006.nc'
+  602    1.0000d+00  HLF   99  9999  INC   2    0    0    0   'emiss_ind'    0000
+   C3H8  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_propane_2006.nc'
+  602    1.0000d+00  HLF   99  9999  SOL   2    0    0    0   'emiss_slv'    0000
+   C3H8  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_propane_2006.nc'
+  602    1.0000d+00  HLF   99  9999  TRA   2    0    0    0   'emiss_tra'    0000
+   C3H8  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_propane_2006.nc'
+  602    1.0000d+00  HLF   99  9999  WAS   2    0    0    0   'emiss_wst'    0000
+   C3H8  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_propane_2006.nc'
+  602    1.0000d+00  HLF   99  9999  SHI   2    0    0    0   'emiss_shp'    0000
+   C3H8  1.d0
+    xxx 0 To close this data set
+
+
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_propene_2006.nc'
+  602    1.0000d+00  HLF   99  9999  AGR   2    0    0    0   'emiss_awb'    0000
+   C3H6  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_propene_2006.nc'
+  602    1.0000d+00  HLF   99  9999  RES   2    0    0    0   'emiss_dom'    0000
+   C3H6  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_propene_2006.nc'
+  602    1.0000d+00  HLF   99  9999  POW   2    0    0    0   'emiss_ene'    0000
+   C3H6  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_propene_2006.nc'
+  602    1.0000d+00  HLF   99  9999  INC   2    0    0    0   'emiss_ind'    0000
+   C3H6  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_propene_2006.nc'
+  602    1.0000d+00  HLF   99  9999  SOL   2    0    0    0   'emiss_slv'    0000
+   C3H6  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_propene_2006.nc'
+  602    1.0000d+00  HLF   99  9999  TRA   2    0    0    0   'emiss_tra'    0000
+   C3H6  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_propene_2006.nc'
+  602    1.0000d+00  HLF   99  9999  WAS   2    0    0    0   'emiss_wst'    0000
+   C3H6  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_propene_2006.nc'
+  602    1.0000d+00  HLF   99  9999  SHI   2    0    0    0   'emiss_shp'    0000
+   C3H6  1.d0
+    xxx 0 To close this data set
+
+
+
+
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_butanes_2006.nc'
+  602    1.0000d+00  HLF   99  9999  AGR   2    0    0    0   'emiss_awb'    0000
+   C4H10  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_butanes_2006.nc'
+  602    1.0000d+00  HLF   99  9999  RES   2    0    0    0   'emiss_dom'    0000
+   C4H10  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_butanes_2006.nc'
+  602    1.0000d+00  HLF   99  9999  POW   2    0    0    0   'emiss_ene'    0000
+   C4H10  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_butanes_2006.nc'
+  602    1.0000d+00  HLF   99  9999  INC   2    0    0    0   'emiss_ind'    0000
+   C4H10  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_butanes_2006.nc'
+  602    1.0000d+00  HLF   99  9999  SOL   2    0    0    0   'emiss_slv'    0000
+   C4H10  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_butanes_2006.nc'
+  602    1.0000d+00  HLF   99  9999  TRA   2    0    0    0   'emiss_tra'    0000
+   C4H10  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_butanes_2006.nc'
+  602    1.0000d+00  HLF   99  9999  WAS   2    0    0    0   'emiss_wst'    0000
+   C4H10  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_butanes_2006.nc'
+  602    1.0000d+00  HLF   99  9999  SHI   2    0    0    0   'emiss_shp'    0000
+   C4H10  1.d0
+    xxx 0 To close this data set
+
+
+
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_hexanes_and_higher_alkanes_2006.nc'
+  602    1.0000d+00  HLF   99  9999  AGR   2    0    0    0   'emiss_awb'    0000
+   C6H14  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_hexanes_and_higher_alkanes_2006.nc'
+  602    1.0000d+00  HLF   99  9999  RES   2    0    0    0   'emiss_dom'    0000
+   C6H14  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_hexanes_and_higher_alkanes_2006.nc'
+  602    1.0000d+00  HLF   99  9999  POW   2    0    0    0   'emiss_ene'    0000
+   C6H14  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_hexanes_and_higher_alkanes_2006.nc'
+  602    1.0000d+00  HLF   99  9999  INC   2    0    0    0   'emiss_ind'    0000
+   C6H14  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_hexanes_and_higher_alkanes_2006.nc'
+  602    1.0000d+00  HLF   99  9999  SOL   2    0    0    0   'emiss_slv'    0000
+   C6H14  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_hexanes_and_higher_alkanes_2006.nc'
+  602    1.0000d+00  HLF   99  9999  TRA   2    0    0    0   'emiss_tra'    0000
+   C6H14  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_hexanes_and_higher_alkanes_2006.nc'
+  602    1.0000d+00  HLF   99  9999  WAS   2    0    0    0   'emiss_wst'    0000
+   C6H14  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_hexanes_and_higher_alkanes_2006.nc'
+  602    1.0000d+00  HLF   99  9999  SHI   2    0    0    0   'emiss_shp'    0000
+   C6H14  1.d0
+    xxx 0 To close this data set
+
+
+
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_other_alkanals_2006.nc'
+  602    1.0000d+00  HLF   99  9999  AGR   2    0    0    0   'emiss_awb'    0000
+   CH3CHO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_other_alkanals_2006.nc'
+  602    1.0000d+00  HLF   99  9999  RES   2    0    0    0   'emiss_dom'    0000
+   CH3CHO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_other_alkanals_2006.nc'
+  602    1.0000d+00  HLF   99  9999  POW   2    0    0    0   'emiss_ene'    0000
+   CH3CHO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_other_alkanals_2006.nc'
+  602    1.0000d+00  HLF   99  9999  INC   2    0    0    0   'emiss_ind'    0000
+   CH3CHO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_other_alkanals_2006.nc'
+  602    1.0000d+00  HLF   99  9999  SOL   2    0    0    0   'emiss_slv'    0000
+   CH3CHO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_other_alkanals_2006.nc'
+  602    1.0000d+00  HLF   99  9999  TRA   2    0    0    0   'emiss_tra'    0000
+   CH3CHO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_other_alkanals_2006.nc'
+  602    1.0000d+00  HLF   99  9999  WAS   2    0    0    0   'emiss_wst'    0000
+   CH3CHO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_other_alkanals_2006.nc'
+  602    1.0000d+00  HLF   99  9999  SHI   2    0    0    0   'emiss_shp'    0000
+   CH3CHO  1.d0
+    xxx 0 To close this data set
+
+
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_other_aromatics_2006.nc'
+  602    1.0000d+00  HLF   99  9999  AGR   2    0    0    0   'emiss_awb'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+  Tolmatic 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_other_aromatics_2006.nc'
+  602    1.0000d+00  HLF   99  9999  RES   2    0    0    0   'emiss_dom'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+  Tolmatic 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_other_aromatics_2006.nc'
+  602    1.0000d+00  HLF   99  9999  POW   2    0    0    0   'emiss_ene'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+  Tolmatic 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_other_aromatics_2006.nc'
+  602    1.0000d+00  HLF   99  9999  INC   2    0    0    0   'emiss_ind'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+  Tolmatic 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_other_aromatics_2006.nc'
+  602    1.0000d+00  HLF   99  9999  SOL   2    0    0    0   'emiss_slv'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+  Tolmatic 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_other_aromatics_2006.nc'
+  602    1.0000d+00  HLF   99  9999  TRA   2    0    0    0   'emiss_tra'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+  Tolmatic 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_other_aromatics_2006.nc'
+  602    1.0000d+00  HLF   99  9999  WAS   2    0    0    0   'emiss_wst'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+  Tolmatic 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_other_aromatics_2006.nc'
+  602    1.0000d+00  HLF   99  9999  SHI   2    0    0    0   'emiss_shp'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+  Tolmatic 1.d0
+    xxx 0 To close this data set
+
+
+
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_benzene_2006.nc'
+  602    1.0000d+00  HLF   99  9999  AGR   2    0    0    0   'emiss_awb'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+  Benzene 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_benzene_2006.nc'
+  602    1.0000d+00  HLF   99  9999  RES   2    0    0    0   'emiss_dom'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+  Benzene 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_benzene_2006.nc'
+  602    1.0000d+00  HLF   99  9999  POW   2    0    0    0   'emiss_ene'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+  Benzene 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_benzene_2006.nc'
+  602    1.0000d+00  HLF   99  9999  INC   2    0    0    0   'emiss_ind'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+  Benzene 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_benzene_2006.nc'
+  602    1.0000d+00  HLF   99  9999  SOL   2    0    0    0   'emiss_slv'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+  Benzene 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_benzene_2006.nc'
+  602    1.0000d+00  HLF   99  9999  TRA   2    0    0    0   'emiss_tra'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+  Benzene 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_benzene_2006.nc'
+  602    1.0000d+00  HLF   99  9999  WAS   2    0    0    0   'emiss_wst'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+  Benzene 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_benzene_2006.nc'
+  602    1.0000d+00  HLF   99  9999  SHI   2    0    0    0   'emiss_shp'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+  Benzene 1.d0
+    xxx 0 To close this data set
+
+
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_ketones_2006.nc'
+  602    1.0000d+00  HLF   99  9999  AGR   2    0    0    0   'emiss_awb'    0000
+   ACETONE  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_ketones_2006.nc'
+  602    1.0000d+00  HLF   99  9999  RES   2    0    0    0   'emiss_dom'    0000
+   ACETONE  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_ketones_2006.nc'
+  602    1.0000d+00  HLF   99  9999  POW   2    0    0    0   'emiss_ene'    0000
+   ACETONE  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_ketones_2006.nc'
+  602    1.0000d+00  HLF   99  9999  INC   2    0    0    0   'emiss_ind'    0000
+   ACETONE  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_ketones_2006.nc'
+  602    1.0000d+00  HLF   99  9999  SOL   2    0    0    0   'emiss_slv'    0000
+   ACETONE  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_ketones_2006.nc'
+  602    1.0000d+00  HLF   99  9999  TRA   2    0    0    0   'emiss_tra'    0000
+   ACETONE  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_ketones_2006.nc'
+  602    1.0000d+00  HLF   99  9999  WAS   2    0    0    0   'emiss_wst'    0000
+   ACETONE  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_ketones_2006.nc'
+  602    1.0000d+00  HLF   99  9999  SHI   2    0    0    0   'emiss_shp'    0000
+   ACETONE  1.d0
+    xxx 0 To close this data set
+
+
+
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_xylene_2006.nc'
+  602    1.0000d+00  HLF   99  9999  AGR   2    0    0    0   'emiss_awb'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+C6HXR_SOA  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_xylene_2006.nc'
+  602    1.0000d+00  HLF   99  9999  RES   2    0    0    0   'emiss_dom'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+C6HXR_SOA  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_xylene_2006.nc'
+  602    1.0000d+00  HLF   99  9999  POW   2    0    0    0   'emiss_ene'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+C6HXR_SOA  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_xylene_2006.nc'
+  602    1.0000d+00  HLF   99  9999  INC   2    0    0    0   'emiss_ind'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+C6HXR_SOA  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_xylene_2006.nc'
+  602    1.0000d+00  HLF   99  9999  SOL   2    0    0    0   'emiss_slv'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+C6HXR_SOA  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_xylene_2006.nc'
+  602    1.0000d+00  HLF   99  9999  TRA   2    0    0    0   'emiss_tra'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+C6HXR_SOA  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_xylene_2006.nc'
+  602    1.0000d+00  HLF   99  9999  WAS   2    0    0    0   'emiss_wst'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+C6HXR_SOA  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_xylene_2006.nc'
+  602    1.0000d+00  HLF   99  9999  SHI   2    0    0    0   'emiss_shp'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+C6HXR_SOA  1.d0
+    xxx 0 To close this data set
+
+
+
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_trimethyl_benzenes_2006.nc'
+  602    1.0000d+00  HLF   99  9999  AGR   2    0    0    0   'emiss_awb'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+C6HXR_SOA  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_trimethyl_benzenes_2006.nc'
+  602    1.0000d+00  HLF   99  9999  RES   2    0    0    0   'emiss_dom'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+C6HXR_SOA  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_trimethyl_benzenes_2006.nc'
+  602    1.0000d+00  HLF   99  9999  POW   2    0    0    0   'emiss_ene'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+C6HXR_SOA  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_trimethyl_benzenes_2006.nc'
+  602    1.0000d+00  HLF   99  9999  INC   2    0    0    0   'emiss_ind'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+C6HXR_SOA  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_trimethyl_benzenes_2006.nc'
+  602    1.0000d+00  HLF   99  9999  SOL   2    0    0    0   'emiss_slv'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+C6HXR_SOA  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_trimethyl_benzenes_2006.nc'
+  602    1.0000d+00  HLF   99  9999  TRA   2    0    0    0   'emiss_tra'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+C6HXR_SOA  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_trimethyl_benzenes_2006.nc'
+  602    1.0000d+00  HLF   99  9999  WAS   2    0    0    0   'emiss_wst'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+C6HXR_SOA  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_trimethyl_benzenes_2006.nc'
+  602    1.0000d+00  HLF   99  9999  SHI   2    0    0    0   'emiss_shp'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+C6HXR_SOA  1.d0
+    xxx 0 To close this data set
+
+
+
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_toluene_2006.nc'
+  602    1.0000d+00  HLF   99  9999  AGR   2    0    0    0   'emiss_awb'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+ Tolmatic  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_toluene_2006.nc'
+  602    1.0000d+00  HLF   99  9999  RES   2    0    0    0   'emiss_dom'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+ Tolmatic  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_toluene_2006.nc'
+  602    1.0000d+00  HLF   99  9999  POW   2    0    0    0   'emiss_ene'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+ Tolmatic  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_toluene_2006.nc'
+  602    1.0000d+00  HLF   99  9999  INC   2    0    0    0   'emiss_ind'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+ Tolmatic  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_toluene_2006.nc'
+  602    1.0000d+00  HLF   99  9999  SOL   2    0    0    0   'emiss_slv'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+ Tolmatic  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_toluene_2006.nc'
+  602    1.0000d+00  HLF   99  9999  TRA   2    0    0    0   'emiss_tra'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+ Tolmatic  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_toluene_2006.nc'
+  602    1.0000d+00  HLF   99  9999  WAS   2    0    0    0   'emiss_wst'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+ Tolmatic  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/EDGAR4/NMVOC_v4.2separated/edgar42_voc_scaled2lamarque_toluene_2006.nc'
+  602    1.0000d+00  HLF   99  9999  SHI   2    0    0    0   'emiss_shp'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+ Tolmatic  1.d0
+    xxx 0 To close this data set
+

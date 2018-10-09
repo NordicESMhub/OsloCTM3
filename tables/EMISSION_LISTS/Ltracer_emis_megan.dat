@@ -1,0 +1,45 @@
+Natural emissions from MEGAN 2000.
+Please consider using MEGAN-MACC.
+
+These are the files to read for MEGAN 2000, they go into the 2D section
+of the emission file.
+
+
+'/projects/geo/EMIS/MEGAN2.1/MEGAN_nat_CO_2000_0.5x0.5.nc' 'MEGAN2.1 CO'
+  401    1.0000d+00  HLF   99  9999  NAT   2    0    0    0   'emiss_bio'    0000
+    CO 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/MEGAN2.1/MEGAN_nat_ethene_2000_0.5x0.5.nc' 'MEGAN2.1 C2H4'
+  401    1.0000d+00  HLF   99  9999  NAT   2    0    0    0    'emiss_bio'    0000
+    C2H4 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/MEGAN2.1/MEGAN_nat_propene_2000_0.5x0.5.nc' 'MEGAN2.1 C3H6'
+  401    1.0000d+00  HLF   99  9999  NAT   2    0    0    0    'emiss_bio'    0000
+    C3H6 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/MEGAN2.1/MEGAN_nat_propane_2000_0.5x0.5.nc' 'MEGAN2.1 C3H8'
+  401    1.0000d+00  HLF   99  9999  NAT   2    0    0    0   'emiss_bio'    0000
+    C3H8 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/MEGAN2.1/MEGAN_nat_toluene_2000_0.5x0.5.nc' 'MEGAN2.1 C6HXR'
+  401    1.1500d+00  HLF   99  9999  NAT   2    0    0    0    'emiss_bio'    0000
+    C6HXR 1.d0    #1.1500d+00=Aromatic        Mass of xylene with equal aromatic rings
+    C6HXR_SOA 1.d0    #1.1500d+00=Aromatic        Mass of xylene with equal aromatic rings
+    xxx 0 To close this data set
+'/projects/geo/EMIS/MEGAN2.1/MEGAN_nat_formaldehyde_2000_0.5x0.5.nc' 'MEGAN2.1 CH2O'
+  401    1.0000d+00  HLF   99  9999  NAT   2    0    0    0   'emiss_bio'    0000
+    CH2O 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/MEGAN2.1/MEGAN_nat_acetaldehyde_2000_0.5x0.5.nc' 'MEGAN2.1 CH3CHO'
+  401    1.0000d+00  HLF   99  9999  NAT   2    0    0    0   'emiss_bio'    0000
+    CH3CHO 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/MEGAN2.1/MEGAN_nat_isoprene_2000_0.5x0.5.nc' 'MEGAN2.1 ISOPRENE'
+  401    0.4400d+00  HLF   99  9999  NAT   2    0    0    0   'emiss_bio'    0000
+    ISOPRENE 1.d0    # 0.44 = 220/500 as in CTM2 1.0000d+00=Isoprene
+    xxx 0 To close this data set
+'/projects/geo/EMIS/MEGAN2.1/MEGAN_nat_acetone_2000_0.5x0.5.nc' 'MEGAN2.1 ACETONE'
+  401    1.0000d+00  HLF   99  9999  NAT   2    0    0    0   'emiss_bio'    0000
+    ACETONE 1.d0
+    xxx 0 To close this data set
+

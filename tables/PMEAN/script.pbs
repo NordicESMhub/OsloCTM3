@@ -1,0 +1,8 @@
+#!/bin/csh
+#PBS -N P_mean
+#PBS -l nodes=1:ppn=1
+#PBS -q prather_fast
+#PBS -m bea
+#PBS -M xzhu@uci.edu
+cd /data1/prather/xzhu/qcode_60/tables/PMEAN
+mpirun  -machinefile  $PBS_NODEFILE -np 1 ./a.out < L60T319.inp > out_T319

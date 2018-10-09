@@ -1,0 +1,20 @@
+These are the original GEIA emissions used for SOA.
+
+'/projects/geo/EMIS/Emisdata_1990/EMIS/SOAPRE/1x1/MONTHLY/MASS/V10_monoterpene_1x1_1990_GEIA.dat'
+  502    1.0000d-06  1x1   99  9999  NAT   2    3    3    0   'soa_nat'    0000
+    Apine    0.3966666667d0    # 0.35*136/(12*10) Griffin, GRL1999, 10 C's
+    Bpine    0.2606666667d0    # 0.23*136/(12*10) Griffin, GRL1999, 10 C's
+    Limon    0.2606666667d0    # 0.23*136/(12*10) Griffin, GRL1999, 10 C's
+    Myrcene  0.0566666667d0    # 0.05*136/(12*10) Griffin, GRL1999, 10 C's
+    Sabine   0.0566666667d0    # 0.05*136/(12*10) Griffin, GRL1999, 10 C's
+    D3carene 0.0453333333d0    # 0.04*136/(12*10) Griffin, GRL1999, 10 C's
+    Ocimene  0.0226666667d0    # 0.02*136/(12*10) Griffin, GRL1999, 10 C's
+    Trpolene 0.0226666667d0    # 0.02*136/(12*10) Griffin, GRL1999, 10 C's
+    Trpinene 0.0113333333d0    # 0.01*136/(12*10) Griffin, GRL1999, 10 C's
+    xxx 0 To close this data set
+'/projects/geo/EMIS/Emisdata_1990/EMIS/SOAPRE/1x1/MONTHLY/MASS/V10_nvoc_1x1_1990_GEIA.dat'
+  502    1.0000d-06  1x1   99  9999  NAT   2    3    3    0   'soa_nat'    0000
+    TrpAlc   0.1155d0          # 0.09*154/(12*10) Griffin, GRL1999, 10 C's
+    Sestrp   0.0566666667d0    # 0.05*204/(12*15) Griffin, GRL1999, 15 C's
+    Trp_Ket  0.0506666667d0    # 0.04*152/(12*10) Griffin, GRL1999, 10 C's
+    xxx 0 To close this data set

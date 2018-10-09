@@ -1,0 +1,22 @@
+Changes in DEAD for use in Oslo CTM2
+
+1) params.h 
+
+Include section for T63 
+
+2) Change roughness length to max 0.7 in drydep, or not iterations
+   will crash. (Done in blmutl.F90)
+
+3) Change params.h
+
+--> plond = plon
+--> platd = plat
+--> pcnst = DST_NBR
+
+4) Change pmgrid.h
+
+--> DST_NBR= 8 (f.eks) in params.h) in MATCH/MOZART section
+--> PLEV = 19/40 in params.h in MATCH/MOZART section
+
+5) Change dmt_min_min and dmt_max_max if you run with other than 
+   8 tracers

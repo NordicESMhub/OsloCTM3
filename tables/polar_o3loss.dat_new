@@ -1,0 +1,12 @@
+Linoz chemistry input
+  30.0e-09         O3SSFC:  Surface O3Strat concentration  (VMR)
+  172800.0         O3STAU:  First-order lifetime to attain o3ssfc
+         4         LBLO3
+  100.e-09         O3PAUZ:  Recommended tropopause threshold mix. ratio
+     3.437         CLLOAD:  Cl loading factor
+     195.0         TPSC195
+Lifetimes to O3 loss below 195K: Cariolle et al., 1990  (z*=10,12,...58)
+Cariolle Loss (1/s): 0.000E+00 0.000E+00 2.872E-08 6.645E-07 9.921E-07 9.843E-07
+ 6.898E-07 5.154E-07 2.970E-07 1.929E-07 2.771E-08 0.000E+00 0.000E+00 0.000E+00
+ 0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00
+ 0.000E+00 0.000E+00 0.000E+00

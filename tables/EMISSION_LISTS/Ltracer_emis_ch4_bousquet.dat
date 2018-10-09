@@ -1,0 +1,15 @@
+Natural emissions of CH4 from Bousquet. Note that they probably have
+to be scaled up to match the CTM loss rate.
+
+'/projects/geo/EMIS/GAME/fch4.ref.mask11.nc'
+  403    1.0000d+00  1x1   99  9999  AGR   2    0    0    0   'bbur'     0000
+   CH4  0.00027777778d0    # Convert 1/h to 1/s
+    xxx 0 To close this data set
+'/projects/geo/EMIS/GAME/fch4.ref.mask11.nc'
+  403    1.0000d+00  1x1   99  9999  NAT   2    0    0    0   'wetlands' 0000
+   CH4  0.00027777778d0    # Convert 1/h to 1/s
+    xxx 0 To close this data set
+'/projects/geo/EMIS/GAME/fch4.ref.mask11.nc'
+  403    1.0000d+00  1x1   99  9999  NAT   2    0    0    0   'others'   0000
+   CH4  0.00027777778d0    # Convert 1/h to 1/s
+    xxx 0 To close this data set

@@ -1,0 +1,71 @@
+-*-text-*-
+
+Meta-code:
+ChangeLog	Chronological list of changes
+INSTALL		Installation instructions
+MANIFEST	This file
+Makefile	For GNU Make
+pvmgetarch	Shell script to determine machine architecture for Makefile
+README		Model description
+TAGS		For GNU Emacs
+TODO		Tasks which need work
+VERSION		DEAD version number
+patches		Sample patches required to install DEAD in certain CTMs and GCMs
+
+Source code:
+File descriptions are prefixed by [ACMLSZ] where the letters signify
+the models which require the file:
+
+A	All
+B	BXM offline box model
+C	CCM
+L	All large scale models [C+M+Z]
+M	MATCH
+N	None (code is for future use)
+Z	MOZART or UCI CTM
+
+aer.F90		[B] Offline driver for aerosol microphysics
+aernvr.F90	[B] 
+blmutl.F90	[A] 
+dbg_mdl.F90	[A] 
+dpsdryutl.F90	[A]	
+dst.h		[A] Pre-processor tokens defining physics options	
+dstaer.F90	[A]
+dstbdg.F90	[A]
+dstblm.F90	[A]
+dstchm.F90	[Z]
+dstcmnini.F90	[A]
+dstcst.F90	[A]
+dstctl.F90	[A]
+dstdbg.F90	[A]
+dstdpsdry.F90	[A]
+dstdpswet.F90	[A]
+dstgrd.F90	[A]
+dstlsm.F90	[A]
+dstmbl.F90	[A]
+dstmblutl.F90	[A]
+dstmssutl.F90	[A]
+dstnm.F90	[L]
+dstodx.F90	[A]
+dstpsd.F90	[A]
+dstrad.F90	[C]
+dstscv.F90	[A]
+dstsfc.F90	[A]
+dstsltsbl.F90	[A]
+dsttibds.F90	[L]
+dsttvbds.F90	[N]
+erf_mdl.F90	[A]
+misc.h		[C] Defines NCPREC, PVP, REALTYPE tokens
+nf90_utl.F90	[A]
+params.h	[A] Defines grid size tokens
+phyzlic.F90	[B] Physics driver for latitude slices
+pmgrid.F	[A] Module wrapper for pmgrid.h
+pmgrid.h	[A] Defines grid size variables from tokens
+precision.F90	[A] Defines LSM grid size and COUP_CCM tokens
+preproc.h	[C] Defines LSM grid size and COUP_CCM tokens
+psdlgn.F90	[A]
+sng_mdl.F90	[A]
+szdstlgn.F90	[A]
+utl_mdl.F90	[A]
+vec_mdl.F90	[A]
+xtr_mdl.F90	[A]

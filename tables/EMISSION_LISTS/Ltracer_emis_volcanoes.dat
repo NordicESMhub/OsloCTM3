@@ -1,0 +1,20 @@
+Possible emission files for volcanoe SO2 emissions.
+These are put into the STV section of Ltracer_xxx.inp file.
+
+Currently three options are available: HTAP and AEROCOM:
+
+HTAP:
+'/projects/geo/EMIS/SULFUR/VOLCANOES/'
+  553    1.0000d+00  PPP   99  9999  NAT   0    0    0   '---'
+    SO2     #
+
+AEROCOM without ETNA:
+'/projects/geo/EMIS/SULFUR/contineous_volc-ETNA.1x1'
+  554    1.0000d+00  1x1   99  9999  NAT   2   -1    0   '---'
+    SO2     # Unit is kg/year, changed to kg/s in read-in
+
+AEROCOM with ETNA:
+'/projects/geo/EMIS/SULFUR/contineous_volc.1x1'
+  554    1.0000d+00  1x1   99  9999  NAT   2   -1    0   '---'
+    SO2     # Unit is kg/year, changed to kg/s in read-in
+

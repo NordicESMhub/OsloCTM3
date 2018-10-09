@@ -1,0 +1,92 @@
+----- Emissions for Oslo CTM3 -----------------------------------------------
+Lists the emissions used in monthly emission tables. In addition there are
+some hard coded emissions, which you define by setting the following flags.
+They are hard coded because they have their own arrays, and do not use the
+emission arrays E2DS and E3DS, and may be updated more often.
+--- IMPORTANT!!! ------------------------------------------------------------
+Nothing special yet.
+--- Aircraft emission data --------------------------------------------------
+  AirScen NONE 0000     #NONE/REACT4C_5a/Quantify_MA8/TradeOff_1e
+  AirEmisPath 'NONE'
+--- Lightning emission data -------------------------------------------------
+  1       No. of species with lightning sources; emissions in Tg/yr
+  'NO'       14.0D0   5.0000D+00  0
+-2D-- 2D emissions ----------------------------------------------------------
+filename / description  (See detailed description below)
+  ID     SCALE       RES MONTH YEAR  CAT TYPE UNIT DIURN VERT DATASET_NAME
+    SPECIES SCALING ('xxx' to close dataset)
+
+'end2D' 'end2D' -------------------------------------------------------------
+-3D-- Emissions 3-D ---------------------------------------------------------
+filename / description
+  ID     SCALE       RES MONTH YEAR  CAT TYPE UNIT DIURN DATASET_NAME
+
+'end3D' 'end3D' -------------------------------------------------------------
+-STV- Used for short time variations; only one species per field ------------
+format(char)/name for 2d-variable/tracer info
+
+'/work/projects/cicero/ctm_input/EMIS/SULFUR/DMSconc_Kettle2.1x1'
+  551    1.0000d+00  1x1   99  9999  NAT   2   -1    0   'DMSseaconc'
+    DMS     # Unit is nmol*m2/L, handeled by read-in
+'/work/projects/cicero/ctm_input/EMIS/SULFUR/contineous_volc.1x1'
+  554    1.0000d+00  1x1   99  9999  NAT   2   -1    0   '---'
+    SO2     # Unit is kg/year, changed to kg/s in read-in
+'Indata_CTM3/oceanemis/'
+  555    1.0000d+00  HLF   99  9999  OCN   2   -1    0   '---'
+  ---   #This section just turns on the OC oceanic emissions
+
+-END- -END-  ----------------------------------------------------------------
+
+-BBB- Used for biomass burning - may list several species -------------------
+filename / description
+  ID     SCALE       RES MONTH YEAR  CAT TYPE UNIT DIURN DATASET_NAME
+'endFF' 'endFF'  -------------------------------------------------------------
+
+
+==============================================================================
+DESCRIPTION OF FILE SETTINGS
+==============================================================================
+----- Variables to set above -----
+ID:    ID number to control read-in, connected to the file structure
+SCALE: Dataset scaling factor. No scaling when 1.d0.
+RES:   Resolution of input data (character)
+       1x1 = 1x1 degree, HLF = half; 0.5x0.5, ZP1 = zero point 1; 0.1:0.1
+MONTH: Month which the emissions apply for (99 = all months)
+YEAR:  Year which the emissions apply for (9999 = all years)
+CAT:   Category of the emissions (for diagnostics)
+TYPE:  Read into ETYP
+       0: Use data as is
+       1: Data is per cm2, multiply with area (m2)*1.d4
+       2: Data is per m2, multiply with area (m2)
+UNIT:  Read into EUNIT
+       0: kg/s (or kg/area/s when ETYP=1,2)
+       1: molec/s (or molec/area/s when ETYP=1,2)
+       2: kg/y (or kg/area/y when ETYP=1,2)
+       3: kg/month (or kg/area/month when ETYP=1,2)
+DIURN: Flag for diurnal variation, local hour or based on 2D field.
+       0: No diurnal variation
+       1: RETRO variations (TNO)
+       2: +50% from 8am to 7pm, -50% from 8pm to 7am (e.g. for BCOC)
+       3: Scale with both sunlight and temperature
+       4: Scale with sunlight
+       5: Scale with heating degree day (HDD)
+VERT:  Distribute 2D emissions on a few layers
+       1: 0.250/0.125/0.125/0.500  (typical power/industrial combustion)
+       2: 0.600/0.200/0.200/0.000  (typical residential heating)
+       3: 0.300/0.400/0.300/0.000  (typical ships)
+DATASET_NAME: Name of dataset (e.g. in netCDF files).
+SPECIES: The name of the species to use the listed dataset.
+SCALING: Separate scaling factor for the listed species.
+         Used in addition to SCALE above, which applies for the dataset.
+           Normal usage:
+         If the units of the input data on file is other than molecules
+         per time and/or area, you have to scale the data to correct for
+         differences in molecular mass.
+         If input is molecules, you should *not* scale with molecular mass.
+
+         If you specify a category not on file, the program will stop.
+
+
+EDGAR category definitios:
+http://edgar.jrc.ec.europa.eu/methodology.php
+

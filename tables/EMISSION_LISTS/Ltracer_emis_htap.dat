@@ -1,0 +1,1733 @@
+These are the HTAP files for 2010. Other years may be available.
+Does not currently include CH4.
+
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NOx_emi_ENERGY_2010_1.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   01  9999  POW   2    0    0    0   'emi_nox'    0000
+    NO  0.6521739130434782609d0   # Convert from NO2 to NO: 30/46
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NOx_emi_ENERGY_2010_2.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   02  9999  POW   2    0    0    0   'emi_nox'    0000
+    NO  0.6521739130434782609d0   # Convert from NO2 to NO: 30/46
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NOx_emi_ENERGY_2010_3.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   03  9999  POW   2    0    0    0   'emi_nox'    0000
+    NO  0.6521739130434782609d0   # Convert from NO2 to NO: 30/46
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NOx_emi_ENERGY_2010_4.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   04  9999  POW   2    0    0    0   'emi_nox'    0000
+    NO  0.6521739130434782609d0   # Convert from NO2 to NO: 30/46
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NOx_emi_ENERGY_2010_5.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   05  9999  POW   2    0    0    0   'emi_nox'    0000
+    NO  0.6521739130434782609d0   # Convert from NO2 to NO: 30/46
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NOx_emi_ENERGY_2010_6.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   06  9999  POW   2    0    0    0   'emi_nox'    0000
+    NO  0.6521739130434782609d0   # Convert from NO2 to NO: 30/46
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NOx_emi_ENERGY_2010_7.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   07  9999  POW   2    0    0    0   'emi_nox'    0000
+    NO  0.6521739130434782609d0   # Convert from NO2 to NO: 30/46
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NOx_emi_ENERGY_2010_8.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   08  9999  POW   2    0    0    0   'emi_nox'    0000
+    NO  0.6521739130434782609d0   # Convert from NO2 to NO: 30/46
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NOx_emi_ENERGY_2010_9.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   09  9999  POW   2    0    0    0   'emi_nox'    0000
+    NO  0.6521739130434782609d0   # Convert from NO2 to NO: 30/46
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NOx_emi_ENERGY_2010_10.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   10  9999  POW   2    0    0    0   'emi_nox'    0000
+    NO  0.6521739130434782609d0   # Convert from NO2 to NO: 30/46
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NOx_emi_ENERGY_2010_11.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   11  9999  POW   2    0    0    0   'emi_nox'    0000
+    NO  0.6521739130434782609d0   # Convert from NO2 to NO: 30/46
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NOx_emi_ENERGY_2010_12.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   12  9999  POW   2    0    0    0   'emi_nox'    0000
+    NO  0.6521739130434782609d0   # Convert from NO2 to NO: 30/46
+    xxx 0 To close this data set
+
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NOx_emi_RESIDENTIAL_2010_1.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   01  9999  RES   2    0    0    0   'emi_nox'    0000
+    NO  0.6521739130434782609d0   # Convert from NO2 to NO: 30/46
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NOx_emi_RESIDENTIAL_2010_2.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   02  9999  RES   2    0    0    0   'emi_nox'    0000
+    NO  0.6521739130434782609d0   # Convert from NO2 to NO: 30/46
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NOx_emi_RESIDENTIAL_2010_3.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   03  9999  RES   2    0    0    0   'emi_nox'    0000
+    NO  0.6521739130434782609d0   # Convert from NO2 to NO: 30/46
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NOx_emi_RESIDENTIAL_2010_4.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   04  9999  RES   2    0    0    0   'emi_nox'    0000
+    NO  0.6521739130434782609d0   # Convert from NO2 to NO: 30/46
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NOx_emi_RESIDENTIAL_2010_5.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   05  9999  RES   2    0    0    0   'emi_nox'    0000
+    NO  0.6521739130434782609d0   # Convert from NO2 to NO: 30/46
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NOx_emi_RESIDENTIAL_2010_6.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   06  9999  RES   2    0    0    0   'emi_nox'    0000
+    NO  0.6521739130434782609d0   # Convert from NO2 to NO: 30/46
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NOx_emi_RESIDENTIAL_2010_7.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   07  9999  RES   2    0    0    0   'emi_nox'    0000
+    NO  0.6521739130434782609d0   # Convert from NO2 to NO: 30/46
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NOx_emi_RESIDENTIAL_2010_8.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   08  9999  RES   2    0    0    0   'emi_nox'    0000
+    NO  0.6521739130434782609d0   # Convert from NO2 to NO: 30/46
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NOx_emi_RESIDENTIAL_2010_9.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   09  9999  RES   2    0    0    0   'emi_nox'    0000
+    NO  0.6521739130434782609d0   # Convert from NO2 to NO: 30/46
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NOx_emi_RESIDENTIAL_2010_10.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   10  9999  RES   2    0    0    0   'emi_nox'    0000
+    NO  0.6521739130434782609d0   # Convert from NO2 to NO: 30/46
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NOx_emi_RESIDENTIAL_2010_11.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   11  9999  RES   2    0    0    0   'emi_nox'    0000
+    NO  0.6521739130434782609d0   # Convert from NO2 to NO: 30/46
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NOx_emi_RESIDENTIAL_2010_12.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   12  9999  RES   2    0    0    0   'emi_nox'    0000
+    NO  0.6521739130434782609d0   # Convert from NO2 to NO: 30/46
+    xxx 0 To close this data set
+
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NOx_emi_INDUSTRY_2010_1.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   01  9999  INC   2    0    0    0   'emi_nox'    0000
+    NO  0.6521739130434782609d0   # Convert from NO2 to NO: 30/46
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NOx_emi_INDUSTRY_2010_2.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   02  9999  INC   2    0    0    0   'emi_nox'    0000
+    NO  0.6521739130434782609d0   # Convert from NO2 to NO: 30/46
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NOx_emi_INDUSTRY_2010_3.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   03  9999  INC   2    0    0    0   'emi_nox'    0000
+    NO  0.6521739130434782609d0   # Convert from NO2 to NO: 30/46
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NOx_emi_INDUSTRY_2010_4.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   04  9999  INC   2    0    0    0   'emi_nox'    0000
+    NO  0.6521739130434782609d0   # Convert from NO2 to NO: 30/46
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NOx_emi_INDUSTRY_2010_5.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   05  9999  INC   2    0    0    0   'emi_nox'    0000
+    NO  0.6521739130434782609d0   # Convert from NO2 to NO: 30/46
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NOx_emi_INDUSTRY_2010_6.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   06  9999  INC   2    0    0    0   'emi_nox'    0000
+    NO  0.6521739130434782609d0   # Convert from NO2 to NO: 30/46
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NOx_emi_INDUSTRY_2010_7.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   07  9999  INC   2    0    0    0   'emi_nox'    0000
+    NO  0.6521739130434782609d0   # Convert from NO2 to NO: 30/46
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NOx_emi_INDUSTRY_2010_8.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   08  9999  INC   2    0    0    0   'emi_nox'    0000
+    NO  0.6521739130434782609d0   # Convert from NO2 to NO: 30/46
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NOx_emi_INDUSTRY_2010_9.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   09  9999  INC   2    0    0    0   'emi_nox'    0000
+    NO  0.6521739130434782609d0   # Convert from NO2 to NO: 30/46
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NOx_emi_INDUSTRY_2010_10.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   10  9999  INC   2    0    0    0   'emi_nox'    0000
+    NO  0.6521739130434782609d0   # Convert from NO2 to NO: 30/46
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NOx_emi_INDUSTRY_2010_11.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   11  9999  INC   2    0    0    0   'emi_nox'    0000
+    NO  0.6521739130434782609d0   # Convert from NO2 to NO: 30/46
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NOx_emi_INDUSTRY_2010_12.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   12  9999  INC   2    0    0    0   'emi_nox'    0000
+    NO  0.6521739130434782609d0   # Convert from NO2 to NO: 30/46
+    xxx 0 To close this data set
+
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NOx_emi_TRANSPORT_2010_1.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   01  9999  TRA   2    0    0    0   'emi_nox'    0000
+    NO  0.6521739130434782609d0   # Convert from NO2 to NO: 30/46
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NOx_emi_TRANSPORT_2010_2.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   02  9999  TRA   2    0    0    0   'emi_nox'    0000
+    NO  0.6521739130434782609d0   # Convert from NO2 to NO: 30/46
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NOx_emi_TRANSPORT_2010_3.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   03  9999  TRA   2    0    0    0   'emi_nox'    0000
+    NO  0.6521739130434782609d0   # Convert from NO2 to NO: 30/46
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NOx_emi_TRANSPORT_2010_4.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   04  9999  TRA   2    0    0    0   'emi_nox'    0000
+    NO  0.6521739130434782609d0   # Convert from NO2 to NO: 30/46
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NOx_emi_TRANSPORT_2010_5.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   05  9999  TRA   2    0    0    0   'emi_nox'    0000
+    NO  0.6521739130434782609d0   # Convert from NO2 to NO: 30/46
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NOx_emi_TRANSPORT_2010_6.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   06  9999  TRA   2    0    0    0   'emi_nox'    0000
+    NO  0.6521739130434782609d0   # Convert from NO2 to NO: 30/46
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NOx_emi_TRANSPORT_2010_7.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   07  9999  TRA   2    0    0    0   'emi_nox'    0000
+    NO  0.6521739130434782609d0   # Convert from NO2 to NO: 30/46
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NOx_emi_TRANSPORT_2010_8.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   08  9999  TRA   2    0    0    0   'emi_nox'    0000
+    NO  0.6521739130434782609d0   # Convert from NO2 to NO: 30/46
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NOx_emi_TRANSPORT_2010_9.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   09  9999  TRA   2    0    0    0   'emi_nox'    0000
+    NO  0.6521739130434782609d0   # Convert from NO2 to NO: 30/46
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NOx_emi_TRANSPORT_2010_10.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   10  9999  TRA   2    0    0    0   'emi_nox'    0000
+    NO  0.6521739130434782609d0   # Convert from NO2 to NO: 30/46
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NOx_emi_TRANSPORT_2010_11.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   11  9999  TRA   2    0    0    0   'emi_nox'    0000
+    NO  0.6521739130434782609d0   # Convert from NO2 to NO: 30/46
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NOx_emi_TRANSPORT_2010_12.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   12  9999  TRA   2    0    0    0   'emi_nox'    0000
+    NO  0.6521739130434782609d0   # Convert from NO2 to NO: 30/46
+    xxx 0 To close this data set
+
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NOx_emi_SHIPS_2010.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   99  9999  SHI   2    0    0    0   'emi_nox'    0000
+    NO  0.6521739130434782609d0   # Convert from NO2 to NO: 30/46
+    xxx 0 To close this data set
+
+
+
+
+'/projects/geo/EMIS/HTAP/edgar_HTAP_CO_emi_ENERGY_2010_1.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   01  9999  POW   2    0    0    0   'emi_co'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_CO_emi_ENERGY_2010_2.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   02  9999  POW   2    0    0    0   'emi_co'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_CO_emi_ENERGY_2010_3.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   03  9999  POW   2    0    0    0   'emi_co'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_CO_emi_ENERGY_2010_4.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   04  9999  POW   2    0    0    0   'emi_co'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_CO_emi_ENERGY_2010_5.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   05  9999  POW   2    0    0    0   'emi_co'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_CO_emi_ENERGY_2010_6.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   06  9999  POW   2    0    0    0   'emi_co'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_CO_emi_ENERGY_2010_7.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   07  9999  POW   2    0    0    0   'emi_co'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_CO_emi_ENERGY_2010_8.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   08  9999  POW   2    0    0    0   'emi_co'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_CO_emi_ENERGY_2010_9.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   09  9999  POW   2    0    0    0   'emi_co'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_CO_emi_ENERGY_2010_10.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   10  9999  POW   2    0    0    0   'emi_co'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_CO_emi_ENERGY_2010_11.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   11  9999  POW   2    0    0    0   'emi_co'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_CO_emi_ENERGY_2010_12.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   12  9999  POW   2    0    0    0   'emi_co'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+
+'/projects/geo/EMIS/HTAP/edgar_HTAP_CO_emi_INDUSTRY_2010_1.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   01  9999  INC   2    0    0    0   'emi_co'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_CO_emi_INDUSTRY_2010_2.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   02  9999  INC   2    0    0    0   'emi_co'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_CO_emi_INDUSTRY_2010_3.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   03  9999  INC   2    0    0    0   'emi_co'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_CO_emi_INDUSTRY_2010_4.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   04  9999  INC   2    0    0    0   'emi_co'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_CO_emi_INDUSTRY_2010_5.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   05  9999  INC   2    0    0    0   'emi_co'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_CO_emi_INDUSTRY_2010_6.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   06  9999  INC   2    0    0    0   'emi_co'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_CO_emi_INDUSTRY_2010_7.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   07  9999  INC   2    0    0    0   'emi_co'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_CO_emi_INDUSTRY_2010_8.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   08  9999  INC   2    0    0    0   'emi_co'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_CO_emi_INDUSTRY_2010_9.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   09  9999  INC   2    0    0    0   'emi_co'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_CO_emi_INDUSTRY_2010_10.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   10  9999  INC   2    0    0    0   'emi_co'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_CO_emi_INDUSTRY_2010_11.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   11  9999  INC   2    0    0    0   'emi_co'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_CO_emi_INDUSTRY_2010_12.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   12  9999  INC   2    0    0    0   'emi_co'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+
+'/projects/geo/EMIS/HTAP/edgar_HTAP_CO_emi_RESIDENTIAL_2010_1.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   01  9999  RES   2    0    0    0   'emi_co'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_CO_emi_RESIDENTIAL_2010_2.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   02  9999  RES   2    0    0    0   'emi_co'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_CO_emi_RESIDENTIAL_2010_3.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   03  9999  RES   2    0    0    0   'emi_co'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_CO_emi_RESIDENTIAL_2010_4.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   04  9999  RES   2    0    0    0   'emi_co'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_CO_emi_RESIDENTIAL_2010_5.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   05  9999  RES   2    0    0    0   'emi_co'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_CO_emi_RESIDENTIAL_2010_6.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   06  9999  RES   2    0    0    0   'emi_co'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_CO_emi_RESIDENTIAL_2010_7.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   07  9999  RES   2    0    0    0   'emi_co'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_CO_emi_RESIDENTIAL_2010_8.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   08  9999  RES   2    0    0    0   'emi_co'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_CO_emi_RESIDENTIAL_2010_9.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   09  9999  RES   2    0    0    0   'emi_co'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_CO_emi_RESIDENTIAL_2010_10.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   10  9999  RES   2    0    0    0   'emi_co'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_CO_emi_RESIDENTIAL_2010_11.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   11  9999  RES   2    0    0    0   'emi_co'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_CO_emi_RESIDENTIAL_2010_12.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   12  9999  RES   2    0    0    0   'emi_co'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+
+'/projects/geo/EMIS/HTAP/edgar_HTAP_CO_emi_TRANSPORT_2010_1.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   01  9999  TRA   2    0    0    0   'emi_co'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_CO_emi_TRANSPORT_2010_2.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   02  9999  TRA   2    0    0    0   'emi_co'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_CO_emi_TRANSPORT_2010_3.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   03  9999  TRA   2    0    0    0   'emi_co'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_CO_emi_TRANSPORT_2010_4.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   04  9999  TRA   2    0    0    0   'emi_co'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_CO_emi_TRANSPORT_2010_5.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   05  9999  TRA   2    0    0    0   'emi_co'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_CO_emi_TRANSPORT_2010_6.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   06  9999  TRA   2    0    0    0   'emi_co'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_CO_emi_TRANSPORT_2010_7.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   07  9999  TRA   2    0    0    0   'emi_co'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_CO_emi_TRANSPORT_2010_8.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   08  9999  TRA   2    0    0    0   'emi_co'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_CO_emi_TRANSPORT_2010_9.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   09  9999  TRA   2    0    0    0   'emi_co'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_CO_emi_TRANSPORT_2010_10.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   10  9999  TRA   2    0    0    0   'emi_co'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_CO_emi_TRANSPORT_2010_11.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   11  9999  TRA   2    0    0    0   'emi_co'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_CO_emi_TRANSPORT_2010_12.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   12  9999  TRA   2    0    0    0   'emi_co'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+
+'/projects/geo/EMIS/HTAP/edgar_HTAP_CO_emi_SHIPS_2010.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   99  9999  SHI   2    0    0    0   'emi_co'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+
+
+
+'/projects/geo/EMIS/HTAP/HTAPv2_ENERGY_ethene_2010_0.1x0.1.nc'
+  601    1.0000d+00  ZP1   99  9999  POW   2    0    0    0   'emiss_ene'    0000
+    C2H4  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/HTAPv2_ENERGY_ethane_2010_0.1x0.1.nc'
+  601    1.0000d+00  ZP1   99  9999  POW   2    0    0    0   'emiss_ene'    0000
+    C2H6  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/HTAPv2_ENERGY_propene_2010_0.1x0.1.nc'
+  601    1.0000d+00  ZP1   99  9999  POW   2    0    0    0   'emiss_ene'    0000
+    C3H6  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/HTAPv2_ENERGY_propane_2010_0.1x0.1.nc'
+  601    1.0000d+00  ZP1   99  9999  POW   2    0    0    0   'emiss_ene'    0000
+    C3H8  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/HTAPv2_ENERGY_butanes_2010_0.1x0.1.nc'
+  601    1.0000d+00  ZP1   99  9999  POW   2    0    0    0   'emiss_ene'    0000
+    C4H10  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/HTAPv2_ENERGY_hexanes_and_higher_alkanes_2010_0.1x0.1.nc'
+  601    1.0000d+00  ZP1   99  9999  POW   2    0    0    0   'emiss_ene'    0000
+    C6H14  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/HTAPv2_ENERGY_formaldehyde_2010_0.1x0.1.nc'
+  601    1.0000d+00  ZP1   99  9999  POW   2    0    0    0   'emiss_ene'    0000
+    CH2O  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/HTAPv2_ENERGY_other_alkanals_2010_0.1x0.1.nc'
+  601    1.0000d+00  ZP1   99  9999  POW   2    0    0    0   'emiss_ene'    0000
+    CH3CHO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/HTAPv2_ENERGY_trimethylbenzenes_2010_0.1x0.1.nc'
+  601    1.0000d+00  ZP1   99  9999  POW   2    0    0    0   'emiss_ene'    0000
+    C6HXR  1.d0
+    C6HXR_SOA  1.d0	
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/HTAPv2_ENERGY_xylene_2010_0.1x0.1.nc'
+  601    1.0000d+00  ZP1   99  9999  POW   2    0    0    0   'emiss_ene'    0000
+    C6HXR  1.d0
+    C6HXR_SOA  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/HTAPv2_ENERGY_toluene_2010_0.1x0.1.nc'
+  601    1.0000d+00  ZP1   99  9999  POW   2    0    0    0   'emiss_ene'    0000
+    C6HXR  1.d0
+    Tolmatic 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/HTAPv2_ENERGY_other_aromatics_2010_0.1x0.1.nc'
+  601    1.0000d+00  ZP1   99  9999  POW   2    0    0    0   'emiss_ene'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+    Tolmatic  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/HTAPv2_ENERGY_benzene_2010_0.1x0.1.nc'
+  601    1.0000d+00  ZP1   99  9999  POW   2    0    0    0   'emiss_ene'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+    Benzene  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/HTAPv2_ENERGY_ketones_2010_0.1x0.1.nc'
+  601    1.0000d+00  ZP1   99  9999  POW   2    0    0    0   'emiss_ene'    0000
+    ACETONE  1.d0
+    xxx 0 To close this data set
+
+
+
+'/projects/geo/EMIS/HTAP/HTAPv2_RESIDENTIAL_ethene_2010_0.1x0.1.nc'
+  601    1.0000d+00  ZP1   99  9999  RES   2    0    0    0   'emiss_dom'    0000
+    C2H4  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/HTAPv2_RESIDENTIAL_ethane_2010_0.1x0.1.nc'
+  601    1.0000d+00  ZP1   99  9999  RES   2    0    0    0   'emiss_dom'    0000
+    C2H6  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/HTAPv2_RESIDENTIAL_propene_2010_0.1x0.1.nc'
+  601    1.0000d+00  ZP1   99  9999  RES   2    0    0    0   'emiss_dom'    0000
+    C3H6  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/HTAPv2_RESIDENTIAL_propane_2010_0.1x0.1.nc'
+  601    1.0000d+00  ZP1   99  9999  RES   2    0    0    0   'emiss_dom'    0000
+    C3H8  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/HTAPv2_RESIDENTIAL_butanes_2010_0.1x0.1.nc'
+  601    1.0000d+00  ZP1   99  9999  RES   2    0    0    0   'emiss_dom'    0000
+    C4H10  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/HTAPv2_RESIDENTIAL_hexanes_and_higher_alkanes_2010_0.1x0.1.nc'
+  601    1.0000d+00  ZP1   99  9999  RES   2    0    0    0   'emiss_dom'    0000
+    C6H14  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/HTAPv2_RESIDENTIAL_formaldehyde_2010_0.1x0.1.nc'
+  601    1.0000d+00  ZP1   99  9999  RES   2    0    0    0   'emiss_dom'    0000
+    CH2O  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/HTAPv2_RESIDENTIAL_other_alkanals_2010_0.1x0.1.nc'
+  601    1.0000d+00  ZP1   99  9999  RES   2    0    0    0   'emiss_dom'    0000
+    CH3CHO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/HTAPv2_RESIDENTIAL_trimethylbenzenes_2010_0.1x0.1.nc'
+  601    1.0000d+00  ZP1   99  9999  RES   2    0    0    0   'emiss_dom'    0000
+    C6HXR  1.d0
+    C6HXR_SOA  1.d0	
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/HTAPv2_RESIDENTIAL_xylene_2010_0.1x0.1.nc'
+  601    1.0000d+00  ZP1   99  9999  RES   2    0    0    0   'emiss_dom'    0000
+    C6HXR  1.d0
+    C6HXR_SOA  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/HTAPv2_RESIDENTIAL_toluene_2010_0.1x0.1.nc'
+  601    1.0000d+00  ZP1   99  9999  RES   2    0    0    0   'emiss_dom'    0000
+    C6HXR  1.d0
+    Tolmatic 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/HTAPv2_RESIDENTIAL_other_aromatics_2010_0.1x0.1.nc'
+  601    1.0000d+00  ZP1   99  9999  RES   2    0    0    0   'emiss_dom'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+    Tolmatic  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/HTAPv2_RESIDENTIAL_benzene_2010_0.1x0.1.nc'
+  601    1.0000d+00  ZP1   99  9999  RES   2    0    0    0   'emiss_dom'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+    Benzene  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/HTAPv2_RESIDENTIAL_ketones_2010_0.1x0.1.nc'
+  601    1.0000d+00  ZP1   99  9999  RES   2    0    0    0   'emiss_dom'    0000
+    ACETONE  1.d0
+    xxx 0 To close this data set
+
+
+'/projects/geo/EMIS/HTAP/HTAPv2_INDUSTRY_ethene_2010_0.1x0.1.nc'
+  601    1.0000d+00  ZP1   99  9999  INC   2    0    0    0   'emiss_ind'    0000
+    C2H4  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/HTAPv2_INDUSTRY_ethane_2010_0.1x0.1.nc'
+  601    1.0000d+00  ZP1   99  9999  INC   2    0    0    0   'emiss_ind'    0000
+    C2H6  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/HTAPv2_INDUSTRY_propene_2010_0.1x0.1.nc'
+  601    1.0000d+00  ZP1   99  9999  INC   2    0    0    0   'emiss_ind'    0000
+    C3H6  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/HTAPv2_INDUSTRY_propane_2010_0.1x0.1.nc'
+  601    1.0000d+00  ZP1   99  9999  INC   2    0    0    0   'emiss_ind'    0000
+    C3H8  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/HTAPv2_INDUSTRY_butanes_2010_0.1x0.1.nc'
+  601    1.0000d+00  ZP1   99  9999  INC   2    0    0    0   'emiss_ind'    0000
+    C4H10  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/HTAPv2_INDUSTRY_hexanes_and_higher_alkanes_2010_0.1x0.1.nc'
+  601    1.0000d+00  ZP1   99  9999  INC   2    0    0    0   'emiss_ind'    0000
+    C6H14  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/HTAPv2_INDUSTRY_formaldehyde_2010_0.1x0.1.nc'
+  601    1.0000d+00  ZP1   99  9999  INC   2    0    0    0   'emiss_ind'    0000
+    CH2O  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/HTAPv2_INDUSTRY_other_alkanals_2010_0.1x0.1.nc'
+  601    1.0000d+00  ZP1   99  9999  INC   2    0    0    0   'emiss_ind'    0000
+    CH3CHO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/HTAPv2_INDUSTRY_trimethylbenzenes_2010_0.1x0.1.nc'
+  601    1.0000d+00  ZP1   99  9999  INC   2    0    0    0   'emiss_ind'    0000
+    C6HXR  1.d0
+    C6HXR_SOA  1.d0	
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/HTAPv2_INDUSTRY_xylene_2010_0.1x0.1.nc'
+  601    1.0000d+00  ZP1   99  9999  INC   2    0    0    0   'emiss_ind'    0000
+    C6HXR  1.d0
+    C6HXR_SOA  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/HTAPv2_INDUSTRY_toluene_2010_0.1x0.1.nc'
+  601    1.0000d+00  ZP1   99  9999  INC   2    0    0    0   'emiss_ind'    0000
+    C6HXR  1.d0
+    Tolmatic 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/HTAPv2_INDUSTRY_other_aromatics_2010_0.1x0.1.nc'
+  601    1.0000d+00  ZP1   99  9999  INC   2    0    0    0   'emiss_ind'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+    Tolmatic  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/HTAPv2_INDUSTRY_benzene_2010_0.1x0.1.nc'
+  601    1.0000d+00  ZP1   99  9999  INC   2    0    0    0   'emiss_ind'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+    Benzene  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/HTAPv2_INDUSTRY_ketones_2010_0.1x0.1.nc'
+  601    1.0000d+00  ZP1   99  9999  INC   2    0    0    0   'emiss_ind'    0000
+    ACETONE  1.d0
+    xxx 0 To close this data set
+
+
+'/projects/geo/EMIS/HTAP/HTAPv2_TRANSPORT_ethene_2010_0.1x0.1.nc'
+  601    1.0000d+00  ZP1   99  9999  TRA   2    0    0    0   'emiss_tra'    0000
+    C2H4  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/HTAPv2_TRANSPORT_ethane_2010_0.1x0.1.nc'
+  601    1.0000d+00  ZP1   99  9999  TRA   2    0    0    0   'emiss_tra'    0000
+    C2H6  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/HTAPv2_TRANSPORT_propene_2010_0.1x0.1.nc'
+  601    1.0000d+00  ZP1   99  9999  TRA   2    0    0    0   'emiss_tra'    0000
+    C3H6  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/HTAPv2_TRANSPORT_propane_2010_0.1x0.1.nc'
+  601    1.0000d+00  ZP1   99  9999  TRA   2    0    0    0   'emiss_tra'    0000
+    C3H8  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/HTAPv2_TRANSPORT_butanes_2010_0.1x0.1.nc'
+  601    1.0000d+00  ZP1   99  9999  TRA   2    0    0    0   'emiss_tra'    0000
+    C4H10  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/HTAPv2_TRANSPORT_hexanes_and_higher_alkanes_2010_0.1x0.1.nc'
+  601    1.0000d+00  ZP1   99  9999  TRA   2    0    0    0   'emiss_tra'    0000
+    C6H14  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/HTAPv2_TRANSPORT_formaldehyde_2010_0.1x0.1.nc'
+  601    1.0000d+00  ZP1   99  9999  TRA   2    0    0    0   'emiss_tra'    0000
+    CH2O  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/HTAPv2_TRANSPORT_other_alkanals_2010_0.1x0.1.nc'
+  601    1.0000d+00  ZP1   99  9999  TRA   2    0    0    0   'emiss_tra'    0000
+    CH3CHO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/HTAPv2_TRANSPORT_trimethylbenzenes_2010_0.1x0.1.nc'
+  601    1.0000d+00  ZP1   99  9999  TRA   2    0    0    0   'emiss_tra'    0000
+    C6HXR  1.d0
+    C6HXR_SOA  1.d0	
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/HTAPv2_TRANSPORT_xylene_2010_0.1x0.1.nc'
+  601    1.0000d+00  ZP1   99  9999  TRA   2    0    0    0   'emiss_tra'    0000
+    C6HXR  1.d0
+    C6HXR_SOA  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/HTAPv2_TRANSPORT_toluene_2010_0.1x0.1.nc'
+  601    1.0000d+00  ZP1   99  9999  TRA   2    0    0    0   'emiss_tra'    0000
+    C6HXR  1.d0
+    Tolmatic 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/HTAPv2_TRANSPORT_other_aromatics_2010_0.1x0.1.nc'
+  601    1.0000d+00  ZP1   99  9999  TRA   2    0    0    0   'emiss_tra'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+    Tolmatic  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/HTAPv2_TRANSPORT_benzene_2010_0.1x0.1.nc'
+  601    1.0000d+00  ZP1   99  9999  TRA   2    0    0    0   'emiss_tra'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+    Benzene  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/HTAPv2_TRANSPORT_ketones_2010_0.1x0.1.nc'
+  601    1.0000d+00  ZP1   99  9999  TRA   2    0    0    0   'emiss_tra'    0000
+    ACETONE  1.d0
+    xxx 0 To close this data set
+
+
+
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NMVOC_emi_SHIPS_2010.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   99  9999  SHI   2    0    0    0   'emi_nmvoc'    0000
+     C2H4 0.151333d0
+     C2H6 0.006936d0
+     C3H6 0.165814d0
+     C3H8 0.019240d0
+    C4H10 0.020355d0
+    C6H14 0.179447d0 # hexanes_and_higher_alkanes
+    C6HXR 0.151600d0 # other_aromatics + benzene + xylene + trimethyl_benzenes + toluene
+ Tolmatic 0.004112d0 # other_aromatics + toluene
+  Benzene 0.067414d0 # benzene
+C6HXR_SOA 0.055248d0 # xylene + trimethyl_benzenes
+    xxx 0 To close this data set
+
+
+
+
+
+'/projects/geo/EMIS/HTAP/edgar_HTAP_SO2_emi_ENERGY_2010_1.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   01  9999  POW   2    0    0    0   'emi_so2'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_SO2_emi_ENERGY_2010_2.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   02  9999  POW   2    0    0    0   'emi_so2'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_SO2_emi_ENERGY_2010_3.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   03  9999  POW   2    0    0    0   'emi_so2'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_SO2_emi_ENERGY_2010_4.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   04  9999  POW   2    0    0    0   'emi_so2'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_SO2_emi_ENERGY_2010_5.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   05  9999  POW   2    0    0    0   'emi_so2'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_SO2_emi_ENERGY_2010_6.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   06  9999  POW   2    0    0    0   'emi_so2'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_SO2_emi_ENERGY_2010_7.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   07  9999  POW   2    0    0    0   'emi_so2'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_SO2_emi_ENERGY_2010_8.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   08  9999  POW   2    0    0    0   'emi_so2'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_SO2_emi_ENERGY_2010_9.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   09  9999  POW   2    0    0    0   'emi_so2'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_SO2_emi_ENERGY_2010_10.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   10  9999  POW   2    0    0    0   'emi_so2'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_SO2_emi_ENERGY_2010_11.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   11  9999  POW   2    0    0    0   'emi_so2'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_SO2_emi_ENERGY_2010_12.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   12  9999  POW   2    0    0    0   'emi_so2'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+
+
+
+'/projects/geo/EMIS/HTAP/edgar_HTAP_SO2_emi_INDUSTRY_2010_1.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   01  9999  INC   2    0    0    0   'emi_so2'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_SO2_emi_INDUSTRY_2010_2.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   02  9999  INC   2    0    0    0   'emi_so2'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_SO2_emi_INDUSTRY_2010_3.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   03  9999  INC   2    0    0    0   'emi_so2'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_SO2_emi_INDUSTRY_2010_4.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   04  9999  INC   2    0    0    0   'emi_so2'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_SO2_emi_INDUSTRY_2010_5.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   05  9999  INC   2    0    0    0   'emi_so2'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_SO2_emi_INDUSTRY_2010_6.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   06  9999  INC   2    0    0    0   'emi_so2'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_SO2_emi_INDUSTRY_2010_7.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   07  9999  INC   2    0    0    0   'emi_so2'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_SO2_emi_INDUSTRY_2010_8.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   08  9999  INC   2    0    0    0   'emi_so2'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_SO2_emi_INDUSTRY_2010_9.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   09  9999  INC   2    0    0    0   'emi_so2'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_SO2_emi_INDUSTRY_2010_10.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   10  9999  INC   2    0    0    0   'emi_so2'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_SO2_emi_INDUSTRY_2010_11.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   11  9999  INC   2    0    0    0   'emi_so2'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_SO2_emi_INDUSTRY_2010_12.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   12  9999  INC   2    0    0    0   'emi_so2'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+
+
+
+
+
+'/projects/geo/EMIS/HTAP/edgar_HTAP_SO2_emi_RESIDENTIAL_2010_1.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   01  9999  RES   2    0    0    0   'emi_so2'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_SO2_emi_RESIDENTIAL_2010_2.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   02  9999  RES   2    0    0    0   'emi_so2'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_SO2_emi_RESIDENTIAL_2010_3.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   03  9999  RES   2    0    0    0   'emi_so2'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_SO2_emi_RESIDENTIAL_2010_4.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   04  9999  RES   2    0    0    0   'emi_so2'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_SO2_emi_RESIDENTIAL_2010_5.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   05  9999  RES   2    0    0    0   'emi_so2'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_SO2_emi_RESIDENTIAL_2010_6.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   06  9999  RES   2    0    0    0   'emi_so2'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_SO2_emi_RESIDENTIAL_2010_7.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   07  9999  RES   2    0    0    0   'emi_so2'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_SO2_emi_RESIDENTIAL_2010_8.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   08  9999  RES   2    0    0    0   'emi_so2'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_SO2_emi_RESIDENTIAL_2010_9.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   09  9999  RES   2    0    0    0   'emi_so2'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_SO2_emi_RESIDENTIAL_2010_10.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   10  9999  RES   2    0    0    0   'emi_so2'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_SO2_emi_RESIDENTIAL_2010_11.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   11  9999  RES   2    0    0    0   'emi_so2'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_SO2_emi_RESIDENTIAL_2010_12.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   12  9999  RES   2    0    0    0   'emi_so2'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+
+
+
+
+'/projects/geo/EMIS/HTAP/edgar_HTAP_SO2_emi_TRANSPORT_2010_1.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   01  9999  TRA   2    0    0    0   'emi_so2'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_SO2_emi_TRANSPORT_2010_2.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   02  9999  TRA   2    0    0    0   'emi_so2'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_SO2_emi_TRANSPORT_2010_3.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   03  9999  TRA   2    0    0    0   'emi_so2'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_SO2_emi_TRANSPORT_2010_4.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   04  9999  TRA   2    0    0    0   'emi_so2'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_SO2_emi_TRANSPORT_2010_5.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   05  9999  TRA   2    0    0    0   'emi_so2'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_SO2_emi_TRANSPORT_2010_6.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   06  9999  TRA   2    0    0    0   'emi_so2'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_SO2_emi_TRANSPORT_2010_7.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   07  9999  TRA   2    0    0    0   'emi_so2'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_SO2_emi_TRANSPORT_2010_8.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   08  9999  TRA   2    0    0    0   'emi_so2'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_SO2_emi_TRANSPORT_2010_9.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   09  9999  TRA   2    0    0    0   'emi_so2'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_SO2_emi_TRANSPORT_2010_10.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   10  9999  TRA   2    0    0    0   'emi_so2'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_SO2_emi_TRANSPORT_2010_11.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   11  9999  TRA   2    0    0    0   'emi_so2'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_SO2_emi_TRANSPORT_2010_12.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   12  9999  TRA   2    0    0    0   'emi_so2'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+
+'/projects/geo/EMIS/HTAP/edgar_HTAP_SO2_emi_SHIPS_2010.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   99  9999  SHI   2    0    0    0   'emi_so2'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+
+
+
+
+
+
+
+
+
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NH3_emi_ENERGY_2010_1.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   01  9999  POW   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NH3_emi_ENERGY_2010_2.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   02  9999  POW   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NH3_emi_ENERGY_2010_3.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   03  9999  POW   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NH3_emi_ENERGY_2010_4.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   04  9999  POW   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NH3_emi_ENERGY_2010_5.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   05  9999  POW   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NH3_emi_ENERGY_2010_6.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   06  9999  POW   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NH3_emi_ENERGY_2010_7.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   07  9999  POW   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NH3_emi_ENERGY_2010_8.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   08  9999  POW   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NH3_emi_ENERGY_2010_9.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   09  9999  POW   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NH3_emi_ENERGY_2010_10.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   10  9999  POW   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NH3_emi_ENERGY_2010_11.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   11  9999  POW   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NH3_emi_ENERGY_2010_12.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   12  9999  POW   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+
+
+
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NH3_emi_INDUSTRY_2010_1.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   01  9999  INC   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NH3_emi_INDUSTRY_2010_2.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   02  9999  INC   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NH3_emi_INDUSTRY_2010_3.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   03  9999  INC   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NH3_emi_INDUSTRY_2010_4.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   04  9999  INC   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NH3_emi_INDUSTRY_2010_5.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   05  9999  INC   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NH3_emi_INDUSTRY_2010_6.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   06  9999  INC   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NH3_emi_INDUSTRY_2010_7.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   07  9999  INC   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NH3_emi_INDUSTRY_2010_8.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   08  9999  INC   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NH3_emi_INDUSTRY_2010_9.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   09  9999  INC   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NH3_emi_INDUSTRY_2010_10.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   10  9999  INC   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NH3_emi_INDUSTRY_2010_11.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   11  9999  INC   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NH3_emi_INDUSTRY_2010_12.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   12  9999  INC   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+
+
+
+
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NH3_emi_RESIDENTIAL_2010_1.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   01  9999  RES   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NH3_emi_RESIDENTIAL_2010_2.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   02  9999  RES   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NH3_emi_RESIDENTIAL_2010_3.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   03  9999  RES   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NH3_emi_RESIDENTIAL_2010_4.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   04  9999  RES   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NH3_emi_RESIDENTIAL_2010_5.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   05  9999  RES   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NH3_emi_RESIDENTIAL_2010_6.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   06  9999  RES   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NH3_emi_RESIDENTIAL_2010_7.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   07  9999  RES   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NH3_emi_RESIDENTIAL_2010_8.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   08  9999  RES   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NH3_emi_RESIDENTIAL_2010_9.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   09  9999  RES   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NH3_emi_RESIDENTIAL_2010_10.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   10  9999  RES   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NH3_emi_RESIDENTIAL_2010_11.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   11  9999  RES   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NH3_emi_RESIDENTIAL_2010_12.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   12  9999  RES   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+
+
+
+
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NH3_emi_TRANSPORT_2010_1.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   01  9999  TRA   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NH3_emi_TRANSPORT_2010_2.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   02  9999  TRA   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NH3_emi_TRANSPORT_2010_3.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   03  9999  TRA   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NH3_emi_TRANSPORT_2010_4.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   04  9999  TRA   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NH3_emi_TRANSPORT_2010_5.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   05  9999  TRA   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NH3_emi_TRANSPORT_2010_6.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   06  9999  TRA   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NH3_emi_TRANSPORT_2010_7.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   07  9999  TRA   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NH3_emi_TRANSPORT_2010_8.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   08  9999  TRA   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NH3_emi_TRANSPORT_2010_9.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   09  9999  TRA   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NH3_emi_TRANSPORT_2010_10.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   10  9999  TRA   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NH3_emi_TRANSPORT_2010_11.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   11  9999  TRA   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NH3_emi_TRANSPORT_2010_12.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   12  9999  TRA   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+
+
+
+
+
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NH3_emi_AGRICULTURE_2010_1.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   01  9999  AGR   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NH3_emi_AGRICULTURE_2010_2.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   02  9999  AGR   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NH3_emi_AGRICULTURE_2010_3.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   03  9999  AGR   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NH3_emi_AGRICULTURE_2010_4.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   04  9999  AGR   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NH3_emi_AGRICULTURE_2010_5.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   05  9999  AGR   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NH3_emi_AGRICULTURE_2010_6.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   06  9999  AGR   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NH3_emi_AGRICULTURE_2010_7.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   07  9999  AGR   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NH3_emi_AGRICULTURE_2010_8.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   08  9999  AGR   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NH3_emi_AGRICULTURE_2010_9.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   09  9999  AGR   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NH3_emi_AGRICULTURE_2010_10.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   10  9999  AGR   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NH3_emi_AGRICULTURE_2010_11.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   11  9999  AGR   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_NH3_emi_AGRICULTURE_2010_12.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   12  9999  AGR   2    0    0    0   'emi_nh3'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+
+
+
+
+
+
+
+'/projects/geo/EMIS/HTAP/edgar_HTAP_BC_emi_ENERGY_2010_1.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   01  9999  POW   2    0    0    0   'emi_bc'    0000
+    BCFFPHOB 0.8d0    # 80% on hydrophobic
+    BCFFPHIL 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_BC_emi_ENERGY_2010_2.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   02  9999  POW   2    0    0    0   'emi_bc'    0000
+    BCFFPHOB 0.8d0    # 80% on hydrophobic
+    BCFFPHIL 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_BC_emi_ENERGY_2010_3.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   03  9999  POW   2    0    0    0   'emi_bc'    0000
+    BCFFPHOB 0.8d0    # 80% on hydrophobic
+    BCFFPHIL 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_BC_emi_ENERGY_2010_4.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   04  9999  POW   2    0    0    0   'emi_bc'    0000
+    BCFFPHOB 0.8d0    # 80% on hydrophobic
+    BCFFPHIL 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_BC_emi_ENERGY_2010_5.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   05  9999  POW   2    0    0    0   'emi_bc'    0000
+    BCFFPHOB 0.8d0    # 80% on hydrophobic
+    BCFFPHIL 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_BC_emi_ENERGY_2010_6.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   06  9999  POW   2    0    0    0   'emi_bc'    0000
+    BCFFPHOB 0.8d0    # 80% on hydrophobic
+    BCFFPHIL 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_BC_emi_ENERGY_2010_7.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   07  9999  POW   2    0    0    0   'emi_bc'    0000
+    BCFFPHOB 0.8d0    # 80% on hydrophobic
+    BCFFPHIL 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_BC_emi_ENERGY_2010_8.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   08  9999  POW   2    0    0    0   'emi_bc'    0000
+    BCFFPHOB 0.8d0    # 80% on hydrophobic
+    BCFFPHIL 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_BC_emi_ENERGY_2010_9.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   09  9999  POW   2    0    0    0   'emi_bc'    0000
+    BCFFPHOB 0.8d0    # 80% on hydrophobic
+    BCFFPHIL 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_BC_emi_ENERGY_2010_10.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   10  9999  POW   2    0    0    0   'emi_bc'    0000
+    BCFFPHOB 0.8d0    # 80% on hydrophobic
+    BCFFPHIL 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_BC_emi_ENERGY_2010_11.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   11  9999  POW   2    0    0    0   'emi_bc'    0000
+    BCFFPHOB 0.8d0    # 80% on hydrophobic
+    BCFFPHIL 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_BC_emi_ENERGY_2010_12.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   12  9999  POW   2    0    0    0   'emi_bc'    0000
+    BCFFPHOB 0.8d0    # 80% on hydrophobic
+    BCFFPHIL 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+
+
+
+'/projects/geo/EMIS/HTAP/edgar_HTAP_BC_emi_INDUSTRY_2010_1.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   01  9999  INC   2    0    0    0   'emi_bc'    0000
+    BCFFPHOB 0.8d0    # 80% on hydrophobic
+    BCFFPHIL 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_BC_emi_INDUSTRY_2010_2.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   02  9999  INC   2    0    0    0   'emi_bc'    0000
+    BCFFPHOB 0.8d0    # 80% on hydrophobic
+    BCFFPHIL 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_BC_emi_INDUSTRY_2010_3.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   03  9999  INC   2    0    0    0   'emi_bc'    0000
+    BCFFPHOB 0.8d0    # 80% on hydrophobic
+    BCFFPHIL 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_BC_emi_INDUSTRY_2010_4.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   04  9999  INC   2    0    0    0   'emi_bc'    0000
+    BCFFPHOB 0.8d0    # 80% on hydrophobic
+    BCFFPHIL 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_BC_emi_INDUSTRY_2010_5.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   05  9999  INC   2    0    0    0   'emi_bc'    0000
+    BCFFPHOB 0.8d0    # 80% on hydrophobic
+    BCFFPHIL 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_BC_emi_INDUSTRY_2010_6.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   06  9999  INC   2    0    0    0   'emi_bc'    0000
+    BCFFPHOB 0.8d0    # 80% on hydrophobic
+    BCFFPHIL 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_BC_emi_INDUSTRY_2010_7.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   07  9999  INC   2    0    0    0   'emi_bc'    0000
+    BCFFPHOB 0.8d0    # 80% on hydrophobic
+    BCFFPHIL 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_BC_emi_INDUSTRY_2010_8.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   08  9999  INC   2    0    0    0   'emi_bc'    0000
+    BCFFPHOB 0.8d0    # 80% on hydrophobic
+    BCFFPHIL 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_BC_emi_INDUSTRY_2010_9.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   09  9999  INC   2    0    0    0   'emi_bc'    0000
+    BCFFPHOB 0.8d0    # 80% on hydrophobic
+    BCFFPHIL 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_BC_emi_INDUSTRY_2010_10.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   10  9999  INC   2    0    0    0   'emi_bc'    0000
+    BCFFPHOB 0.8d0    # 80% on hydrophobic
+    BCFFPHIL 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_BC_emi_INDUSTRY_2010_11.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   11  9999  INC   2    0    0    0   'emi_bc'    0000
+    BCFFPHOB 0.8d0    # 80% on hydrophobic
+    BCFFPHIL 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_BC_emi_INDUSTRY_2010_12.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   12  9999  INC   2    0    0    0   'emi_bc'    0000
+    BCFFPHOB 0.8d0    # 80% on hydrophobic
+    BCFFPHIL 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+
+
+
+'/projects/geo/EMIS/HTAP/edgar_HTAP_BC_emi_RESIDENTIAL_2010_1.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   01  9999  RES   2    0    0    0   'emi_bc'    0000
+    BCFFPHOB 0.8d0    # 80% on hydrophobic
+    BCFFPHIL 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_BC_emi_RESIDENTIAL_2010_2.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   02  9999  RES   2    0    0    0   'emi_bc'    0000
+    BCFFPHOB 0.8d0    # 80% on hydrophobic
+    BCFFPHIL 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_BC_emi_RESIDENTIAL_2010_3.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   03  9999  RES   2    0    0    0   'emi_bc'    0000
+    BCFFPHOB 0.8d0    # 80% on hydrophobic
+    BCFFPHIL 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_BC_emi_RESIDENTIAL_2010_4.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   04  9999  RES   2    0    0    0   'emi_bc'    0000
+    BCFFPHOB 0.8d0    # 80% on hydrophobic
+    BCFFPHIL 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_BC_emi_RESIDENTIAL_2010_5.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   05  9999  RES   2    0    0    0   'emi_bc'    0000
+    BCFFPHOB 0.8d0    # 80% on hydrophobic
+    BCFFPHIL 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_BC_emi_RESIDENTIAL_2010_6.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   06  9999  RES   2    0    0    0   'emi_bc'    0000
+    BCFFPHOB 0.8d0    # 80% on hydrophobic
+    BCFFPHIL 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_BC_emi_RESIDENTIAL_2010_7.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   07  9999  RES   2    0    0    0   'emi_bc'    0000
+    BCFFPHOB 0.8d0    # 80% on hydrophobic
+    BCFFPHIL 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_BC_emi_RESIDENTIAL_2010_8.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   08  9999  RES   2    0    0    0   'emi_bc'    0000
+    BCFFPHOB 0.8d0    # 80% on hydrophobic
+    BCFFPHIL 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_BC_emi_RESIDENTIAL_2010_9.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   09  9999  RES   2    0    0    0   'emi_bc'    0000
+    BCFFPHOB 0.8d0    # 80% on hydrophobic
+    BCFFPHIL 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_BC_emi_RESIDENTIAL_2010_10.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   10  9999  RES   2    0    0    0   'emi_bc'    0000
+    BCFFPHOB 0.8d0    # 80% on hydrophobic
+    BCFFPHIL 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_BC_emi_RESIDENTIAL_2010_11.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   11  9999  RES   2    0    0    0   'emi_bc'    0000
+    BCFFPHOB 0.8d0    # 80% on hydrophobic
+    BCFFPHIL 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_BC_emi_RESIDENTIAL_2010_12.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   12  9999  RES   2    0    0    0   'emi_bc'    0000
+    BCFFPHOB 0.8d0    # 80% on hydrophobic
+    BCFFPHIL 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+
+
+
+
+'/projects/geo/EMIS/HTAP/edgar_HTAP_BC_emi_TRANSPORT_2010_1.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   01  9999  TRA   2    0    0    0   'emi_bc'    0000
+    BCFFPHOB 0.8d0    # 80% on hydrophobic
+    BCFFPHIL 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_BC_emi_TRANSPORT_2010_2.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   02  9999  TRA   2    0    0    0   'emi_bc'    0000
+    BCFFPHOB 0.8d0    # 80% on hydrophobic
+    BCFFPHIL 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_BC_emi_TRANSPORT_2010_3.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   03  9999  TRA   2    0    0    0   'emi_bc'    0000
+    BCFFPHOB 0.8d0    # 80% on hydrophobic
+    BCFFPHIL 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_BC_emi_TRANSPORT_2010_4.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   04  9999  TRA   2    0    0    0   'emi_bc'    0000
+    BCFFPHOB 0.8d0    # 80% on hydrophobic
+    BCFFPHIL 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_BC_emi_TRANSPORT_2010_5.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   05  9999  TRA   2    0    0    0   'emi_bc'    0000
+    BCFFPHOB 0.8d0    # 80% on hydrophobic
+    BCFFPHIL 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_BC_emi_TRANSPORT_2010_6.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   06  9999  TRA   2    0    0    0   'emi_bc'    0000
+    BCFFPHOB 0.8d0    # 80% on hydrophobic
+    BCFFPHIL 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_BC_emi_TRANSPORT_2010_7.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   07  9999  TRA   2    0    0    0   'emi_bc'    0000
+    BCFFPHOB 0.8d0    # 80% on hydrophobic
+    BCFFPHIL 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_BC_emi_TRANSPORT_2010_8.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   08  9999  TRA   2    0    0    0   'emi_bc'    0000
+    BCFFPHOB 0.8d0    # 80% on hydrophobic
+    BCFFPHIL 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_BC_emi_TRANSPORT_2010_9.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   09  9999  TRA   2    0    0    0   'emi_bc'    0000
+    BCFFPHOB 0.8d0    # 80% on hydrophobic
+    BCFFPHIL 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_BC_emi_TRANSPORT_2010_10.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   10  9999  TRA   2    0    0    0   'emi_bc'    0000
+    BCFFPHOB 0.8d0    # 80% on hydrophobic
+    BCFFPHIL 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_BC_emi_TRANSPORT_2010_11.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   11  9999  TRA   2    0    0    0   'emi_bc'    0000
+    BCFFPHOB 0.8d0    # 80% on hydrophobic
+    BCFFPHIL 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_BC_emi_TRANSPORT_2010_12.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   12  9999  TRA   2    0    0    0   'emi_bc'    0000
+    BCFFPHOB 0.8d0    # 80% on hydrophobic
+    BCFFPHIL 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+
+'/projects/geo/EMIS/HTAP/edgar_HTAP_BC_emi_SHIPS_2010.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   99  9999  SHI   2    0    0    0   'emi_bc'    0000
+    BCFFPHOB 0.8d0    # 80% on hydrophobic
+    BCFFPHIL 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+
+
+
+
+
+
+'/projects/geo/EMIS/HTAP/edgar_HTAP_OC_emi_ENERGY_2010_1.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   01  9999  POW   2    0    0    0   'emi_oc'    0000
+    OCFFPHOB 0.5d0    # 80% on hydrophobic
+    OCFFPHIL 0.5d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_OC_emi_ENERGY_2010_2.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   02  9999  POW   2    0    0    0   'emi_oc'    0000
+    OCFFPHOB 0.5d0    # 80% on hydrophobic
+    OCFFPHIL 0.5d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_OC_emi_ENERGY_2010_3.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   03  9999  POW   2    0    0    0   'emi_oc'    0000
+    OCFFPHOB 0.5d0    # 80% on hydrophobic
+    OCFFPHIL 0.5d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_OC_emi_ENERGY_2010_4.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   04  9999  POW   2    0    0    0   'emi_oc'    0000
+    OCFFPHOB 0.5d0    # 80% on hydrophobic
+    OCFFPHIL 0.5d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_OC_emi_ENERGY_2010_5.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   05  9999  POW   2    0    0    0   'emi_oc'    0000
+    OCFFPHOB 0.5d0    # 80% on hydrophobic
+    OCFFPHIL 0.5d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_OC_emi_ENERGY_2010_6.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   06  9999  POW   2    0    0    0   'emi_oc'    0000
+    OCFFPHOB 0.5d0    # 80% on hydrophobic
+    OCFFPHIL 0.5d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_OC_emi_ENERGY_2010_7.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   07  9999  POW   2    0    0    0   'emi_oc'    0000
+    OCFFPHOB 0.5d0    # 80% on hydrophobic
+    OCFFPHIL 0.5d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_OC_emi_ENERGY_2010_8.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   08  9999  POW   2    0    0    0   'emi_oc'    0000
+    OCFFPHOB 0.5d0    # 80% on hydrophobic
+    OCFFPHIL 0.5d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_OC_emi_ENERGY_2010_9.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   09  9999  POW   2    0    0    0   'emi_oc'    0000
+    OCFFPHOB 0.5d0    # 80% on hydrophobic
+    OCFFPHIL 0.5d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_OC_emi_ENERGY_2010_10.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   10  9999  POW   2    0    0    0   'emi_oc'    0000
+    OCFFPHOB 0.5d0    # 80% on hydrophobic
+    OCFFPHIL 0.5d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_OC_emi_ENERGY_2010_11.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   11  9999  POW   2    0    0    0   'emi_oc'    0000
+    OCFFPHOB 0.5d0    # 80% on hydrophobic
+    OCFFPHIL 0.5d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_OC_emi_ENERGY_2010_12.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   12  9999  POW   2    0    0    0   'emi_oc'    0000
+    OCFFPHOB 0.5d0    # 80% on hydrophobic
+    OCFFPHIL 0.5d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+
+
+
+'/projects/geo/EMIS/HTAP/edgar_HTAP_OC_emi_INDUSTRY_2010_1.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   01  9999  INC   2    0    0    0   'emi_oc'    0000
+    OCFFPHOB 0.5d0    # 80% on hydrophobic
+    OCFFPHIL 0.5d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_OC_emi_INDUSTRY_2010_2.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   02  9999  INC   2    0    0    0   'emi_oc'    0000
+    OCFFPHOB 0.5d0    # 80% on hydrophobic
+    OCFFPHIL 0.5d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_OC_emi_INDUSTRY_2010_3.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   03  9999  INC   2    0    0    0   'emi_oc'    0000
+    OCFFPHOB 0.5d0    # 80% on hydrophobic
+    OCFFPHIL 0.5d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_OC_emi_INDUSTRY_2010_4.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   04  9999  INC   2    0    0    0   'emi_oc'    0000
+    OCFFPHOB 0.5d0    # 80% on hydrophobic
+    OCFFPHIL 0.5d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_OC_emi_INDUSTRY_2010_5.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   05  9999  INC   2    0    0    0   'emi_oc'    0000
+    OCFFPHOB 0.5d0    # 80% on hydrophobic
+    OCFFPHIL 0.5d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_OC_emi_INDUSTRY_2010_6.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   06  9999  INC   2    0    0    0   'emi_oc'    0000
+    OCFFPHOB 0.5d0    # 80% on hydrophobic
+    OCFFPHIL 0.5d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_OC_emi_INDUSTRY_2010_7.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   07  9999  INC   2    0    0    0   'emi_oc'    0000
+    OCFFPHOB 0.5d0    # 80% on hydrophobic
+    OCFFPHIL 0.5d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_OC_emi_INDUSTRY_2010_8.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   08  9999  INC   2    0    0    0   'emi_oc'    0000
+    OCFFPHOB 0.5d0    # 80% on hydrophobic
+    OCFFPHIL 0.5d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_OC_emi_INDUSTRY_2010_9.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   09  9999  INC   2    0    0    0   'emi_oc'    0000
+    OCFFPHOB 0.5d0    # 80% on hydrophobic
+    OCFFPHIL 0.5d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_OC_emi_INDUSTRY_2010_10.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   10  9999  INC   2    0    0    0   'emi_oc'    0000
+    OCFFPHOB 0.5d0    # 80% on hydrophobic
+    OCFFPHIL 0.5d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_OC_emi_INDUSTRY_2010_11.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   11  9999  INC   2    0    0    0   'emi_oc'    0000
+    OCFFPHOB 0.5d0    # 80% on hydrophobic
+    OCFFPHIL 0.5d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_OC_emi_INDUSTRY_2010_12.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   12  9999  INC   2    0    0    0   'emi_oc'    0000
+    OCFFPHOB 0.5d0    # 80% on hydrophobic
+    OCFFPHIL 0.5d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+
+
+
+'/projects/geo/EMIS/HTAP/edgar_HTAP_OC_emi_RESIDENTIAL_2010_1.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   01  9999  RES   2    0    0    0   'emi_oc'    0000
+    OCFFPHOB 0.5d0    # 80% on hydrophobic
+    OCFFPHIL 0.5d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_OC_emi_RESIDENTIAL_2010_2.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   02  9999  RES   2    0    0    0   'emi_oc'    0000
+    OCFFPHOB 0.5d0    # 80% on hydrophobic
+    OCFFPHIL 0.5d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_OC_emi_RESIDENTIAL_2010_3.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   03  9999  RES   2    0    0    0   'emi_oc'    0000
+    OCFFPHOB 0.5d0    # 80% on hydrophobic
+    OCFFPHIL 0.5d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_OC_emi_RESIDENTIAL_2010_4.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   04  9999  RES   2    0    0    0   'emi_oc'    0000
+    OCFFPHOB 0.5d0    # 80% on hydrophobic
+    OCFFPHIL 0.5d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_OC_emi_RESIDENTIAL_2010_5.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   05  9999  RES   2    0    0    0   'emi_oc'    0000
+    OCFFPHOB 0.5d0    # 80% on hydrophobic
+    OCFFPHIL 0.5d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_OC_emi_RESIDENTIAL_2010_6.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   06  9999  RES   2    0    0    0   'emi_oc'    0000
+    OCFFPHOB 0.5d0    # 80% on hydrophobic
+    OCFFPHIL 0.5d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_OC_emi_RESIDENTIAL_2010_7.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   07  9999  RES   2    0    0    0   'emi_oc'    0000
+    OCFFPHOB 0.5d0    # 80% on hydrophobic
+    OCFFPHIL 0.5d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_OC_emi_RESIDENTIAL_2010_8.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   08  9999  RES   2    0    0    0   'emi_oc'    0000
+    OCFFPHOB 0.5d0    # 80% on hydrophobic
+    OCFFPHIL 0.5d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_OC_emi_RESIDENTIAL_2010_9.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   09  9999  RES   2    0    0    0   'emi_oc'    0000
+    OCFFPHOB 0.5d0    # 80% on hydrophobic
+    OCFFPHIL 0.5d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_OC_emi_RESIDENTIAL_2010_10.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   10  9999  RES   2    0    0    0   'emi_oc'    0000
+    OCFFPHOB 0.5d0    # 80% on hydrophobic
+    OCFFPHIL 0.5d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_OC_emi_RESIDENTIAL_2010_11.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   11  9999  RES   2    0    0    0   'emi_oc'    0000
+    OCFFPHOB 0.5d0    # 80% on hydrophobic
+    OCFFPHIL 0.5d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_OC_emi_RESIDENTIAL_2010_12.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   12  9999  RES   2    0    0    0   'emi_oc'    0000
+    OCFFPHOB 0.5d0    # 80% on hydrophobic
+    OCFFPHIL 0.5d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+
+
+
+
+
+
+'/projects/geo/EMIS/HTAP/edgar_HTAP_OC_emi_TRANSPORT_2010_1.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   01  9999  TRA   2    0    0    0   'emi_oc'    0000
+    OCFFPHOB 0.5d0    # 80% on hydrophobic
+    OCFFPHIL 0.5d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_OC_emi_TRANSPORT_2010_2.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   02  9999  TRA   2    0    0    0   'emi_oc'    0000
+    OCFFPHOB 0.5d0    # 80% on hydrophobic
+    OCFFPHIL 0.5d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_OC_emi_TRANSPORT_2010_3.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   03  9999  TRA   2    0    0    0   'emi_oc'    0000
+    OCFFPHOB 0.5d0    # 80% on hydrophobic
+    OCFFPHIL 0.5d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_OC_emi_TRANSPORT_2010_4.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   04  9999  TRA   2    0    0    0   'emi_oc'    0000
+    OCFFPHOB 0.5d0    # 80% on hydrophobic
+    OCFFPHIL 0.5d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_OC_emi_TRANSPORT_2010_5.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   05  9999  TRA   2    0    0    0   'emi_oc'    0000
+    OCFFPHOB 0.5d0    # 80% on hydrophobic
+    OCFFPHIL 0.5d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_OC_emi_TRANSPORT_2010_6.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   06  9999  TRA   2    0    0    0   'emi_oc'    0000
+    OCFFPHOB 0.5d0    # 80% on hydrophobic
+    OCFFPHIL 0.5d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_OC_emi_TRANSPORT_2010_7.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   07  9999  TRA   2    0    0    0   'emi_oc'    0000
+    OCFFPHOB 0.5d0    # 80% on hydrophobic
+    OCFFPHIL 0.5d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_OC_emi_TRANSPORT_2010_8.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   08  9999  TRA   2    0    0    0   'emi_oc'    0000
+    OCFFPHOB 0.5d0    # 80% on hydrophobic
+    OCFFPHIL 0.5d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_OC_emi_TRANSPORT_2010_9.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   09  9999  TRA   2    0    0    0   'emi_oc'    0000
+    OCFFPHOB 0.5d0    # 80% on hydrophobic
+    OCFFPHIL 0.5d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_OC_emi_TRANSPORT_2010_10.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   10  9999  TRA   2    0    0    0   'emi_oc'    0000
+    OCFFPHOB 0.5d0    # 80% on hydrophobic
+    OCFFPHIL 0.5d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_OC_emi_TRANSPORT_2010_11.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   11  9999  TRA   2    0    0    0   'emi_oc'    0000
+    OCFFPHOB 0.5d0    # 80% on hydrophobic
+    OCFFPHIL 0.5d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/HTAP/edgar_HTAP_OC_emi_TRANSPORT_2010_12.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   12  9999  TRA   2    0    0    0   'emi_oc'    0000
+    OCFFPHOB 0.5d0    # 80% on hydrophobic
+    OCFFPHIL 0.5d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+
+
+'/projects/geo/EMIS/HTAP/edgar_HTAP_OC_emi_SHIPS_2010.0.1x0.1.nc'
+  602    1.0000d+00  ZP1   99  9999  SHI   2    0    0    0   'emi_oc'    0000
+    OCFFPHOB 0.5d0    # 80% on hydrophobic
+    OCFFPHIL 0.5d0    # 20% on hydrophilic
+    xxx 0 To close this data set

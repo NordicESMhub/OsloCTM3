@@ -1,0 +1,365 @@
+These are the ECLIPSE v5 files for 2010. Other years are available,
+e.g. 2005.
+
+
+'/projects/geo/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_CH4_2010.nc'
+  401    1.0000d+00  HLF   99  9999  AGR   0    0    0    0   'emis_awb'    0000
+    CH4 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_CH4_2010.nc'
+  401    1.0000d+00  HLF   99  9999  AGR   0    0    0    0   'emis_agr'    0000
+    CH4 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_CH4_2010.nc'
+  401    1.0000d+00  HLF   99  9999  RES   0    0    0    0   'emis_dom'    0000
+    CH4 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_CH4_2010.nc'
+  401    1.0000d+00  HLF   99  9999  POW   0    0    0    0   'emis_ene'    0000
+    CH4 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_CH4_2010.nc'
+  401    1.0000d+00  HLF   99  9999  INC   0    0    0    0   'emis_ind'    0000
+    CH4 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_CH4_2010.nc'
+  401    1.0000d+00  HLF   99  9999  TRA   0    0    0    0   'emis_tra'    0000
+    CH4 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_CH4_2010.nc'
+  401    1.0000d+00  HLF   99  9999  WAS   0    0    0    0   'emis_wst'    0000
+    CH4 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/ECLIPSE_V5/ship_CLE_emis_2010.nc'
+  402    1.0000d+06  1x1   99  9999  SHI   0    2    0    0   'CH4'    0000
+    CH4 1.d0
+    xxx 0 To close this data set
+
+
+
+
+'/projects/geo/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_NOx_2010.nc'
+  401    1.0000d+00  HLF   99  9999  AGR   0    0    0    0   'emis_awb'    0000
+    NO 0.6521739130434782609d0   # Convert from NO2 to NO: 30/46
+    xxx 0 To close this data set
+
+'/projects/geo/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_NOx_2010.nc'
+  401    1.0000d+00  HLF   99  9999  RES   0    0    0    0   'emis_dom'    0000
+    NO 0.6521739130434782609d0   # Convert from NO2 to NO: 30/46
+    xxx 0 To close this data set
+
+'/projects/geo/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_NOx_2010.nc'
+  401    1.0000d+00  HLF   99  9999  POW   0    0    0    0   'emis_ene'    0000
+    NO 0.6521739130434782609d0   # Convert from NO2 to NO: 30/46
+    xxx 0 To close this data set
+
+'/projects/geo/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_NOx_2010.nc'
+  401    1.0000d+00  HLF   99  9999  INC   0    0    0    0   'emis_ind'    0000
+    NO 0.6521739130434782609d0   # Convert from NO2 to NO: 30/46
+    xxx 0 To close this data set
+
+'/projects/geo/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_NOx_2010.nc'
+  401    1.0000d+00  HLF   99  9999  TRA   0    0    0    0   'emis_tra'    0000
+    NO 0.6521739130434782609d0   # Convert from NO2 to NO: 30/46
+    xxx 0 To close this data set
+
+'/projects/geo/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_NOx_2010.nc'
+  401    1.0000d+00  HLF   99  9999  WAS   0    0    0    0   'emis_wst'    0000
+    NO 0.6521739130434782609d0   # Convert from NO2 to NO: 30/46
+    xxx 0 To close this data set
+
+'/projects/geo/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_CO_2010.nc'
+  401    1.0000d+00  HLF   99  9999  AGR   0    0    0    0   'emis_awb'    0000
+    CO 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_CO_2010.nc'
+  401    1.0000d+00  HLF   99  9999  RES   0    0    0    0   'emis_dom'    0000
+    CO 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_CO_2010.nc'
+  401    1.0000d+00  HLF   99  9999  POW   0    0    0    0   'emis_ene'    0000
+    CO 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_CO_2010.nc'
+  401    1.0000d+00  HLF   99  9999  INC   0    0    0    0   'emis_ind'    0000
+    CO 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_CO_2010.nc'
+  401    1.0000d+00  HLF   99  9999  TRA   0    0    0    0   'emis_tra'    0000
+    CO 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_CO_2010.nc'
+  401    1.0000d+00  HLF   99  9999  WAS   0    0    0    0   'emis_wst'    0000
+    CO 1.d0
+    xxx 0 To close this data set
+
+
+'/projects/geo/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_SO2_2010.nc'
+  401    1.0000d+00  HLF   99  9999  AGR   0    0    0    0   'emis_awb'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_SO2_2010.nc'
+  401    1.0000d+00  HLF   99  9999  RES   0    0    0    0   'emis_dom'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_SO2_2010.nc'
+  401    1.0000d+00  HLF   99  9999  POW   0    0    0    0   'emis_ene'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_SO2_2010.nc'
+  401    1.0000d+00  HLF   99  9999  INC   0    0    0    0   'emis_ind'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_SO2_2010.nc'
+  401    1.0000d+00  HLF   99  9999  TRA   0    0    0    0   'emis_tra'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_SO2_2010.nc'
+  401    1.0000d+00  HLF   99  9999  WAS   0    0    0    0   'emis_wst'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+
+
+
+'/projects/geo/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_NH3_2010.nc'
+  401    1.0000d+00  HLF   99  9999  AGR   0    0    0    0   'emis_agr'    0000
+    NH3 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_NH3_2010.nc'
+  401    1.0000d+00  HLF   99  9999  AGR   0    0    0    0   'emis_awb'    0000
+    NH3 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_NH3_2010.nc'
+  401    1.0000d+00  HLF   99  9999  RES   0    0    0    0   'emis_dom'    0000
+    NH3 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_NH3_2010.nc'
+  401    1.0000d+00  HLF   99  9999  POW   0    0    0    0   'emis_ene'    0000
+    NH3 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_NH3_2010.nc'
+  401    1.0000d+00  HLF   99  9999  INC   0    0    0    0   'emis_ind'    0000
+    NH3 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_NH3_2010.nc'
+  401    1.0000d+00  HLF   99  9999  TRA   0    0    0    0   'emis_tra'    0000
+    NH3 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_NH3_2010.nc'
+  401    1.0000d+00  HLF   99  9999  WAS   0    0    0    0   'emis_wst'    0000
+    NH3 1.d0
+    xxx 0 To close this data set
+
+
+
+
+'/projects/geo/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_VOC_2010.nc'
+  401    1.0000d+00  HLF   99  9999  AGR   0    0    0    0   'emis_awb'    0000
+     C2H4 0.118076d0
+     C2H6 0.044981d0
+     C3H6 0.047793d0
+     C3H8 0.012651d0
+    C4H10 0.004232d0
+    C6H14 0.023770d0 # hexanes_and_higher_alkanes
+     CH2O 0.099802d0
+   CH3CHO 0.044949d0 # other_alkanals
+    C6HXR 0.114342d0 # other_aromatics + benzene + xylene + trimethyl_benzenes + toluene
+ Tolmatic 0.056227d0 # other_aromatics + toluene
+  Benzene 0.032330d0 # benzene
+C6HXR_SOA 0.005623d0 # xylene + trimethyl_benzenes
+  ACETONE 0.056301d0 # ketones
+    xxx 0 To close this data set
+'/projects/geo/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_VOC_2010.nc'
+  401    1.0000d+00  HLF   99  9999  RES   0    0    0    0   'emis_dom'    0000
+     C2H4 0.155149d0
+     C2H6 0.073554d0
+     C3H6 0.069012d0
+     C3H8 0.027796d0
+    C4H10 0.018122d0
+    C6H14 0.012318d0 # hexanes_and_higher_alkanes
+     CH2O 0.015754d0
+   CH3CHO 0.026678d0 # other_alkanals
+    C6HXR 0.203424d0 # other_aromatics + benzene + xylene + trimethyl_benzenes + toluene
+ Tolmatic 0.049554d0 # other_aromatics + toluene
+  Benzene 0.098485d0 # benzene
+C6HXR_SOA 0.012492d0 # xylene + trimethyl_benzenes
+  ACETONE 0.006668d0 # ketones
+    xxx 0 To close this data set
+'/projects/geo/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_VOC_2010.nc'
+  401    1.0000d+00  HLF   99  9999  POW   0    0    0    0   'emis_ene'    0000
+     C2H4 0.004727d0
+     C2H6 0.008916d0
+     C3H6 0.004727d0
+     C3H8 0.068035d0
+    C4H10 0.179398d0
+    C6H14 0.125799d0 # hexanes_and_higher_alkanes
+     CH2O 0.090846d0
+   CH3CHO 0.007286d0 # other_alkanals
+    C6HXR 0.401163d0 # other_aromatics + benzene + xylene + trimethyl_benzenes + toluene
+ Tolmatic 0.129569d0 # other_aromatics + toluene
+  Benzene 0.076768d0 # benzene
+C6HXR_SOA 0.147551d0 # xylene + trimethyl_benzenes
+  ACETONE 0.013332d0 # ketones
+    xxx 0 To close this data set
+'/projects/geo/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_VOC_2010.nc'
+  401    1.0000d+00  HLF   99  9999  INC   0    0    0    0   'emis_ind'    0000
+     C2H4 0.006830d0
+     C2H6 0.012945d0
+     C3H6 0.006830d0
+     C3H8 0.061547d0
+    C4H10 0.159148d0
+    C6H14 0.144157d0 # hexanes_and_higher_alkanes
+     CH2O 0.073887d0
+   CH3CHO 0.005304d0 # other_alkanals
+    C6HXR 0.474994d0 # other_aromatics + benzene + xylene + trimethyl_benzenes + toluene
+ Tolmatic 0.155762d0 # other_aromatics + toluene
+  Benzene 0.069447d0 # benzene
+C6HXR_SOA 0.201152d0 # xylene + trimethyl_benzenes
+  ACETONE 0.009706d0 # ketones
+    xxx 0 To close this data set
+'/projects/geo/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_VOC_2010.nc'
+  401    1.0000d+00  HLF   99  9999  TRA   0    0    0    0   'emis_slv'    0000
+    C6H14 0.646855d0 # hexanes_and_higher_alkanes
+    C6HXR 0.409190d0 # other_aromatics + benzene + xylene + trimethyl_benzenes + toluene
+ Tolmatic 0.202537d0 # other_aromatics + toluene
+C6HXR_SOA 0.175832d0 # xylene + trimethyl_benzenes
+  ACETONE 0.145408d0 # ketones
+    xxx 0 To close this data set
+'/projects/geo/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_VOC_2010.nc'
+  401    1.0000d+00  HLF   99  9999  TRA   0    0    0    0   'emis_tra'    0000
+     C2H4 0.067942d0
+     C2H6 0.014170d0
+     C3H6 0.023384d0
+     C3H8 0.012650d0
+    C4H10 0.163158d0
+    C6H14 0.205941d0 # hexanes_and_higher_alkanes
+     CH2O 0.007090d0
+   CH3CHO 0.005334d0 # other_alkanals
+    C6HXR 0.475389d0 # other_aromatics + benzene + xylene + trimethyl_benzenes + toluene
+ Tolmatic 0.210974d0 # other_aromatics + toluene
+  Benzene 0.034991d0 # benzene
+C6HXR_SOA 0.184757d0 # xylene + trimethyl_benzenes
+  ACETONE 0.005551d0 # ketones
+    xxx 0 To close this data set
+'/projects/geo/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_VOC_2010.nc'
+  401    1.0000d+00  HLF   99  9999  WAS   0    0    0    0   'emis_wst'    0000
+     C2H4 0.112263d0
+     C2H6 0.066575d0
+     C3H6 0.047351d0
+     C3H8 0.046878d0
+    C4H10 0.081629d0
+    C6H14 0.108925d0 # hexanes_and_higher_alkanes
+     CH2O 0.008611d0
+   CH3CHO 0.015939d0 # other_alkanals
+    C6HXR 0.206489d0 # other_aromatics + benzene + xylene + trimethyl_benzenes + toluene
+ Tolmatic 0.073160d0 # other_aromatics + toluene
+  Benzene 0.063414d0 # benzene
+C6HXR_SOA 0.036018d0 # xylene + trimethyl_benzenes
+  ACETONE 0.011381d0 # ketones
+    xxx 0 To close this data set
+
+'/projects/geo/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_BC_2010.nc' 
+  401    1.0000d+00  HLF   99  9999  RES   0    0    0    0   'emis_dom'    0000
+    BCFFPHOB 0.8d0    # 80% on hydrophobic
+    BCFFPHIL 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_BC_2010.nc' 
+  401    1.0000d+00  HLF   99  9999  POW   0    0    0    0   'emis_ene'    0000
+    BCFFPHOB 0.8d0    # 80% on hydrophobic
+    BCFFPHIL 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_BC_2010.nc' 
+  401    1.0000d+00  HLF   99  9999  INC   0    0    0    0   'emis_ind'    0000
+    BCFFPHOB 0.8d0    # 80% on hydrophobic
+    BCFFPHIL 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_BC_2010.nc' 
+  401    1.0000d+00  HLF   99  9999  TRA   0    0    0    0   'emis_tra'    0000
+    BCFFPHOB 0.8d0    # 80% on hydrophobic
+    BCFFPHIL 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_BC_2010.nc' 
+  401    1.0000d+00  HLF   99  9999  WAS   0    0    0    0   'emis_wst'    0000
+    BCFFPHOB 0.8d0    # 80% on hydrophobic
+    BCFFPHIL 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_BC_2010.nc' 
+  401    1.0000d+00  HLF   99  9999  WAS   0    0    0    0   'emis_awb'    0000
+    BCBBPHOB 0.8d0    # 80% on hydrophobic
+    BCBBPHIL 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_OC_2010.nc' 
+  401    1.0000d+00  HLF   99  9999  RES   0    0    0    0   'emis_dom'    0000
+    OCFFPHOB 0.5d0    # 80% on hydrophobic
+    OCFFPHIL 0.5d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_OC_2010.nc' 
+  401    1.0000d+00  HLF   99  9999  POW   0    0    0    0   'emis_ene'    0000
+    OCFFPHOB 0.5d0    # 80% on hydrophobic
+    OCFFPHIL 0.5d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_OC_2010.nc' 
+  401    1.0000d+00  HLF   99  9999  INC   0    0    0    0   'emis_ind'    0000
+    OCFFPHOB 0.5d0    # 80% on hydrophobic
+    OCFFPHIL 0.5d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_OC_2010.nc' 
+  401    1.0000d+00  HLF   99  9999  TRA   0    0    0    0   'emis_tra'    0000
+    OCFFPHOB 0.5d0    # 80% on hydrophobic
+    OCFFPHIL 0.5d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_OC_2010.nc' 
+  401    1.0000d+00  HLF   99  9999  WAS   0    0    0    0   'emis_wst'    0000
+    OCFFPHOB 0.5d0    # 80% on hydrophobic
+    OCFFPHIL 0.5d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/ECLIPSE_V5/MONTHLY/ETP_base_CLE_V5_OC_2010.nc' 
+  401    1.0000d+00  HLF   99  9999  WAS   0    0    0    0   'emis_awb'    0000
+    OCBBPHOB 0.5d0    # 80% on hydrophobic
+    OCBBPHIL 0.5d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+
+
+
+'/projects/geo/EMIS/ECLIPSE_V5/ship_CLE_emis_2010.nc'
+  402    1.0000d+06  1x1   99  9999  SHI   0    2    0    0   'VOC'    0000
+     C2H4 0.151333d0
+     C2H6 0.006936d0
+     C3H6 0.165814d0
+     C3H8 0.019240d0
+    C4H10 0.020355d0
+    C6H14 0.179447d0 # hexanes_and_higher_alkanes
+    C6HXR 0.151600d0 # other_aromatics + benzene + xylene + trimethyl_benzenes + toluene
+ Tolmatic 0.004112d0 # other_aromatics + toluene
+  Benzene 0.067414d0 # benzene
+C6HXR_SOA 0.055248d0 # xylene + trimethyl_benzenes
+    xxx 0 To close this data set
+'/projects/geo/EMIS/ECLIPSE_V5/ship_CLE_emis_2010.nc'
+  402    1.0000d+06  1x1   99  9999  SHI   0    2    0    0   'CO'    0000
+     CO 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/ECLIPSE_V5/ship_CLE_emis_2010.nc'
+  402    1.0000d+06  1x1   99  9999  SHI   0    2    0    0   'NOx'    0000
+     NO 0.6521739130434782609d0   # Convert from NO2 to NO: 30/46
+    xxx 0 To close this data set
+'/projects/geo/EMIS/ECLIPSE_V5/ship_CLE_emis_2010.nc'
+  402    1.0000d+06  1x1   99  9999  SHI   0    2    0    0   'SO2'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/ECLIPSE_V5/ship_CLE_emis_2010.nc'
+  402    1.0000d+06  1x1   99  9999  SHI   0    2    0    0   'BC'    0000
+    BCFFPHOB 0.8d0    # 80% on hydrophobic
+    BCFFPHIL 0.2d0    # 20% on hydrophilic
+    xxx 0 To close this data set
+'/projects/geo/EMIS/ECLIPSE_V5/ship_CLE_emis_2010.nc'
+  402    1.0000d+06  1x1   99  9999  SHI   0    2    0    0   'OC'    0000
+    OCFFPHOB 0.5d0    # 80% on hydrophobic
+    OCFFPHIL 0.5d0    # 20% on hydrophilic
+    xxx 0 To close this data set

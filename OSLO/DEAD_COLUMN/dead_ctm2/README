@@ -1,0 +1,75 @@
+$Header: /mn/hox/ozon/ctm2_model/ctm2_src/dst_dst/README,v 1.1 2003/04/15 14:41:35 alfgr Exp $ -*-text-*-
+
+The Aerosol Model DEAD---Dust Entrainment And Deposition
+
+DEAD is a an aerosol model suitable for running in standalone (box
+model) mode or for embedding in large scale atmospheric models. 
+Currently DEAD only simulates dust, but its framework is more general
+and eventually other aerosols will be added. 
+Therefore this code sometimes refers to itself as "the aerosol model"
+or 'aer'. This directory contains Fortran routines to simulate aerosol
+physics and chemistry offline and in GCM and CTM models.  
+
+The "box model" (BXM) refers to the stand-alone version of the aerosol 
+model. This box model is driven from the top level routine aer.F90,
+which supplies all the information normally supplied by the host
+GCM or CTM. The box model may be run for arbitrary numbers of 
+timesteps and environmental conditions.
+
+The same code is used in large scale atmospheric host models as in the
+box model, only the entry points are different. The box model
+is a standalone program with entry point aer.F90, the embedded model
+has multiple hooks which must be called by the global model.
+Currently there are about 10 hooks. These are used to initialize
+external datasets (dsttibds.F90, dsttvbds.F90), control budget
+diagnostics (dstbdg.F90), initialize lower level modules
+(dstcmnini.F90). The physics entry points control source processes
+(dstmbl.F90), sink processes (dstdpsdry.F90, dstdpswet.F90), chemistry
+(dstchm.F90), optical depth (dstodx.F90), particle size distributions
+(dstpsd.F90), and radiative forcing (dstrad.F90).
+
+The best way to understand the model physics is to read the main
+physics loop (phyzlic.F90) which calls most of the physics entry
+points directly. To embed DEAD in another host model, simply call
+the same entry points in roughly the order (but make sure to
+do the required initializations performed in aer.F90 first too!).
+For example, to embed DEAD in the NCAR MATCH model, modify the files 
+src/main.F and src/physlic.F to contain the same initializations
+and physics hooks as aer.F90 and phyzlic.F90 in DEAD.
+Of course to run DEAD in a global model, you must also have the source
+code for that global model. DEAD has been successfully embedded in
+the NCAR CCM3, NCAR MATCH, UCI CTM, and U. Oslo global models.
+Work on embedding DEAD in the NCAR CAM has begun.
+
+Running the Box Model version of DEAD:
+
+As explained in the aer.F90 file, environmental conditions in the box
+model may be set from the command line. Most of the flags are
+identical to my "mie" program used for microphysics development
+(that some of you may also have). Although the box model supplies
+useful defaults, it is instructive to run sensitivity studies, to,
+e.g., midlayer windspeed. Such a study might be performed by calling
+the box model as follows, and varying the final parameter:
+
+aer --dbg=5 --time_nbr=1 \
+--prs_mdp=1000.0e+02 \
+--prs_ntf=1013.15e+02 \
+--q_H2O_vpr=0.001894183 \
+--tpt_gnd=267.0 \
+--tpt_mdp=264.0 \
+--oro=1.0 --sfc_typ=2 \
+--wnd_mrd_mdp=1.0 --wnd_znl_mdp=10.0
+
+ncks -C -H -F -u -v prs_mdp,tpt_mdp,wnd_frc_dps,q_H2O_vpr,mno_lng_dps,\
+tpt_gnd,wnd_mdp,oro,sfc_typ aer.nc 
+
+When the model is run, it will produce two output files, aer.nc and
+dst_mss_bdg.nc. aer.nc records the time-varying state of the box model
+in great detail (currently over 150 variables are automatically
+recorded). dst_mss_bdg.nc records the time-varying mass budget of the
+box model and is mainly intended for diagnosing the mass budget of
+aerosols in host global models. Each timestep the global mean mass
+budget is computed and recorded as a scalar. In addition, some
+diagnostics such as the change in mass due to specific processes are
+also recorded. Both of these files, aer.nc and dst_mss_bdg.nc, are
+purely diagnostic. 

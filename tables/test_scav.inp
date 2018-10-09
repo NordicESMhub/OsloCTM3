@@ -1,0 +1,199 @@
+Oslo CTM3 Wet Deposition Parameters (Haslerud June 2017)
+-----------------------------------------------------------------------------------------------------
+(i3,1x,a10,f7.2,3x,i1,e9.1,f7.0,f9.0,f7.0,e9.1,i2)
+-----------------------------------------------------------------------------------------------------
+Tracer info    | Convective   | Large scale                     | Both                  | Tracer info
+-----------------------------------------------------------------------------------------------------
+999 tracers      CSOLU   CFLAG  LSOLU   LFLAG LMETHOD ISCVFR  IT  TCHENA  TCHENB  HFLAG   #   tracers
+001 O3           1.0d-00 1      1.0d-00 0     0       0.0d-00 0   1.1d-02   2400  0       001 O3         
+002 O3s          0.0d-00 0      0.0d-00 0     0       0.0d-00 0   0.0d-00      0  0       002 O3s        
+003 OH           0.0d-00 0      1.0d-00 0     0       0.0d-00 0   2.5d+01   5300  0       003 OH         
+004 HO2          1.0d-00 1      1.0d-00 0     0       0.0d-00 0   4.0d+03   5900  0       004 HO2        
+005 NO           0.0d-00 0      1.0d-00 0     0       0.0d-00 0   1.9d-03   1400  0       005 NO         
+006 NO3          1.0d-00 1      1.0d-00 0     0       0.0d-00 0   2.0d+00   2000  0       006 NO3        
+007 NO2          0.0d-00 0      1.0d-00 0     0       0.0d-00 0   1.2d-02   2500  0       007 NO2        
+008 N2O5         1.0d-00 1      1.0d-00 0     0       0.0d-00 0   2.1d+00   3400  0       008 N2O5       
+009 HONO         0.0d-00 0      1.0d-00 0     0       0.0d-00 0   4.9d+01   4800  0       009 HONO       
+010 HNO3         1.0d-00 3      1.0d-00 0     1       1.0d-00 1   2.1d+05   8700  1       010 HNO3
+011 HO2NO2       1.0d-00 1      1.0d-00 0     0       0.0d-00 0   1.2d+04   6900  0       011 HO2NO2     
+012 H2O2         1.0d-00 1      1.0d-00 0     1       0.0d-00 0   7.1d+04   6800  0       012 H2O2
+
+-99 end_table    0.0d-00 0      0.0d-00 0     0       0.0d-00 0   0.0d-00     0   0       -99 end_table
+#   tracers      CSOLU   CFLAG  LSOLU   LFLAG LMETHOD ISCVFR  IT  TCHENA  TCHENB  HFLAG   #   tracers
+                                              TCKAQB                              TCKAQA
+
+999 tracers      SOLU  CHN TCHENA  TCHENB   TCKAQA TCKAQB  ISCVFR  IT #  tracers
+13  CH4          1.00   0  1.4d-03   1600        0      0  0.0d-00 0  13 CH4        
+14  CH3O2        1.00   1  2.0d+03   6600        0      0  0.0d-00 0  14 CH3O2
+15  CH3O2H       1.00   1  3.1d+02   5200        0      0  0.0d-00 0  15 CH3O2H
+16  CH2O         1.00   1  3.2d+03   6800        1      0  0.0d-00 0  16 CH2O
+17  CO           1.00   0  9.5d-04   1300        0      0  0.0d-00 0  17 CO         
+18  O2           1.00   0  1.3d-03   1500        0      0  0.0d-00 0  18 O2         
+19  N2           1.00   0  6.1d-04   1300        0      0  0.0d-00 0  19 N2         
+
+
+
+CSOLU: Fraction of grid box available for convective wet scavenging.
+CFLAG: Flag to specify details on convective scavenging
+       We first calculate the amount of tracer dissolved in water/ice, and then
+       this is scaled by the fraction QFRAC (i.e. the fraction of
+       convective rain to total water content). Generally, QFRAC is always used.
+       See the scavenging section of the user manual for more on this.
+       0: No convective removal.
+       1: Fraction dissolved in water/ice calculated from Henry coefficients.
+       3: Fraction dissolved set by QFRAC only.
+       4: Fraction washed out given by SOLU only, and NOT QFRAC!
+          Should not be used unless you know what you are doing...
+       7: Convective removal when min(Tplume)<258K.
+          Treat large scale ice removal, but not liquid.
+       8: Convective removal when min(Tplume)<258K and max(Tplume)<273.15K.
+          Treat large scale removal.
+LSOLU: Fraction of grid box available for large scale wet scavenging.
+LFLAG: 5: Turns off large scale scavenging.
+       6: Turns off large scale scavenging by rain, but treats scavenging by
+           large scale ice.
+LMETHOD: Flag for large scale scavenging method:
+         0: washout limited by Henry's Law.
+         1: washout kinetically limited (this is for highly soluble species).
+ISCVFR: Fraction of grid box available for ice scavenging. If zero, no uptake.
+        The usual is to apply ISCVFR=1, so that tracer is removed on ice.
+        Parameter IT will take care of T<258K.
+        Retention coefficient for ice uptake is always 0.5 in CTM3, which is
+        set in WETSET_CTM3.
+IT:     Defines ice treatment for T<258K
+        0: No removal for T<258K.
+           Otherwise, use standard retention coefficient for 258K<T<273K.
+        1: Kärcher & Voigt 2006 for T<258K, retention coefficient for 258K<T<273K.
+	   They only considered HNO3.
+        2: Assume same treatment below 258K as for 258K<T<273K, i.e. using
+           retention coefficient.
+        3: No removal for T<258K, but apply retention coefficient 1
+           instead of 0.5 for 258<T<273.
+        4: Do standard (Henry's law or kinetically limited) below 258K
+           (as in 2), but set retention coefficient to 1 for T<273.
+TCHENA: Henry coefficient A, i.e. for the expression A * exp(-B/T).
+TCHENB: Henry coefficient B, i.e. for the expression A * exp(-B/T).
+HFLAG: Flag to denote hard coded effective Henry constant.
+       Non-zero: There will be hard coded effective Henry constant.
+
+
+
+20  C2H6         1.00   0  1.9d-03   2300        0      0  0.0d-00 0  20 C2H6       
+21  C2H5O2       1.00   1  2.2d+03   7200        0      0  0.0d-00 0  21 C2H5O2
+22  EtOOH        1.00   0  3.4d+02   6000        0      0  0.0d-00 0  22 EtOOH      
+23  CH3CHO       1.00   1  1.4d+01   5600        0      0  0.0d-00 0  23 CH3CHO
+24  MeCO3        1.00   0  1.0d-01      0        0      0  0.0d-00 0  24 MeCO3      
+25  PANX         1.00   1  2.9d+00   5900        0      0  0.0d-00 0  25 PANX
+26  Alkane       1.00   0  1.2d-03   3100        0      0  0.0d-00 0  26 Alkane     
+27  ROHOO        1.00   0  0.0d+00      0        0      0  0.0d-00 0  27 ROHOO      
+28  Alkene       1.00   0  7.4d-03   3400        0      0  0.0d-00 0  28 Alkene     
+29  Aromatic     1.00   0  1.5d-01   4000        0      0  0.0d-00 0  29 Aromatic   
+30  ISOPRENE     1.00   0  1.3d-02      0        0      0  0.0d-00 0  30 ISOPRENE
+31  MVKMACR      1.00   0  2.1d+01   7800        0      0  0.0d-00 0  31 MVKMACR    
+32  ISOK         1.00   1  1.3d+01   7800        0      0  0.0d-00 0  32 MVKMACR
+33  H2S          1.00   0  8.7d-02   2100        0      0  0.0d-00 0  33 H2S        
+34  DMS          1.00   0  4.8d-01   3100        0      0  0.0d-00 0  34 DMS
+35  Me2SO        1.00   0  5.0d+04      0        0      0  0.0d-00 0  35 Me2SO      
+36  Me2SO2       1.00   0  5.0d+04      0        0      0  0.0d-00 0  36 Me2SO2     
+37  MeSO3H       1.00   0  1.0d+08      0        0      0  0.0d-00 0  37 MeSO3H     
+38  MSA          1.00   3  5.0d+04      0        0      0  0.0d-00 0  38 MSA
+39  SO2          1.00   1  1.2d+00   3020        1      0  0.0d-00 0  39 SO2
+40  SO3          1.00   0  1.0d+08      0        0      0  0.0d-00 0  40 SO3        
+41  SO4          1.00   3  1.0d+08      0        0      1  0.1d-00 0  41 SO4
+42  SF6          1.00   0  2.4d-04   2400        0      0  0.0d-00 0  42 SF6        
+43  Rn           1.00   0  9.3d-03   2600        0      0  0.0d-00 0  43 Rn         
+44  Pb           1.00   0  0.0d-00      0        0      0  0.0d-00 0  44 Pb         
+45  CO2          1.00   0  0.0d-00      0        0      0  0.0d-00 0  45 CO2        
+47  omBB1fil     1.00   3  1.0d+08      0        0      1  0.1d-00 0  47 omBB1fil
+49  omFF1fil     1.00   3  1.0d+08      0        0      1  0.1d-00 0  49 omFF1fil
+130 omBF1fil     1.00   3  1.0d+08      0        0      1  0.1d-00 0 130 omBF1fil
+128 omOCNfil     1.00   3  1.0d+08      0        0      1  0.1d-00 0 128 omOCNfil
+131 omBB1fob     1.00   6  1.0d+08      0        0      1  0.2d-00 4  47 omBB1fob
+132 omFF1fob     1.00   6  1.0d+08      0        0      1  0.2d-00 4  49 omFF1fob
+133 omBF1fob     1.00   6  1.0d+08      0        0      1  0.2d-00 4 130 omBF1fob
+134 omOCNfob     1.00   6  1.0d+08      0        0      1  0.2d-00 4 128 omOCNfob
+46  bcBB1fil     1.00   3  1.0d+08      0        0      1  0.1d-00 0  46 bcBB1fil
+48  bcFF1fil     1.00   3  1.0d+08      0        0      1  0.1d-00 0  48 bcFF1fil
+48  bcBF1fil     1.00   3  1.0d+08      0        0      1  0.1d-00 0  48 bcBF1fil
+126 bcBB1fob     1.00   6  1.0d+08      0        0      1  0.2d-00 4 126 bcBB1fob
+127 bcFF1fob     1.00   6  1.0d+08      0        0      1  0.2d-00 4 127 bcFF1fob
+129 bcBF1fob     1.00   6  1.0d+08      0        0      1  0.2d-00 4 129 bcBF1fob
+50  SALT01       1.00   3  1.0d+08      0        0      1  0.1d-00 0  50 SALT01
+51  SALT02       1.00   3  1.0d+08      0        0      1  0.1d-00 0  51 SALT02
+52  SALT03       1.00   3  1.0d+08      0        0      1  0.1d-00 0  52 SALT03
+53  SALT04       1.00   3  1.0d+08      0        0      1  0.1d-00 0  53 SALT04
+54  SALT05       1.00   3  1.0d+08      0        0      1  0.1d-00 0  54 SALT05
+55  SALT06       1.00   3  1.0d+08      0        0      1  0.1d-00 0  55 SALT06
+56  SALT07       1.00   3  1.0d+08      0        0      1  0.1d-00 0  56 SALT07
+57  SALT08       1.00   3  1.0d+08      0        0      1  0.1d-00 0  57 SALT08
+58  DUST01       1.00   3  1.0d+08      0        0      1  0.5d-00 4  58 DUST01
+59  DUST02       1.00   3  1.0d+08      0        0      1  0.5d-00 4  59 DUST02
+60  DUST03       1.00   3  1.0d+08      0        0      1  0.5d-00 4  60 DUST03
+61  DUST04       1.00   3  1.0d+08      0        0      1  0.5d-00 4  61 DUST04
+62  DUST05       1.00   3  1.0d+08      0        0      1  0.5d-00 4  62 DUST05
+63  DUST06       1.00   3  1.0d+08      0        0      1  0.5d-00 4  63 DUST06
+64  DUST07       1.00   3  1.0d+08      0        0      1  0.5d-00 4  64 DUST07
+65  DUST08       1.00   3  1.0d+08      0        0      1  0.5d-00 4  65 DUST08
+66  HNO3s        1.00   3  2.1d+05   8700        1      1  1.0d-00 1  66 HNO3s
+67  NH3          1.00   1  3.3d+06      0        0      0  0.0d-00 0  67 NH3
+68  NH4fine      1.00   3  1.0d+08      0        0      1  0.1d-00 0  68 NH4fine
+69  NH4coarse    1.00   3  1.0d+08      0        0      1  0.1d-00 0  69 NH4coarse
+70  NO3fine      1.00   3  1.0d+08      0        0      1  0.1d-00 0  70 NO3fine
+71  NO3coarse    1.00   3  1.0d+08      0        0      1  0.1d-00 0  71 NO3coarse
+72  SOAGAS11     1.00   1  1.0d+05     12        0      0  1.0d-00 0  72 SOAGAS11
+73  SOAGAS21     1.00   1  1.0d+05     12        0      0  1.0d-00 0  73 SOAGAS21
+74  SOAGAS31     1.00   1  1.0d+05     12        0      0  1.0d-00 0  74 SOAGAS31
+75  SOAGAS41     1.00   1  1.0d+05     12        0      0  1.0d-00 0  75 SOAGAS41
+76  SOAGAS51     1.00   1  1.0d+05     12        0      0  1.0d-00 0  76 SOAGAS51
+77  SOAGAS12     1.00   1  1.0d+05     12        0      0  1.0d-00 0  77 SOAGAS12
+78  SOAGAS22     1.00   1  1.0d+05     12        0      0  1.0d-00 0  78 SOAGAS22
+79  SOAGAS32     1.00   1  1.0d+05     12        0      0  1.0d-00 0  79 SOAGAS32
+80  SOAGAS42     1.00   1  1.0d+05     12        0      0  1.0d-00 0  80 SOAGAS42
+81  SOAGAS52     1.00   1  1.0d+05     12        0      0  1.0d-00 0  81 SOAGAS52
+82  SOAGAS13     1.00   1  1.0d+05     12        0      0  1.0d-00 0  82 SOAGAS13
+83  SOAGAS23     1.00   1  1.0d+05     12        0      0  1.0d-00 0  83 SOAGAS23
+84  SOAGAS33     1.00   1  1.0d+05     12        0      0  1.0d-00 0  84 SOAGAS33
+85  SOAGAS43     1.00   1  1.0d+05     12        0      0  1.0d-00 0  85 SOAGAS43
+86  SOAGAS53     1.00   1  1.0d+05     12        0      0  1.0d-00 0  86 SOAGAS53
+87  SOAGAS61     1.00   1  1.0d+05     12        0      0  1.0d-00 0  87 SOAGAS61
+88  SOAGAS62     1.00   1  1.0d+05     12        0      0  1.0d-00 0  88 SOAGAS62
+89  SOAGAS71     1.00   1  1.0d+04     12        0      0  1.0d-00 0  89 SOAGAS71
+90  SOAGAS72     1.00   1  1.0d+03     12        0      0  1.0d-00 0  90 SOAGAS72
+91  SOAGAS81     1.00   1  1.0d+03     12        0      0  1.0d-00 0  91 SOAGAS81
+92  SOAGAS82     1.00   1  1.0d+03     12        0      0  1.0d-00 0  92 SOAGAS82
+93  Apine        1.00   1  2.3d-02     0         0      0  1.0d-00 0  93 Apine
+94  Bpine        1.00   1  2.3d-02     0         0      0  1.0d-00 0  94 Bpine
+95  Sabine       1.00   1  2.3d-02     0         0      0  1.0d-00 0  95 Sabine
+96  D3carene     1.00   1  2.3d-02     0         0      0  1.0d-00 0  96 D3Carene
+97  Trp_Ket      1.00   1  2.3d-02     0         0      0  1.0d-00 0  97 Trp_Ket
+98  Limon        1.00   1  7.0d-02     0         0      0  1.0d-00 0  98 Limon
+99  Trpolene     1.00   1  6.7d-02     0         0      0  1.0d-00 0  99 Trpolene
+100 Trpinene     1.00   1  6.7d-02     0         0      0  1.0d-00 0 100 Trpinene
+101 Myrcene      1.00   1  5.4d+01     0         0      0  1.0d-00 0 101 Myrcene
+102 Ocimene      1.00   1  5.4d+01     0         0      0  1.0d-00 0 102 Ocimene
+103 TrpAlc       1.00   1  5.4d+01     0         0      0  1.0d-00 0 103 TrpAlc
+104 Sestrp       1.00   1  4.9d-02     0         0      0  1.0d-00 0 104 Sestrp
+105 SOAAER11     0.80   3  1.0d+08     0         0      1  2.0d-01 4 105 SOAAER11  Aerosols wash out 80%
+106 SOAAER21     0.80   3  1.0d+08     0         0      1  2.0d-01 4 106 SOAAER21
+107 SOAAER31     0.80   3  1.0d+08     0         0      1  2.0d-01 4 107 SOAAER31
+108 SOAAER41     0.80   3  1.0d+08     0         0      1  2.0d-01 4 108 SOAAER41
+109 SOAAER51     0.80   3  1.0d+08     0         0      1  2.0d-01 4 109 SOAAER51
+110 SOAAER12     0.80   3  1.0d+08     0         0      1  2.0d-01 4 110 SOAAER12
+111 SOAAER22     0.80   3  1.0d+08     0         0      1  2.0d-01 4 111 SOAAER22
+112 SOAAER32     0.80   3  1.0d+08     0         0      1  2.0d-01 4 112 SOAAER32
+113 SOAAER42     0.80   3  1.0d+08     0         0      1  2.0d-01 4 113 SOAAER42
+114 SOAAER52     0.80   3  1.0d+08     0         0      1  2.0d-01 4 114 SOAAER52
+115 SOAAER13     0.80   3  1.0d+08     0         0      1  2.0d-01 4 115 SOAAER13
+116 SOAAER23     0.80   3  1.0d+08     0         0      1  2.0d-01 4 116 SOAAER23
+117 SOAAER33     0.80   3  1.0d+08     0         0      1  2.0d-01 4 117 SOAAER33
+118 SOAAER43     0.80   3  1.0d+08     0         0      1  2.0d-01 4 118 SOAAER43
+119 SOAAER53     0.80   3  1.0d+08     0         0      1  2.0d-01 4 119 SOAAER53
+120 SOAAER61     0.80   3  1.0d+08     0         0      1  2.0d-01 4 120 SOAAER61
+121 SOAAER62     0.80   3  1.0d+08     0         0      1  2.0d-01 4 121 SOAAER62
+122 SOAAER71     0.80   3  1.0d+08     0         0      1  2.0d-01 4 122 SOAAER71
+123 SOAAER72     0.80   3  1.0d+08     0         0      1  2.0d-01 4 123 SOAAER72
+124 SOAAER81     0.80   3  1.0d+08     0         0      1  2.0d-01 4 124 SOAAER81
+125 SOAAER82     0.80   3  1.0d+08     0         0      1  2.0d-01 4 125 SOAAER82
+-99 end_table    0.00   0  0.0d-00     0         0      0  0.0d-00 0 -99 end_table
+ #  tracer       SOLU  CHN TCHENA  TCHENB   TCKAQA TCKAQB  ISCVFR  IT #  tracers
+

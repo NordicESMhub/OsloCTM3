@@ -1,0 +1,77 @@
+Aerosol model TODO list:
+
+1. Add fractional mass errors to diagnostics file
+2. Add timescales to diagnostics file, especially precipitation, deposition times
+3. Prevent MATCH from deleting old grib files
+5. blmutl.F90: change from itr_max to relative convergence criteria and abort when itr_max is exceeded
+8. Make time2nc Y2k-compliant (YYYYMMDD)
+9. Restart runs fail because msread appears to be returning error code even though successful, what do perl programs return?
+10. Wet scavenging!
+11. Replace DSTSFPCP with DSTSFWET
+12. Use DSTSFPCP for precipitation scavenging, DSTSFNCL for nucleation scavenging
+13. Use pointers to non-writable data, rather than copying, when passing tvbds info (vai_dst)
+14. FCT: http://www.lcp.nrl.navy.mil/hpcc-ess/fct-bib.html
+15. Modify banner for AlG01
+16. Ensure !AlG01 only computes/prints one windspeed
+17. Move ext_dat_nbr to dst_grd
+18. Move wnd_mdp_nbr to dst_grd
+19. Clean up Weibull PDFs
+
+Fortran90 issues:
+
+5. Convert saturation vapor pressure to inline'd functions with single source for all routines
+7. Add OpenMP self-diagnostics from fff.F90
+12. Make nf90_utl part of nf90_wrp module?
+13. Add intent(in) to parameter list in BXM output routines: mbl2nc,clm2nc,...???2nc
+14. make OPTS=X with ifc generates errors, regardless of OMP setting
+aer: Created netCDF output file dst_mss_bdg.nc
+dst_mbl: lat =  1 flx_mss_vrt_dst_ttl(  1) =  5.8E-07 kg m-2 s-1
+aer: Initialized mobilization data archive in aer.nc
+aer: Initialized dry deposition data archive in aer.nc
+aer: Initialized wet deposition data archive in aer.nc
+aer: Initialized chemistry data archive in aer.nc
+aer: Initialized column mass and optical path data in aer.nc
+
+Run-Time Error 401: Unassigned variable
+
+   In Procedure: dstbdg..bdg_update
+
+Diagnostics Entered From Subroutine dstbdg..bdg_update  Line  530
+
+Entered From MAIN PROGRAM   Line  245
+
+End of diagnostics
+
+Build Status:
+AIX: OK
+
+ALPHA: Unknown, used to work fine
+
+IRIX: OK
+
+Linux: OK
+
+Solaris: OK
+
+Migration to match4 issues:
+1. match3 physlic: dmmr -> mmmr, physics, mmmr->dmmr, outfld 
+   match4 physlic:               physics,             outfld 
+It appears match4 outputs physics values which are assumed to be mmmr
+3. match mailing list:
+http://www.cgd.ucar.edu/pipermail/match/
+
+Phil's new wet dep MATCH:
+/fs/cgd/home0/pjr/match/nwetdep01/src
+Assimilation MATCH:
+/fs/cgd/home0/bundy/match/matchAerAssim4_0_ready/src
+Vanilla MATCH:
+/fs/cgd/home0/bundy/match/match-4.0-beta2/src/
+fl=src/physlic.F
+fl=src/wetdep.F
+fl=dst/dstdpswet.F
+diff /fs/cgd/home0/bundy/match/match-4.0-beta2/${fl} /fs/cgd/home0/bundy/match/matchAerAssim4_0_ready/${fl}
+diff /fs/cgd/home0/bundy/match/match-4.0-beta2/${fl} /fs/cgd/home0/pjr/match/nwetdep01/${fl}
+diff /fs/cgd/home0/pjr/match/nwetdep01/${fl} /fs/cgd/home0/bundy/match/matchAerAssim4_0_ready/${fl}
+
+diff /fs/cgd/home0/pjr/match/nwetdep01/src_scyc/wetdep.F90 /fs/cgd/home0/pjr/match/nwetdep01/nwd02/wetdep.F90 
+

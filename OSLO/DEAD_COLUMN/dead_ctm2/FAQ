@@ -1,0 +1,57 @@
+$Header: /mn/hox/ozon/ctm2_model/ctm2_src/dst_dst/FAQ,v 1.1 2003/04/15 14:41:35 alfgr Exp $ -*-text-*-
+
+This is the Frequently Asked Questions (FAQ) list for the 
+Dust Entrainment And Deposition model, hereafter DEAD. 
+Please read this file before sending questions to the DEAD
+maintainers. The current version of this file is available 
+on-line at http://dust.ps.uci.edu/dead/FAQ
+So that others may benefit from your experience with 
+DEAD, send corrections and additions to this material to
+zender@uci.edu.  
+
+Questions:
+Section 1: Background
+1.1 Where can I get further information on DEAD?
+
+Section 2: Building DEAD
+2.1 Does DEAD work in single precision?
+
+Section 3: Running DEAD
+3.1 How does one run the DEAD?
+3.2 How do I correctly specify wind speed or XXX?
+
+Section 4: Interpreting the results
+4.1 How do I easily compare the results of multiple DEAD runs?
+
+Section 5: Modifying DEAD
+5.1 How do I change the number of dust size bins?
+
+Answers:
+1.1 Where can I get further information on DEAD
+
+The DEAD homepage at http://dust.ps.uci.edu/dead is the central
+repository for DEAD information.
+
+The physical parameterizations used in the DEAD are fully described in 
+<a href="ftp://dust.ps.uci.edu/pub/zender/ppr/ppr_ZBN02.pdf">this paper</a>, 
+and the correct usage of the control parameters (e.g., tokens in
+params.h and dst.h) are documented in those files.
+
+2.1 Does DEAD work in single precision?
+
+Yes. DEAD builds in double precision by default but works fine
+in single precision. Build DEAD with 'make PRC=S' to switch to single 
+precision. 
+
+3.1 How does one run DEAD?
+
+3.2 How do I correctly specify the wind speed or XXX?
+
+4.1 How do I easily compare the results of multiple DEAD runs?
+
+5.1 How do I change the number of dust size bins?
+The number of size bins for DEAD is easily changed by editing the
+preprocessor tokens DST_NBR in params.h to whatever number of
+sizes are desired.  
+
+End of DEAD FAQ

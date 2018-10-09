@@ -1,0 +1,24 @@
+The ocean emits some species listed here.
+
+You need to complete the paths.
+
+'EMIS/POET/oceans.co.nc'
+  601    1.0000d+00  1x1   99  9999  OCE   1    1    0    0   'oceans'    0000
+    CO 1.d0         # Oceanic emissions not included in MEGAN
+    xxx 0 To close this data set
+'EMIS/POET/oceans.c2h4.nc'
+  601    1.0000d+00  1x1   99  9999  OCE   1    1    0    0   'oceans'    0000
+    C2H4 1.d0         # Oceanic emissions not included in MEGAN
+    xxx 0 To close this data set
+'EMIS/POET/oceans.c2h6.nc'
+  601    1.0000d+00  1x1   99  9999  OCE   1    1    0    0   'oceans'    0000
+    C2H6 1.d0         # Oceanic emissions not included in MEGAN
+    xxx 0 To close this data set
+'EMIS/POET/oceans.c3h6.nc'
+  601    1.0000d+00  1x1   99  9999  OCE   1    1    0    0   'oceans'    0000
+    C3H6 1.d0         # Oceanic emissions not included in MEGAN
+    xxx 0 To close this data set
+'EMIS/POET/oceans.c3h8.nc'
+  601    1.0000d+00  1x1   99  9999  OCE   1    1    0    0   'oceans'    0000
+    C3H8 1.d0         # Oceanic emissions not included in MEGAN
+    xxx 0 To close this data set

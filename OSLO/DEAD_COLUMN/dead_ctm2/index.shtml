@@ -1,0 +1,327 @@
+<!-- $Header: /mn/hox/ozon/ctm2_model/ctm2_src/dst_dst/index.shtml,v 1.1 2003/04/15 14:41:36 alfgr Exp $
+
+Purpose: Homepage for DEAD, the Dust Entrainment And Deposition Model
+
+Usage:
+http://www.ess.uci.edu/~zender/dead/index.shtml
+file:/home/zender/aer/index.shtml
+
+scp -p ~/aer/index.shtml dust.ess.uci.edu:/var/www/html/dead/index.shtml
+scp -p ~/aer/index.shtml www.ess.uci.edu:/home/zender/public_html/dead/index.shtml
+-->
+
+<table width="100%"><tr><td align="left" valign="top">/
+<a href="http://www.ess.uci.edu">UCI ESS</a> /
+<a href="http://www.ess.uci.edu/~zender">Zender Group</a> /
+<a href="http://dust.ess.uci.edu/dead">DEAD</a> /
+<a href="http://dust.ess.uci.edu/dead/bxm_home.html">Box Model</a> /
+</td>
+
+<td align="right" valign="top">
+[<a href="http://www.cgd.ucar.edu/csm">CCSM</a>]
+[<a href="http://www.cgd.ucar.edu/cms/match">MATCH</a>] 
+</td></tr></table>
+
+<!doctype html public "-//W3C//DTD HTML 3.2//EN">
+<html>
+<head>
+   <title>DEAD Homepage</title>
+   <meta name="Generator" content="Old fashioned typing">
+   <meta name="Author" content="Charles S. Zender">
+   <meta name="Keywords" content="DEAD Homepage, mineral dust, entrainment, mobilization, deposition, scavenging, microphysics">
+</head>
+<body bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#008080" alink="#FF0000">
+
+<p><hr width="100%"></p>
+<p><h1 align=center>Welcome to the Dust Entrainment and Deposition (DEAD) Model Homepage</h1>
+<p><h2>Current version is <!--#include virtual="VERSION"--> released on <!--#flastmod file="VERSION"--> </h2>
+
+<p><ul>
+<li><a href="#Definition">What is DEAD?</a></li>
+<li><a href="#News">DEAD News & Announcements</a></li>
+<li><a href="#BXM">DEAD On-line Box Model</a></li>
+<li><a href="#Manuscripts/Papers">Manuscripts/Papers</a></li>
+<li><a href="#Version">Version Summary</a></li>
+<li><a href="#Movies">Movies</a></li>
+<li><a href="#Download">Download/CVS DEAD Software</a></li>
+<li><a href="#README/INSTALL/FAQ/ChangeLog/TODO">README/INSTALL/FAQ/ChangeLog/TODO</a></li>
+<li><a href="#Problems">Known Problems with DEAD</a></li>
+</ul>
+<hr>
+
+<dt><a name="Definition"></a></dt>
+<h2>What is DEAD?</h2>
+<p>The Dust Entrainment and Deposition Model (DEAD) is a wind erosion
+and mineral dust transport model. 
+DEAD may be run standalone, as a box model (BXM), or as a mineral dust
+module embedded in a large scale atmospheric host model. 
+DEAD is currently embedded in 
+<a href="http://www.cgd.ucar.edu/cms/match">MATCH</a>,
+a Chemical Transport Model (CTM), 
+<a href="http://www.geofysikk.uio.no">Univeristy of Oslo</a> CTM2,
+the <a href="http://www.ess.uci.edu/~prather">UC Irvine CTM</a>, 
+and in the NCAR
+<a href="http://www.cgd.ucar.edu/cms/ccm3">CCM</a>, a General
+Circulation Model (GCM).
+A reference 
+<a href="ftp://dust.ess.uci.edu/pub/zender/ppr/ppr_ZBN03.pdf">manuscript</a>  
+describing the physics of DEAD version 1.x is in press in
+<i>J. Geophys. Res.</i>, and numerous other manuscripts using or
+referring to DEAD are listed below.
+</p>
+
+In BXM mode, DEAD provides a flexible front-end for specification of
+environmental parameters (e.g., wind speed) and microphysical
+parameters. 
+This mode is useful for offline sensitivity studies, prediction
+of erosion in wind tunnels and source regions, and comparison to
+station data.
+In CTM mode, DEAD predicts realistic evolution of dust storms and
+transport based on analyzed global meteorology.
+This mode is useful for hindcasting and short-term forecasting of
+dust events (e.g., during field campaigns) and present day dust
+climatology. 
+In GCM mode, DEAD provides radiative feedbacks which alter and respond 
+to the climate of the host GCM. 
+This mode is useful for analyzing the effect of dust on climate,
+and the sensitivity of dust loading to past, present, and future
+climate changes.
+
+DEAD comprises the actual subroutines used in both the 
+<a href="http://www.cgd.ucar.edu/cms/ccm3">CCM</a> and 
+<a href="http://www.cgd.ucar.edu/cms/match">MATCH</a>, along with
+driver subroutines for offline (<a href="#BXM">box model</a>)
+operation.  
+DEAD is freely available (see below) and is a useful tool for
+scientific studies of wind erosion, mineral dust aerosol, and
+heterogeneous chemistry.
+<hr></p>
+
+<dt><a name="News"></a></dt>
+<h2>DEAD News</h2>
+<ul>
+<li>20030206: On-line box model produces graphical timeseries downloadable
+<li>20030201: Wind speed PDFs implemented (defaults to Weibull distribution)
+<li>20030121: Sandblasting parameterization invoked with <tt>make USR_TKN=-DAlG01</tt></li>
+<li>20020109: Box model runs directly from website
+<li>20021004: Fix small mass leak of largest particles in dry deposition</li>
+<li>20020809: Homepage debuts</li>
+<li>20020719: First public release of DEAD</li>
+<li>19651223: Pre-release <a href="http://www.dead.net/">Dead</a> forms</li>
+</ul>
+<hr></p>
+
+<dt><a name="BXM"></a></dt>
+<h2>DEAD On-line Box Model</h2>
+DEAD compiles into a 
+<a href="http://dust.ess.uci.edu/dead/bxm_home.html">box model</a>
+that you can 
+<a href="http://dust.ess.uci.edu/dead/bxm_config.html">run on-line here</a>
+(yes, it runs from the shell command line, too).
+This unusual feature raises some eyebrows (or, in the case of the hirstute author, eyebrow).
+What is the purpose of the box model?
+We believe that the same processes which generate dust in laboratory
+wind tunnels also generate most large-scale dust events.
+This is a difficult hypothesis to test because of the mismatch of
+scales and scarcity of accurate measurements of natural dust storms. 
+DEAD is testable against station and wind tunnel timeseries precisely so
+we can improve the wind tunnel-scale processes which contribute to
+observations.
+We want (you to help us) to test our GCM dust model against any and
+all station and wind tunnel dust measurements and to use the resulting
+biases to understand erosive processes better and to refine DEAD.</p>
+DEAD should nail well-controlled laboratory and field wind tunnel
+measurements.
+That way, biases in the global predictions of DEAD can be constrained
+to errors in input data or representation of large scale processes
+(transport, mixing, deposition). 
+
+We have one semi-funded and one submitted proposal to use this
+technique to improve understanding and representation (in DEAD) of
+dust emissions using <it>in situ</it> measurements from the  
+<a href="http://www.bsyse.wsu.edu/saxton/cp3/">Columbia Plateau</a>,
+<a href="http://climchange.cr.usgs.gov/info/sw/">Mojave Desert</a>, and 
+<a href="http://www.tech-db.ru/istc/db/projects.nsf/prjn/K-424">Aral Sea</a>.
+Please contact us if you are interested in evaluating your favorite
+dust measurement timeseries (or do it yourself and let us know what
+you find!).</p>
+
+The 
+<a href="http://www.cgd.ucar.edu/cms/crm">Column Radiation Model</a> (CRM)
+is another example of a physical process model that works in a reduced
+dimension mode, in this case a single vertical column. 
+We have modified the CRM radiation code (which may be used in CCM 3.6)
+to account for the dust predicted by DEAD, so the two are synergistic. 
+Contact us for more details.
+<hr></p>
+
+<dt><a name="Manuscripts/Papers"></a></dt>
+<h2>DEAD Manuscripts/Papers</h2>
+<ul>
+<li><!-- ZBN03 -->
+Zender, C. S., H. Bian, and D. Newman, The mineral Dust Entrainment
+And Deposition (DEAD) model: Description and 1990's dust climatology,
+In Press in <i>J. Geophys. Res.</i>, 2003.
+<a href="ftp://dust.ess.uci.edu/pub/zender/ppr/ppr_ZBN03.pdf">PDF</a>
+<a href="ftp://dust.ess.uci.edu/pub/zender/ppr/ppr_ZBN03.ps.gz">Postscript</a></dd>
+</li>
+<li><!-- BiZ03 -->
+Bian, H., and C. S. Zender, Mineral dust and global tropospheric
+chemistry: Relative roles of photolysis and heterogeneous uptake,
+Submitted to <i>J. Geophys. Res.</i>, 2002.
+<a href="ftp://dust.ess.uci.edu/pub/zender/ppr/ppr_BiZ03.pdf">PDF</a>
+<a href="ftp://dust.ess.uci.edu/pub/zender/ppr/ppr_BiZ03.ps.gz">Postscript</a></dd>
+</li>
+<li><!-- ZNT03 -->
+Zender, C. S., D. Newman, and O. Torres, Spatial Heterogeneity in Aeolian
+Erodibility: Uniform, Topographic, Geomorphic, and Hydrologic
+Hypotheses, Submitted to <i>J. Geophys. Res.</i>, 2002. 
+<a href="ftp://dust.ess.uci.edu/pub/zender/ppr/ppr_ZNT03.pdf">PDF</a>
+<a href="ftp://dust.ess.uci.edu/pub/zender/ppr/ppr_ZNT03.ps.gz">Postscript</a></dd>
+</li>
+<li><!-- GZC02 -->
+Grini, A., C. S. Zender, and P. Colarco, Saltation sandblasting
+behavior during mineral dust aerosol production,
+<i>Geophys. Res. Lett.</i>, <b>29</b>(18), 1868, doi:10.1029/2002GL015248, 2002.
+<a href="ftp://dust.ess.uci.edu/pub/zender/ppr/ppr_GZC02.pdf">PDF</a>
+<a href="ftp://dust.ess.uci.edu/pub/zender/ppr/ppr_GZC02.ps.gz">Postscript</a></dd>
+</li> 
+<li><!-- MLD03 -->
+Mahowald, N. M., C. Luo, and J. del Corral, and C. S. Zender,
+Interannual variability in Atmospheric Mineral Aerosols from a 22-year
+Model Simulation and Observational Data, In Press in <i>J. Geophys. Res.</i>, 2003.
+</li>
+<li><!-- MZL02 -->
+Mahowald, N. M., C. S. Zender, C. Luo, D. Savoie, O. Torres, and J. del Corral,
+Understanding the 30 year Barbados desert dust record, In Press in
+<i>J. Geophys. Res.</i>, 2002.
+</li>
+<li><!-- LMZ03 -->
+Luo, C., N. M. Mahowald, C. S. Zender, and J. del Corral,
+A 22-year Climatology of Mineral Aerosols, Submitted to <i>J. Geophys. Res.</i>, 2003.
+</li>
+</ul>
+<hr></p>
+
+<dt><a name="Version"></a></dt>
+<h2>Version Summary</h2>
+<ul>
+<li><b>DEAD 1.3.2</b>, Sandblasting option included with <tt>-DAlG01</tt>
+<li><b>DEAD 1.3.1</b>, Synchronization for sandblasting modifications
+<li><b>DEAD 1.3.0</b>, Reads WSU-format external forcing data from <tt>fl_ext_dat.nc</tt>
+<li><b>DEAD 1.2.7</b>, Rearranged dependencies, builds cleanly & runs with Intel <tt>ifc</tt>
+<li><b>DEAD 1.2.6</b>, Drag coefficient more accurate for Re > 0.1
+<li><b>DEAD 1.2.5</b>, Fix dry deposition leak, ppt change in large particle sedimentation
+<li><b>DEAD 1.2.4</b>, Lahey <tt>lf95</tt> fixes for <tt>OPTS=X</tt>
+<li><b>DEAD 1.2.3</b>, Lahey <tt>lf95</tt> fixes for <tt>PRC=D</tt>
+<li><b>DEAD 1.2.2</b>, Lahey <tt>lf95</tt> compatibility for <tt>PRC=S</tt>
+<li><b>DEAD 1.2.1</b>, <tt>dst_mss_bdg.nc</tt> timestepping fix
+<li><b>DEAD 1.2.0</b>, Added documentation for public version
+<li><b>DEAD 1.1.15</b>, Version used in this <a href="ftp://dust.ess.uci.edu/pub/zender/ppr/ppr_ZBN03.pdf">manuscript</a>
+</ul>
+<hr></p>
+
+<dt><a name="Movies"></a></dt>
+<h2>Movies Summary</h2>
+<ul>
+<li>DEAD's <a href="ftp://dust.ess.uci.edu/pub/zender/match_dst/dstmch26_19980101_19981231_DSTODXC.mpg">simulation of 1998</a> in MPEG format.
+This movie shows the predicted daily average optical depth for all of
+1998.
+Note the intense Asian dust storms in April that propogate across the
+Pacific. 
+</ul>
+<hr></p>
+
+<dt><a name="Download"></a></dt>
+<h2>Download DEAD model source distribution.</h2> 
+<p>The distribution includes the complete DEAD source code necessary to
+build and run DEAD (in box model mode) on your own machine.</p>
+<ul>
+<li>Source code and documentation in tarball format: <a href="ftp://dust.ess.uci.edu/pub/zender/dead/dead.tar.gz">dead.tar.gz</a> (209 Kb compressed tar-file)</li>
+</ul>
+Additional required software is a Fortran9X compiler, 
+<a href="http://www.gnu.org/software/automake">GNU Make</a>, and a
+working installation of the 
+<a href="http://www.unidata.ucar.edu/packages/netcdf">netCDF</a>  
+Fortran90 interface.
+
+<p>CVS access to DEAD is coming soon.</p>
+<!--
+The <a href="http://dust.ess.uci.edu/home/zender/cvs">DEAD CVS Repository</a>
+contains up-to-the-minute sources and is the easiest way to stay
+synchronized with DEAD features.
+Retrieving DEAD requires some familiarity with GNU development tools,
+especially <a href="http://www.cvshome.org">CVS</a> and 
+<a href="http://www.gnu.org/software/make/make.html">Make</a>.
+You must first log into the DEAD CVS server:
+<p><tt>cvs -d:pserver:anonymous@dust.ess.uci.edu:/home/zender/cvs/dead login</tt></p>
+Simply hit return when asked for the CVS password.
+This logging in procedure is only required the first time you access
+the CVS server.
+Then you may retrieve any DEAD distribution you wish.
+Usually you will wish to retrieve a recent tagged (i.e., released)
+version.
+This command retrieves and places DEAD version <tt>2.5.3</tt> into a
+local directory named <tt>dead-2.5.3</tt>: 
+<p><tt>cvs -z3 -d:pserver:anonymous@dust.ess.uci.edu:/home/zender/cvs/dead co -r dead-2_5_3 -d dead-2.5.3 dead</tt></p>
+This command retrieves the current ("bleeding edge") development
+version of DEAD into a local directory named <tt>dead</tt>:
+<p><tt>cvs -z3 -d:pserver:anonymous@dust.ess.uci.edu:/home/zender/cvs/dead co -kk dead</tt></p>
+Track changes to the development version using
+<p><tt>cd dead;cvs update -kk</tt></p>
+-->
+
+<hr></p>
+
+<dt><a name="README/INSTALL/FAQ/ChangeLog/TODO"></a></dt>
+<h2>README/INSTALL/FAQ/ChangeLog/TODO</h2>
+<p>Files containing useful information about the current DEAD distribution:
+<ul>
+<li><a href="./README"><tt>README</tt></a> briefly describes DEAD, links to further
+documentation, and contact information for further questions.</li>
+<li><a href="./INSTALL"><tt>INSTALL</tt></a> contains the installation
+instructions for the DEAD box model.</li> 
+<li><a href="./FAQ"><tt>FAQ</tt></a> contains answers to Frequently
+Asked Questions about DEAD. Please read this file before sending
+questions to the DEAD maintainers.</li>
+<li><a href="./ChangeLog"><tt>ChangeLog</tt></a> Up-to-date history of
+DEAD changes</li>
+<li><a href="./TODO"><tt>TODO</tt></a> An unordered list describing the features and
+fixes we currently have in mind for DEAD.</li> 
+</ul>
+The <tt>Makefile</tt> that comes with the DEAD box model
+<i>requires</i> a utility called <tt>makdep</tt> to generate
+dependencies for the Fortran programs.
+Download the source code, <a href="./makdep.c"><tt>makdep.c</tt></a>,
+compile it with <tt>cc -o makdep makdep.c</tt>, and place the
+resulting executable in your path <i>before</i> you try to build DEAD.
+<hr></p>
+
+<dt><a name="Problems"></a></dt>
+<h2>Known Problems with DEAD:</h2>
+<ul>
+<li>No problemo</li>
+</ul>
+<p><hr></p>
+
+<table width="100%"><tr><td align="left" valign="top">/
+<a href="http://www.ess.uci.edu">UCI ESS</a> /
+<a href="http://www.ess.uci.edu/~zender">Zender Group</a> /
+<a href="http://dust.ess.uci.edu/dead">DEAD</a> /
+<a href="http://dust.ess.uci.edu/dead/bxm_home.html">Box Model</a> /
+</td>
+
+<td align="right" valign="top">
+[<a href="http://www.cgd.ucar.edu/csm">CCSM</a>]
+[<a href="http://www.cgd.ucar.edu/cms/match">MATCH</a>] 
+</td></tr></table>
+
+<p>
+<hr></p>
+Address questions and comments about DEAD to Charlie Zender, 
+<address>
+<a href="mailto:zender_at_uci_dot_edu">zender at uci dot edu</a>
+</address>
+
+</body>
+</html>

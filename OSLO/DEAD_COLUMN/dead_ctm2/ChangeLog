@@ -1,0 +1,2032 @@
+2003-02-19  Charlie Zender  <zender@uci.edu>
+
+	* Cleaned up wbl_mdl.F90, gmm_mdl.F90 some more and added them to libcsz_f90
+
+2003-02-16  Charlie Zender  <zender@uci.edu>
+
+	* Cleaned up wbl_mdl.F90, gmm_mdl.F90
+
+2003-02-12  Charlie Zender  <zender@uci.edu>
+
+	* Fixed bug in drag coefficient interpolation introduced in 1.2.6.
+	Bug only affected particles with 2 < Re < 5, i.e., dust particles larger
+	than 80 microns diameter, so not to worry.
+	I had dylexically reversed the weights. So shoot me!
+	Thanks to Alan Bol for pointing	this out.
+
+2003-01-28  Alf Grini <alf.grini@geofysikk.uio.no>
+
+	* Still working on getting PDF winds in
+	
+	* Identified and fixed following bug:
+	We cannot modify ovr_src_snk_mss in dstmbl.F90 because when running
+	on several processors, every processor wrote to same ovr_src_snk_mss
+	in dstaer module. Thus ovr_src_snk_mss in dstaer was random.
+	Same was true for mss_frc_src and other variables in dstaer
+
+	Previous version of AlG01 formulation suffered from this problem
+	because ovr_src_snk_mss was constantly overwritten.
+	Thus ovr_src_snk_mss used in flx_mss_vrt_dst_prt was random
+	
+	Fixed problem as follows:
+	Created ovr_src_snk_mss_wbin and ovr_src_snk_mss_add in dstmbl
+	ovr_src_snk_mss_wbin is overlap fraction for given wind speed "bin"
+	ovr_src_snk_mss_add which is mean overlap fraction averaged over PDF
+	Thus ovr_src_snk_mss is never overwritten
+
+	This fix requires sending ovr_src_snk_mss_add (which can change)
+	to flx_mss_vrt_dst_prt() so that flx_mss_vrt_dst_prt() uses overlap fraction
+	computed in dstmbl(), _not_ overlap fraction saved in dstaer().
+	flx_mss_vrt_dst_prt() no longer uses dstaer.
+
+	* Solution (triple set of variables in dstaer) works, but is not elegant
+		
+	* Output variables with "_add" (e.g., mss_frc_src_add) to mbl2nc()
+	
+2003-01-27  Alf Grini <alf.grini@geofysikk.uio.no>
+
+	* Fixed bug in dstmbl.F90 where previous version set mss_frc_src
+	to zero if vertical flux was zero. 
+	Now set mss_frc_src to previous value if fluxes are zero
+	(does not matter in AlG01 formulation).
+	
+
+	* Left write statements in dstmbl to show how the the new formulation works.
+	These should be taken out in a later version
+	
+2003-01-23  Alf Grini <alf.grini@geofysikk.uio.no>
+
+	* Added flx_mss_hrz_slt_ttl_lut in dstsltsbl.F90 it is calculated in
+	offline sltsbl program and accesses by
+	dstmblutl.F90:flx_mss_hrz_slt_ttl_AlG01_get()
+
+	* Call new subroutine from dstmbl.F90 within a "ifdef AlG01" test 
+
+	* Changed "use dstsltsbl:only..." to "use dstsltsbl" in dstmbl.F90
+
+2003-01-21  Alf Grini <alf.grini@geofysikk.uio.no>
+
+        * Changed dust code to make it run with wind speed PDFs
+	wbl_mdl.F90 Weibull distribution of wind speed
+	gmm_mdl.F90 Gamma function gamma(x) based on libspecfun library
+
+        * Changed dstmbl.F90 
+	New parameter wnd_mdp_nbr (Number of wind midpoint bins)
+        New parameter percentile (Fraction of distribution to take into account)
+	New variable wnd_mdp_wgt (Weighting of wind bins)
+        New variable wnd_mdp_min (Minimum wind speed to take into account)
+	New variable wnd_mdp_max (Maximum wind speed to take into account)
+
+        * Call weibull_winds just after we have wnd_rfr to calculate the
+	statistical distribution of winds 
+
+	* Call dstblm inside the loop for wnd_wbl_nbr to get wnd_rfr for
+	all wnd_mdp values 
+
+	* Introduced new variables which are only valid for a wnd_mdp bin
+
+	* Initialize mss_frc_src ovr_src_snk_mss and so on in a special way
+
+        * Add loop to add up quantities and weight with flx_mss_vrt_dst_ttl_wbin
+
+	* Get global quantities by dividing them with the total flx_mss_vrt_dst_ttl
+
+        * use dstgrd:dst_src_nbr to make tmp version of mss_frc_src and overlap fraction
+	* Changes to dstblm.F90:
+	No longer called with wnd_mdp_mrd and wnd_mdp_znl but simply with wnd_mdp
+
+	* Using old version:
+	New and old version are identical when wnd_mdp_nbr is set to 1
+
+	* Outstanding problems related to AlG01 horizontal flux:
+	I ran into the problem previously described by Charlie with
+	respect to horizontal flux. Each wind will give a horizontal
+	flux. However, using the simple horizontal flux is not OK because
+	we look up the value of (alpha) which is based on a size
+	distributed horizontal flux. When only calculating one wind speed,
+	it is ok to say that all this disappears in the fudge factor, but
+	when we have to weight with respect to flux from different wind
+	speeds, this is not OK. 
+
+	I think the AlG01 formulation should be OK too, once there is a
+	subroutine called flx_mss_hrz_slt_ttl_AlG01_get(pick from
+	lookuptable). Then the right relations between the  fluxes from
+	different wind speeds should be OK. The loop which averages the
+	overlap fractions and so on should be OK even for AlG01
+	formulation. 
+
+	Actually, this is problem only disappears into the fudge factor
+	when using the box model. Imagine two neighboring grid cells with
+	different wind speeds, they have different size distribution of
+	their horizontal flux, and even though we look up "alpha", the
+	absolute value of the hrz flux is different, and we don't get the
+	right vertical flux. 
+
+2003-01-21  Charlie Zender  <zender@uci.edu>
+
+	* cvs tag -c dst-1_3_2
+	Changes since dst-1_3_1: Sandblasting is optional with -DAlG01
+
+	* Print mobilization parameterization in dst_bnr()
+
+	* Fix Makefile to really work with USR_TKN=-DAlG01
+
+2003-01-16  Charlie Zender  <zender@uci.edu>
+
+	* Discussed with Alf the possible shortcomings of the sandblasting
+	implementation. There are two main possible inconsistencies:
+
+	First, it is unclear whether the AlG01 formulation for kinetic
+	energy (KE) available to release modes should be computed from
+	wnd_frc or wnd_frc_slt. 
+	Should increase in wind friction speed due to saltation also
+	increase the kinetic energy available for sandblasting?
+	Answer is non-trivial because as saltation increases, friction
+	speed increases so particles are lofted higher above the surface,
+	giving them more potential energy. At the same time, the mean
+	wind profile near the surface has a steeper gradient, so
+	mean horizontal transport slows down, reducing the amount of 
+	kinetic energy in the mean flow. However, obviously the eddy
+	kinetic energy increases with turbulence, and the saltating
+	particles are moving and sandblasting the surface with the eddies,
+	not with the mean flow. Thus it seems appropriate to use
+	wnd_frc_slt to determine the KE available for sandblasting.
+	In this initial implementation, however, Alf uses wnd_frc,
+	not wnd_frc_slt, to determine the KE.
+	Perhaps the sensitivity to this assumption should be analyzed.
+	
+	Second: The original DEAD saltation code uses a "simple" saltation
+	mass flux based on Whi79, flx_mss_hrz_slt_ttl_Whi79
+	The new AlG01 saltation/sandblasting code computes a "complex"
+	saltation mass flux based on AlG01, flx_mss_hrz_slt_ttl_AlG01.
+	Thus there are two independent estimates of the same quantity.
+	flx_mss_hrz_slt_ttl_AlG01 is determined by the sum of the
+	individual saltation mass fluxes of each size of saltating soil.
+	The offline lookup table code uses about 10,000 different sizes
+	of saltator to determine the amount of each of the dust modes
+	that are liberated. The offline code integrates the AlG01
+	formulation over the parent soil distribution to determine the
+	sandblasting mass efficiency of each dust mode by the given 
+	soil blend for a given friction speed. It does this by knowing
+	the threshold friction speed for each size saltator (computed
+	off-line by mie, recall that the threshold speed does not depend on
+	ambient wind speed, only on particle size). It keeps track
+	of all sandblasted particles and computes the fractions of 
+	total sandblasted flux that occur in each of the 3 source modes. 
+	It also computes the net mass sandblasting efficiency for all the
+	modes (dst_slt_flx_rat_ttl="alpha"). Given the model
+	flx_mss_hrz_slt_ttl_Whi79 and the dst_slt_flx_rat_ttl returned by
+	the lookup table, the source modes are then mapped into the
+	transport modes using the matrix of overlap factors and
+	mss_frc_src. Thus the reason for using flx_mss_hrz_slt_ttl_Whi79
+	rather than flx_mss_hrz_slt_ttl_AlG01 in the online dust model
+	is that it takes thousands of integrations to obtain
+	flx_mss_hrz_slt_ttl_AlG01. So our philososphy was to use AlG01
+	to provide the size distribution of the sandblasted dust, but
+	not to provide any new information about the total horizontal
+	saltation mass flux. So, it would be more consistent to archive 
+	flx_mss_hrz_slt_ttl_AlG01 in the lookup table as well, and to 
+	use that instead of flx_mss_hrz_slt_ttl_Whi79 in the online
+	model. 
+	
+	* Since port appears clean, am removing -DAlG01 from makefile
+	to make sandblasting non-default, and committing this as
+	dst-1_3_2. 
+
+	* Verified that new box model running new code (i.e., with
+	sandblasting) gives identical answers to Alf's _sbl branch
+	box model when inputs are identical.
+
+	* Verified that new box model running old code (i.e., no
+	sandblasting) gives same answers as old box model running old code
+
+Tue Jan 14 13:57:12 2003  Charles Sutton Zender  <charlesz@gauss.uio.no>
+
+	* Merged dstmbl.F90, aer.F90, dstsfc.F90, dsttibds.F90, main.F 
+
+	* Merged dstaer.F90: Removed lon_idx
+
+	* Merged dstpsd.F90: Modified Alf's code so AlG01 size distribution
+	used when AlG01 token defined, rather than #if 1, and Dal87 used when
+	AlG01 not defined.
+
+	* Added dstsltsbl.F90
+
+	* Began merging Alf's sandblasting code. 
+	This code originally based on Alf's match_brnch_dst_sbl from dst-1_1_1.
+	Many of the code change regions are demarcated by alf++ and alf--
+
+	* cvs tag -c dst-1_3_1
+	Changes since dst-1_3_0: Some modifications for web box model
+	Synchronization tag for beginning of sandblasting code
+
+2002-12-11  Dave Newman  <newman@biogenic.ps.uci.edu>
+
+	* cvs tag -c dst-1_3_0
+	
+	* added --fl_ext_dat="..." option to read in external forcing data
+	(currently just zonal and meridional wind)
+	
+	* added fl_ext_dat.nc to archive to demo above option
+	(e.g. % aer --time_nbr=86 --fl_ext_dat="fl_ext_dat.nc")
+	
+
+2002-11-25  Charlie Zender  <zender@uci.edu>
+
+	* cvs tag -c dst-1_2_7
+	Changes since dst-1_2_6: Rearranged some dependencies, builds with ifc
+
+2002-11-24  Charlie Zender  <zender@uci.edu>
+
+	* Initialize derived budget variables to 0.0 so they are defined
+	first time they are used. They are always multiplied by 0.0 the
+	first time they are used, so the answers do not change, but now
+	the ifc compiler will not flag the variables as undefined during use.
+
+	* Code compiles and runs with ifc, but chokes in bdg_update() with
+	OPTS=X 
+
+	* Moved wnd_rfr_get(), snw_frc_get() from dstmblutl.F90 to
+	blmutl.F90 to improve dependencies
+
+	* Commented out unused labels
+
+	* Removed last statement function
+
+	* Moved all thermodynamic routines from blmutl.F90 to dstblm.F90
+	Removed dependence of dstblm.F90 on blmutl.F90
+
+2002-10-22  Charlie Zender  <zender@uci.edu>
+
+	* Created preliminary FAQ
+
+2002-10-10  Charlie Zender  <zender@uci.edu>
+
+	* Add intent's to many prototypes
+
+	* Modularize dSVPdT functions
+
+	* Add _r8 to some constants where it was forgotten
+
+2002-10-05  Charlie Zender  <zender@uci.edu>
+
+	* Fall speed for ellipsoids implements using method of Gin03
+	Appears to give correct answers for spherical case
+
+	* dstpsd.F90: Explicitly set particle aspect ratio
+
+	* dpsdryutl.F90: Support CEISK
+
+2002-10-03  Charlie Zender  <zender@uci.edu>
+
+	* cvs tag -c dst-1_2_6
+	  Changes since dst-1_2_5: Drag coefficient more accurate for Re > 0.1
+
+	* Added ellipsoidal aspect ratio routines
+
+2002-10-02  Charlie Zender  <zender@uci.edu>
+
+	* Change mpc_dst_mdl from bdg_gam_dry() to bdg_gam_wet()
+
+2002-09-30  Charlie Zender  <zender@uci.edu>
+
+	* Implement advanced drag coefficient cff_drg_fst_scl()
+
+2002-09-28  Charlie Zender  <zender@uci.edu>
+
+	* Call inline'd thermodynamic and stability routines
+
+2002-09-27  Charlie Zender  <zender@uci.edu>
+
+	* cvs tag -c dst-1_2_5
+	  Changes since dst-1_2_4: Fix dry dep leak, ppt change in sedimentation
+
+	* Begin to inline thermodynamic and stability routines
+
+	* Remove save statement from dstdpsutl
+
+	* Replace dns_prt by dns_prt-dns_mdp in exact sedimentation solution
+
+	* Fix leak in surface layer dry deposition found by Dave Newman
+
+2002-09-24  Charlie Zender  <zender@uci.edu>
+
+	* Added missing *.h files to distribution
+
+	* cvs tag -c dst-1_2_4
+	* Changes since dst-1_2_3: Lahey OPTS=X, web site changes
+
+	* Added makdep.c to Makefile so distribution is more standalone
+
+	* Removed unsafe dmn_nbr_max from dsttibds
+
+	* Fixed box model on match_dst_old branch to run with Lahey
+
+	* Removed size dependence of CaCO3 fraction (possibly temporarily) 
+
+	* Lahey builds, runs with OPTS=X
+
+2002-09-19  Charlie Zender  <zender@uci.edu>
+
+	* cvs tag -c dst-1_2_3
+	* Changes since dst-1_2_2: Lahey builds, runs with PRC=D
+
+	* Enclose float version of overloaded routines in #ifndef PRC_DBL 
+	to avoid ambiguity in overload resolution on lf95
+
+	* Use r8 on various routines to allow lf95 to compile double
+	precision without using --dbl switch. 
+
+2002-09-18  Charlie Zender  <zender@uci.edu>
+
+	* lf95 is unable to disambiguate ftn_arg_get() for doubles
+
+	* cvs tag -c dst-1_2_2
+	* Changes since dst-1_2_1: Lahey builds, dst_mss_bdg.nc
+	timestepping fix 
+	
+2002-09-17  Charlie Zender  <zender@uci.edu>
+
+	* Restore timestepping to dst_mss_bdg.nc 
+
+	* Initialize nstep before using in BXM dst_psd_ini()->aersz2nc()
+
+	* Lahey compiler incorrectly diagnoses uninitialized variables
+	in phyzlic, dstchm, so will not run code in full debugging mode
+
+	* Pass q_dst to mmrd2mmrm to satisfy Lahey compiler
+
+2002-09-13  Charlie Zender  <zender@uci.edu>
+
+	* Allow for #define MATCH in initialization of q_cst
+
+2002-09-10  Charlie Zender  <zender@uci.edu>
+
+	* Box model had no time-variation because wet scavenging was
+	cleaning out all aerosol. Set cld_frc=0.0 so only sink is dry dep.
+
+2002-09-09  Charlie Zender  <zender@uci.edu>
+
+	* cvs tag -c dst-1_2_1
+        * cvs tag -c match-4_0_beta2-dst-1_2_1
+	Synchronization tag for creation of match_dst_mom
+
+2002-08-09  Charlie Zender  <zender@uci.edu>
+
+	* cvs tag -c dst-1_2_0
+	* Changes since dst-1_1_5: Spruced up documentation for public
+	release. No physics changes.
+
+2002-06-18  Charlie Zender  <zender@uci.edu>
+
+	* cvs tag -c dst-1_1_5
+        * cvs tag -c match-4_0_beta2-dst-1_1_5
+	* Changes since dst-1_1_3: No physics changes, but most
+	runs are using nocoast/nopole erodibility factors.
+
+	* Changed real(r8),intent(in),dimension(:)::obuf back to
+	real(r8),intent(in)::obuf(*) because this was causing AIX
+	and PGI to core dump, although IRIX worked fine.
+
+	* Removed check on mbl_bsn_fct > 1.0, which is now legal for
+	some erodibility factors
+
+2002-06-05  Charlie Zender  <zender@uci.edu>
+
+        * Allow 64 bit mode ABI (addresses are all 64 bits) on AIX
+        when compiled with ABI=64.
+
+2002-05-20  Charlie Zender  <zender@uci.edu>
+
+	* Submitted dstmch85 which is vai_thr=0.3 but employs nocoast
+	basin factor where all sources neighboring an ocean point are
+	eliminated
+
+2002-05-15  Charlie Zender  <zender@uci.edu>
+
+	* Noted that new NCEP file list uses different GRIB files for
+	both 2D and 3D fields for entire period beginning 19970301.
+
+2002-04-30  Charlie Zender  <zender@uci.edu>
+
+	* Changed inlined statement functions to module functions for
+	oro_is_ocn() and other utilities
+
+2002-04-21  Charlie Zender  <zender@uci.edu>
+
+	* cvs tag -c dst-1_1_3
+        * cvs tag -c match-4_0_beta2-dst-1_1_3
+	* Changes since dst-1_1_2: All subroutines and functions
+	are in modules, no physics changes
+	
+	* Improve modularization of utl_mdl, vec_mdl, sng_mdl
+
+	* Put nf90_wrp wrappers around most I/O routines
+
+2002-04-05  Charlie Zender  <zender@uci.edu>
+
+	* dstmblutl.F90 (lnd_frc_mbl_get): Disallow emissions when
+	soil temperature < frozen soil temperature = 0 C.
+
+2002-04-04  Charlie Zender  <zender@uci.edu>
+
+	* Use pmgrid module in physlic so dstsfc changes work
+
+	* Move dst_sfc_set() from aer.F90 to dstsfc.F90.
+	Make default private for dstsfc.F90
+
+2002-04-02  Charlie Zender  <zender@uci.edu>
+
+	* Synchronization check-in and branch point for saltation
+	sandblasting branch (match_brnch_dst_sbl) of Alf Grini.
+	* cvs tag -c dst-1_1_1
+	* Changes since dst-1_1_0: Implemented Dani Bundy's utim.c fix
+	for Y2K problems and tracer initialization in initr0.F. 
+	Nothing else user visible.
+        * cvs tag -c match-4_0_beta2-dst-1_1_1
+        * cvs tag -b -r match-4_0_beta2-dst-1_1_1 match_brnch_dst_sbl match_dst
+
+2002-04-01  Charlie Zender  <zender@uci.edu>
+
+	* Fudge factor changed to 7.0e-4 a posteriori to give agreement 
+	with concentrations at Barbados. Running dstmch77.
+
+2002-03-26  Charlie Zender  <zender@uci.edu>
+
+	* cvs tag -c dst-1_1_0
+	* Changes since dst-1_0_16: fdg_fct=1.0e-3, D'Almeida source
+	distribution, tuned scavenging for size class 1 and 2
+
+	* Code appears to run in global model once arbitrary
+	tracer initialization in initr0.F is commented out
+
+	* Merged scavenging changes from Huisheng, new fudge factor is
+	1.0e-3 because of move to D'Almeida source distribution.
+
+	* Added J. del Corral's readers/utim.c fix for y2k+
+
+2002-03-18  Charlie Zender  <zender@uci.edu>
+
+	* Bulletproofing dsttvbds routines with sanity checks
+
+2002-03-16  Charlie Zender  <zender@uci.edu>
+
+	* Changed to D'Almeida background mode summarized in BSM96
+	on basis of improved size distribution at Barbados from dstmch89
+	simulations.
+
+2002-03-08  Charlie Zender  <zender@uci.edu>
+
+	* Mode 1 fraction of Shettle from 2.6e-4 to 2.6e-6 (see BSM96,
+	SBG98) 
+
+	* Added mss_frc_trn_dst_src to dstpsd
+
+2002-02-22  Charlie Zender  <zender@uci.edu>
+
+	* First error is -'ve mixing ratio in befix(). Same error on
+	Linux and SGI, same with PRC_DBL as with PRC_FLT
+
+2002-02-21  Charlie Zender  <zender@uci.edu>
+
+	* Attempting to get dstmch73 to integrate on either SGI or AIX
+
+2002-02-15  Charlie Zender  <zender@uci.edu>
+
+	* Modifications for AIX compiling, including commenting out badly
+	prototyped called to crayread().
+
+2002-02-01  Charlie Zender  <zender@uci.edu>
+
+	* dstdpsdry.F90: Put debugging block back beneath velocity definitions
+
+2001-12-28  Charlie Zender  <zender@uci.edu>
+
+	* cvs tag -c dst-1_0_16
+	* Changes since dst-1_0_15: using sng_mdl module procedures
+
+	* For some reason explicitly typing the precision and modularizing
+	the string utilities causes the AIX box model to work again
+
+	* aer.F90: restricted rank of input to get_arg() calls
+
+	* Converted all routines to use new sng_mdl module
+
+	* cvs tag -c dst-1_0_15
+	* Changes since dst-1_0_14: None.
+	dst-1_0_15 is last tag where ftn_ string manipulation
+	routines are externals. Changing them to internal module
+	procedures now.
+	
+2001-12-18  Charlie Zender  <zender@uci.edu>
+
+	* dstrad.F90 (dst_trn): Fix comments
+
+2001-11-09  Charlie Zender  <zender@uci.edu>
+
+	* cvs tag -c match-4_0_beta2-dst-1_0_14 match match_dst
+	* cvs tag -c dst-1_0_14 used for dstmch71
+
+	* dstscv.F90: Increase scavenging coefficient, reduce convective
+	transport in old wet deposition routine. 
+
+2001-11-07  Charlie Zender  <zender@uci.edu>
+
+	* aer.F90 (outfld): Added parameter typing to outfld stubs
+
+	* Add T42 point in Atacama for debugging
+
+	* Makefile (PRC): Default to PRC=S single precision in box model
+
+	* dstsfc.F90 (soi_txt_get): Put clay discrepancy into sand fraction
+
+2001-11-06  Charlie Zender  <zender@uci.edu>
+
+	* cvs tag -c match-4_0_beta2-dst-1_0_11 match match_dst
+	* cvs tag -c dst-1_0_11
+
+	* dstmch70: dst-1_0_11 1 month run to test PRC=S single precision
+
+	* dstbdg.F90: Change to computational precision (r8)
+
+	* cvs tag -c match-4_0_beta2-dst-1_0_10 match match_dst
+	* cvs tag -c dst-1_0_10
+
+	* dstmch69: dst-1_0_10 1 month run also blew up
+
+	* dstmblutl.F90 (frc_thr_wet_fct_get): Replaced where clauses 
+	with loops, ifs, indexes
+
+	* Makefile (OPTS): Default to compiling BXM with debugging options
+
+	* dstmblutl.F90 (vwc2gwc): Switched from VWC to GWC formulation of
+	moisture inhibition. Now sending GWC to output as well.
+
+	* dstmbl.F90 (dst_mbl): Added VAI_DST to outfld() list
+
+2001-11-04  Charlie Zender  <zender@uci.edu>
+
+	* preproc.h: Add plethora of resolutions to LSM preproc.h
+
+2001-11-02  Charlie Zender  <zender@uci.edu>
+
+	* cvs tag -c match-4_0_beta2-dst-1_0_9 match match_dst
+	* cvs tag -c dst-1_0_9
+
+	* aer.F90: Respect 132 char limit with nf90_wrp() calls
+
+	* Finished adding _r8 to literal constants and results to most routines.
+	Answers are BFB with dst-0_9_8 when debugging options (-g)
+	employed. Huzzah. Passing literal constants to functions may not
+	have been a problem before, and should not be in the future.
+	Note that [dst-0_9_9b--dst-1_0_9] are only BFB with dst-0_9_8 when
+	compiled with debugging option (-g). 
+	I thought debugging and optimized (-O2) versions were supposed 
+	to be BFB with all compilers but perhaps not.
+	
+2001-10-31  Charlie Zender  <zender@uci.edu>
+
+	* aer.F90 (aer): Began adding _r8 to literal constants
+	This affects answers, though I'm not sure why
+
+2001-10-29  Charlie Zender  <zender@uci.edu>
+
+	* cvs tag -c match-4_0_beta2-dst-1_0_8 match match_dst
+	* cvs tag -c dst-1_0_8
+	With these changes global dust model seems to runs without
+	blowing up and dumping core but simulation is not realistic
+	
+	* dstmch68: dst-1_0_8 Run completes but there is a bug 
+	and dust burden is ridiculous
+
+	* Use msrcp.pl for rdsp
+
+	* Use -UWETDEP to ensure default wet dep is turned off
+	and use true to ensure my wet dep is turned on
+
+2001-10-26  Charlie Zender  <zender@uci.edu>
+
+	* cvs tag -c match-4_0_beta2-dst-1_0_7 match match_dst
+	* cvs tag -c dst-1_0_7
+	1_0_7 tag used for testing new merged code.
+	Tests include dstmch67
+	
+	* Global model now compiles on dust and krein, and fails in
+	boundary dataset ingest because of old boundary datasets
+
+	* phyzlic.F90 (phyzlic): Wrapped phyzlic.F90, like aer.F90,
+	in #ifdef BXM tokens so box model does not look for a history module
+
+2001-10-24  Charlie Zender  <zender@uci.edu>
+
+	* To resolve these dependencies, added src_scyc to match_brnch_dst 
+
+	* Match 4.X files which fulfill dependencies of files
+	in src: 
+	src/caer.F90 depends on src_scyc/error_messages.F90,
+	src/drydepdr.F depends on src_scyc/scyc.F90
+	
+	* Match 4.X files modified for match_dst branch that should
+	be modified upstream in vanilla match distribution:
+	src/fca2cs.c, src/dyninp.F moved to readers/ccm directory,
+	readers/mss.c, readers/ncep/dyninp.F,
+	src/main.F namelist does not compile on SGI
+
+	* Changed pmgrid.F90 to fixed-format pmgrid.F and made pmgrid.h
+	fixed-format to support Match fixed format files
+
+	* Renamed dstszdst.F90 as dstpsd.F90, szdstlgn.F90 as psdlgn.F90
+	Replace szdst by psd (particle size distribution) everywhere
+
+	* Removed hbuf and wrhstts from all MATCH outfld() calls
+	Replaced hbuf with lchnk and wrhstts with ncol for CAM 
+	compatibility
+
+	* cvs tag -c dst-1_0_6
+	dst-1_0_6 tag is for the match4_0_beta2 merge
+
+2001-10-22  Charlie Zender  <zender@uci.edu>
+
+	* cvs tag -c dst-1_0_5
+	Changes since dst-1_0_4: bck_cff_mss information
+
+	* sng_mdl.F90: Adopted free-format version from libcsz_f90
+
+	* dstodx.F90: Added backscatter coefficient for LIDAR assimilation
+
+2001-10-05  Charlie Zender  <zender@uci.edu>
+
+	* Began implementation of nf90_wrp for most netCDF I/O
+	This improves error diagnostics substantially
+
+2001-10-04  Charlie Zender  <zender@uci.edu>
+
+	* nf90_utl.F90 (nf90_wrp): New function to handle errors
+	generically, i.e., a dumb wrapper, not as good as routine-specific
+	wrappers, but it works.
+
+	* cvs tag -c dst-1_0_4
+	Changes since dst-1_0_3: All .F90 files are now free-format,
+	model executes and is BFB with BXM of dst-0_9_9
+
+	* Began adding only: clauses to module usage
+
+	* Successfully built, linked, and executed Fortran90 model
+
+2001-10-03  Charlie Zender  <zender@uci.edu>
+
+	* Re-organized common variable initialization, formerly known
+	as common block initialization.
+	Goal is to place routines to initialize variables in the modules
+	where those variable are actually used.
+	dstcst.F90 now only has dst_cst_cmn_ini to initialize physical constants
+	New module dstdbg.F90 handles debugging constants from dst_msc_cmn
+	New routine dst_blm_cmn_ini() placed in dstblm.F90
+	dstcmnini.F90 is now a wrapper for initializing many modules
+	dst_odx_cmn_ini moved to dstodx.F90
+	dst_scv_cmn_ini moved to dstscv.F90
+	dst_chm_cmn_ini moved to dstchm.F90
+	
+2001-10-02  Charlie Zender  <zender@uci.edu>
+
+	* cvs tag -c dst-1_0_3
+	Changes since dst-1_0_2: All Fortran code is now in .F90 files
+	but some .F90 files are still fixed-format. Will change this now.
+
+	* Modified everything else to use these modules
+
+	* Moved *.h files into corresponding modules for 
+	aernvr.h dstaer.h dstbdg.h dstblm.h dstchm.h dstcst.h
+	dstctl.h dstgrd.h dstszdst.h dstszdstbd.F dstlsm.h dstlsmbd.F
+	dstmsc.h dstnm.h dstodx.h dstrad.h dstradbd.F dstscv.h dstsfc.h 
+	dsttibds.h dsttvbds.h
+	
+	* Converted .F files into .F90 files which contain the
+	applicable .h files, creating
+	  dstcst.F90 aernvr.F90 dstgrd.F90 dstaer.F90 pmgrid.F90
+          dstlsm.F90 dstrad.F90 dstscv.F90 dstsfc.F90 dsttibds.F90
+	  dsttvbds.F90 aer.F90 blmutl.F90 dpsdryutl.F90 dstblm.F90
+	  dstbdg.F90 dstchm.F90 dstcmnini.F90 dstctl.F90 dstdpsdry.F90
+	  dstdpswet.F90 dstmbl.F90 dstmblutl.F90 dstmssutl.F90
+	  dstszdst.F90 phyzlic.F90 szdstlgn.F90 
+	
+	* cvs tag -c dst-1_0_2
+	Changes since dst-1_0_1: Answers have not changed
+	Free format F90 codes from libcsz_f90 are now default
+
+	* Converted from 1p,e8.1,0p to es8.1 format string
+
+	* Replaced sng_f77.F  utl_f77.F  vec_f77.F  xtr_f77.F by F90
+
+	* Use dbg_mdl instead of include dbg.com, xtr_mdl instead of xtr.com
+
+2001-09-28  Charlie Zender  <zender@uci.edu>
+
+	* szdstlgn.F: appended _r8 suffix to naked constants
+
+	* cvs tag -c dst-1_0_1
+	Changes since dst-1_0_0:
+	Adds dbg_mdl and erf_mdl, still builds fine and is BFB with
+	dst-0_9_9 (in box model mode only, since global VAI has changed)
+
+	* erf_mdl.F90 (main): changed erf.F to erf_mdl.F90
+	This should allow building on AIX, ALPHA
+
+2001-09-27  Charlie Zender  <zender@uci.edu>
+
+        * dst-1_0_0 compiles and runs on most platforms but dies
+	with error on AIX when with OPTS=X. 
+	Considering making all interfaces Fortran90 in order to help
+	catch more potential errors
+
+	* cvs tag -c dst-1_0_0
+	dst-1_0_0 merges CCM branch changes into F90 code:
+	Answer changing physics:
+	VAI from CLM is default, LSM may still be selected with switch
+	dst_dps_wet() returns fracis=frc_trc_trn_cnv_ptn= fraction of
+	aerosol available for convective transport
+	dst_dps_wet_old() also returns frc_trc_trn_cnv_ptn, but definition
+	is necessarily different since available cloud diagnostics differ
+	dst_dps_wet_old relies only on cloud diagnostics available in CCM
+	3.3.6 physics. Also note that CCM aphys() and conv_ccm() must be
+	re-written to make use of interstitial fraction. In particular,
+	convtran() must be extracted from conv_ccm() and called from
+	aphys() after dst_dps_wet().
+	
+	* szdstlgn.F: modularized szdstlgn routines
+
+	* Makefile (dbg): Added -I${NETCDF_LIB} to find netcdf.mod
+
+	* Removed superfluous netcdf.inc from many files
+
+	* Added start= and count= qualifiers to most optional arguments in 
+	get_var and put_var functions
+
+	* Fixed bug introduced in F90 port where start and count indices
+	were removed from get_var routines in tvbds and tibds routines
+
+2001-09-26  Charlie Zender  <zender@uci.edu>
+
+	* Merged CCM branch changes of 9/12-9/20 into main trunk:
+	aer.F,.cvsignore,ChangeLog,TODO,Makefile
+
+	* cvs tag -c dst-0_9_9d
+
+	* Undid all pjones changes to pmgrid.h, added precision.F90
+	to main trunk
+
+	* cvs tag -c match-3_3_23-dst-0_9_9c
+	* cvs tag -c dst-0_9_9c
+	* dst-0_9_9c is F90 branch merged back into main trunk
+	i.e., same as 0_9_9b but code is on main trunk not branch
+
+2001-09-20  Charlie Zender  <zender@uci.edu>
+	* cvs tag -c match-3_3_23-dst-0_9_9b
+	* cvs tag -c dst-0_9_9b
+	* dst-0_9_9b code merges snow fraction changes into pjones branch 
+	i.e., match-3_3_23-dst-0_9_9 merged into dst-0_9_8_F90
+
+2001-09-19  Patrick Jones  <pajones@uci.edu>
+
+	* cvs tag -c dst-0_9_8_F90
+	* Changes: Branch point code with fully working F90 netCDF interface	
+
+2001-09-20  Charlie Zender  <zender@uci.edu>
+
+        * Today's changes all in CCM branch
+
+	* .cvsignore: Added .cvsignore to CCM branch
+
+2001-09-19  Charlie Zender  <zender@uci.edu>
+
+        * Today's changes all in CCM branch
+
+	* dstmblutl.F (lnd_frc_mbl_get): CLM VAI -> lnd_frc_mbl in CCM branch
+
+2001-09-18  Charlie Zender  <zender@uci.edu>
+
+        * Today's changes all in CCM branch
+
+	* aer.F (dst_sfc_set): Default to vai_dst from tvbds, allow
+	old LSM vai_dst by setting flag in lnd_frc_mbl
+	(aer): sorted command line options, added vai_dst in CCM branch
+
+2001-09-14  Charlie Zender  <zender@uci.edu>
+
+        * Today's changes all in CCM branch
+
+	* dstmblutl.F (lnd_frc_mbl_get): wrote tm_2_idx_wgt() to 
+	handle computing bracketing indices of mid-month values
+	and weights relative to current day of year
+	(vai_lsm_get): compute vai not lai 
+
+	* dsttvbds.F (dst_tvbds_ntp): Changed lai_dst to vai_dst,
+	lai_lsm to vai_ttl_clm so that host model receives
+	satellite-derived gridcell average VAI as used by CLM2.
+
+	* dstmblutl.F (lnd_frc_mbl_get): Changed lai to vai
+
+	* Noticed minor but annoying discrepencies between CCM and
+	Match 0_9_9 tags crept into ChangeLog utl_f77.F and sng_f77.F 
+	Too hard to fix since must get Erik Kluzek to untag BranchSum
+
+2001-09-12  Patrick Jones  <pajones@uci.edu>
+
+	* Fixed netCDF calls in bdg_update in dstbdg.F to correspond to F90.
+
+	* Cleaned up some syntax in comments.
+	
+2001-09-12  Patrick Jones  <pajones@uci.edu>
+
+	* Major change is the conversion of the netCDF interface from F77 to 
+	F90. These changes are mostly cosmetic, involving the syntax of 
+	netCDF routine calls, and the order of arguments in some calls.
+
+	* The model now uses the precision module for its precision 
+	information. Switching between single and double precision can now be
+	accomplished by one line changes to precision.F90. There are also 
+	syntactical changes associated with this, such as going from real to 
+	real(r8), and so forth.
+
+	* Most of the .F files have been modularized, with use statements
+	inserted in the proper locations in each module and/or subroutine.
+
+2001-09-13  Charlie Zender  <zender@uci.edu>
+
+	* cvs tag -c dst-0_9_9
+	* cvs tag -c ccm3_6_6_brnchT_dst-0_9_9
+	* cvs tag -c match-3_3_23-dst-0_9_9
+	* dst-0_9_9 changes:
+	Box model: snow height -> snow fraction conversion
+	CCM: Fixed comments in tphysac
+	Match: None
+
+	* Improved comments in ccm_dst calling args to dst_dps_dry()
+
+	* dstmblutl.F (snw_frc_get): Changed bulk density of snow from
+	250.0 to 100.0 kg m-3 in accord with old CCM value and WiW80.
+	New density represents top layer of dry snow, 
+	not packed snow (which is too deep to allow dust deflation),
+	or wet snow (which constrains mobilization through soil moisture).
+	This changes answers in snowy regions.
+	
+2001-09-10  Charlie Zender  <zender@uci.edu>
+
+	* Makefile: Updated with new ALPHA, AIX builds and recognition of
+	.F90 and .mod files 
+
+2001-08-22  Charlie Zender  <zender@uci.edu>
+
+	* utl_f77.F (mnt_ncr_chk): Fixed bug in mnt_ncr_chk() and
+	mnt_dcr_chk(). Routines could have returned wrong flag if
+	array contained negative numbers with certain spacing.
+
+2001-07-25  Charlie Zender  <zender@uci.edu>
+
+	* aer.F (nvr2nc): Added global attributes including cmd_ln so that
+	box model retains its history
+
+2001-07-20  Charlie Zender  <zender@uci.edu>
+
+        * Branch point for implementation of Fortran90 precision.mod & netCDF
+	* cvs tag -c dst-0_9_8
+        * cvs tag -c match-3_3_23-dst-0_9_8
+        * cvs tag -b -r match-3_3_23-dst-0_9_8 match_brnch_dst_pjones match_dst
+	
+	* sng_f77.F (ftn_strlen): Protected namespace of all functions in
+	sng_f77.F by prefixing them with ftn_. The ftn_ prefix should be 
+	applied to all fortran functions/subroutines that may be exposed
+	to other libraries so that architectures which do not
+	differentiate between fortran and C symbol names do not get
+	confused. Specifically, this is intended to fix linking errors on
+	AIX machines, but it is always good practice to have a
+	three-letter identifier in from of library routines.
+
+2001-07-19  Charlie Zender  <zender@uci.edu>
+
+	* cvs tag -c dst-0_9_7_AIX
+	This tag incorporates all the changes required to get AIX to compile
+	
+	* Makefile: Heavy modifications to allow AIX compiling
+	Box model now compiles on AIX. However, model will not run until
+	namespace conflict with fortran string handling routines is addressed.
+
+	* dstcmnini.F (dst_scv_cmn_ini): Removed hanging token after #endif
+
+	* dstsfc.h (main): Broken dst_htd_lsm into two commons to satisfy
+	AIX compiler that reals and logicals will not be mis-aligned
+
+	* Fixed whitespace problems with PRC and DBG tokens
+
+	* dstscv.F (dst_scv): Changed q_dst_cld_min, q_trc_tnd_scv_eps
+	from 1.0e-100 to 1.0e-30 in accord with PJR to work with single
+	precision
+
+	* blmutl.F (blm_glb): Backed out changes used to debug
+	dry deposition problems kept in dst-0_9_7_dry_dps_dbg.
+
+	* cvs tag -c dst-0_9_7_dry_dps_dbg
+	This tag contains the mods to call and directly compare flxsice()
+	instead of blm_???() for dry deposition. These mods may be useful
+	in the future. Inputs to dry dep are hardwired to not-converge due
+	to large roughness length. However convergence appears to be
+	guaranteed when correct boundary data and surface type info are
+	used, i.e., boundary layers found on Earth will converge.
+
+	* sng_f77.F (int_arg_get): Fixing format descriptors to be
+	strictly standard compliant and always specify a numeric width.
+
+2001-07-16  Charlie Zender  <zender@uci.edu>
+
+	* dstmblutl.F (lnd_frc_mbl_get): Added second min() to pln_frc_mbl 
+	to prevent roundoff error pln_frc_mbl < 0.0 on PGF90 compiler
+	This fixes lnd_frc_mbl ~ -1.0e-8 on sfc_typ = 12, 15, 16.
+	
+2001-07-15  Charlie Zender  <zender@uci.edu>
+
+	* aer.F (aer): Added more command line inputs: oro, sfc_typ,
+	hgt_mdp, prs_ntf
+
+	* blmutl.F (blm_ice): wrote wrapper for Large's flxsice() and
+	called identically to blm_ice(). Results appear to agree almost 
+	bit for bit. Differences are easily explained by two differences
+	in algorithms: dust model does not correct sea-ice saturation
+	specific humidity for salinity effects, and dust model always uses
+	latent heat of sublimation over sea ice. Routines also use
+	different formulae for saturation vapor pressure. In any case, 
+	results appear identical and seem to rule out coding errors in
+	translation. Perhaps number of iterations can be reduced over
+	sea-ice due to frequently stable conditions? 
+
+	flxsice appears to give very close results to blm_lnd, as well.
+	blm_lnd uses sublimation or evaporation, depending on temperature.
+	Also blm_lnd does not apply salinity correction to ssh. 
+	Thus results are expected to differ slightly with flxsice and they
+	do. Certainly no indication of coding errors.	
+
+	* sng_f77.F (int_arg_get): Created int_arg_get() to parse command
+	line integer arguments
+
+2001-07-14  Charlie Zender  <zender@uci.edu>
+
+	* Verified single precision and double precision box models
+	agree to machine precision with standard profiles
+
+	* dstdpswet.F (cld_dgn,dst_dps_wet): Changed pcp_flx_sfc_min,
+	q_dst_cld_min, q_trc_tnd_scv_eps from 1.0e-100 to 1.0e-30 in
+	accord with PJR to work with single precision 
+
+	* dstscv.h (main): Fixed redundant dimension for frc_ice_scv
+
+	* Makefile (FFLAGS): Implemented PRC=D and PRC=S options for
+	command line switching between D=Double precision (default)
+	and S=Single precision
+
+2001-07-13  Charlie Zender  <zender@uci.edu>
+
+	* blmutl.F (blm_lnd): Added relative convergence eps_crr
+	diagnostic for wind friction speed convergence
+	Also improved diagnostics to blm_ice(), blm_ocn()
+
+	* Makefile: Removed unecessary libcsz_f77 link dependencies
+
+	* dstscv.F (clc_fsh_get): Fixed dangling comment on #endif
+
+	* dstbdg.F (bdg_update): Protected divide by zero errors on two
+	diagnostics which could occur when dust mobilization was zero.
+
+	* Running dstmch65 to test effect of turbulent dry deposition fix
+
+2001-07-12  Charlie Zender  <zender@uci.edu>
+
+	* aer.F (aer_nvr_cmn_cmd_ln_dfl): Implemented this routine to
+	initialize common block members whose values may be overridden by
+	command line input. These initializations were removed from their
+	former locations in aer_nvr_cmn_ini(). No provision is made for
+	passing arrays of command-line inputs, only scalars are allowed
+	so plev,plon,plat must all equal 1 for command line input feature
+	to function as intended.
+
+	* blmutl.F (blm_glb): Fixed bogus orography sanity check
+
+	* Fixed compilation of dstchm.F when DST_DBG is enabled
+
+	* Added DBG=Y option to box model Makefile
+
+        * Fixed removal of NCEP files, by modifying mss.c MSSclear
+
+	* Implemented long option command line parsing
+
+	* Fixed sending wrong vertical level to dry dep routines
+	This bug has been present in all versions of the dust version
+	2 dry dep code. It affected turbulent deposition, but not
+	gravitational sedimentation or any other processes.
+	This bug did not affect the box model at all, only models
+	with multiple vertical levels.
+
+2001-07-11  Charlie Zender  <zender@uci.edu>
+
+	* Merged updated sng_f77.F nc_f77.F into dust model
+
+	* Merged this code with CCM 3.6.6, creating ccm3_6_6_brnchT_dst-0_9_7
+	Woops, unable to tag CCM because of CVS problems
+	
+	* cvs tag -c dst-0_9_7
+
+	* cvs tag -c match-3_3_23-dst-0_9_7
+
+2001-07-10  Charlie Zender  <zender@uci.edu>
+
+	* dstszdst.F (grd_mk): Fixed harmless overwrite of calling
+	parameters sz_grd_min and sz_grd_max by themselves
+
+2001-06-25  Charlie Zender  <zender@uci.edu>
+
+	* dstszdst.F (dst_szdst_ini): Moved sanity checks to end of
+	routine so cause of printed error may be determined from banner
+	information 
+
+2001-06-07  Charlie Zender  <zender@uci.edu>
+
+	* cvs tag -c dst-0_9_6
+	is tag for bugfixed dry dep and wet dep routines:
+	Fixed cwat argument to as1(), and blm_[lnd,atm,ocn]() loops.
+	This version uses wet dep with PSD for size-dependent scavenging,
+	DSD for separation of strat and convective precip is also on.
+
+	* Cleaned up Makefile
+
+2001-06-03  Charlie Zender  <zender@uci.edu>
+
+	* Committed bugfix for dry dep boundary layer routines
+
+	* PJR reported serious bug in blmutl.F where blm_ocn,blm_ice, and
+	blm_lnd all were incorrectly split into two loops and variables
+	initialized in one were static 
+
+2001-04-06  Charlie Zender  <zender@uci.edu>
+
+	* Fixed condensed cloud water argument to dst_dps_wet().
+	Used to be cwat but that was only appropriate for archived cloud water
+	Diagnosed condensed cloud water could and should use the
+	constituent array as1(1,1,pcnst)
+	
+2001-04-04  Charlie Zender  <zender@uci.edu>
+
+	* F90 build on f77 source appears to work again
+	PJR has converted source to F90 in 
+	/fs/cgd/home0/pjr/match/devbranch
+	and I will attempt merging these changes once I get the module
+	precedence handled correctly in the Makefile
+
+2000-12-13  Charlie Zender  <zender@uci.edu>
+
+	* dstmch49 Implemented PJR Wet Dep, size-independent scv
+	* dstmch50 Uses local cloud frac for nucleation scv
+	* dstmch51 spc_xsx_ncl_scv=0.05 instead of 0.1
+        * dstmch52 spc_xsx_cll_scv=0.05 instead of 0.1
+        * dstmch53 dst-0.9.1 Fix LAI bug reported by NMM, Optics change
+	* dstmch54 dst-0.9.2 snow + dust (ncl+cll) OK 
+	* dstmch55 dst-0.9.3 Same as dstmch53
+	* dstmch56 dst-0.9.4 PSD for size dep scv
+	* dstmch57 dst-0.9.5 DSD for size dep scv, separate str and cnv 
+	* dstmch58 dst-0.9.1 Old Wet Dep 
+	* dstmch59 Same as dstmch58 but fixmas=false, 1998
+	* dstmch60 Same as dstmch58 but run 1995--
+	* dstmch61 dst-0.9.5: run 1998
+	* dstmch62 bogus rerun of dstmch61
+	* dstmch63 dst-0.9.6: 1998 dst-0.9.5 + fix for wet_dep args + blm_[ocn,lnd,ice]()
+	* dstmch64 dst-0.9.6: 1998 dst-0.9.5 + blm_[ocn,lnd,ice]() fix (backed out wet_dep arg fix)
+	* dstmch65 dst-0.9.7: 1998 fix trb dry dps to get sfc lyr not TOA flds()
+	* dstmch20 dst-0_9_9b: 1998 snow fraction changes
+	* dstmch21 dst-0_9_9b: 1998 crop to forest crop dataset change
+	* dstmch46 5 yr, LSM LAI thr = 0.2, She84 psd, old match, NCEP
+	* dstmch75 1994 fdg=1.0e-3, CLM vai=0.2, psd=Dal87 old match, NCEP
+	* dstmch76 1994 fdg=1.0e-3, CLM vai=0.3, psd=Dal87 old match, NCEP
+	* dstmch77 1994 fdg=0.7e-3, CLM vai=0.2, psd=Dal87 old match, NCEP
+	* dstmch78 1994 fdg=0.7e-3, CLM vai=0.4, psd=Dal87 old match, NCEP
+	* dstmch79 1994 fdg=0.7e-3, CLM vai=0.35, psd=Dal87 old match, new NCEP
+	* dstmch80 1994 fdg=0.7e-3, CLM vai=0.35, psd=Dal87 new match, new NCEP
+	* dstmch81 1994 fdg=0.7e-3, CLM vai=0.35, psd=Dal87 new match, new NCEP
+	* dstmch82 1994 fdg=0.7e-3, CLM vai=0.3, psd=Dal87 new match, old NCEP
+	* dstmch83 1994 fdg=0.7e-3, CLM vai=0.3, psd=Dal87 old match, old NCEP
+	* dstmch84 94-98 fdg=0.7e-3, CLM vai=0.3, psd=Dal87 old match, old NCEP, notaper ocn=3
+	* dstmch85 1994 fdg=0.7e-3, CLM vai=0.3, psd=Dal87 old match, old NCEP, nocoast
+	* dstmch86 94-98 fdg=0.7e-3, CLM vai=0.3, psd=Dal87 old match, old NCEP, nocoast, nopole
+	* dstmch87 test
+	* dstmch88 1994 fdg=0.7e-3, CLM vai=0.3, psd=Dal87 old match, old NCEP, geo number
+	* dstmch89 1994 fdg=0.7e-3, CLM vai=0.3, psd=Dal87 old match, old NCEP, geo area nocoast
+	* dstmch90 1994 fdg=0.7e-3, CLM vai=0.3, psd=Dal87 old match, old NCEP, geo nocoast nopole
+	krein run 931201--96080, ute 960701--970417, krein 970317--
+	* dstmch92 1994 fdg=0.7e-3, CLM vai=0.3, psd=Dal87 new match, new NCEP, geo nocoast nopole
+	* dstccm50 5 yrs. T31 FDB fdg=0.5e-3, CLM vai=0.2, psd=Dal87
+	* dstccm51 5 yrs. T42 FRC fdg=0.5e-3, CLM vai=0.2, psd=Dal87
+	* dstccm50 5 yrs. T42 FDB fdg=0.5e-3, CLM vai=0.2, psd=Dal87
+	* dstccm50 5 yrs. T31 FRC fdg=0.5e-3, CLM vai=0.2, psd=Dal87
+	* dstmch00 3 yrs. fdg=0.5e-3, CLM vai=0.2, psd=Dal87 new match,	new NCEP Ginoux
+	* dstmch01 3 yrs. fdg=0.5e-3, CLM vai=0.2, psd=Dal87 new match,	new NCEP Unity
+	* dstmch02 3 yrs. fdg=0.5e-3, CLM vai=0.2, psd=Dal87 new match,	new NCEP Area
+	* dstmch03 3 yrs. fdg=0.5e-3, CLM vai=0.2, psd=Dal87 new match,	new NCEP Flow
+	* dstmch1j Geo
+	* dstmch1l Unity
+	* dstmch1m Hydro
+	* dstmch1n Topo
+	* dstmch1p Uniform 3 yrs. fdg=0.7e03, CLM vai=0.3, old match, 1990--1992
+	* dstmch1q Topo "
+	* dstmch1t Geo "
+	* dstmch1r Hydro "
+	
+2000-11-09  Charlie Zender  <zender@uci.edu>
+
+	* Ran dstmch61: New wet dep 
+
+2000-09-26  Charlie Zender  <zender@uci.edu>
+
+	* Comparing 1998 simulations of Barbados
+	dstmch51--dstmch57 are not dramatically different
+	Later simulations have physics (collection) which give them longer
+	lifetime, but mean concentrations at Barbados do not change by more
+	than 40%, and event occurence does not change, just intensity.
+	Ran dstmch58 same as dstmch55,56 except uses OLD wet deposition
+	scheme based on TeF94. 
+
+	dstmch58 has same mean concentration at Barbados as dstmch57, 
+	which is 20--40% greater than dstmch51--56.
+	Variability still much weaker than dstmch41 which best simulated
+	mean and variability at Barbados.
+
+2000-08-28  Charlie Zender  <zender@uci.edu>
+
+	* Tagged dst-0_9_5, testing with 1-year dstmch57 run
+
+	* Continuous raindrop distribution made convective rain less
+	generally less efficient at scavenging all dust sizes.
+
+	* Changed scavenging coefficients in dst_scv_cmn_ini() to include
+	continuous size distribution of raindrops. Formerly assumed
+	monodisperse raindrop distribution. Transition from interception
+	to impaction regime is now < factor of 10 in high resolution mode.
+
+2000-08-21  Charlie Zender  <zender@uci.edu>
+
+	* Results of dstmch56 look reasonable. Enhanced total column
+	aerosol path and surface concentration is especially pronounced in
+	the Caribbean. However, transition of scavenging coefficient from
+	interception to impaction regime is too sharp, even in
+	high-resolution cases. Changes can be factors of 30--100 from one 
+	aerosol size bin to the next. This is largely due to monodisperse
+	raindrop distribution.
+
+	* Tagged dst-0_9_4, testing with 1-year dstmch56 run
+
+	* Finished initial implementation of size-dependent scavenging
+	coefficients. 
+
+	* Reimplemented ice fraction of condensate but added new
+	frc_ice_scv weight which is 1.0 for dust, 0.0 for SO4
+
+	* Distinguishing below cloud scavenging coefficients 
+	in convective and stratiform rain.
+	Stratiform scavenging: dmt_pcp=400  um, flx_vlm_pcp=1   mm hr-1
+	Convective scavenging: dmt_pcp=1000 um, flx_vlm_pcp=3.6 mm hr-1
+
+2000-08-14  Charlie Zender  <zender@uci.edu>
+
+	* dstmch55 is 1-year test simulation of match-3_3_23-dst-0_9_3
+
+	* Retagged match-3_3_23-dst-0_9_3
+
+	* Fixed a problem with order of initialization of dynamic input
+	arrays in stk_crc_get()
+
+	* Added timeout code to readers/ncep/mss.c:MSSget() so model dies
+	after more than 15 minutes waiting for NCEP data.
+
+2000-08-10  Charlie Zender  <zender@uci.edu>
+
+	* Tagged version match-3_3_23-dst-0_9_3. This version contains
+	initial mods for size dependent wet scavenging in dstscv.F
+	Initialization of dst_odx_cmn_ini() and dst_szdst_ini() are
+	now in correct order. Ran dstmch55 to test code.
+
+2000-06-25  Charlie Zender  <zender@uci.edu>
+
+	* There are still small sources around North Sea, Belgium, Ireland
+	Check if this is fixed by the LAI multiplication patch.
+	
+2000-06-22  Charlie Zender  <zender@uci.edu>
+
+	* Tagged version used for dstmch54 as match-3_3_23-dst-0_9_2
+	This is the tag Brian will use to put the new dust in to the
+	assimilation model.
+
+	* Ran dstmch54 with snow deposition allowed
+
+	* Dust is allowed to nucleate ice, thus convective and stratiform
+	snow is allowed to remove dust 
+
+	* Add extra sanity check to dst_mbl that stops model when
+	environment, not dust, has gone haywire
+
+	* Once qneg3(afterSPF) call was disabled by default,
+	qneg3() became triggered most often by VDIFF so the size of the
+	log file did not shrunk very much, and VDIFF looked like
+	the culprit when really the spitfire advection module created
+	ALL the negative dust mixing ratios. So revert to enabling
+	qneg3(afterSPF) by default. 
+
+	* Examination of log file in 1 year run dstmch51 shows statistics
+	for production of negative mixing ratios by physical process:
+
+	dst_mbl produces 0 (none)
+	dst_wet produces 0 (none)
+	dst_dry produces 0 (none)
+	VDIFF produces 0 (none) for dust or cloudwater
+	APHYS_az produces 48 (about 1 per week) for cloudwater, none for dust
+	APHYSARz produces 259 (about 1 per day) for dust, none for cloudwater
+	afterSPF produces 603000 (about 45 per 2400 s timestep) for dust
+	
+	* Tagged version used for dstmch53 as match-3_3_23-dst-0_9_1
+
+2000-06-19  Charlie Zender  <zender@uci.edu>
+
+	* dstmch53 fixes LAI multiplication bug caught by Natalie
+	
+	* Turned off DST_DBG and DST_MSS_BDG by default on SGI and CRAY
+
+	* Changed to new optics with globally uniform rds_nma=0.2986 and
+	gsd=2.0. Previous optics employed rds_nma=bin center. For standard
+	4 size class runs this means changing, at 0.63 um, from 
+	ext_cff_mss_dst_063_04bn=(/ 2886.75,734.911,329.408,158.602 /) to
+	ext_cff_mss_dst_063_04bn=(/ 2892.77,835.046,382.509,196.051 /)
+	
+	* Turned of afterSPF qneg3() call to reduce log file size and check
+	mass conservation. 99% of QNEG3() calls occur afterSPF.
+
+2000-06-12  Charlie Zender  <zender@uci.edu>
+
+	* dstmch52 uses spc_xsx_cll_scv=0.05 instead of 0.1. 
+	This increases turnover time for wet deposition by about 1.3 days
+	For some reason the one year version of this ran as dstmch51
+	
+	* dstmch51 uses spc_xsx_ncl_scv=0.05 instead of 0.1. 
+	This had no effect on turnover time due to wet deposition. 
+	Apparently nucleation scavenging does nothing and collision
+	scavenging is responsible for everything.
+
+2000-06-10  Charlie Zender  <zender@uci.edu>
+
+	* dstmch50 use local cloud instead of cld_pcp_wgt for in-cloud
+	scavenging. This increases turnover time for wet depostion by
+	about 1 full day.
+
+	* dstmch04 mass budget diagnostics
+
+2000-06-09  Charlie Zender  <zender@uci.edu>
+
+	* Sensitivity to new wet dep scheme in 1998 simulation
+	with all other processes identical
+	dstmch49: PJR/MB wet dep scheme	dstmch46: Old wet dep scheme
+	                 s      day	  s            day 
+	    DSTTAU   498744.7	5.7	895756         10.3
+	    DSTTAU01 610766.9	7.1	743712.9       8.6 
+	    DSTTAU02 574401.7	6.6	1198345        13.8
+	    DSTTAU03 474450.8	5.5	835801         9.7 
+	    DSTTAU04 277859.4	3.2	304499.0       3.5 
+	    DSTTAUPCP 623512	7.2	 1401561       16.2
+	    DSTTAUP01 641086	7.4	 796629.5      9.2 
+	    DSTTAUP02 634764	7.3	 1489329       17.2
+	    DSTTAUP03 614204.9	7.1	 1484712       17.1
+	    DSTTAUP04 578701	6.7	 1664119       19.3
+
+	* Finished 1-year test of BRK wet deposition scheme for 1998
+	Comparing dstmch49 to dstmch46 with only wet deposition changed:
+	dstmch46 Old wet dps scheme DSTMPC=4.3053e-05 KG/M2, DSTODXC=0.0318116 FRACTION
+	dstmch49 BRK wet dps scheme DSTMPC=2.42303e-05 KG/M2, DSTODXC=0.0192631 FRACTION
+	Mobilization is unchanged so BRK is nearly twice as efficient
+
+2000-06-05  Charlie Zender  <zender@uci.edu>
+
+	* Removed initial nstep=0 bdg_update() call in MATCH so that
+	dst_mss_bdg.nc records are synchronized with history tapes 
+
+	* Implemented correct conversion of mixing ratios from dry to wet
+	and back again in each timestep of box model to keep mass
+	diagnostics from drifting in box model (global models already
+	handled this correctly of course)
+
+2000-06-04  Charlie Zender  <zender@uci.edu>
+
+	* Annotated timesplitting rationale in dstbdg.F
+
+	* Fixed problem where tm_dlt was not initialized in bdg_cmn_ini():
+	Put tm_dlt initialization at top of aer.F in box model
+	Cast delt to real in bdg_cmn_ini() call in inirun() in MATCH 
+
+2000-05-27  Charlie Zender  <zender@uci.edu>
+
+	* Updating Match for new physics: switched order of initialization
+	of dst_szdst_ini() and dst_msc_cmn_ini()
+
+2000-05-26  Charlie Zender  <zender@uci.edu>
+
+	* Implemented Rasch and Barth wet deposition scheme
+
+2000-05-21  Charlie Zender  <zender@uci.edu>
+
+	* Model should now run "correctly" when arbitrary number of size
+	bins. Most significant remaining problem is that complete optical
+	properties are not interpolated, just optical dept is. As a
+	result, radiative forcing is zero unless pre-computed tables are
+	available to be used. Currently only have precomputed table for
+	dst_nbr = 4.
+
+	* Implemented automated size binning for arbitrary dst_nbr.
+	Moved all size grid information except source bin distributions
+	from dstszdstbd() to dst_szdst_ini()
+
+	* Implemented default radiative forcing properties as 0.0 when
+	pre-computed properties are not available
+
+	* Added smart interpolation for optical depth information when
+	pre-computed properties are not available
+
+	* Broke out optical depth into own common block dstodx and
+	initialization routint dst_odx_cmn_ini()
+
+	* Switched order so dst_szdst_ini() is called before dst_msc_cmn_ini()
+
+2000-04-20  Charlie Zender  <zender@uci.edu>
+
+	* dstmch46: 1998 re-run with dry dep. bugfix
+
+	* Added qneg3_dgn() to archive tendencies from mass limiter
+
+2000-04-19  Charlie Zender  <zender@uci.edu>
+
+	* Found and fixed bug in dst_dps_dry() 
+
+2000-04-14  Charlie Zender  <zender@uci.edu>
+
+	* Turned dst_wet_dps() back on and turned dst_dps_dry() off.
+
+2000-04-13  Charlie Zender  <zender@uci.edu>
+
+	* Turned off dst_dps_wet() to check for mass balance.
+	Mass balanced only worsened. This definitively rules out
+	dst_dps_wet() as the sole problem---although it may be a part of a 
+	larger problem.
+
+	* PRECT != PRECT2 --> is there a units problems in dst_wet_dps()?
+
+2000-04-12  Charlie Zender  <zender@uci.edu>
+
+	* Added mpc_dst_a_trn, mpc_dst_a_trn_qng, mpc_dst_a_fxr dianostics
+
+2000-04-11  Charlie Zender  <zender@uci.edu>
+
+	* Disabling CaCO3 for mass tests
+
+	* Set fixmas=.true. to invoke mass fixer and evaluate size of
+	advective contribution to mass imbalance
+
+	* Tagged match-3_3_23-dst-0_9_0
+
+2000-03-26  Charlie Zender  <zender@uci.edu>
+
+	* dstmch45 is a CaCO3 tracer test in 1998. Results look good.
+
+	* Implemented capability to transport CaCO3 as a tracer 
+
+	* dstmch43 is a one day run archiving every timestep to check for
+	mass conservation
+
+2000-01-18  Charlie Zender  <zender@uci.edu>
+
+	* Tagged dst-0_8_9
+
+	* Ran dstmch37-44
+
+1999-11-23  Charlie Zender  <zender@dust.ps.uci.edu>
+
+	* Added coastal filter to reduce basin emission on coasts and
+	islands. Ran dstmch36 beginning in May 1998. 
+
+	* dstmch35 looks good. DSTODXC = 0.04, DSTMPC = 57 mg m-2.
+
+1999-11-11  Charlie Zender  <zender@dust.ps.uci.edu>
+
+	* Results look good, except Caspian sea and Horn of Africa too
+	strong. Changed vwc_thr to 0.17+0.14*mss_frc_cly to reintroduce
+	direct dependence on clay fraction. Ran dstmch35 for 1 year.
+
+1999-11-08  Charlie Zender  <zender@dust.ps.uci.edu>
+
+	* Changed from flx_mss_fdg_fct=1.0e-4 to 5.0e-4, ran dstmch34
+
+1999-11-05  Charlie Zender  <zender@dust.ps.uci.edu>
+
+	* Tagged dst-0_8_8, ran dstmch33
+
+	* Testing topographic source limitations (based on Ginoux)
+
+	* Reactivated frc_thr_wet_fct but changed vwc_thr to 0.20 so that
+	only very moist soils (such as Iceland) are proscribed as sources.
+
+1999-11-02  Charlie Zender  <zender@dust.ps.uci.edu>
+
+	* Tagged dst-0_8_7
+
+	* Changed flx_mss_fdg_fct to 1.0e-4, ran dstmch32
+
+	* Began changing old aer code to F90 syntax
+
+	* Changed flx_mss_fdg_fct to 1.0e-3, ran dstmch31, looks OK,
+	vwc_sfc appears correct, GAA ODXC = 0.61
+
+1999-10-27  Charlie Zender  <zender@flagstaff.cgd.ucar.edu>
+
+	* Tagged dst-0_8_6
+
+	* Added routines necessary to set radiative fluxes, surface
+	temperatures, and soil moisture in MATCH
+
+1999-10-05  Charlie Zender  <zender@dust.ps.uci.edu>
+
+	* Tagged as match-3_3_23-dst-0_8_5
+
+	* Removed dependence on date_time.c so that box-model is truly
+	standalone. Rewrote Makefile to build box-model in local
+	directory. Implemented Fortran90 date_time_get() routine.
+
+	* Updated to match-3_3_23, tagged as match-3_3_23-dst-0_8_4
+
+	* Adjustments by Brian Eaton for match-3_3_20-dst-0_8_4
+
+	* Merged with match-3_3_20, tagged as match-3_3_20-dst-0_8_3
+
+1999-09-10  Charlie Zender  <zender@dust.acd.ucar.edu>
+
+	* Tagged this as aer-0_8_3
+
+	* Merged params.h from box model, CCM, and MATCH together so that
+	dst module params.h controls all three models.
+
+	* Changed SCM token to BXM for "Box model" to avoid possible
+	future conflicts with CCM SCCM tokens.
+
+	* Tagged this as aer-0_8_2
+
+	* Merged into dst directory of match_dst
+
+1999-09-01  Charlie Zender  <zender@dust.acd.ucar.edu>
+
+	* Tagged this as aer-0_8_1
+
+	* Added more time and date functionality. Verified behavior of
+	nstep, mcdate, mcsec, nbdate, nbsec, ndcur, nscur, time, tm_adj
+	agree with MATCH. 
+
+1999-08-29  Charlie Zender  <zender@z.ppp.ucar.edu>
+
+	* Tagged this as aer-0_8_0
+
+	* Switched all netCDF I/O to be multiple time-step compliant,
+	tested with nstep=10
+
+1999-08-28  Charlie Zender  <zender@z.ppp.ucar.edu>
+
+	* Implemented rudimentary time-stepping capapbility with tm2nc()
+	and dstctl.h
+
+1999-08-22  Charlie Zender  <zender@z.ppp.ucar.edu>
+
+	* Tagged this as aer-0_7_5
+
+	* Implemented mods for match-3_3_20. 
+	Verified that simulations with CCM 3.6 work fine. 
+
+1999-08-19  Charlie Zender  <zender@dust.acd.ucar.edu>
+
+	* Tagged this as aer-0_7_4 Prior to merging with match-3_3_20
+
+1999-08-10  Charlie Zender  <zender@z.ppp.ucar.edu>
+
+	* Tagged this as aer-0_7_3
+
+	* Segregated chemistry routines into dst_chm_rxr() to solve for
+	reaction rates and dst_chm_slv() to solve equations.
+
+1999-08-02  Charlie Zender  <zender@z.ppp.ucar.edu>
+
+	* Tagged this as aer-0_7_2
+
+	* Added alpha heterogeneous chemistry routines for HNO3
+
+1999-07-31  Charlie Zender  <zender@z.ppp.ucar.edu>
+
+	* Implemented blm_glb(), blm_lnd(), blm_ocn(), and blm_ice().
+	Verified BFB agreement between mie and aer for these routines.
+
+1999-07-23  Charlie Zender  <zender@dust.acd.ucar.edu>
+
+	* Tweaked CCM_LW to give better agreement with GSFC_LW
+
+1999-07-22  Charlie Zender  <zender@dust.acd.ucar.edu>
+
+	* Added GSFC LW capability
+
+1999-07-20  Charlie Zender  <zender@z.ppp.ucar.edu>
+
+	* Removed __GNUC__ tokens for automatic allocation in vec_f77.F
+	and in csz_f77.F. Now code _must_ be compiled with f90 or with g77.
+
+1999-07-19  Charlie Zender  <zender@dust.acd.ucar.edu>
+
+	* Tagged this as aer-0_7_1
+
+1999-07-15  Charlie Zender  <zender@z.ppp.ucar.edu>
+
+	* Verified blm_ocn() is BFB between aer() and mie()
+	Technique for this is to add blm_ocn() call just after
+	blm_mbl() in dstmbl.F. Then compare with, e.g., 
+	mie -tpt_sst=311. Also validated diagnostic computations
+	of xch_cff_mmn and of wnd_rfr at end of blm_ocn() are BFB.
+
+1999-06-29  Charlie Zender  <zender@z.ppp.ucar.edu>
+
+	* Verified that pgf90 works on linux port
+
+Mon Jun 21 10:17:56 1999  ZENDER CHARLIE 1445 ML CGD  <zender@dataproc.ucar.edu>
+
+	* Tagged this version as aer-0_7_0, sent to Natalie
+
+1999-06-08  Charlie Zender  <zender@flagstaff.cgd.ucar.edu>
+
+	* Fixed default size distribution modes as SBG98 rather than BSM96
+
+Sun Jun  6 14:57:25 1999  ZENDER CHARLIE 1445 ML CGD  <zender@dataproc.ucar.edu>
+
+	* dstccm28 results: Relaxing frc_thr_wet_fct from FMB99 by a
+	factor of 3 reduced the spikiness of the dust source regions
+	considerably. 
+
+	* Ran dstccm28: LSM=IGBP cly=0.20 frcwet/=0.33 fdg=0.001
+
+Sat Jun  5 22:07:26 1999  ZENDER CHARLIE 1445 ML CGD  <zender@dataproc.ucar.edu>
+
+	* dstccm25--27 results: Changing from Webb to IGBP soil texture for
+	the LSM improved unrealistic waterline at 20 N in the Sahara.
+
+	* Ran dstccm27: LSM=IGBP cly=0.20 rghmbl=100 rghsmt=33 LAI<0.2 fdg=0.01
+	* Ran dstccm26: LSM=IGBP cly=0.15 rghmbl=100 rghsmt=33 LAI<0.2 fdg=0.01
+	* Ran dstccm25: LSM=IGBP cly=0.10 rghmbl=100 rghsmt=33 LAI<0.2 fdg=0.01 
+	The header ctitle is mistaken on dstccm25, cly really was 0.10
+	
+	* Changed default soil texture dataset for LSM to IGBP (IBIS)
+
+	* dstccm24 was a botched attempt to put IGBP soil into LSM
+	I changed routine fsurdat but forgot that now LSM only uses fsurdat
+	when finidat='arbitrary initialization'
+
+Thu Jun  3 21:34:29 1999  ZENDER CHARLIE 1445 ML CGD  <zender@dataproc.ucar.edu>
+
+	* dstccm04 results: Fixing SGS mss_frc_cly at 0.10 rather than
+	0.15 causes tremendous differences, nearly all of them
+	undesirable. First, Botswana (Kalahari) becomes the strongest
+	source in May, beating both East Asia and the Sahara by a factor
+	of about three. Of these sources, only the Kalahari is dry enough
+	to avoid triggering the vwc_thr penalties in frc_thr_wet_fct.
+
+	* Ran dstccm04: IBIS 1.0*vwc cly=0.10 rghmbl=100
+	rghsmt=33 cld=0.85 fdg=0.01  
+
+	* dstccm23 results: Realizing that the nearly linear dependence of
+	vwc_thr upon mss_frc_cly was now primarily responsible for
+	inhibiting African relative to Asian sources, and that limiting
+	mss_frc_cly to < 0.05 for only some mobilization routines was
+	physically inconsistent, it became obvious that a single
+	mss_frc_cly should be used for all mobilization physics, and that
+	then vwc would not need to be tuned. Setting SGS mss_frc_cly to
+	0.15 imposed a global vwc_thr of about 0.03 m3 m-3. Setting SGS
+	vwc equal to vwc_sfc increased African sources, which are
+	seaonally very close to 0.03, relative to Asian sources, which are
+	closer to 0.05 m3 m-3. As a result, the African sources look just
+	about right, although there is too sharp a cutoff in sources north
+	of 20N. This cutoff is due to the abrupt change of frc_thr_wet_fct
+	from ~1 to ~3 at that latitude, which is, in turn, due to vwc_sfc.
+	Higher vwc_sfc north of 20N unmistakably follows the 
+	patterns of soil texture, specifically clay, in LSM's Webb dataset.
+	Western Australia is now also significant, but not unreasonable. 
+	The Patagonian source disappeared, which is fine,
+	but so did nearly all of the Baluchistani and Caspian sources,
+	which is not good. The Horn of Africa, much too strong in June and
+	July in earlier	versions, is now...
+	Arabian peninsula and sea are virtually devoid of dust in May.
+	Note that overall, source locations are extremely spiky, rather
+	than covering diffuse regions. The locations generally agree,
+	e.g., TOMS hotspots, but the spikiness is too extreme. Solving
+	this may require relaxing the LAI restriction from vai_mbl_thr=0.2
+	to, e.g., 0.4 m2 m-2.
+
+	* Ran dstccm23: IBIS 1.0*vwc cly=0.15 rghmbl=100
+	rghsmt=33 cld=0.85 fdg=0.01  
+
+	* Changed to mss_frc_cly=0.15 for SGS mobilization routines
+	Reset vwc_sgs to 1.0*vwc_sfc
+	
+	* Result: Fixing cld_frc at 0.85 instead of setting it equal to
+	the interactive cloud fraction was necessary to reduce the
+	overly long-lived, and hence overly diffuse, distribution of dust
+	far from the sources. The 0.85 cloud fraction was obtained from
+	the Dust model version 1, e.g., dst16 and dst17 to yield a
+	lifetime of 12-19 days for submicron dust. Note that this is
+	obviously a short term fix, and that using PJR's wet deposition
+	routine will probably be the best long term fix.
+
+	* Ran dstccm22: IBIS 0.4*vwc cly<0.05 rghmbl=100
+	rghsmt=33 cld=0.85 fdg=0.01  
+
+	* Changed to cld_frc=0.85 for dstdpswet()
+
+	* dstccm21 results: Reducing mss_frc_cly from 0.10 to 0.05 (for
+ 	the computation of dst_slt_flx_rat_ttl only) essentially removed
+ 	all sensitivity of dst_slt_flx_rat_ttl to mss_frc_cly. This
+ 	certainly improved strength of Saharan sources relative to East
+ 	Asian, but the increase of mss_frc_cly on vwc_thr still allowed
+ 	moister Asian sources to dominate drier African sources. The
+ 	absolute strength of the Asian source looks good, but is much too
+ 	strong relative to the African source. The African source has
+ 	developed the desired trans-Atlantic characteristics. The Asian
+ 	sources centered near Baluchistan and the Caspian are desirable
+ 	but will disappear in dstccm23, presumably due to more stringent
+ 	moisture criteria.  The Patagonian source is too strong (relative
+ 	to Africa).
+
+	* Ran dstccm21: IBIS 0.4*vwc cly<0.05 rghmbl=100 rghsmt=33 fdg=0.01
+
+	* Changed to mss_frc_cly < 0.05, rgh_mmn_mbl=100.0e-6,
+	rgh_mmn_smt=33.3e-6
+
+Wed Jun  2 19:47:24 1999  ZENDER CHARLIE 1445 ML CGD  <zender@dataproc.ucar.edu>
+
+	* dstccm20 results: Decreasing rgh_mmn_mbl to 50 um decreased the
+	stress partitioning from frc_thr_rgh_fct = 1.57 to 1.34, which was
+	good, but not enough to activate any Saharan sources. Realized
+	that decreasing rgh_mmn_mbl also reduces wnd_frc, because the SGS
+	surface is now smoother. Increasing vwc_sgs from 0.2 to
+	0.4*vwc_sfc succeeded in removing some obviously non-arid source
+	regions. However, relatively moist regions with high soil clay
+	content were still able to deflate due to nearly linear
+	FMB99 relationship between vwc_thr and mss_frc_cly. Note that
+	until dstccm23, mss_frc_cly was only reduced in computation of
+	dst_slt_flx_rat_ttl, but was not reduced consistently in other
+	SGS physics such as the vwc_thr determination. Regions with 
+	mss_frc_cly < 0.10, such as much of the Sahara, were thus still at
+	a significant disadvantage in mobilization because of the combined
+	effects of reduced vwc_thr and reduced dst_slt_flx_rat_ttl
+	relative to moister regions with mss_frc_cly > 0.10.
+	The Patagonian source is too strong, and the the source of nearly
+	all the Arabian sea dust is the Horn of Africa, which is
+	completely wrong. Unfortunately, the Omani coast is much too wet
+	in the CCM, and there is very little that can be done about this
+	except waiting for an improved convection scheme.
+	
+	* Ran dstccm20: IBIS 0.4*vwc cly<0.1 rghmbl=50 fdg=0.01
+	
+	* Changed to vwc_sgs=0.4*vwc_sfc, rgh_mmn_mbl=50.0e-6
+
+	* Tagged this as aer-0_6_11
+	
+	* Ran dstccm19: IBIS 0.2*vwc cly<0.1 rghmbl=100 fdg=0.01 
+
+	* Changed flx_mss_fdg_fct from 1.0e-6 to 1.0e-2
+
+	* Capped mss_frc_cly to 0.1 for computing dst_slt_flx_rat_ttl
+
+	* Ran dstccm18: 
+
+	* Fixed error in flx_mss_vrt_dst_ttl_MaB95_get() where 20% cap on
+	mss_frc_cly was being ignored
+
+	* Tagged this as aer-0_6_10
+
+	* Moved Sun working code in with SGI, Cray in /fs/cgd/home0/zender/aer
+
+	* Ran dstccm16, dstccm17, dstccm18 with vwc_sfc factor = 1.0, 0.5,
+	0.2, respectively. Using IBIS soil texture again as of dstccm17.
+
+	* Re-verified CRM gives no dust forcing with no dust loading
+
+Tue Jun  1 17:01:28 1999  ZENDER CHARLIE 1445 ML CGD  <zender@dataproc.ucar.edu>
+
+	* Multiplied vwc_sfc by arbitrary scaling factor (0.2 currently)
+	to reduce effect of soil moisture on threshold friction speed
+	increases, which are unreasonably large in most arid regions 
+
+	* Tagged this as aer-0_6_9
+
+	* Added more wind diagnostics to dst_mbl() and validated wnd_frc,
+	wnd_frc_slt, wnd_rfr, wnd_rfr_thr_slt, and wnd_frc_thr_slt using
+	ncview 
+
+	* Reading VWC and Tg from bare ground sub-gridscales where possible
+
+	* Re-enabled FMB99 moisture inhibition
+
+1999-05-31  Charlie Zender  <zender@flagstaff.cgd.ucar.edu>
+
+	* Tagged this as aer-0_6_8
+
+	* Changed diagnostic optical depth channel from 0.50 to 0.63 um
+
+	* Changed single scattering properties in dstradbd.F and in
+	dstcmnini.F to next generation size distribution 
+
+Wed May 26 00:28:24 1999  ZENDER CHARLIE 1445 ML CGD  <zender@dataproc.ucar.edu>
+
+	* Tagged this as aer-0_6_7
+
+	* Noted problems with long runs, improved some debugging options
+
+	* Tagged this as aer-0_6_6
+
+	* Fixed many problems with dimensions of subroutine arguments
+
+	* Fixed loop end error in rss_aer_get()
+
+Tue May 25 00:31:38 1999  ZENDER CHARLIE 1445 ML CGD  <zender@dataproc.ucar.edu>
+
+	* Tagged this as aer-0_6_5
+
+	* Implemented mbl_flg in mobilization routines to limit most
+	computations in dst_mbl() to points where lnd_frc_mbl > 0.0
+
+	* Tagged this as aer-0_6_4
+
+	* Implemented preprocessor directives to avoid compiling routines
+	like whenflt and erf on platforms which have native
+	implementations of them, i.e., Cray and SGI
+	Noticed that native SGI erf gives different results than
+	libspecfun, so have retained libspecfun for SGI
+
+	* Tagged this as aer-0_6_3
+
+	* Temporarily turned off frc_thr_wet_fct and set
+	flx_mss_fdg_fct=1.0e-6
+	
+	* Validated aer on CRAY, rearranged build environment to allow
+	multiple machine types in objecte directory
+
+Mon May 24 13:53:25 1999  ZENDER CHARLIE 1445 ML CGD  <zender@dataproc.ucar.edu>
+
+	* Tagged this as aer-0_6_2
+
+	* Verifiied dust flux, boundary layer agreement between mie and aer
+
+	* Limited Owen's effect to 20%
+
+Fri May 21 17:13:36 1999  ZENDER CHARLIE 1445 ML CGD  <zender@dataproc.ucar.edu>
+
+	* Tagged this as aer-0_6_1
+
+	* Implemented and validated VAI and snow fraction limitation
+
+1999-05-20  Charlie Zender  <zender@flagstaff.cgd.ucar.edu>
+
+	* Implemented stress partition and Owen's effect
+
+Wed May 19 12:44:09 1999  ZENDER CHARLIE 1445 ML CGD  <zender@dataproc.ucar.edu>
+
+	* Tagged this as aer-0_6_0
+
+	* Rearranged netCDF output so dst_mbl() outputs all derived BLM
+	quantities for dust mobilization, and dst_dps_dry() outputs
+	corresponding properties for deposition over entire grid-cell.
+	These latter quantities are distinguished by the "_dps" subscript 
+
+	* Fixed error in thermal conductivity calculation in
+	cnd_trm_soi_get() where conductivity of soil solids was 
+	inadvertently set to 0.0
+
+Tue May 18 13:36:34 1999  ZENDER CHARLIE 1445 ML CGD  <zender@dataproc.ucar.edu>
+
+	* Finished dst_blm_sfc() to compute friction speed and
+	Monin-Obukhov length. Verified it gives identical answers to
+	mie::flx_sfc() and mie::dst_blm_sfc()
+
+	* Fixed error in thermal conductivity calculation in
+	cnd_trm_soi_get() where snow cover was handled incorrectly
+
+Mon May 17 12:45:45 1999  ZENDER CHARLIE 1445 ML CGD  <zender@dataproc.ucar.edu>
+
+	* Added dstblm.F and dstblm.h to compute boundary layer properties
+	such as Friction speed and Monin-Obukhov length
+
+Fri May 14 16:46:48 1999  ZENDER CHARLIE 1445 ML CGD  <zender@dataproc.ucar.edu>
+
+	* Tagged this as aer-0_5_2
+
+	* Added #include <dst.h> to all files using DST_MSS_BDG
+	This turned on output to mass budget routines
+	Verified that all surface mass fluxes from dst_mbl(),
+	dst_dps_dry(), and dst_dps_wet() agree in CCM history tapes and
+	diagnostic mass budget file for 4 timestep runs
+
+Tue May 11 14:42:36 1999  ZENDER CHARLIE 1445 ML CGD  <zender@dataproc.ucar.edu>
+
+	* Tagged this as aer-0_5_1
+
+	* Added all deposition flux and tendency diagnostics to drydps2nc()
+
+	* Added clm2nc() to output individual and total dust mixing
+	ratios, mass paths, and optical depths
+
+Thu May  6 17:51:08 1999  ZENDER CHARLIE 1445 ML CGD  <zender@dataproc.ucar.edu>
+
+	* Tagged this as aer-0_5_0
+
+	* Fixed and validated latest version
+
+	* Cleaned up dstbdg.F and dstbdg.h to use new dry deposition
+	fluxes and remove old fluxes
+
+	* Added bdg_gam_wet_2D() to enable mass conservation checks on
+	mobilization tendency now that dst_mbl() is completely a 2D
+	routine
+
+	* Fixed dstdpsdry() to correctly partition gravitational and
+	turbulent fluxes
+
+Wed May  5 18:10:13 1999  ZENDER CHARLIE 1445 ML CGD  <zender@dataproc.ucar.edu>
+
+	* Tagged this as aer-0_4_3
+
+	* Merged into existing ccm-3.6 dust model but have not validated yet
+
+	* Merged all pmgrid.h's into this pmgrid.h
+
+Wed Apr 28 11:08:33 1999  ZENDER CHARLIE 1445 ML CGD  <zender@dataproc.ucar.edu>
+
+	* Added stubs dst_chm(), chm2nc(), and dst_chm_ini() in dstchm.F
+	and dstchm.h
+
+	* Split dstaer.h into dstszdst.h (purely diagnostic) and dstaer.h
+	(available to source/sink routines) 
+
+	* Tagged this as aer-0_4_2
+
+	* Added requisite libcsz_f77 routines, so that compile is now
+	standalone (i.e., removed -lcsz_f77)
+
+	* Noticed that compiling with -X = -trapuv and -check_bounds
+	causes error in flx_mss_vrt_dst_prt() because flx_mss_vrt_dst,
+	which should be initialized by vec_set() is not being completely
+	initialized for unknown reasons.
+
+Tue Apr 27 15:14:45 1999  ZENDER CHARLIE 1445 ML CGD  <zender@dataproc.ucar.edu>
+
+	* Tagged this as aer-0_4_1
+
+	* Changed all netCDF output to double precision and defined double
+	precision compiling options for SGIMP64 which is intended to
+	become the new default development environment since the Sun F90
+	compiler is useless.
+
+1999-04-26  Charlie Zender  <zender@sanitas-e0.cgd.ucar.edu>
+
+	* Tagged this as aer-0_4_0
+
+	* Hooked in all GCM source sink functions, rearranged builds to
+	use local (~/aer) files rather than GCM files, added SCM switch, 
+	de-crufted most DST_TMS code.
+
+1999-04-16  Charlie Zender  <zender@flagstaff.cgd.ucar.edu>
+
+	* Tagged this as aer-0_3_2
+
+	* Added _get() functions for vwc_sfc, sfc_typ, mss_frc_cly,
+	mss_frc_snd, and lnd_frc_dry
+
+1999-04-13  Charlie Zender  <zender@flagstaff.cgd.ucar.edu>
+
+	* Tagged this as aer-0_3_1
+
+	* About to attempt the great size distribution renaming
+
+1999-04-12  Charlie Zender  <zender@flagstaff.cgd.ucar.edu>
+
+	* Tagged this as aer-0_3_0
+
+	* Added flx_mss_vrt_dst_get() which partitions total vertical dust  
+	flux into transport bins
+
+1999-04-07  Charlie Zender  <zender@flagstaff.cgd.ucar.edu>
+
+	* Tagged this as aer-0_2_2
+
+	* Added wnd_thr_slt_get(), validated against mie.
+	mie and aer now produce answers identical to within machine precision.
+
+1999-04-06  Charlie Zender  <zender@flagstaff.cgd.ucar.edu>
+
+	* Tagged this as aer-0_2_1
+
+	* Validated wnd_frc_thr against mie and IvW82 for D = 75 um
+
+	* Fixed density bug in wnd_frc_thr_get()
+
+	* Tagged this as aer-0_2_0
+
+	* Validated rgh_zpd_get(), snw_frc_get(), wnd_mbl_get() against LSM and mie
+
+	* Fixed bug in oro_is_lnd,ocn,ice statement functions
+
+1999-04-02  Charlie Zender  <zender@flagstaff.cgd.ucar.edu>
+
+	* Tagged this as aer-0_10
+
+	* Add zpd_rgh_get() and wnd_mbl_get()
+
+	* Added dstlsm.h and dstbdlsm.F solely in order to allow aer
+	module to be self-contained, i.e., work from home and NCAR.
+
+	* Tagged this as aer-0_9
+
+	* Added snw_frc_get() function. Validation agrees with Bon96.
+
+1999-03-31  Charlie Zender  <zender@z.ppp.ucar.edu>
+
+	* Tagged this as aer-0_8
+
+	* Implemented FMB99 soil moisture threshold factor.
+	Validations consistent with FMB99 p. 156 Fgr. 8 and mie()
+
+	* Added aer_mbl() I/O
+
+1999-02-02  Charlie Zender  <zender@flagstaff.cgd.ucar.edu>
+
+	* Tagged this as aer-0_7
+
+	* Added correction term to Stokes' settling velocity for large
+	Reynolds numbers flows (significan for D > 30 um).
+
+Tue Dec 29 09:43:15 1998  Charlie Zender  <zender@sanitas-e0.cgd.ucar.edu>
+
+	* Minor bugfixes to nvr_ini(). Still builds without GCM. Tagged
+	this as aer-0_6. 
+
+Mon Dec 28 15:29:47 1998  Charlie Zender  <zender@sanitas-e0.cgd.ucar.edu>
+
+	* Rearranged location of some routines to fit better with GCM.
+	Tagged this as aer-0_5. This still runs in standalone mode.
+	
+	* Last version which does not require GCM. Tagged this as aer-0_4
+
+1998-12-20  Charlie Zender  <zender@z.ppp.ucar.edu>
+
+	* Added statistics per unit mass and verified exact agreement with mie()
+
+1998-12-19  Charlie Zender  <zender@z.ppp.ucar.edu>
+
+	* Tagged this as aer-0_3
+
+1998-12-18  Charlie Zender  <zender@z.ppp.ucar.edu>
+
+	* Verified rss_lmn,shm_nbr,stk_nbr, and v_grv agree with mie().
+	Discrepancies of < 10% occur because aer() uses mass-weighted
+	diameters to compute properties, but mie() resolves distribution. 
+	
+	* Verified size distributions agree exactly with mie()
+
+	* Multidimensional fields are compiling but not validated
+
+	* Segregated output into aersz2nc(), drydps2nc(), and nvr2nc()
+
+1998-12-16  Charlie Zender  <zender@z.ppp.ucar.edu>
+
+	* Added dst_sz_ini() and computation of sub-grid resolved sizes
+
+Wed Dec 16 18:59:18 1998  Charlie Zender  <zender@sanitas-e0.cgd.ucar.edu>
+
+	* Added aerodynamic resistance calculation
+
+Tue Dec 15 13:08:56 1998  Charlie Zender  <zender@sanitas-e0.cgd.ucar.edu>
+
+	* Added Stokes and Schmidt number computations and output and
+	verified exact agreement with mie.cc
+
+Mon Dec 14 16:50:00 1998  Charlie Zender  <zender@sanitas-e0.cgd.ucar.edu>
+
+	* Added erf.f from Dick Valent and specfun
+
+	* Implemented src_snk_ovr
+
+1998-12-13  Charlie Zender  <zender@z.ppp.ucar.edu>
+
+	* Implemented sub-gridscale gravitational settling
+
+Tue Nov  3 14:55:30 1998  Charlie Zender  <zender@sanitas-e0.cgd.ucar.edu>
+
+	* Implemented initial aerosol module aer-0_0
+

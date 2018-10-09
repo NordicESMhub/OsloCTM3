@@ -1,0 +1,1381 @@
+------------------------------------------------------------------------
+r216 | sfalk | 2018-03-09 10:18:57 +0100 (fr., 09 mars 2018) | 1 line
+Changed paths:
+   M /branches/brOzoNorClim/OSLO/emissions_megan.f90
+   M /branches/brOzoNorClim/OSLO/utilities_oslo.f90
+
+Move GROWSEASON from MEGAN to utilities
+------------------------------------------------------------------------
+r215 | sfalk | 2018-03-01 12:47:57 +0100 (to., 01 mars 2018) | 1 line
+Changed paths:
+   M /branches/brOzoNorClim/OSLO/bcoc_oslo.f90
+   M /branches/brOzoNorClim/OSLO/drydeposition_oslo.f90
+   M /branches/brOzoNorClim/OSLO/utilities_oslo.f90
+
+Use EMEP parameters and mean forest height 13m.
+------------------------------------------------------------------------
+r214 | sfalk | 2018-02-28 15:14:43 +0100 (on., 28 feb. 2018) | 1 line
+Changed paths:
+   M /branches/brOzoNorClim/OSLO/bcoc_oslo.f90
+   M /branches/brOzoNorClim/OSLO/drydeposition_oslo.f90
+   M /branches/brOzoNorClim/OSLO/utilities_oslo.f90
+
+Latitude dependent forest vegetation height -> subroutine.
+------------------------------------------------------------------------
+r213 | sfalk | 2018-02-28 11:55:44 +0100 (on., 28 feb. 2018) | 1 line
+Changed paths:
+   M /branches/brOzoNorClim/OSLO/drydeposition_oslo.f90
+   M /branches/brOzoNorClim/c3run_emeppar_example.job
+
+Use some parameters from input file.
+------------------------------------------------------------------------
+r212 | sfalk | 2018-02-28 10:35:43 +0100 (on., 28 feb. 2018) | 1 line
+Changed paths:
+   M /branches/brOzoNorClim/Makefile
+   M /branches/brOzoNorClim/OSLO/diagnostics_general.f90
+   M /branches/brOzoNorClim/OSLO/drydeposition_oslo.f90
+   M /branches/brOzoNorClim/cmn_sfc.f90
+   M /branches/brOzoNorClim/initialize.f90
+   M /branches/brOzoNorClim/tables/Ltracer_emis_ceds17_2014_megan_gfed4blhdaily.inp
+   M /branches/brOzoNorClim/tables/PMEAN/p-wind_ec.f
+   M /branches/brOzoNorClim/tables/tracer_list_nitrate.d
+
+Moved EMEP parameters from drydeposition_oslo to cmn_sfc. Also moved initialization to initialize. New assignment of EMEP parameters from file still outcommented.
+------------------------------------------------------------------------
+r207 | sfalk | 2018-02-20 14:49:29 +0100 (ti., 20 feb. 2018) | 1 line
+Changed paths:
+   A /branches/brOzoNorClim (from /ctm3f90:204)
+
+Branching for the project OzoNorClim
+------------------------------------------------------------------------
+r204 | sfalk | 2018-02-19 16:11:36 +0100 (ma., 19 feb. 2018) | 1 line
+Changed paths:
+   M /ctm3f90/OSLO/drydeposition_oslo.f90
+   A /ctm3f90/c3run_emeppar_example.job
+   M /ctm3f90/cmn_sfc.f90
+   A /ctm3f90/emeppar_example.inp
+   M /ctm3f90/initialize.f90
+
+Added switch for EMEP-based/old drydep scheme to inp-file. Defined source of EMEP.par in inp-file. Variables read from inp-file are defined in cmn_sfc.f90. Read EMEP.par in drydeposition_oslo.f90 if LDEPEMEP2012 is true.
+------------------------------------------------------------------------
+r203 | asovde | 2018-02-05 14:00:46 +0100 (ma., 05 feb. 2018) | 1 line
+Changed paths:
+   M /ctm3f90/pmain.f90
+
+timing correction
+------------------------------------------------------------------------
+r202 | asovde | 2018-02-02 08:40:24 +0100 (fr., 02 feb. 2018) | 11 lines
+Changed paths:
+   M /ctm3f90/Makefile
+   M /ctm3f90/OSLO/bcoc_oslo.f90
+   M /ctm3f90/OSLO/drydeposition_oslo.f90
+   M /ctm3f90/OSLO/emissions_megan.f90
+   M /ctm3f90/OSLO/emissions_ocean.f90
+   M /ctm3f90/OSLO/utilities_oslo.f90
+   M /ctm3f90/cmn_size.F90
+   M /ctm3f90/grid.f90
+   M /ctm3f90/pmain.f90
+   M /ctm3f90/utilities.f90
+
+20180203 Amund Sovde Haslerud
+
+Small updates.
+
+OpenMP scheduling is now dynamic (some speed increase).
+
+Timings are done with different system call, printing better info
+(and correct times when actual date crosses a month).
+
+Yet another bugfix to the not-default drydep scheme.
+
+------------------------------------------------------------------------
+r201 | asovde | 2018-01-25 15:53:08 +0100 (to., 25 jan. 2018) | 1 line
+Changed paths:
+   M /ctm3f90/OSLO/drydeposition_oslo.f90
+   M /ctm3f90/OSLO/emissions_megan.f90
+   M /ctm3f90/cmn_sfc.f90
+
+Anoter update of the EMEP-dydep test version
+------------------------------------------------------------------------
+r200 | asovde | 2018-01-24 13:45:56 +0100 (on., 24 jan. 2018) | 1 line
+Changed paths:
+   M /ctm3f90/OSLO/drydeposition_oslo.f90
+
+Updating test version of EMEP drydep
+------------------------------------------------------------------------
+r199 | sfalk | 2018-01-23 08:41:55 +0100 (ti., 23 jan. 2018) | 1 line
+Changed paths:
+   M /ctm3f90/spectral_routines.f
+
+Style.
+------------------------------------------------------------------------
+r198 | asovde | 2018-01-19 14:09:09 +0100 (fr., 19 jan. 2018) | 1 line
+Changed paths:
+   M /ctm3f90/OSLO/emissions_megan.f90
+
+corrected non-initialised value
+------------------------------------------------------------------------
+r197 | asovde | 2018-01-19 12:04:45 +0100 (fr., 19 jan. 2018) | 8 lines
+Changed paths:
+   M /ctm3f90/Makefile
+   M /ctm3f90/OSLO/chem_oslo_rates.f90
+   M /ctm3f90/OSLO/diagnostics_scavenging.f90
+   M /ctm3f90/OSLO/pchemc_ij.f90
+   M /ctm3f90/OSLO/pchemc_str_ij.f90
+   M /ctm3f90/OSLO/soa_oslo.f90
+   M /ctm3f90/scavenging_largescale_uci.f90
+   A /ctm3f90/tables/EMISSION_LISTS/Ltracer_emis_ceds20170518.dat
+   D /ctm3f90/tables/Ltracer_emis_ceds_2000.inp
+   M /ctm3f90/tables/scavenging_wet.inp
+
+20180119 Amund Sovde Haslerud
+
+Small updates
+
+Removed tables/Ltracer_emis_ceds_2000.inp
+Added tables/EMISSION_LISTS/Ltracer_emis_ceds20170518.dat
+
+Added a few things for CH3OH inclusion (will do that next).
+------------------------------------------------------------------------
+r196 | asovde | 2018-01-10 13:30:31 +0100 (on., 10 jan. 2018) | 15 lines
+Changed paths:
+   M /ctm3f90/OSLO/emissions_megan.f90
+   M /ctm3f90/OSLO/emissions_oslo.f90
+   M /ctm3f90/OSLO/emisutils_oslo.f90
+   M /ctm3f90/OSLO/ncutils.f90
+   M /ctm3f90/OSLO/psc_microphysics.f90
+   M /ctm3f90/p-dyn0.f
+   A /ctm3f90/tables/solflux_7month_running_mean_1990_2017.dat
+
+20180110 Amund Sovde Haslerud
+
+Small updates
+
+Number of PSC bins (N_B) is reduced from 40 to 15. This gives up to
+0.2% difference in O3 total column in O3-hole conditions.
+
+Added routine to read monthly megan-emissions produced by Oslo CTM3.
+
+p-dyn0.f: Added info on how to increase the number of NADV, in case of
+negative tracers due to vertical advection.
+
+Added: tables/solflux_7month_running_mean_1990_2017.dat
+
+
+------------------------------------------------------------------------
+r195 | asovde | 2018-01-03 09:46:44 +0100 (on., 03 jan. 2018) | 62 lines
+Changed paths:
+   M /ctm3f90/L60CTM.inp
+   D /ctm3f90/MANUAL
+   M /ctm3f90/Makefile
+   A /ctm3f90/OSLO/atom.f90
+   M /ctm3f90/OSLO/bcoc_oslo.f90
+   M /ctm3f90/OSLO/caribic2.f90
+   M /ctm3f90/OSLO/cmn_oslo.f90
+   M /ctm3f90/OSLO/diagnostics_general.f90
+   M /ctm3f90/OSLO/drydeposition_oslo.f90
+   M /ctm3f90/OSLO/emisdep4chem_oslo.f90
+   M /ctm3f90/OSLO/emissions_aircraft.f90
+   A /ctm3f90/OSLO/emissions_megan.f90
+   M /ctm3f90/OSLO/emissions_oslo.f90
+   M /ctm3f90/OSLO/emissions_volcanoes.f90
+   M /ctm3f90/OSLO/emisutils_oslo.f90
+   M /ctm3f90/OSLO/fallingaerosols.f90
+   M /ctm3f90/OSLO/hippo.f90
+   M /ctm3f90/OSLO/input_oslo.f90
+   M /ctm3f90/OSLO/main_oslo.f90
+   M /ctm3f90/OSLO/ncutils.f90
+   M /ctm3f90/OSLO/pchemc_ij.f90
+   M /ctm3f90/OSLO/physics_oslo.f90
+   M /ctm3f90/OSLO/psc_microphysics.f90
+   M /ctm3f90/OSLO/satelliteprofiles_mls.f90
+   M /ctm3f90/OSLO/strat_h2o.f90
+   M /ctm3f90/OSLO/strat_loss.f90
+   M /ctm3f90/OSLO/utilities_oslo.f90
+   M /ctm3f90/OSLO/verticalprofiles_stations2.f90
+   M /ctm3f90/README
+   M /ctm3f90/cmn_ctm.f90
+   M /ctm3f90/cmn_met.f90
+   M /ctm3f90/cmn_sfc.f90
+   M /ctm3f90/cmn_size.F90
+   M /ctm3f90/fastjx.f90
+   M /ctm3f90/grid.f90
+   M /ctm3f90/initialize.f90
+   A /ctm3f90/manual_osloctm3.pdf
+   M /ctm3f90/metdata_ecmwf.f90
+   M /ctm3f90/metdata_ecmwf_uioformat.f90
+   M /ctm3f90/p-dyn2.f
+   M /ctm3f90/pbl_mixing.f90
+   M /ctm3f90/pmain.f90
+   M /ctm3f90/source_uci.f90
+   M /ctm3f90/tables/EMISSION_LISTS/Ltracer_emis_biomassburning.dat
+   M /ctm3f90/tables/EMISSION_LISTS/Ltracer_emis_ocean.dat
+   M /ctm3f90/tables/EMISSION_LISTS/Ltracer_emis_soils.dat
+   A /ctm3f90/tables/FJX_solminmax.dat
+   A /ctm3f90/tables/Ltracer_emis_ceds17_2000_megan_gfed4.inp
+   A /ctm3f90/tables/Ltracer_emis_ceds17_2000_megan_gfed4blhmonthly.inp
+   A /ctm3f90/tables/Ltracer_emis_ceds17_2014_megan_gfed4blhdaily.inp
+   A /ctm3f90/tables/megan_tables.dat
+   A /ctm3f90/tables/test_scav.inp
+   M /ctm3f90/tables/tracer_list_all_soa.d
+   M /ctm3f90/tables/tracer_list_bcoc.d
+   M /ctm3f90/tables/tracer_list_dust.d
+   M /ctm3f90/tables/tracer_list_nitrate.d
+   M /ctm3f90/tables/tracer_list_salt.d
+   M /ctm3f90/utilities.f90
+
+20180103 Amund Sovde Haslerud
+
+Updates
+
+After this update (and possible corrections), the repository will be
+moved to github.
+
+User manual is now just a pdf in the main directory, manual_osloctm3.pdf.
+The latex source code is located in a separate repository.
+
+The Photosynthetic active radiation variable PAR has changed name to
+PhotActRad, because it was a hassle to search for PAR.
+
+MEGANv2.10 has been included. You have to make sure not to use other
+biogenic emissions in the emission list (also NOx and NH3).
+To include it, there is an entry in STV you have to include.
+
+Biomass burning from GFED4 is now distributed according to
+air mass in the boundary layer - i.e. from the surface and up to the
+uppermost box completely within PBL. (Code 569 for GFED4.)
+
+GFED4
+- can be used with daily distributions.
+- Several options for vertical distributions are possible.
+  I will set the default to code 572.
+  - Code 567: Monthly, use BBH-file for vertical distribution
+  - Code 573: Daily, use BBH-file for vertical distribution
+  - Code 569: Monthly, use BLH pressures: fraction dP/dPtot
+  - Code 570: Daily, use BLH pressures: fraction dP/dPtot
+  - Code 571: Monthly, use BLH altitudes: fraction dZ/dZtot
+  - Code 572: Daily, use BLH altitudes: fraction dZ/dZtot
+CEDS:
+  - Code 574: Monthly, use BLH altitudes: fraction dZ/dZtot
+  - Code 568: Monthly, use BBH-file for vertical distribution
+
+PBL mixing can now be done by interpolating BLH between current
+meteorological time step and the next. You have to uncomment the
+call, located in the CYC-loop in pmain.
+The update is thus done every time PBL mixing is called, which
+is every 15 minutes when NRCHEM=1 (i.e. PBL height is updated
+12 times per meteorological time step).
+
+Interpolated BLH will be default in the next update.
+
+Some other variable names have changed names, e.g. LS_FRAC is now
+landSurfTypeFrac, which also have changed the order of indices.
+
+Clean up diagnostics_general: tnd_emis2file
+
+New input lists and tracer lists (correct molecular weights).
+
+Included some table files that I have used before.
+
+MANUAL directory is removed, the manual is now in main directory as pdf.
+The manual LaTeX code is found on amoc.
+
+Solar min/max: Included some routines to read solar min/max data and
+monthly variation between these. See start of subroutine RD_XXX in
+fastjx.f90.
+
+
+
+------------------------------------------------------------------------
+r194 | asovde | 2017-09-18 09:37:41 +0200 (ma., 18 sep. 2017) | 14 lines
+Changed paths:
+   M /ctm3f90/Makefile
+   M /ctm3f90/OSLO/bcoc_oslo.f90
+   M /ctm3f90/OSLO/diagnostics_general.f90
+   M /ctm3f90/OSLO/emissions_oslo.f90
+   M /ctm3f90/averages.f90
+
+20170912 Amund Sovde Haslerud
+
+Corrections to v1.0.
+
+Updated error in biomass burning read-in (emissions_oslo.f90): It read
+NPAR components, not EPAR_FIR, so when running only BCOC you didn't get
+all emissions.
+
+averages.f90: Volume output was not correct (it wrote air density instead).
+
+bcoc_oslo.f90: Missing a parameter for subroutine name (caused compilation
+               error).
+
+
+------------------------------------------------------------------------
+r193 | asovde | 2017-09-01 14:39:12 +0200 (fr., 01 sep. 2017) | 67 lines
+Changed paths:
+   M /ctm3f90/L60CTM.inp
+   M /ctm3f90/MANUAL/LATEX/manual.tex
+   M /ctm3f90/MANUAL/LATEX/references_ctm.bib
+   M /ctm3f90/MANUAL/osloctm3_manual.pdf
+   M /ctm3f90/Makefile
+   M /ctm3f90/OSLO/DUMMIES/chem_oslo_rates.f90
+   M /ctm3f90/OSLO/bcoc_oslo.f90
+   M /ctm3f90/OSLO/ch4routines.f90
+   M /ctm3f90/OSLO/chem_oslo_rates.f90
+   M /ctm3f90/OSLO/cmn_oslo.f90
+   M /ctm3f90/OSLO/diagnostics_general.f90
+   A /ctm3f90/OSLO/diagnostics_general_rrdiag.f90
+   M /ctm3f90/OSLO/diagnostics_scavenging.f90
+   M /ctm3f90/OSLO/emisdep4chem_oslo.f90
+   M /ctm3f90/OSLO/emissions_aircraft.f90
+   M /ctm3f90/OSLO/emissions_oslo.f90
+   M /ctm3f90/OSLO/emisutils_oslo.f90
+   M /ctm3f90/OSLO/gmdump3hrs.f90
+   M /ctm3f90/OSLO/input_oslo.f90
+   M /ctm3f90/OSLO/main_oslo.f90
+   M /ctm3f90/OSLO/ncutils.f90
+   M /ctm3f90/OSLO/pchemc_ij.f90
+   M /ctm3f90/OSLO/pchemc_str_ij.f90
+   M /ctm3f90/OSLO/physics_oslo.f90
+   M /ctm3f90/OSLO/seasalt.f90
+   M /ctm3f90/OSLO/stratchem_oslo.f90
+   M /ctm3f90/OSLO/tropchem_oslo.f90
+   M /ctm3f90/OSLO/utilities_oslo.f90
+   M /ctm3f90/averages.f90
+   M /ctm3f90/cmn_chem.f90
+   M /ctm3f90/cmn_ctm.f90
+   M /ctm3f90/cmn_diag.f90
+   M /ctm3f90/cmn_precision.f90
+   M /ctm3f90/cmn_size.F90
+   M /ctm3f90/initialize.f90
+   M /ctm3f90/lightning.f90
+   M /ctm3f90/omp.f90
+   M /ctm3f90/p-linoz.f
+   M /ctm3f90/pmain.f90
+   M /ctm3f90/regridding.f90
+   M /ctm3f90/source_uci.f90
+   M /ctm3f90/steflux.f90
+   M /ctm3f90/stt_save_load.f90
+   A /ctm3f90/tables/EMISSION_LISTS/Ltracer_emis_biomassburning.dat
+   M /ctm3f90/tables/EMISSION_LISTS/Ltracer_emis_ch4_bousquet.dat
+   M /ctm3f90/tables/EMISSION_LISTS/Ltracer_emis_eclipse4.dat
+   M /ctm3f90/tables/EMISSION_LISTS/Ltracer_emis_eclipse5.dat
+   M /ctm3f90/tables/EMISSION_LISTS/Ltracer_emis_edgar42.dat
+   M /ctm3f90/tables/EMISSION_LISTS/Ltracer_emis_geia.dat
+   M /ctm3f90/tables/EMISSION_LISTS/Ltracer_emis_htap.dat
+   M /ctm3f90/tables/EMISSION_LISTS/Ltracer_emis_lamarque.dat
+   M /ctm3f90/tables/EMISSION_LISTS/Ltracer_emis_megan.dat
+   M /ctm3f90/tables/EMISSION_LISTS/Ltracer_emis_meganMACC.dat
+   M /ctm3f90/tables/EMISSION_LISTS/Ltracer_emis_ocean.dat
+   M /ctm3f90/tables/EMISSION_LISTS/Ltracer_emis_retro.dat
+   M /ctm3f90/tables/EMISSION_LISTS/Ltracer_emis_soils.dat
+   A /ctm3f90/tables/Ltracer_emis_ceds_2000.inp
+   M /ctm3f90/tables/Ltracer_emis_eclipse_V5_2010_meganMACC.inp
+   M /ctm3f90/tables/Ltracer_emis_noemis.inp
+   M /ctm3f90/tables/polar_o3loss.dat
+   M /ctm3f90/tables/scavenging_wet.inp
+   M /ctm3f90/tables/tracer_list_all_soa.d
+   M /ctm3f90/utilities.f90
+
+20170901 Amund Sovde Haslerud
+
+Update to v1.0.
+
+Many files are now written as netCDF4 instead of fortran binary files, but
+not all. I will continue that work in the coming months.
+
+Overview:
+- output files are written as netCDF4
+  - averages (avgsav_YYYYMMDD_YYYYMMDD.nc)
+  - 3-hr output files (previously netCDF3)
+  - scavenging diagnostics (scavenging_daily_totals_YYYY.nc and
+                            scavenging_daily_2d_YYYYMMDD.nc)
+  - 3-hr dobson fields (dobson_nmet.nc)
+  - emission diagnostics (emis_daily_totals_YYYY.nc and
+                          emis_accumulated_3d_YYYYMMDD_YYYYMMDD.nc)
+  - ste-flux (ste_YYYYMMDD_YYYYMMDD.nc)
+- restart file is written as netCDF4
+  - reading restart file is set to read netCDF4.
+    Change this to old read-in if necessary (initialize.f90)
+- CEDS emissions are available.
+- BCOC CHET is now 12-month, generated 2016.
+- manual update (still a few issues that are unresolved - working on it)
+- Changed names of LPAUZ to LSTRATAIR_E90 and LO3PAUZ to LSTRATAIR_O3.
+
+Main updates
+- cmn_ctm.f90: Added JDAY_NEXT, JYEAR_NEXT, JMON_NEXT, JDATE_NEXT 
+- cmn_size.f90: Added TNAMELEN to define character length of TNAME and
+                XTNAME.
+- averages.f90: avgsav-files are now written on netCDF4 format.
+                Removed old unused routines.
+- steflux.f90: writes output in netCDF4.
+- stt_save_load.f90: Included new routines for saveing/loading netCDF4
+                     restart files.
+- utilities.f90: Replaced old CALENDR with subroutine calendar and
+                 get_soldecdis, to calculate JDAY_NEXT, JMON_NEXT,
+                 JYEAR_NEXT.
+- tables/scavenging_wet.inp: Updated.
+- tables/Ltracer_emis_eclipse_V5_2010_meganMACC.inp: Updated
+- tables/tracer_list_all_soa.d: Updated
+- OSLO/cmn_oslo.f90: TP_TYPE definition is moved here.
+- OSLO/bcoc_oslo.f90: New 12-months CHET.
+- OSLO/ch4routines.f90: Updated. Added possibility to scale fields.
+- OSLO/diagnostics_general.f90: Removed RR-diags (put them in separate file)
+  				Several output files are now netCDF4.
+- OSLO/diagnostics_scavenging.f90: Scavenging files are now netCDF4.
+- OSLO/emisdep4chem_oslo.f90: Updated for aircraft emissions.
+- OSLO/emissions_oslo.f90: Updated
+- OSLO/emisutils_oslo.f90: Added CEDS routines.
+- OSLO/emissions_aircraft.f90: Added CEDS routines.
+- OSLO/gmdump3hrs.f90: Writes compressed netCDF4
+- OSLO/cmn_oslo.f90: Added new categories.
+- OSLO/ncutils.f90: Added readnc_sub3d_from3d
+- OSLO/pchemc_ij.f90: Added test on isoprene loss.
+  		      DDDIAG for NO3coarse was not included: corrected.
+- OSLO/physics_oslo.f90: Updated to handle other tropopause definitions.
+                         TP_TYPE definition is moved to cmn_oslo.f90.
+- OSLO/stratchem_oslo.f90: Chemical production and loss of Ox is diagnosed.
+- OSLO/tropchem_oslo.f90: Chemical production and loss of Ox is diagnosed.
+- OSLO/utilities_oslo.f90: Updated, minor changes.
+- L60CTM.inp: Removed 3D-section at the very bottom.
+
+New files
+- tables/Ltracer_emis_ceds_2000.inp
+- tables/EMISSION_LISTS/Ltracer_emis_biomassburning.dat
+- OSLO/diagnostics_general_rrdiag.f90
+
+------------------------------------------------------------------------
+r192 | asovde | 2016-06-12 14:42:16 +0200 (sø., 12 juni 2016) | 20 lines
+Changed paths:
+   M /ctm3f90/L60CTM.inp
+   M /ctm3f90/Makefile
+   M /ctm3f90/OSLO/cmn_oslo.f90
+   M /ctm3f90/OSLO/dust_oslo.f90
+   M /ctm3f90/OSLO/emissions_oslo.f90
+   M /ctm3f90/OSLO/emisutils_oslo.f90
+   M /ctm3f90/OSLO/pchemc_ij.f90
+   M /ctm3f90/OSLO/soa_oslo.f90
+   M /ctm3f90/averages.f90
+   M /ctm3f90/tables/Ltracer_emis_eclipse_V5_2010_meganMACC.inp
+   M /ctm3f90/tables/scavenging_wet.inp
+
+20160612 Amund Sovde Haslerud
+
+- Corrected isoprene emissions for SOA (~500Tg/yr instead of ~220Tg/yr).
+  Also applies to chemistry.
+- Corrected precursor emissions for SOA.
+- Definition of biomass burning emissions is moved from top of
+  emission file to the bottom.
+  - Here you now list all tracers to be included, along with
+    scaling factors (global + partitions).
+- Wet scavenging update:
+  SO4: Not scavenged on large scale ice (previously 50%)
+  OM-phil: Not scavenged on large scale ice (previously 20%)
+  BC-phil: Not scavenged on large scale ice (previously 20%)
+  SALT: Not scavenged on large scale ice (previously 50%)
+  DUST: 50% available for scavenging on large scale ice (previously 100%)
+  Nitrate aerosols: Not scavenged on large scale ice (previously 50%)
+  SOA: 20% available for scavenging on large scale ice (previously 100%)
+       Because the overall 80% available for scavenging still applies, the
+       table value is 25%.
+
+------------------------------------------------------------------------
+r191 | asovde | 2016-06-01 10:54:11 +0200 (on., 01 juni 2016) | 21 lines
+Changed paths:
+   M /ctm3f90/OSLO/diagnostics_scavenging.f90
+   M /ctm3f90/OSLO/dust_oslo.f90
+   M /ctm3f90/OSLO/emisutils_oslo.f90
+   M /ctm3f90/OSLO/gmdump3hrs.f90
+   M /ctm3f90/OSLO/input_oslo.f90
+   M /ctm3f90/OSLO/seasalt.f90
+   M /ctm3f90/initialize.f90
+   M /ctm3f90/scavenging_largescale_uci.f90
+   M /ctm3f90/tables/scavenging_wet.inp
+   M /ctm3f90/tables/tracer_list_all_soa.d
+
+20160601 Amund Sovde Haslerud
+
+Updated scavenging table: soa gases and soa precursors on ice.
+
+Split 3-hr output for soa in two: natural and anthropogenic.
+
+Small corrections / bug fixes.
+
+
+Updated
+   tables/scavenging_wet.inp
+   tables/tracer_list_all_soa.d
+   OSLO/gmdump3hrs.f90
+   OSLO/seasalt.f90
+   OSLO/emisutils_oslo.f90
+   OSLO/input_oslo.f90
+   OSLO/dust_oslo.f90
+   OSLO/diagnostics_scavenging.f90
+   initialize.f90
+   scavenging_largescale_uci.f90
+
+------------------------------------------------------------------------
+r190 | asovde | 2016-05-10 09:29:34 +0200 (ti., 10 mai 2016) | 60 lines
+Changed paths:
+   M /ctm3f90/Makefile
+   M /ctm3f90/OSLO/DUMMIES/soa_oslo.f90
+   M /ctm3f90/OSLO/chem_oslo_rates.f90
+   M /ctm3f90/OSLO/cnv_oslo.f90
+   M /ctm3f90/OSLO/drydeposition_oslo.f90
+   M /ctm3f90/OSLO/emisdep4chem_oslo.f90
+   M /ctm3f90/OSLO/emissions_ocean.f90
+   M /ctm3f90/OSLO/nitrate.f90
+   M /ctm3f90/OSLO/soa_oslo.f90
+   M /ctm3f90/OSLO/sulphur_oslo.f90
+   M /ctm3f90/OSLO/tropchem_oslo.f90
+   M /ctm3f90/c3run.job
+   M /ctm3f90/cmn_chem.f90
+   M /ctm3f90/pbl_mixing.f90
+   M /ctm3f90/regridding.f90
+   M /ctm3f90/scavenging_largescale_uci.f90
+   M /ctm3f90/tables/scavenging_wet.inp
+
+20160510 Amund Sovde
+
+*SCAVENGING UPDATE*
+
+Previously, the large scale wet removal did not handle hard-coded
+modifications to Henry expressions (i.e. calculation of effective
+Henry expressions). This is now remedied.
+
+Effective Henry in the convective scavenging was not turned on for
+SO2. This is fixed.
+
+scavenging_wet.inp is UPDATED!
+
+Technical:
+  The TCKAQA variable has now changed from an enhancement factor to
+  be a flag denoting whether hard coding is necessary. Setting it to
+  non-zero will look for specific code, given in getHstar in
+  scavenging_largescale_uci.f90.
+
+Some other small updates are included, which will not affect results.
+
+
+Modified files:
+
+c3run.job:
+  Updated
+cmn_chem.f90:
+  TCKAQA is now a flag
+pbl_mixing.f90:
+  PBL_KEDDY=KC(2) was set after KC had been adjusted by:
+       do L = 1, MID-1
+          KC(L) = max(KC(L), KC(MID))
+       end do
+  I tested this, and it had no effect whatsoever. Will set
+  PBL_KEDDY before the adjustment anyway.
+scavenging_largescale_uci.f90:
+  Updated with subroutine getHstar.
+OSLO/chem_oslo_rates.f90:
+  CTM2-style aerosols for tropospheric heterogeneous chemistry.
+OSLO/cnv_oslo.f90:
+  Updated to handle effective henry expressions better.
+OSLO/drydeposition_oslo.f90:
+  Tests species on component id instead of name.
+OSLO/emisdep4chem_oslo.f90:
+  getVDEP_oslo now gets VDEP(NPAR) as input.
+OSLO/emissions_ocean.f90:
+  SeaSaltScheme set as in seasalt.f90.
+OSLO/soa_oslo.f90:
+  Added new diags for gases. Updated printouts.
+OSLO/sulphur_oslo.f90:
+  Removed some rates that have new names.
+OSLO/tropchem_oslo.f90:
+  New calls to SOA diags.
+tables/scavenging_wet.inp:
+  Updated: TCKAQA is now a flag.
+
+
+
+
+
+------------------------------------------------------------------------
+r189 | asovde | 2016-04-19 12:01:09 +0200 (ti., 19 april 2016) | 46 lines
+Changed paths:
+   A /ctm3f90/L60CTM.inp
+   A /ctm3f90/L60CTM_bcoc.inp
+   D /ctm3f90/L60T159.inp
+   D /ctm3f90/L60T159_bcoc.inp
+   M /ctm3f90/Makefile
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_history.f90
+   M /ctm3f90/OSLO/DEAD_COLUMN/dead_inirun.f90
+   M /ctm3f90/OSLO/DEAD_COLUMN/dstdbg.F90
+   M /ctm3f90/OSLO/DEAD_COLUMN/dstdpsdry.F90
+   M /ctm3f90/OSLO/DEAD_COLUMN/dstmbl.F90
+   D /ctm3f90/OSLO/DEAD_COLUMN/histout.F
+   M /ctm3f90/OSLO/DUMMIES/dust_oslo.f90
+   M /ctm3f90/OSLO/DUMMIES/seasalt.f90
+   D /ctm3f90/OSLO/aerobdg2nc.f90
+   M /ctm3f90/OSLO/chem_oslo_rates.f90
+   M /ctm3f90/OSLO/cmn_oslo.f90
+   M /ctm3f90/OSLO/diagnostics_general.f90
+   M /ctm3f90/OSLO/diagnostics_scavenging.f90
+   M /ctm3f90/OSLO/dust_oslo.f90
+   M /ctm3f90/OSLO/emissions_aircraft.f90
+   M /ctm3f90/OSLO/emisutils_oslo.f90
+   M /ctm3f90/OSLO/ncutils.f90
+   M /ctm3f90/OSLO/pchemc_str_ij.f90
+   M /ctm3f90/OSLO/seasalt.f90
+   M /ctm3f90/OSLO/strat_h2o.f90
+   M /ctm3f90/OSLO/tropchem_oslo.f90
+   M /ctm3f90/cmn_ctm.f90
+   M /ctm3f90/grid.f90
+   M /ctm3f90/initialize.f90
+   M /ctm3f90/metdata_ecmwf.f90
+   M /ctm3f90/pmain.f90
+   M /ctm3f90/regridding.f90
+   M /ctm3f90/stt_save_load.f90
+   A /ctm3f90/tables/P_meanT159.nc
+   A /ctm3f90/tables/P_meanT319.nc
+   A /ctm3f90/tables/P_meanT319_IFScy36r1_2005.nc
+
+20160419 Amund Sovde
+
+*BUDGETS*
+DUST budget: Updated to diagnose all DUST tracers separately.
+Dust budget file contains the same as before, but now it is
+possible to turn on putting out budgets for all DUST tracers.
+Set LDUSTDIAG3D=.true. in dust_oslo.f90
+
+SALT budget: Same as for DUST, but flag LSALTDIAG3D=.true. in
+seasalt.f90.
+
+
+This means that the file aerobdg2nc.f90 is removed.
+
+*PMEAN*
+PMEAN is read from a separate file, defined in the input file.
+I have now updated this to be netcdf file, in T319 resolution, which is
+then interpolated to the model resolution.
+The impact of this should be minimal; PMEAN is only used to calculate
+topography, and should not affect chemistry or aerosol physics.
+Transport and so on uses hybrid coefficients and surface pressure, not
+topography height.
+
+*input file*
+The LxxTyy-files are renamed to LxxCTM.inp, because they are no longer
+dependent on horizontal resolution.
+
+
+
+Removed:
+- histout.F
+- aerobdg2nc.f90
+- LxxTyy*
+
+New:
+- dead_history.f90: Most of the history fields are commented out,
+  		    since they were not used. When needed, it is easy
+		    to put them back.
+
+- tables/P_meanT319_IFScy36r1_2005.nc
+- tables/P_meanT159.nc
+- tables/P_meanT319.nc
+- LxxCTM*
+
+
+
+------------------------------------------------------------------------
+r188 | asovde | 2016-03-11 10:17:19 +0100 (fr., 11 mars 2016) | 5 lines
+Changed paths:
+   M /ctm3f90/MANUAL/LATEX/manual.tex
+   M /ctm3f90/MANUAL/LATEX/references_ctm.bib
+   M /ctm3f90/MANUAL/osloctm3_manual.pdf
+   M /ctm3f90/Makefile
+   M /ctm3f90/OSLO/emissions_aircraft.f90
+   M /ctm3f90/OSLO/emissions_ocean.f90
+   M /ctm3f90/OSLO/emisutils_oslo.f90
+   M /ctm3f90/OSLO/input_oslo.f90
+   M /ctm3f90/grid.f90
+   M /ctm3f90/metdata_ecmwf.f90
+   M /ctm3f90/metdata_ecmwf_uioformat.f90
+
+20160311: Amund Sovde
+
+CTM3f90 update: Just bug fixes on my last commits, and a small update
+on the manual.
+
+------------------------------------------------------------------------
+r187 | asovde | 2016-03-02 14:01:05 +0100 (on., 02 mars 2016) | 1 line
+Changed paths:
+   M /ctm3f90/OSLO/nitrate.f90
+
+asovde: small correction
+------------------------------------------------------------------------
+r186 | asovde | 2016-03-02 10:02:29 +0100 (on., 02 mars 2016) | 63 lines
+Changed paths:
+   M /ctm3f90/L60T159.inp
+   M /ctm3f90/L60T159_bcoc.inp
+   M /ctm3f90/L60T42.inp
+   M /ctm3f90/MANUAL/LATEX/manual.tex
+   M /ctm3f90/MANUAL/LATEX/references_ctm.bib
+   M /ctm3f90/MANUAL/osloctm3_manual.pdf
+   M /ctm3f90/Makefile
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_inirun.f90
+   M /ctm3f90/OSLO/DEAD_COLUMN/dstcst.F90
+   M /ctm3f90/OSLO/DEAD_COLUMN/dstctl.F90
+   M /ctm3f90/OSLO/DEAD_COLUMN/dstmbl.F90
+   M /ctm3f90/OSLO/DEAD_COLUMN/dstmblutl.F90
+   M /ctm3f90/OSLO/DEAD_COLUMN/dstpsd.F90
+   M /ctm3f90/OSLO/DEAD_COLUMN/dsttibds.F90
+   D /ctm3f90/OSLO/DEAD_COLUMN/inirun.F
+   M /ctm3f90/OSLO/DEAD_COLUMN/nf90_utl.F90
+   M /ctm3f90/OSLO/DUMMIES/dust_oslo.f90
+   M /ctm3f90/OSLO/DUMMIES/seasalt.f90
+   M /ctm3f90/OSLO/aerobdg2nc.f90
+   M /ctm3f90/OSLO/aerosols2fastjx.f90
+   M /ctm3f90/OSLO/bcoc_oslo.f90
+   M /ctm3f90/OSLO/caribic2.f90
+   M /ctm3f90/OSLO/ch4routines.f90
+   M /ctm3f90/OSLO/chem_oslo.f90
+   M /ctm3f90/OSLO/chem_oslo_rates.f90
+   M /ctm3f90/OSLO/cmn_oslo.f90
+   M /ctm3f90/OSLO/cnv_oslo.f90
+   M /ctm3f90/OSLO/dateconv.f90
+   M /ctm3f90/OSLO/diagnostics_general.f90
+   M /ctm3f90/OSLO/diagnostics_scavenging.f90
+   M /ctm3f90/OSLO/drydeposition_oslo.f90
+   M /ctm3f90/OSLO/dust_oslo.f90
+   M /ctm3f90/OSLO/emisdep4chem_oslo.f90
+   M /ctm3f90/OSLO/emissions_aircraft.f90
+   M /ctm3f90/OSLO/emissions_ocean.f90
+   M /ctm3f90/OSLO/emissions_oslo.f90
+   M /ctm3f90/OSLO/emissions_volcanoes.f90
+   M /ctm3f90/OSLO/emisutils_oslo.f90
+   M /ctm3f90/OSLO/fallingaerosols.f90
+   M /ctm3f90/OSLO/gmdump3hrs.f90
+   M /ctm3f90/OSLO/hippo.f90
+   M /ctm3f90/OSLO/input_oslo.f90
+   M /ctm3f90/OSLO/main_oslo.f90
+   M /ctm3f90/OSLO/ncutils.f90
+   M /ctm3f90/OSLO/nitrate.f90
+   M /ctm3f90/OSLO/pchemc_ij.f90
+   M /ctm3f90/OSLO/pchemc_str_ij.f90
+   M /ctm3f90/OSLO/physics_oslo.f90
+   M /ctm3f90/OSLO/psc_microphysics.f90
+   M /ctm3f90/OSLO/qssa_integrator.f90
+   M /ctm3f90/OSLO/satelliteprofiles_mls.f90
+   M /ctm3f90/OSLO/seasalt.f90
+   M /ctm3f90/OSLO/seasaltprod.f90
+   M /ctm3f90/OSLO/soa_oslo.f90
+   M /ctm3f90/OSLO/strat_aerosols.f90
+   M /ctm3f90/OSLO/strat_h2o.f90
+   M /ctm3f90/OSLO/strat_loss.f90
+   M /ctm3f90/OSLO/strat_o3noy_clim.f90
+   M /ctm3f90/OSLO/stratchem_oslo.f90
+   M /ctm3f90/OSLO/sulphur_oslo.f90
+   M /ctm3f90/OSLO/troccinox_ban.f90
+   M /ctm3f90/OSLO/troccinox_fal.f90
+   M /ctm3f90/OSLO/troccinox_geo.f90
+   M /ctm3f90/OSLO/tropchem_oslo.f90
+   M /ctm3f90/OSLO/utilities_oslo.f90
+   M /ctm3f90/OSLO/verticalprofiles_stations2.f90
+   M /ctm3f90/README
+   M /ctm3f90/averages.f90
+   M /ctm3f90/budgets.f90
+   M /ctm3f90/cloudjx.f90
+   M /ctm3f90/cmn_chem.f90
+   M /ctm3f90/cmn_ctm.f90
+   M /ctm3f90/cmn_diag.f90
+   M /ctm3f90/cmn_fjx.f90
+   M /ctm3f90/cmn_met.f90
+   M /ctm3f90/cmn_parameters.f90
+   M /ctm3f90/cmn_precision.f90
+   M /ctm3f90/cmn_sfc.f90
+   M /ctm3f90/cmn_size.F90
+   M /ctm3f90/convection.f90
+   M /ctm3f90/fastjx.f90
+   M /ctm3f90/grid.f90
+   M /ctm3f90/initialize.f90
+   M /ctm3f90/lightning.f90
+   M /ctm3f90/metdata_ecmwf.f90
+   M /ctm3f90/metdata_ecmwf_uioformat.f90
+   M /ctm3f90/omp.f90
+   M /ctm3f90/pbl_mixing.f90
+   M /ctm3f90/pmain.f90
+   M /ctm3f90/pmain_lit.f90
+   M /ctm3f90/regridding.f90
+   M /ctm3f90/scavenging_drydep_uci.f90
+   M /ctm3f90/scavenging_largescale_uci.f90
+   M /ctm3f90/source_uci.f90
+   M /ctm3f90/spectral_routines.f
+   M /ctm3f90/steflux.f90
+   M /ctm3f90/stt_save_load.f90
+   M /ctm3f90/tables/Ltracer_emis_eclipse_V5_2010_meganMACC.inp
+   M /ctm3f90/tables/Ltracer_emis_noemis.inp
+   A /ctm3f90/tables/tracer_list_dust.d
+   D /ctm3f90/tables/tracer_list_dust.inp
+   M /ctm3f90/utilities.f90
+
+20160302: Amund Sovde
+
+CTM3f90 update: No big changes, but a bit closer to setting v1.0.
+
+IMPORTANT:
+- Not decided yet on SALT production scheme.
+- DO NOT use DUST until it is decided which mobilisation map to use.
+  Ask Amund if you must.
+
+
+
+Removed:
+tracer_list_dust.inp
+OSLO/DEAD_COLUMN/inirun.F
+
+Added:
+tracer_list_dust.d
+OSLO/DEAD_COLUMN/dead_inirun.f90
+
+
+
+Modifications:
+emissions_oslo.f90: Added EFACT to STV read-in. Added AirEmisPath read-in.
+emisutils_oslo.f90: Added EFACT to STV read-in. Added setting of
+		    dust mobilisation map and scaling factor.
+
+stt_save_load.f90: Corrected indices of a loop in OSLO_CON_RUN42
+
+
+cmn_size.F90: Updated version number
+
+tables/Ltracer_emis_eclipse_V5_2010_meganMACC.inp: Added DUST section to STV
+
+
+OSLO/gmdump3hrs.f90: Corrected for BC/OM division into bb/bf/ff.
+
+OSLO/seasalt.f90: Added production schemes.
+OSLO/seasaltprod.f90: Added production schemes.
+OSLO/pchemc_str_ij.f90: Added chemprod/chemloss diags.
+
+
+OSLO/DEAD_COLUMN/dstmbl.F90: Removed parameter for fudge factor.
+OSLO/DEAD_COLUMN/dstcst.F90: Added constants. Updated to use CTM3 constants.
+OSLO/DEAD_COLUMN/dsttibds.F90: Reads a defined mobilisation map.
+
+OSLO/emissions_ocean.f90: Added possible sea salt scheme.
+
+OSLO/input_oslo.f90: Moved read-in of emissions to before DUST.
+OSLO/diagnostics_general.f90: Updated chembud_output.
+			      Split some diags.
+OSLO/DUMMIES/dust_oslo.f90: Updated.
+OSLO/DUMMIES/seasalt.f90: Updated.
+OSLO/dust_oslo.f90: Updated.
+OSLO/physics_oslo.f90: Added subroutine IJLfield2ThetaLvs.
+cmn_met.f90: Longer path names.
+README: Updated
+metdata_ecmwf.f90: Longer FNAME.
+initialize.f90: Updated read-in of metdata paths.
+MANUAL/osloctm3_manual.pdf: Updated.
+MANUAL/LATEX/references_ctm.bib: Updated.
+MANUAL/LATEX/manual.tex: Updated.
+
+
+------------------------------------------------------------------------
+r185 | asovde | 2016-02-03 12:54:18 +0100 (on., 03 feb. 2016) | 75 lines
+Changed paths:
+   M /ctm3f90/MANUAL/LATEX/manual.tex
+   D /ctm3f90/MANUAL/LATEX/table_reactions.tex
+   M /ctm3f90/MANUAL/osloctm3_manual.pdf
+   M /ctm3f90/Makefile
+   M /ctm3f90/OSLO/DEAD_COLUMN/blmutl.F90
+   M /ctm3f90/OSLO/DEAD_COLUMN/dstmbl.F90
+   M /ctm3f90/OSLO/DEAD_COLUMN/dsttibds.F90
+   M /ctm3f90/OSLO/DEAD_COLUMN/dsttvbds.F90
+   M /ctm3f90/OSLO/DEAD_COLUMN/histout.F
+   M /ctm3f90/OSLO/DEAD_COLUMN/inirun.F
+   M /ctm3f90/OSLO/DEAD_COLUMN/wbl_mdl.F90
+   M /ctm3f90/OSLO/DUMMIES/dust_oslo.f90
+   M /ctm3f90/OSLO/bcoc_oslo.f90
+   M /ctm3f90/OSLO/caribic2.f90
+   M /ctm3f90/OSLO/diagnostics_general.f90
+   M /ctm3f90/OSLO/dust_oslo.f90
+   M /ctm3f90/OSLO/emissions_ocean.f90
+   M /ctm3f90/OSLO/emissions_oslo.f90
+   M /ctm3f90/OSLO/gmdump3hrs.f90
+   M /ctm3f90/OSLO/hippo.f90
+   M /ctm3f90/OSLO/satelliteprofiles_mls.f90
+   M /ctm3f90/OSLO/seasalt.f90
+   A /ctm3f90/OSLO/seasaltprod.f90
+   M /ctm3f90/OSLO/troccinox_ban.f90
+   M /ctm3f90/OSLO/troccinox_fal.f90
+   M /ctm3f90/OSLO/troccinox_geo.f90
+   M /ctm3f90/OSLO/verticalprofiles_stations2.f90
+   D /ctm3f90/commit_file
+   M /ctm3f90/grid.f90
+   M /ctm3f90/initialize.f90
+   M /ctm3f90/metdata_ecmwf.f90
+   D /ctm3f90/metdata_ecmwf_netcdf.f90
+   M /ctm3f90/metdata_ecmwf_uioformat.f90
+   M /ctm3f90/pmain.f90
+   M /ctm3f90/scavenging_largescale_uci.f90
+   M /ctm3f90/stt_save_load.f90
+
+20160203: Amund Sovde
+CTM3F90-update
+
+Sea salt production
+Sea salt production routines are moved from seasalt.f90 to its
+own module seasaltprod.f90. This is because both emissions_ocean.f90
+and seasalt.f90 need to use the routines.
+
+DUST
+Meteorological variables SSRD, STRD, SWVL1 and SD are now used by the
+dust module.
+
+
+
+Deleted:
+metdata_ecmwf_netcdf.f90: This was the same file as metdata_ecmwf.f90.
+commit_file: removed
+MANUAL/LATEX/table_reactions.tex: Moved into manual.tex
+
+
+New file:
+OSLO/seasaltprod.f90: sea salt production routines
+
+
+Modified files:
+grid.f90: XDEDG now goes from 0 to 360.
+	  old: 0-180, and then switch -360 at dateline
+initialize.f90: Corrected MPATH2 for netcdf4.
+metdata_ecmwf.f90: Added read-in of some fields for DUST:
+		   SSRD, STRD and SWVL1
+metdata_ecmwf_uioformat.f90: Same as metdata_ecmwf.f90
+pmain.f90: Added possible printout of dust production.
+	   It is now commented out.
+scavenging_largescale_uci.f90: Insignificant update.
+stt_save_load.f90: Corrected some small bug on version number.
+
+OSLO/DEAD_COLUMN/dstmbl.F90: Updated calls to outfld_1.
+OSLO/DEAD_COLUMN/histout.F: Updated
+OSLO/DEAD_COLUMN/inirun.F: Updated.
+OSLO/DEAD_COLUMN/dsttvbds.F90: Added interpolation from T159 for variables
+ 			       read from file.
+OSLO/DEAD_COLUMN/blmutl.F90: Insignificant update.
+OSLO/DEAD_COLUMN/wbl_mdl.F90: No real change.
+OSLO/DEAD_COLUMN/dsttibds.F90: No real change.
+OSLO/bcoc_oslo.f90: Corrected xdgrd_loc to match updated XDGRD not
+		    changing sign on dateline.
+OSLO/caribic2.f90: Corrected ctmlon/ctmlonb to match updated XDGRD/XDEDG
+		   not changing sign on dateline.
+OSLO/diagnostics_general.f90: Commented out calls to vprofs_master.
+OSLO/dust_oslo.f90: New routines to set meteorological variables
+		    SSRD, STRD and SWVL1. SD is also set from metdata now.
+OSLO/emissions_ocean.f90: Corrected oceanic emissions of organic carbon.
+OSLO/gmdump3hrs.f90: Corrected xdgrd_loc to match updated XDGRD not
+		     changing sign on dateline.
+OSLO/hippo.f90: Corrected ctmlon/ctmlonb to match updated XDGRD/XDEDG
+		not changing sign on dateline.
+OSLO/satelliteprofiles_mls.f90: Corrected ctmlon/ctmlonb to match
+				updated XDGRD/XDEDG not changing sign
+				on dateline.
+OSLO/seasalt.f90: Removed production routines (now in seasaltprod.f90).
+		  Added comments.
+OSLO/troccinox_ban.f90: Corrected ctmlon/ctmlonb to match updated XDGRD/XDEDG
+			not changing sign on dateline.
+OSLO/troccinox_fal.f90: Corrected ctmlon/ctmlonb to match updated XDGRD/XDEDG
+			not changing sign on dateline.
+OSLO/troccinox_geo.f90: Corrected ctmlon/ctmlonb to match updated XDGRD/XDEDG
+			not changing sign on dateline.
+OSLO/verticalprofiles_stations2.f90: Corrected ctmlon/ctmlonb to match
+				      updated XDGRD/XDEDG not changing
+				      sign on dateline.
+OSLO/DUMMIES/dust_oslo.f90: Updated.
+
+MANUAL/osloctm3_manual.pdf: Updated
+MANUAL/LATEX/manual.tex: Updated
+
+------------------------------------------------------------------------
+r184 | asovde | 2015-11-20 15:26:33 +0100 (fr., 20 nov. 2015) | 33 lines
+Changed paths:
+   M /README_ROOT
+   A /ctm3f90
+   A /ctm3f90/L60T159.inp
+   A /ctm3f90/L60T159_bcoc.inp
+   A /ctm3f90/L60T42.inp
+   A /ctm3f90/L60T42newFastJX.inp
+   A /ctm3f90/MANUAL
+   A /ctm3f90/MANUAL/LATEX
+   A /ctm3f90/MANUAL/LATEX/compile_manual
+   A /ctm3f90/MANUAL/LATEX/compile_manual_win.bat
+   A /ctm3f90/MANUAL/LATEX/egu.bst
+   A /ctm3f90/MANUAL/LATEX/egu.cls
+   A /ctm3f90/MANUAL/LATEX/manual.tex
+   A /ctm3f90/MANUAL/LATEX/references_ctm.bib
+   A /ctm3f90/MANUAL/LATEX/table_reactions.tex
+   A /ctm3f90/MANUAL/osloctm3_manual.pdf
+   A /ctm3f90/Makefile
+   A /ctm3f90/OSLO
+   A /ctm3f90/OSLO/DEAD_COLUMN
+   A /ctm3f90/OSLO/DEAD_COLUMN/blmutl.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dbg_mdl.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_ctm2
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_ctm2/ChangeLog
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_ctm2/FAQ
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_ctm2/INSTALL
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_ctm2/MANIFEST
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_ctm2/Makefile
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_ctm2/OSLOCTM2_CHANGES
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_ctm2/README
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_ctm2/TODO
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_ctm2/VERSION
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_ctm2/aer.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_ctm2/aernvr.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_ctm2/blmutl.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_ctm2/dbg_mdl.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_ctm2/deaddiffs.sh
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_ctm2/dpsdryutl.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_ctm2/dst.h
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_ctm2/dstaer.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_ctm2/dstbdg.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_ctm2/dstblm.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_ctm2/dstchm.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_ctm2/dstcmnini.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_ctm2/dstcst.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_ctm2/dstctl.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_ctm2/dstdbg.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_ctm2/dstdpsdry.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_ctm2/dstdpswet.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_ctm2/dstgrd.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_ctm2/dstlsm.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_ctm2/dstmbl.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_ctm2/dstmblutl.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_ctm2/dstmssutl.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_ctm2/dstnm.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_ctm2/dstodx.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_ctm2/dstpsd.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_ctm2/dstrad.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_ctm2/dstscv.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_ctm2/dstsfc.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_ctm2/dstsltsbl.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_ctm2/dsttibds.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_ctm2/dsttvbds.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_ctm2/erf_mdl.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_ctm2/fl_ext_dat.nc
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_ctm2/gmm_mdl.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_ctm2/histout.F
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_ctm2/index.shtml
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_ctm2/inirun.F
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_ctm2/misc.h
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_ctm2/nf90_utl.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_ctm2/params.h
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_ctm2/phyzlic.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_ctm2/pmgrid.F
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_ctm2/pmgrid.h
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_ctm2/precision.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_ctm2/preproc.h
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_ctm2/psdlgn.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_ctm2/pvmgetarch
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_ctm2/qneg.F
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_ctm2/sng_mdl.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_ctm2/utl_mdl.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_ctm2/vec_mdl.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_ctm2/wbl_mdl.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_ctm2/xtr_mdl.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dead_precision.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dpsdryutl.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dstaer.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dstbdg.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dstblm.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dstchm.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dstcmnini.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dstcst.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dstctl.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dstdbg.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dstdpsdry.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dstgrd.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dstlsm.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dstmbl.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dstmblutl.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dstmssutl.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dstnm.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dstodx.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dstpsd.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dstscv.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dstsfc.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dstsltsbl.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dsttibds.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dsttvbds.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/dustinput
+   A /ctm3f90/OSLO/DEAD_COLUMN/dustinput/dst_T159.nc
+   A /ctm3f90/OSLO/DEAD_COLUMN/dustinput/dst_T42.nc
+   A /ctm3f90/OSLO/DEAD_COLUMN/erf_mdl.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/gmm_mdl.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/histout.F
+   A /ctm3f90/OSLO/DEAD_COLUMN/inirun.F
+   A /ctm3f90/OSLO/DEAD_COLUMN/nf90_utl.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/pmgrid.F
+   A /ctm3f90/OSLO/DEAD_COLUMN/psdlgn.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/sng_mdl.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/utl_mdl.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/vec_mdl.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/wbl_mdl.F90
+   A /ctm3f90/OSLO/DEAD_COLUMN/xtr_mdl.F90
+   A /ctm3f90/OSLO/DUMMIES
+   A /ctm3f90/OSLO/DUMMIES/bcoc_oslo.f90
+   A /ctm3f90/OSLO/DUMMIES/chem_oslo_rates.f90
+   A /ctm3f90/OSLO/DUMMIES/dust_oslo.f90
+   A /ctm3f90/OSLO/DUMMIES/emisdep4chem_oslo.f90
+   A /ctm3f90/OSLO/DUMMIES/nitrate.f90
+   A /ctm3f90/OSLO/DUMMIES/psc_microphysics.f90
+   A /ctm3f90/OSLO/DUMMIES/seasalt.f90
+   A /ctm3f90/OSLO/DUMMIES/soa_oslo.f90
+   A /ctm3f90/OSLO/DUMMIES/strat_aerosols.f90
+   A /ctm3f90/OSLO/DUMMIES/strat_o3noy_clim.f90
+   A /ctm3f90/OSLO/DUMMIES/stratchem_oslo.f90
+   A /ctm3f90/OSLO/DUMMIES/sulphur_oslo.f90
+   A /ctm3f90/OSLO/DUMMIES/tropchem_oslo.f90
+   A /ctm3f90/OSLO/aerobdg2nc.f90
+   A /ctm3f90/OSLO/aerosols2fastjx.f90
+   A /ctm3f90/OSLO/bcoc_oslo.f90
+   A /ctm3f90/OSLO/caribic2.f90
+   A /ctm3f90/OSLO/ch4routines.f90
+   A /ctm3f90/OSLO/chem_oslo.f90
+   A /ctm3f90/OSLO/chem_oslo_rates.f90
+   A /ctm3f90/OSLO/cmn_oslo.f90
+   A /ctm3f90/OSLO/cnv_oslo.f90
+   A /ctm3f90/OSLO/dateconv.f90
+   A /ctm3f90/OSLO/diagnostics_general.f90
+   A /ctm3f90/OSLO/diagnostics_scavenging.f90
+   A /ctm3f90/OSLO/drydeposition_oslo.f90
+   A /ctm3f90/OSLO/dust_oslo.f90
+   A /ctm3f90/OSLO/emisdep4chem_oslo.f90
+   A /ctm3f90/OSLO/emissions_aircraft.f90
+   A /ctm3f90/OSLO/emissions_ocean.f90
+   A /ctm3f90/OSLO/emissions_oslo.f90
+   A /ctm3f90/OSLO/emissions_volcanoes.f90
+   A /ctm3f90/OSLO/emisutils_oslo.f90
+   A /ctm3f90/OSLO/eqsam_v03d.f90
+   A /ctm3f90/OSLO/fallingaerosols.f90
+   A /ctm3f90/OSLO/gmdump3hrs.f90
+   A /ctm3f90/OSLO/hippo.f90
+   A /ctm3f90/OSLO/input_oslo.f90
+   A /ctm3f90/OSLO/main_oslo.f90
+   A /ctm3f90/OSLO/ncutils.f90
+   A /ctm3f90/OSLO/nitrate.f90
+   A /ctm3f90/OSLO/pchemc_ij.f90
+   A /ctm3f90/OSLO/pchemc_str_ij.f90
+   A /ctm3f90/OSLO/physics_oslo.f90
+   A /ctm3f90/OSLO/psc_microphysics.f90
+   A /ctm3f90/OSLO/qssa_integrator.f90
+   A /ctm3f90/OSLO/satelliteprofiles_mls.f90
+   A /ctm3f90/OSLO/seasalt.f90
+   A /ctm3f90/OSLO/soa_oslo.f90
+   A /ctm3f90/OSLO/strat_aerosols.f90
+   A /ctm3f90/OSLO/strat_h2o.f90
+   A /ctm3f90/OSLO/strat_loss.f90
+   A /ctm3f90/OSLO/strat_o3noy_clim.f90
+   A /ctm3f90/OSLO/stratchem_oslo.f90
+   A /ctm3f90/OSLO/sulphur_oslo.f90
+   A /ctm3f90/OSLO/troccinox_ban.f90
+   A /ctm3f90/OSLO/troccinox_fal.f90
+   A /ctm3f90/OSLO/troccinox_geo.f90
+   A /ctm3f90/OSLO/tropchem_oslo.f90
+   A /ctm3f90/OSLO/utilities_oslo.f90
+   A /ctm3f90/OSLO/verticalprofiles_stations2.f90
+   A /ctm3f90/README
+   A /ctm3f90/averages.f90
+   A /ctm3f90/budgets.f90
+   A /ctm3f90/c3run.job
+   A /ctm3f90/cloudjx.f90
+   A /ctm3f90/cmn_chem.f90
+   A /ctm3f90/cmn_ctm.f90
+   A /ctm3f90/cmn_diag.f90
+   A /ctm3f90/cmn_fjx.f90
+   A /ctm3f90/cmn_met.f90
+   A /ctm3f90/cmn_parameters.f90
+   A /ctm3f90/cmn_precision.f90
+   A /ctm3f90/cmn_sfc.f90
+   A /ctm3f90/cmn_size.F90
+   A /ctm3f90/commit_file
+   A /ctm3f90/convection.f90
+   A /ctm3f90/fastjx.f90
+   A /ctm3f90/grid.f90
+   A /ctm3f90/initialize.f90
+   A /ctm3f90/lightning.f90
+   A /ctm3f90/metdata_ecmwf.f90
+   A /ctm3f90/metdata_ecmwf_netcdf.f90
+   A /ctm3f90/metdata_ecmwf_uioformat.f90
+   A /ctm3f90/mod
+   A /ctm3f90/new_fjx_cloud
+   A /ctm3f90/new_fjx_cloud/cld_init_mod.f90
+   A /ctm3f90/new_fjx_cloud/cld_sub_mod.f90
+   A /ctm3f90/new_fjx_cloud/cmn_fjx_mod.f90
+   A /ctm3f90/new_fjx_cloud/cmn_flag_mod.f90
+   A /ctm3f90/new_fjx_cloud/fjx_init_mod.f90
+   A /ctm3f90/new_fjx_cloud/fjx_sub_mod.f90
+   A /ctm3f90/omp.f90
+   A /ctm3f90/p-cloud2.f
+   A /ctm3f90/p-dyn0-v2.f
+   A /ctm3f90/p-dyn0.f
+   A /ctm3f90/p-dyn2-v2.f
+   A /ctm3f90/p-dyn2.f
+   A /ctm3f90/p-linoz.f
+   A /ctm3f90/p-phot_oc.f
+   A /ctm3f90/p-series.f
+   A /ctm3f90/p-vect3.f
+   A /ctm3f90/pbl_mixing.f90
+   A /ctm3f90/pmain.f90
+   A /ctm3f90/pmain_lit.f90
+   A /ctm3f90/regridding.f90
+   A /ctm3f90/scavenging_drydep_uci.f90
+   A /ctm3f90/scavenging_largescale_uci.f90
+   A /ctm3f90/source_uci.f90
+   A /ctm3f90/spectral_routines.f
+   A /ctm3f90/steflux.f90
+   A /ctm3f90/stt_save_load.f90
+   A /ctm3f90/tables
+   A /ctm3f90/tables/CH4_AR4s1_2000
+   A /ctm3f90/tables/CO295yr1.dat
+   A /ctm3f90/tables/EMISSION_LISTS
+   A /ctm3f90/tables/EMISSION_LISTS/Ltracer_emis_ch4_bousquet.dat
+   A /ctm3f90/tables/EMISSION_LISTS/Ltracer_emis_eclipse4.dat
+   A /ctm3f90/tables/EMISSION_LISTS/Ltracer_emis_eclipse5.dat
+   A /ctm3f90/tables/EMISSION_LISTS/Ltracer_emis_edgar42.dat
+   A /ctm3f90/tables/EMISSION_LISTS/Ltracer_emis_geia.dat
+   A /ctm3f90/tables/EMISSION_LISTS/Ltracer_emis_htap.dat
+   A /ctm3f90/tables/EMISSION_LISTS/Ltracer_emis_lamarque.dat
+   A /ctm3f90/tables/EMISSION_LISTS/Ltracer_emis_megan.dat
+   A /ctm3f90/tables/EMISSION_LISTS/Ltracer_emis_meganMACC.dat
+   A /ctm3f90/tables/EMISSION_LISTS/Ltracer_emis_ocean.dat
+   A /ctm3f90/tables/EMISSION_LISTS/Ltracer_emis_retro.dat
+   A /ctm3f90/tables/EMISSION_LISTS/Ltracer_emis_soils.dat
+   A /ctm3f90/tables/EMISSION_LISTS/Ltracer_emis_volcanoes.dat
+   A /ctm3f90/tables/FJX_UMaer.dat
+   A /ctm3f90/tables/FJX_scat.dat
+   A /ctm3f90/tables/FJX_scat_v2.dat
+   A /ctm3f90/tables/FJX_spec.dat
+   A /ctm3f90/tables/FJX_spec.dat.old
+   A /ctm3f90/tables/FJX_spec.dat_solray_org
+   A /ctm3f90/tables/FJX_spec_h2o.dat
+   A /ctm3f90/tables/FJX_spec_v64.dat
+   A /ctm3f90/tables/FJX_spec_v66.dat
+   A /ctm3f90/tables/ICAOstdatmos.dat
+   A /ctm3f90/tables/LS_islscp88x.dat
+   A /ctm3f90/tables/Ltracer_emis_eclipse_V5_2010_meganMACC.inp
+   A /ctm3f90/tables/Ltracer_emis_noemis.inp
+   A /ctm3f90/tables/PMEAN
+   A /ctm3f90/tables/PMEAN/L37_1x1.inp
+   A /ctm3f90/tables/PMEAN/L37_T42.inp
+   A /ctm3f90/tables/PMEAN/L57_T42.inp
+   A /ctm3f90/tables/PMEAN/L60T319.inp
+   A /ctm3f90/tables/PMEAN/P_mean1x1_L40.dat
+   A /ctm3f90/tables/PMEAN/P_meanT319_L60.dat
+   A /ctm3f90/tables/PMEAN/P_meanT42_L40.dat
+   A /ctm3f90/tables/PMEAN/P_meanT42_L60.dat
+   A /ctm3f90/tables/PMEAN/cmn.f
+   A /ctm3f90/tables/PMEAN/cmn_h.f
+   A /ctm3f90/tables/PMEAN/cmn_s.f
+   A /ctm3f90/tables/PMEAN/cmn_w.f
+   A /ctm3f90/tables/PMEAN/grid.f
+   A /ctm3f90/tables/PMEAN/p-input.f
+   A /ctm3f90/tables/PMEAN/p-wind_ec.f
+   A /ctm3f90/tables/PMEAN/params.h
+   A /ctm3f90/tables/PMEAN/params_L401x1.h
+   A /ctm3f90/tables/PMEAN/params_L402x2.h
+   A /ctm3f90/tables/PMEAN/params_L40T42.h
+   A /ctm3f90/tables/PMEAN/params_L60T319.h
+   A /ctm3f90/tables/PMEAN/params_L60T319_noASAD.h
+   A /ctm3f90/tables/PMEAN/params_L60T42.h
+   A /ctm3f90/tables/PMEAN/rdmean.f
+   A /ctm3f90/tables/PMEAN/script.pbs
+   A /ctm3f90/tables/P_mean1x1.dat
+   A /ctm3f90/tables/P_mean1x1_L40.dat
+   A /ctm3f90/tables/P_meanN90_L40.dat
+   A /ctm3f90/tables/P_meanT159.dat
+   A /ctm3f90/tables/P_meanT319.dat
+   A /ctm3f90/tables/P_meanT319L60.dat
+   A /ctm3f90/tables/P_meanT42.dat
+   A /ctm3f90/tables/P_meanT42_L40.dat
+   A /ctm3f90/tables/P_meanT42_L60.dat
+   A /ctm3f90/tables/atmos_std.dat
+   A /ctm3f90/tables/landfr.dat
+   A /ctm3f90/tables/light_dist.ott2010.dat
+   A /ctm3f90/tables/light_dist.pickering1998.dat
+   A /ctm3f90/tables/linoz2004_2006jpl
+   A /ctm3f90/tables/polar_o3loss.dat
+   A /ctm3f90/tables/polar_o3loss.dat_new
+   A /ctm3f90/tables/polar_o3loss.dat_old
+   A /ctm3f90/tables/r42het_1x1.dat
+   A /ctm3f90/tables/r42het_T159.dat
+   A /ctm3f90/tables/r42het_T21.dat
+   A /ctm3f90/tables/r42het_T42.dat
+   A /ctm3f90/tables/r42het_T63.dat
+   A /ctm3f90/tables/ratO1D.d
+   A /ctm3f90/tables/ratb.d
+   A /ctm3f90/tables/rath.d
+   A /ctm3f90/tables/ratj.d
+   A /ctm3f90/tables/ratj.d1
+   A /ctm3f90/tables/ratj.d2
+   A /ctm3f90/tables/ratj_oc.d
+   A /ctm3f90/tables/ratl.d
+   A /ctm3f90/tables/rats.d
+   A /ctm3f90/tables/ratt.d
+   A /ctm3f90/tables/scavenging_dry.inp
+   A /ctm3f90/tables/scavenging_wet.inp
+   A /ctm3f90/tables/scavng55.dat
+   A /ctm3f90/tables/scavng55_oc.dat
+   A /ctm3f90/tables/scavng55_oc_org.dat
+   A /ctm3f90/tables/tracer_list_all_soa.d
+   A /ctm3f90/tables/tracer_list_bcoc.d
+   A /ctm3f90/tables/tracer_list_dust.inp
+   A /ctm3f90/tables/tracer_list_lit.d
+   A /ctm3f90/tables/tracer_list_nitrate.d
+   A /ctm3f90/tables/tracer_list_salt.d
+   A /ctm3f90/tmp
+   A /ctm3f90/utilities.f90
+   D /trunk/UCI_Q56D
+   D /trunk/UCI_Q60A
+   D /trunk/UCI_Q61B
+   A /utilities/fortan/ec2netcdf4
+   A /utilities/fortan/ec2netcdf4/convertEC2netcdf4.job
+   A /utilities/fortan/ec2netcdf4/ec2nc4.f90
+   A /utilities/fortan/ec2netcdf4/eta.dat
+   A /utilities/fortan/ec2netcdf4/precision.f90
+   A /utilities/fortan/ec2netcdf4/spectral_routines.f
+   A /utilities/generateOpenIFS
+   A /utilities/generateOpenIFS/getEIdata.job
+   A /utilities/generateOpenIFS/initrun
+   A /utilities/generateOpenIFS/runECgrib2CTM.job
+   A /utilities/generateOpenIFS/runInterpolation.job
+   A /utilities/generateOpenIFS/runOpenIFS.job
+
+20151120: Ole Amund Sovde
+
+*** SVN REPOSITORY UPDATE ***
+
+*** ADDING F90 VERSION OF CTM3 ***
+
+1. Main directory for the new CTM3 is now: ctm3f90
+
+2. The old CTM3 trunk is still available as trunk (but should be phased out).
+
+
+About the f90-version
+There are small differences in a few variables which have been 
+converted from real*4 to real*8. Biggest change was about 1% difference
+at about 1-10 hPa. Not a big deal.
+
+trunk:
+  - Removed directories UCI_Q56D, UCI_Q60A and UCI_Q61B
+
+ctm3f90:
+  - New catalogue for f90-version of CTM3.
+  - New manual is more or less finished, located in directory MANUAL.
+  - Reads netCDF4 metdata by default, but can also read UiO binary format.
+
+
+utilities:
+  fortran:
+    ec2netcdf4: Program to convert the UiO binary files (EC-files) to
+                netCDF4.
+
+
+
+
+------------------------------------------------------------------------

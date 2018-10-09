@@ -1,0 +1,650 @@
+IPCC/Lamarque emissions.
+
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_CO_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  AGR   2    0    1    0   'emiss_agr'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_CO_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  WAS   2    0    1    0   'emiss_awb'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_CO_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  RES   2    0    1    0   'emiss_dom'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_CO_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  POW   2    0    1    0   'emiss_ene'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_CO_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  INC   2    0    1    0   'emiss_ind'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_CO_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  SOL   2    0    1    0   'emiss_slv'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_CO_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  TRA   2    0    1    0   'emiss_tra'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_CO_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  WAS   2    0    1    0   'emiss_wst'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_CO_ships_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  SHI   2    0    0    0   'emiss_shp'    0000
+    CO  1.d0
+    xxx 0 To close this data set
+
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_NO_anthropogenic_2000_0.5x0.5_v1_07_05_2009.nc'
+  601    1.0000d+00  HLF   99  9999  AGR   2    0    1    0   'emiss_agr'    0000
+    NO  0.96d0
+    NO2 0.0613333333d0      # NO on file: 0.04*46/30
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_NO_anthropogenic_2000_0.5x0.5_v1_07_05_2009.nc'
+  601    1.0000d+00  HLF   99  9999  WAS   2    0    1    0   'emiss_awb'    0000
+    NO  0.96d0
+    NO2 0.0613333333d0      # NO on file: 0.04*46/30
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_NO_anthropogenic_2000_0.5x0.5_v1_07_05_2009.nc'
+  601    1.0000d+00  HLF   99  9999  RES   2    0    1    0   'emiss_dom'    0000
+    NO  0.96d0
+    NO2 0.0613333333d0      # NO on file: 0.04*46/30
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_NO_anthropogenic_2000_0.5x0.5_v1_07_05_2009.nc'
+  601    1.0000d+00  HLF   99  9999  POW   2    0    1    0   'emiss_ene'    0000
+    NO  0.96d0
+    NO2 0.0613333333d0      # NO on file: 0.04*46/30
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_NO_anthropogenic_2000_0.5x0.5_v1_07_05_2009.nc'
+  601    1.0000d+00  HLF   99  9999  INC   2    0    1    0   'emiss_ind'    0000
+    NO  0.96d0
+    NO2 0.0613333333d0      # NO on file: 0.04*46/30
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_NO_anthropogenic_2000_0.5x0.5_v1_07_05_2009.nc'
+  601    1.0000d+00  HLF   99  9999  TRA   2    0    1    0   'emiss_tra'    0000
+    NO  0.96d0
+    NO2 0.0613333333d0      # NO on file: 0.04*46/30
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_NO_anthropogenic_2000_0.5x0.5_v1_07_05_2009.nc'
+  601    1.0000d+00  HLF   99  9999  WAS   2    0    1    0   'emiss_wst'    0000
+    NO  0.96d0
+    NO2 0.0613333333d0      # NO on file: 0.04*46/30
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_NO_ships_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  SHI   2    0    0    0   'emiss_shp'    0000
+    NO  0.96d0
+    NO2 0.0613333333d0      # NO on file: 0.04*46/30
+    xxx 0 To close this data set
+
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_ethene_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  AGR   2    0    1    0   'emiss_agr'    0000
+    C2H4  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_ethene_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  WAS   2    0    1    0   'emiss_awb'    0000
+    C2H4  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_ethene_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  RES   2    0    1    0   'emiss_dom'    0000
+    C2H4  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_ethene_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  POW   2    0    1    0   'emiss_ene'    0000
+    C2H4  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_ethene_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  INC   2    0    1    0   'emiss_ind'    0000
+    C2H4  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_ethene_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  TRA   2    0    1    0   'emiss_tra'    0000
+    C2H4  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_ethene_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  WAS   2    0    1    0   'emiss_wst'    0000
+    C2H4  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_ethene_ships_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  SHI   2    0    0    0   'emiss_shp'    0000
+    C2H4  1.d0
+    xxx 0 To close this data set
+
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_ethane_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  AGR   2    0    1    0   'emiss_agr'    0000
+    C2H6  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_ethane_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  WAS   2    0    1    0   'emiss_awb'    0000
+    C2H6  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_ethane_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  RES   2    0    1    0   'emiss_dom'    0000
+    C2H6  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_ethane_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  POW   2    0    1    0   'emiss_ene'    0000
+    C2H6  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_ethane_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  INC   2    0    1    0   'emiss_ind'    0000
+    C2H6  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_ethane_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  TRA   2    0    1    0   'emiss_tra'    0000
+    C2H6  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_ethane_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  WAS   2    0    1    0   'emiss_wst'    0000
+    C2H6  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_ethane_ships_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  SHI   2    0    0    0   'emiss_shp'    0000
+    C2H6  1.d0
+    xxx 0 To close this data set
+
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_propene_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  AGR   2    0    1    0   'emiss_agr'    0000
+    C3H6  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_propene_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  WAS   2    0    1    0   'emiss_awb'    0000
+    C3H6  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_propene_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  RES   2    0    1    0   'emiss_dom'    0000
+    C3H6  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_propene_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  POW   2    0    1    0   'emiss_ene'    0000
+    C3H6  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_propene_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  INC   2    0    1    0   'emiss_ind'    0000
+    C3H6  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_propene_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  TRA   2    0    1    0   'emiss_tra'    0000
+    C3H6  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_propene_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  WAS   2    0    1    0   'emiss_wst'    0000
+    C3H6  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_propene_ships_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  SHI   2    0    0    0   'emiss_shp'    0000
+    C3H6  1.d0
+    xxx 0 To close this data set
+
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_propane_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  AGR   2    0    1    0   'emiss_agr'    0000
+    C3H8  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_propane_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  WAS   2    0    1    0   'emiss_awb'    0000
+    C3H8  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_propane_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  RES   2    0    1    0   'emiss_dom'    0000
+    C3H8  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_propane_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  POW   2    0    1    0   'emiss_ene'    0000
+    C3H8  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_propane_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  INC   2    0    1    0   'emiss_ind'    0000
+    C3H8  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_propane_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  TRA   2    0    1    0   'emiss_tra'    0000
+    C3H8  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_propane_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  WAS   2    0    1    0   'emiss_wst'    0000
+    C3H8  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_propane_ships_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  SHI   2    0    0    0   'emiss_shp'    0000
+    C3H8  1.d0
+    xxx 0 To close this data set
+
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_butanes_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  AGR   2    0    1    0   'emiss_agr'    0000
+    C4H10  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_butanes_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  WAS   2    0    1    0   'emiss_awb'    0000
+    C4H10  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_butanes_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  RES   2    0    1    0   'emiss_dom'    0000
+    C4H10  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_butanes_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  POW   2    0    1    0   'emiss_ene'    0000
+    C4H10  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_butanes_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  INC   2    0    1    0   'emiss_ind'    0000
+    C4H10  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_butanes_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  TRA   2    0    1    0   'emiss_tra'    0000
+    C4H10  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_butanes_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  WAS   2    0    1    0   'emiss_wst'    0000
+    C4H10  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_butanes_ships_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  SHI   2    0    0    0   'emiss_shp'    0000
+    C4H10  1.d0
+    xxx 0 To close this data set
+
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_hexanes_and_higher_alkanes_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  AGR   2    0    1    0   'emiss_agr'    0000
+    C6H14  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_hexanes_and_higher_alkanes_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  WAS   2    0    1    0   'emiss_awb'    0000
+    C6H14  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_hexanes_and_higher_alkanes_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  RES   2    0    1    0   'emiss_dom'    0000
+    C6H14  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_hexanes_and_higher_alkanes_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  POW   2    0    1    0   'emiss_ene'    0000
+    C6H14  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_hexanes_and_higher_alkanes_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  INC   2    0    1    0   'emiss_ind'    0000
+    C6H14  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_hexanes_and_higher_alkanes_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  SOL   2    0    1    0   'emiss_slv'    0000
+    C6H14  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_hexanes_and_higher_alkanes_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  TRA   2    0    1    0   'emiss_tra'    0000
+    C6H14  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_hexanes_and_higher_alkanes_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  WAS   2    0    1    0   'emiss_wst'    0000
+    C6H14  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_hexanes_and_higher_alkanes_ships_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  SHI   2    0    0    0   'emiss_shp'    0000
+    C6H14  1.d0
+    xxx 0 To close this data set
+
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_formaldehyde_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  AGR   2    0    1    0   'emiss_agr'    0000
+    CH2O  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_formaldehyde_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  WAS   2    0    1    0   'emiss_awb'    0000
+    CH2O  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_formaldehyde_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  RES   2    0    1    0   'emiss_dom'    0000
+    CH2O  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_formaldehyde_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  POW   2    0    1    0   'emiss_ene'    0000
+    CH2O  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_formaldehyde_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  INC   2    0    1    0   'emiss_ind'    0000
+    CH2O  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_formaldehyde_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  TRA   2    0    1    0   'emiss_tra'    0000
+    CH2O  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_formaldehyde_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  WAS   2    0    1    0   'emiss_wst'    0000
+    CH2O  1.d0
+    xxx 0 To close this data set
+
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_other_alkanals_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  AGR   2    0    1    0   'emiss_agr'    0000
+    CH3CHO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_other_alkanals_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  WAS   2    0    1    0   'emiss_awb'    0000
+    CH3CHO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_other_alkanals_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  RES   2    0    1    0   'emiss_dom'    0000
+    CH3CHO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_other_alkanals_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  POW   2    0    1    0   'emiss_ene'    0000
+    CH3CHO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_other_alkanals_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  INC   2    0    1    0   'emiss_ind'    0000
+    CH3CHO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_other_alkanals_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  TRA   2    0    1    0   'emiss_tra'    0000
+    CH3CHO  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_other_alkanals_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  WAS   2    0    1    0   'emiss_wst'    0000
+    CH3CHO  1.d0
+    xxx 0 To close this data set
+
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_ketones_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  AGR   2    0    1    0   'emiss_agr'    0000
+    ACETONE  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_ketones_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  WAS   2    0    1    0   'emiss_awb'    0000
+    ACETONE  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_ketones_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  RES   2    0    1    0   'emiss_dom'    0000
+    ACETONE  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_ketones_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  POW   2    0    1    0   'emiss_ene'    0000
+    ACETONE  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_ketones_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  INC   2    0    1    0   'emiss_ind'    0000
+    ACETONE  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_ketones_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  SOL   2    0    1    0   'emiss_slv'    0000
+    ACETONE  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_ketones_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  TRA   2    0    1    0   'emiss_tra'    0000
+    ACETONE  1.d0
+    xxx 0 To close this data set
+
+
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_trimethyl_benzenes_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  POW   2    0    1    0   'emiss_ene'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+C6HXR_SOA  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_trimethyl_benzenes_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  INC   2    0    1    0   'emiss_ind'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+C6HXR_SOA  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_trimethyl_benzenes_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  TRA   2    0    1    0   'emiss_tra'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+C6HXR_SOA  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_trimethyl_benzenes_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  WAS   2    0    1    0   'emiss_wst'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+C6HXR_SOA  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_trimethyl_benzenes_ships_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  SHI   2    0    0    0   'emiss_shp'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+C6HXR_SOA  1.d0
+    xxx 0 To close this data set
+
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_xylene_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  AGR   2    0    1    0   'emiss_agr'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+C6HXR_SOA  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_xylene_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  WAS   2    0    1    0   'emiss_awb'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+C6HXR_SOA  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_xylene_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  RES   2    0    1    0   'emiss_dom'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+C6HXR_SOA  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_xylene_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  POW   2    0    1    0   'emiss_ene'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+C6HXR_SOA  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_xylene_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  INC   2    0    1    0   'emiss_ind'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+C6HXR_SOA  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_xylene_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  SOL   2    0    1    0   'emiss_slv'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+C6HXR_SOA  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_xylene_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  TRA   2    0    1    0   'emiss_tra'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+C6HXR_SOA  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_xylene_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  WAS   2    0    1    0   'emiss_wst'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+C6HXR_SOA  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_xylene_ships_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  SHI   2    0    0    0   'emiss_shp'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+C6HXR_SOA  1.d0
+    xxx 0 To close this data set
+
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_toluene_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  AGR   2    0    1    0   'emiss_agr'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+  Tolmatic 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_toluene_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  WAS   2    0    1    0   'emiss_awb'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+  Tolmatic 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_toluene_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  RES   2    0    1    0   'emiss_dom'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+  Tolmatic 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_toluene_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  POW   2    0    1    0   'emiss_ene'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+  Tolmatic 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_toluene_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  INC   2    0    1    0   'emiss_ind'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+  Tolmatic 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_toluene_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  SOL   2    0    1    0   'emiss_slv'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+  Tolmatic 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_toluene_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  TRA   2    0    1    0   'emiss_tra'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+  Tolmatic 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_toluene_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  WAS   2    0    1    0   'emiss_wst'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+  Tolmatic 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_toluene_ships_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  SHI   2    0    0    0   'emiss_shp'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+  Tolmatic 1.d0
+    xxx 0 To close this data set
+
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_other_aromatics_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  AGR   2    0    1    0   'emiss_agr'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+  Tolmatic 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_other_aromatics_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  RES   2    0    1    0   'emiss_dom'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+  Tolmatic 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_other_aromatics_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  POW   2    0    1    0   'emiss_ene'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+  Tolmatic 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_other_aromatics_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  INC   2    0    1    0   'emiss_ind'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+  Tolmatic 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_other_aromatics_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  SOL   2    0    1    0   'emiss_slv'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+  Tolmatic 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_other_aromatics_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  TRA   2    0    1    0   'emiss_tra'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+  Tolmatic 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_other_aromatics_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  WAS   2    0    1    0   'emiss_wst'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+  Tolmatic 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_other_aromatics_ships_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  SHI   2    0    0    0   'emiss_shp'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+  Tolmatic 1.d0
+    xxx 0 To close this data set
+
+
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_benzene_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  AGR   2    0    1    0   'emiss_agr'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+   Benzene 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_benzene_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  WAS   2    0    1    0   'emiss_awb'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+   Benzene 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_benzene_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  RES   2    0    1    0   'emiss_dom'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+   Benzene 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_benzene_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  POW   2    0    1    0   'emiss_ene'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+   Benzene 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_benzene_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  INC   2    0    1    0   'emiss_ind'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+   Benzene 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_benzene_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  TRA   2    0    1    0   'emiss_tra'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+   Benzene 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_benzene_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  WAS   2    0    1    0   'emiss_wst'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+   Benzene 1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_benzene_ships_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  SHI   2    0    0    0   'emiss_shp'    0000
+    C6HXR  1.d0   # Will not be used when C6HXR_SOA, Tolmatic and Benzene are included
+   Benzene 1.d0
+    xxx 0 To close this data set
+
+'/projects/geo/EMIS/Emisdata_1990/EMIS/SOAPRE/1x1/MONTHLY/MASS/V10_monoterpene_1x1_1990_GEIA.dat'
+  502    1.0000d-06  1x1   99  9999  NAT   2    3    0    0   'soa_nat'    0000
+    Apine    0.3966666667d0    # 0.35*136/(12*10) Griffin, GRL1999, 10 C's
+    Bpine    0.2606666667d0    # 0.23*136/(12*10) Griffin, GRL1999, 10 C's
+    Limon    0.2606666667d0    # 0.23*136/(12*10) Griffin, GRL1999, 10 C's
+    Myrcene  0.0566666667d0    # 0.05*136/(12*10) Griffin, GRL1999, 10 C's
+    Sabine   0.0566666667d0    # 0.05*136/(12*10) Griffin, GRL1999, 10 C's
+    D3carene 0.0453333333d0    # 0.04*136/(12*10) Griffin, GRL1999, 10 C's
+    Ocimene  0.0226666667d0    # 0.02*136/(12*10) Griffin, GRL1999, 10 C's
+    Trpolene 0.0226666667d0    # 0.02*136/(12*10) Griffin, GRL1999, 10 C's
+    Trpinene 0.0113333333d0    # 0.01*136/(12*10) Griffin, GRL1999, 10 C's
+    xxx 0 To close this data set
+'/projects/geo/EMIS/Emisdata_1990/EMIS/SOAPRE/1x1/MONTHLY/MASS/V10_nvoc_1x1_1990_GEIA.dat'
+  502    1.0000d-06  1x1   99  9999  NAT   2    3    0    0   'soa_nat'    0000
+    TrpAlc   0.1155d0          # 0.09*154/(12*10) Griffin, GRL1999, 10 C's
+    Sestrp   0.0566666667d0    # 0.05*204/(12*15) Griffin, GRL1999, 15 C's
+    Trp_Ket  0.0506666667d0    # 0.04*152/(12*10) Griffin, GRL1999, 10 C's
+    xxx 0 To close this data set
+
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_SO2_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  WAS   2    0    1    0   'emiss_awb'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_SO2_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  RES   2    0    1    0   'emiss_dom'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_SO2_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  POW   2    0    1    0   'emiss_ene'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_SO2_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  INC   2    0    1    0   'emiss_ind'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_SO2_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  TRA   2    0    1    0   'emiss_tra'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_SO2_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  WAS   2    0    1    0   'emiss_wst'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_SO2_ships_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  SHI   2    0    0    0   'emiss_shp'    0000
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_NH3_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  AGR   2    0    1    0   'emiss_agr'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_NH3_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  WAS   2    0    1    0   'emiss_awb'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_NH3_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  RES   2    0    1    0   'emiss_dom'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_NH3_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  POW   2    0    1    0   'emiss_ene'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_NH3_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  INC   2    0    1    0   'emiss_ind'    0000
+    NH3  1.d0
+    xxx 0 To close this data set
+'/projects/geo/EMIS/IPCCEMIS/2000/IPCC_emissions_NH3_anthropogenic_2000_0.5x0.5_v1_20_04_2009.nc'
+  601    1.0000d+00  HLF   99  9999  TRA   2    0    1    0   'emiss_tra'    0000
+    NH3  1.d0
+    xxx 0 To close this data set

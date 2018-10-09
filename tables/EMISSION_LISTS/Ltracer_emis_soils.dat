@@ -1,0 +1,11 @@
+Soil emissions. There are few species which are emitted from the soil,
+but e.g. NO is one of them. Typically for NO emissions is that some
+small amount is assumed to be NO2.
+
+Here are the files - you need to complete the paths:
+
+'EMIS/POET/soils.nox.nc'
+  601    1.0000d+00  1x1   99  9999  BIO   1    1    0    0   'bio'    0000
+    NO  0.96d0      # molecules on file, emis_unit handles molecular weights
+    NO2 0.04d0      # Soil NOx not included in MEGAN
+    xxx 0 To close this data set

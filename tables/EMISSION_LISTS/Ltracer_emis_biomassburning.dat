@@ -1,0 +1,68 @@
+For GFED4: Use code 572 for daily, 571 for monthly. Old vertical distribution
+is available through codes 573 and 567.
+For CEDS: Use code 574 for BLH vertical distribution and 568 for old.
+
+-BBB- Used for biomass burning (GFEDv4) - may list several species ----------
+filename / description
+  ID     SCALE       RES MONTH YEAR  CAT TYPE UNIT DIURN DATASET_NAME
+'/work/projects/cicero/ctm_input/EMIS/GFEDv4/'
+  572    1.0000d-00  HLF   99  9999  NAT   0   -1    0   'biomass_burning'
+  #CTMname    GFEDname        Scaling    Part.factor (SAVA/BORF/TEMF/DEFO/PEAT/AGRI)
+   'CO'       'CO'             1.0000d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 1.00d0
+   'NO'       'NOx'            0.9000d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 1.00d0
+   'NO2'      'NOx'            0.1533d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 1.00d0
+   'CH4'      'CH4'            0.0000d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 1.00d0
+   'C2H4'     'C2H4'           1.0000d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 1.00d0
+   'C2H6'     'C2H6'           1.0000d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 1.00d0
+   'C3H6'     'C3H6'           1.0000d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 1.00d0
+   'C4H10'    'NMHC'           0.0000d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 1.00d0
+   'C6H14'    'Higher_Alkanes' 1.0000d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 1.00d0
+   'C6HXR'    'Toluene_lump'   1.0000d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 1.00d0
+   'Tolmatic' 'Toluene_lump'   1.0000d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 1.00d0
+   'CH2O'     'CH2O'           1.0000d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 1.00d0
+   'CH3CHO'   'C2H4O'          1.0000d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 1.00d0
+   'ISOPRENE' 'C5H8'           1.0000d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 1.00d0
+   'C3H8'     'C3H8'           1.0000d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 1.00d0
+   'ACETONE'  'C3H6O'          1.0000d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 1.00d0
+   'NH3'      'NH3'            1.0000d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 1.00d0
+   'SO2'      'SO2'            0.9750d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 1.00d0
+   'SO4'      'SO2'            0.0375d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 1.00d0
+   'bcBB1fob' 'BC'             0.8000d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 0.00d0
+   'bcBB1fil' 'BC'             0.2000d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 0.00d0
+   'omBB1fob' 'OC'             1.3000d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 0.00d0
+   'omBB1fil' 'OC'             1.3000d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 0.00d0
+   '---'      '---'            0.0000d0   0.00d0 0.00d0 0.00d0 0.00d0 0.00d0 0.00d0
+'endFF' 'endFF'  -------------------------------------------------------------
+
+
+-BBB- Used for biomass burning - may list several species -------------------
+filename / description
+  ID     SCALE       RES MONTH YEAR  CAT TYPE UNIT DIURN DATASET_NAME
+'/div/pdo/emissions/CEDS0517/V1.2_biomassburning/'
+  574    1.0000d-00  HLF   99  9999  NAT   0   -1    0   'biomass_burning'
+  #CTMname    Fileprefix      DatasetName      Scaling
+   'CO'       'CO'             'CO'            1.0000d0
+   'NO'       'NOx'            'NOx'           0.9000d0
+   'NO2'      'NOx'            'NOx'           0.1533d0
+   'CH4'      'CH4'            'CH4'           0.0000d0
+   'C2H4'     'NMVOC-C2H4'     'C2H4'          1.0000d0
+   'C2H6'     'NMVOC-C2H6'     'C2H6'          1.0000d0
+   'C3H6'     'NMVOC-C3H6'     'C3H6'          1.0000d0
+   'C6H14'    'NMVOC-Higher-Alkanes' 'Higher_Alkanes' 1.0000d0
+   'C6HXR'    'NMVOC-Toluene-lump'   'Toluene_lump'   1.0000d0
+   'Tolmatic' 'NMVOC-Toluene-lump'   'Toluene_lump'   1.0000d0
+   'CH2O'     'NMVOC-CH2O'     'CH2O'          1.0000d0
+   'CH3CHO'   'NMVOC-C2H4O'    'C2H4O'         1.0000d0
+   'ISOPRENE' 'NMVOC-C5H8'     'C5H8'          1.0000d0
+   'C3H8'     'NMVOC-C3H8'     'C3H8'          1.0000d0
+   'ACETONE'  'NMVOC-C3H6O'    'C3H6O'         1.0000d0
+   'NH3'      'NH3'            'NH3'           1.0000d0
+   'SO2'      'SO2'            'SO2'           0.9750d0
+   'SO4'      'SO2'            'SO2'           0.0375d0
+   'bcBB1fob' 'BC'             'BC'            0.8000d0
+   'bcBB1fil' 'BC'             'BC'            0.2000d0
+   'omBB1fob' 'OC'             'OC'            1.3000d0
+   'omBB1fil' 'OC'             'OC'            1.3000d0
+   '---'      '---'            '---'           0.0000d0
+'endFF' 'endFF'  -------------------------------------------------------------
+

@@ -1,0 +1,87 @@
+$Header: /mn/hox/ozon/ctm2_model/ctm2_src/dst_dst/INSTALL,v 1.1 2003/04/15 14:41:35 alfgr Exp $ -*-text-*-
+
+Installation Requirements:
+1. Working Fortran90 compiler
+2. netCDF version 3.5.0+
+3. makdep dependency generator
+4. GNU Make
+
+Details:
+1. DEAD is standards-compliant Fortran90 and builds on all known Unices
+
+2. Although it may go without saying that you _must have_ netCDF
+correctly installed before you build DEAD, you may not know that
+a recent version of netCDF, version 3.5.0+ is required in order to
+recognize the Fortran90 interface used by DEAD.
+
+3. The Makefile that comes with the DEAD box model requires a utility
+called makdep to generate dependencies for the Fortran programs.
+This makdep program must support options to access and store files
+in other directories. Some of you already have such a makdep.
+If you do not, download the source code makdep.c from the DEAD homepage. 
+Compile it with cc -o makdep makdep.c, and place the resulting
+executable in your path before you try to build DEAD.
+Note: this makdep is based on, and backwardly compatible with,
+the makdep.c program distributed with the NCAR CCM/CAM. 
+
+4. The best way to build the DEAD box model currently is to type `make
+dir; make' in the source directory. You must be using GNU make, which
+will default to using `Makefile' in this directory. 
+Makefile has some hardcoded switches which may be only valid at NCAR
+or UCI, but which can serve as a template for your environment. First,
+be sure to define NETCDF_INC and NETCDF_LIB variables either within
+your environment, or at the top of Makefile. 
+Within Makefile, locate the block of code which corresponds to your
+machine type as defined by $PVM_ARCH and the pvmgetarch command. 
+Within this block you may need to edit the FC, FFLAGS, and LDFLAGS
+arguments so they reflect the names of your compilers and linkers.  
+You must use a Fortran90 compiler or nothing will work.
+By default the executable, named 'aer' (for aerosol), is placed in the
+directory ./bin/${PVM_ARCH}, where $PVM_ARCH is the machine
+architecture determined from the $PVM_ARCH environment variable or
+from the script 'pvmgetarch' described below.
+Object files will be placed in ./obj/${PVM_ARCH}.
+These directories must exist for the Makefile to function properly.
+
+Pre-processor tokens:
+The code must be pre-processed through an ANSI-C pre-processor.
+Using GNU Make, the Makefile handles this automatically.
+Most pre-processor tokens which control physics and grid resolution
+are hard-coded in the *.h configuration files (dst.h, misc.h,
+params.h, pmgrid.h, preproc.h). 
+These tokens should not be set in the Makefile. 
+However, a few tokens which control overall model identity are
+normally passed to the compiler from the Makefile.
+The default setting for these tokens is usually fine and should
+not require any alteration, but it is helpful to know their meaning.
+For the Box model, the pre-processor tokens normally set in the
+Makefile are as follows:
+
+Aerosols to simulate: Set DST to include mineral dust aerosol. 
+DST	    Mineral dust aerosol
+Default is DST and is set in Makefile
+
+Architecture type: Set machine architecture to one of AIX, CRAY, DEC,
+LINUX, OSF1, SGI, SUN. Default is set by value of $PVM_ARCH
+environment variable, or Makefile will call 'pvmgetarch' script.
+This is required in the Box model only because the global models
+(CCM, MATCH) also require it. However, no box model code actually
+depends on this being set because all the Fortran90 code is now
+standard-conformant and architecture-independent.
+
+Computational Precision: Set either PRC_FLT or PRC_DBL
+PRC_FLT	    Single precision (4 byte reals)
+PRC_DBL	    Double precision (8 byte reals)
+Default is PRC_FLT and is set in Makefile
+
+Model type: Set BXM and CCM
+BXM	    Compile code as executable box model: Use box model grid
+	    resolution (1 horizontal point in 1 vertical layer).
+CCM	    Compile code suitable for embedding in CCM: Use default
+	    CCM3 grid resolution and CCM-style outfld() calls
+Currently BXM and CCM are both set by default in Makefile
+If BXM is not set, the code assumes it is embedded in a global model
+If CCM is not set, the code uses MATCH-style outfld() calls
+
+Good luck,
+Charlie
