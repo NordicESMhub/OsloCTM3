@@ -102,6 +102,7 @@ module CMN_MET
        PhotActRad, & !// Photosynthetically active radiation [W/m2]
        PPFD, &       !// Photosynthetically active radiation - deaccumulated [W/m2]
        SWVL1, &      !// Soil volumetric water level 1 [m3/m3]
+       SWVL4, &      !// Soil volumetric water level 4 [m3/m3]
        STL1          !// Soil temperature level 1 [K]
 
   integer, dimension(IPAR,JPAR) :: &

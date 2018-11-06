@@ -792,7 +792,7 @@ contains
     use cmn_ctm, only: XGRD, YGRD, XDGRD, YDGRD, MPBLKJB, MPBLKJE, &
          MPBLKIB, MPBLKIE, IDAY, JMON, JDAY, PLAND, NRMETD, NROPSM
     use cmn_met, only: PRANDTLL1, P, SD, CI, USTR, ZOFLE, PRECLS, PRECCNV, &
-         CLDFR, PPFD, UMS, VMS, SFT, SWVL1
+         CLDFR, PPFD, UMS, VMS, SFT, SWVL4
     use cmn_parameters, only: R_AIR, R_UNIV
     use cmn_sfc, only: LAI, ZOI, landSurfTypeFrac, LANDUSE_IDX, StomRes, NVGPAR, &
          EMEP_PAR, LGSMAP
@@ -813,7 +813,7 @@ contains
 
     !// Locals
     integer :: I,J,II,JJ, NN, KK, NTOTAL
-    real(r8) :: LAI_IJ, RTOTAL, PAR_IJ, SWVL1_IJ
+    real(r8) :: LAI_IJ, RTOTAL, PAR_IJ, SWVL4_IJ
     real(r8) :: tempVEGH
     integer :: GDAY, GLEN                   !// Growing season from megan
 
@@ -1252,7 +1252,7 @@ contains
         T2Mcel = T2M - 273.15_r8     !// Surface temperature (2m) [Celcius]
         PSFC   = P(I,J)              !// Surface pressure [hPa]
         PAR_IJ = PPFD(I,J)           !// Photosynthetic active radiation [W/m2]
-        SWVL1_IJ = SWVL1(I,J)        !// Soil water content in level 1 [0-1]
+        SWVL4_IJ = SWVL4(I,J)        !// Soil water content in level 1 [0-1]
 
         !// Wind at L1 center
         WINDL1  = sqrt(UMS(1,I,J)*UMS(1,I,J) + VMS(1,I,J)*VMS(1,I,J))
@@ -1313,10 +1313,10 @@ contains
            end where
         end if
         !// fSW based on soil moisture in the top soil layer (0-7 cm)
-        if (SWVL1_IJ .ge. 0.5) then
+        if (SWVL4_IJ .ge. 0.5) then
            fSW = 1._r8
         else
-           fSW = 2*SWVL1_IJ
+           fSW = 2*SWVL4_IJ
         end if
 
         !// Stomatal conductance
