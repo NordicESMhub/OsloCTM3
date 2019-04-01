@@ -1,0 +1,6 @@
+# Files that shall be ignored
+# Executable
+osloctm3
+# Compiled modules
+mod/
+tmp/
