@@ -104,11 +104,11 @@ PFZON  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1
     T  LDEPEMEP2012 Dry deposition scheme / T = EMEP based dry deposition scheme, F = old scheme
 'Indata_CTM3/DRYDEP/EMEP.par'
 --- PPFD directory and dummy filename ---
-'/projects/researchers/researchers01/sfalk/ctm_input/PPFD/'
+'/projects/researchers/researchers01/sfalk/input_data/ctm_input/PPFD/'
 'ECopenIFSc38r1_yYYYYmMMdDDhHH_T159N80L60'
 --- Growing Season ---
     T  LGSMAP Growing season (GDAY/GLEN) / T = Use preprocessed  maps, F = use fixed latitudinal bands
-'/projects/researchers/researchers01/sfalk/ctm_input/GROWING_SEASON/GROWING_SEASON_2005.nc'
+'/projects/researchers/researchers01/sfalk/input_data/ctm_input/GROWING_SEASON/GROWING_SEASON_2005.nc'
 --- tracer specific section ---
  T  1  LCONT T: start from restart file, F: set START_AVG: 0: start from STT=0, 1: CTM3 average, 2: CTM2 average
     F  LNCR T: use restart file in netCDF, F: old .sav format
