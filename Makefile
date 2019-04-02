@@ -513,7 +513,7 @@ ALL_SRC:= \
 ALL_OBJ= $(addprefix $(MY_OBJ_DIR)/,$(addsuffix .o,$(basename $(ALL_SRC))))
 
 # All object directories (excluding DUST directory due to compiling rules)
-OBJDIRS:= $(MY_OBJ_DIR) $(addprefix $(MY_OBJ_DIR)/, $(ALL_DIRS))
+OBJDIRS:= $(MY_OBJ_DIR) $(addprefix $(MY_OBJ_DIR)/, $(ALL_DIRS)) $(MY_MOD_DIR)
 
 # VPATH is used by make (directories to be searched for cmn-files etc)
 VPATH:= .$(subst $(space),$(kolon),$(ALL_DIRS))
@@ -558,7 +558,7 @@ $(MY_OBJ_DIR)/$(OSLO_PATH)/$(OSLODUM_PATH): | $(MY_OBJ_DIR)/$(OSLO_PATH)
 $(MY_OBJ_DIR)/$(DUST_PATH): | $(MY_OBJ_DIR)/$(OSLO_PATH)
 # Set up  object directories
 $(OBJDIRS): | $(TITLE)
-	mkdir $@
+	mkdir -p $@
 
 # I need the tokens to work on cmn_size.F90, but have not found out how yet,
 # so until that is taken care of, I chose to recompile all if Makefile have changed.
@@ -1781,7 +1781,7 @@ clean :
 	@echo Cleaning make of Oslo CTM3
 	rm -f fort.* core *.mod  $(MAIN) $(TITLE) $(DONE)
 	rm -f cmn_size_mod.f90
-	rm -rf $(MY_OBJ_DIR)/* $(MY_MOD_DIR)/*
+	rm -rf $(MY_OBJ_DIR) $(MY_MOD_DIR)
 
 
 #-----------------------------------------------------------------
