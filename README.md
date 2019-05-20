@@ -73,11 +73,15 @@ Make sure you are member of the group "cic-hpc" and have access to
 
 Then export the path to forcing etc.:
 
-> export INPUT_OCTM3=/work/projects/cicero/ctm_input/Indata_CTM3
+> export CTM3_INPUT=/work/projects/cicero/ctm_input/Indata_CTM3
 
 Make sure you are member of the group "gf-ozone" and have access to
 
 > ls /projects/researchers/researchers01/sfalk/input/ctm_input/
+
+Then export the path:
+
+> export CTM_USR_INPUT=/projects/researchers/researchers01/sfalk/input/ctm_input/
 
 +++
 To run the example ("c3run_example.job") in c3run
