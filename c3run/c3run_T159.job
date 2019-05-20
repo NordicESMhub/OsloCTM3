@@ -74,13 +74,13 @@ export RESULTDIR=$WORK/$SCEN.$PID
 export RESTARTDIR=$RESULTDIR/restart_$PID
 
 # Set input file name
-export INPUTFILE=emeppar_example.inp
+export INPUTFILE=example.inp
 
 # Name of main program
 export PROGFILE=osloctm3
 
 # Job file (this file)
-export JOBFILENAME=c3run_emeppar_example.job
+export JOBFILENAME=c3run_T159.job
 
 # The dust file
 export DUSTFILE=OSLO/DEAD_COLUMN/dustinput/dst_T159.nc
