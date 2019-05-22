@@ -1087,7 +1087,7 @@ contains
 
 
   !// ----------------------------------------------------------------------
-  subroutine landfrac2emep(LFemep,nLFemep,LFin,nLFin, lat, LANDUSE_IDX)
+  subroutine landfrac2mosaic(LFmosaic,nLFmosaic,LFin,nLFin, lat, LANDUSE_IDX)
     !// --------------------------------------------------------------------
     !// Convert land type fractions to EMEP categories, to be used
     !// in dry deposition scheme.
@@ -1096,15 +1096,15 @@ contains
     !// --------------------------------------------------------------------
     implicit none
     !// --------------------------------------------------------------------
-    integer, intent(in) :: nLFemep, nLFin, LANDUSE_IDX
+    integer, intent(in) :: nLFmosaic, nLFin, LANDUSE_IDX
     real(r8), intent(in) :: lat
     real(r8), dimension(nLFin), intent(in) :: LFin
-    real(r8), dimension(nLFemep), intent(out) :: LFemep
+    real(r8), dimension(nLFmosaic), intent(out) :: LFmosaic
     !// --------------------------------------------------------------------
-    character(len=*), parameter :: subr = 'landfrac2emep'
+    character(len=*), parameter :: subr = 'landfrac2mosaic'
     !// --------------------------------------------------------------------
 
-    LFemep(:) = 0._r8
+    LFmosaic(:) = 0._r8
 
     !// Will set land categories, and then estimate ocean, since there
     !// may be slight inconsistencies between 1-PLAND and 1 - land
@@ -1150,23 +1150,23 @@ contains
        !// Missing: 15 (will be treated under snow/ice)
        !// ----------------------------------------------------------------
 
-       LFemep(1) = sum(LFin(1:5))
-       LFemep(2) = LFin(12) + LFin(14)
-       LFemep(3) = sum(LFin(6:9))
-       LFemep(4) = LFin(10)
-       LFemep(5) = LFin(11)
+       LFmosaic(1) = sum(LFin(1:5))
+       LFmosaic(2) = LFin(12) + LFin(14)
+       LFmosaic(3) = sum(LFin(6:9))
+       LFmosaic(4) = LFin(10)
+       LFmosaic(5) = LFin(11)
        if (lat.lt.-60._r8 .or. lat.gt.60._r8) then
-          LFemep(6) = LFin(16)
-          LFemep(7) = 0._r8
+          LFmosaic(6) = LFin(16)
+          LFmosaic(7) = 0._r8
        else
-          LFemep(6) = 0._r8
-          LFemep(7) = LFin(16)
+          LFmosaic(6) = 0._r8
+          LFmosaic(7) = LFin(16)
        end if
-       LFemep(7) = LFemep(7) + LFin(17)
-       LFemep(9) = LFin(13)
-       LFemep(10)= LFin(15)
-       !// Set LFemep(8) at the end
-       LFemep(8) = max(0._r8, 1._r8 - (sum(LFemep(1:7)) + sum(LFemep(9:10))))
+       LFmosaic(7) = LFmosaic(7) + LFin(17)
+       LFmosaic(9) = LFin(13)
+       LFmosaic(10)= LFin(15)
+       !// Set LFmosaic(8) at the end
+       LFmosaic(8) = max(0._r8, 1._r8 - (sum(LFmosaic(1:7)) + sum(LFmosaic(9:10))))
 
     else if (LANDUSE_IDX .eq. 3) then
 
@@ -1201,19 +1201,19 @@ contains
        !// 16    15    Crop1
        !// 17    16    Crop2
        !// --------------------------------------------------------------------
-       LFemep(1) = sum(LFin(1:10))
-       LFemep(2) = sum(LFin(15:16))
-       LFemep(3) = LFin(14)
-       LFemep(4) = sum(LFin(12:13))
-       LFemep(5) = 0._r8
-       LFemep(6) = LFin(11)
-       LFemep(7) = LFin(17)
-       !Set LFemep(8) from sum at the end
-       LFemep(9) = 0._r8
-       LFemep(10) = 0._r8
+       LFmosaic(1) = sum(LFin(1:10))
+       LFmosaic(2) = sum(LFin(15:16))
+       LFmosaic(3) = LFin(14)
+       LFmosaic(4) = sum(LFin(12:13))
+       LFmosaic(5) = 0._r8
+       LFmosaic(6) = LFin(11)
+       LFmosaic(7) = LFin(17)
+       !Set LFmosaic(8) from sum at the end
+       LFmosaic(9) = 0._r8
+       LFmosaic(10) = 0._r8
 
        !// Ocean may not be fully compatible with 1-PLAND:
-       LFemep(8) = max(0._r8, 1._r8 - (sum(LFemep(1:7)) + sum(LFemep(9:10))))
+       LFmosaic(8) = max(0._r8, 1._r8 - (sum(LFmosaic(1:7)) + sum(LFmosaic(9:10))))
 
     else
        write(6,'(a,i5)') f90file//':'//subr// &
@@ -1222,7 +1222,7 @@ contains
     end if
 
     !// --------------------------------------------------------------------
-  end subroutine landfrac2emep
+  end subroutine landfrac2mosaic
   !// ----------------------------------------------------------------------
 !// ----------------------------------------------------------------------
   subroutine set_vegetation_height(start_height,lat, out_height)

@@ -1131,7 +1131,11 @@ contains
 
        case (41)
           !// Volumetric soil water layer 3 (SWVL3)
-          if (verbose) call skipData(FLD_ID,'SFC','SWVL3')
+          if (LmOSaic) then
+             if (verbose) call gotData(FLD_ID,'SFC','Volumetric soil water layer 3 (SWVL3)')
+          else
+             if (verbose) call skipData(FLD_ID,'SFC','SWVL3')
+          end if
 
        case (42)
           !// Volumetric soil water layer 4 (SWVL4)

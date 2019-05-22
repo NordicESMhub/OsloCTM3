@@ -951,9 +951,9 @@ contains
          YDGRD, PLAND
     use cmn_chem, only: TNAME
     use cmn_met, only: PRECLS, PRECCNV, MO_LENGTH, USTR, SFT, CI, SD, CLDFR, &
-         EMEP_PAR
+         DDEP_PAR
     use cmn_sfc, only: LANDUSE_IDX, landSurfTypeFrac, NVGPAR, LAI
-    use utilities_oslo, only: landfrac2emep, set_vegetation_height
+    use utilities_oslo, only: landfrac2mosaic, set_vegetation_height
     !// --------------------------------------------------------------------
     implicit none
     !// --------------------------------------------------------------------
@@ -991,15 +991,15 @@ contains
     !// 10. Ice+snow (strictly, EMEP has this as category 9 and urban as 10)
     !// Vegetation heights
     VEGH(1)  = 0._r8 !// Will be modified below 
-    tempVEGH = (sum(EMEP_PAR(20,1:4))+EMEP_PAR(20,10))/5._r8
-    VEGH(2)  = sum(EMEP_PAR(20,5:7))/3._r8
-    VEGH(3)  = EMEP_PAR(20,8)
-    VEGH(4)  = EMEP_PAR(20,9)
-    VEGH(5)  = EMEP_PAR(20,11)
-    VEGH(6)  = EMEP_PAR(20,12)
-    VEGH(7)  = EMEP_PAR(20,13)
-    VEGH(8)  = EMEP_PAR(20,14)
-    VEGH(9)  = EMEP_PAR(20,16)
+    tempVEGH = (sum(DDEP_PAR(20,1:4))+DDEP_PAR(20,10))/5._r8
+    VEGH(2)  = sum(DDEP_PAR(20,5:7))/3._r8
+    VEGH(3)  = DDEP_PAR(20,8)
+    VEGH(4)  = DDEP_PAR(20,9)
+    VEGH(5)  = DDEP_PAR(20,11)
+    VEGH(6)  = DDEP_PAR(20,12)
+    VEGH(7)  = DDEP_PAR(20,13)
+    VEGH(8)  = DDEP_PAR(20,14)
+    VEGH(9)  = DDEP_PAR(20,16)
     VEGH(10) = 0._r8
 
 
@@ -1048,7 +1048,7 @@ contains
 
 
         !// Set land fractions
-        call landfrac2emep(FL,NLCAT,landSurfTypeFrac(:,I,J), &
+        call landfrac2mosaic(FL,NLCAT,landSurfTypeFrac(:,I,J), &
              NVGPAR, YDGRD(J), LANDUSE_IDX)
 
 

@@ -44,8 +44,8 @@ module drydeposition_oslo
        VNOXDDEP, VSO2DDEP, VSO4DDEP, VMSADDEP, VNH3DDEP
   !// Stomatal conductance and mean photolytic active radiation
   real(r8), dimension(IPAR,JPAR,12) :: STC, PARMEAN
-  ! Parameters and land use type from EMEP
-  real(r8), dimension(28,16) :: EMEP_PAR
+  ! Parameters and land use type from Simpson et al. (2012)
+  real(r8), dimension(28,16) :: DDEP_PAR
   !// Defines which VDEP to scale according to stability (i.e. only
   !// old CTM2 calculations)
   integer :: SCALESTABILITY(NPAR)
@@ -183,7 +183,7 @@ contains
     !// Amund Sovde, March 2013 - January 2014
     !// --------------------------------------------------------------------
     use cmn_ctm, only: JMON, JDATE, NRMETD
-    use cmn_sfc, only: LDEPEMEP2012
+    use cmn_sfc, only: LDDEPmOSaic
     use cmn_oslo, only: TEMPAVG
     use ch4routines, only: updateSOILUPTAKEbousquet
     !// --------------------------------------------------------------------
@@ -203,13 +203,13 @@ contains
     call updateSOILUPTAKEbousquet(LNEW_MONTH)
 
     !// DRYDEP2
-    if (LDEPEMEP2012) then
+    if (LDDEPmOSaic) then
        !// Find SO2/NH3 fraction for each hour
        call get_asn24h(NDAYI, NDAY, NMET, NOPS)
        !// Update photon flux density
        call get_PPFD(NMET, DTMET)
        
-    end if !// if (LDEPEMEP2012) then
+    end if !// if (LDDEPmOSaic) then
 
     !// --------------------------------------------------------------------
   end subroutine update_drydepvariables
@@ -233,7 +233,7 @@ contains
     use cmn_fjx, only: SZAMAX
     use cmn_met, only: CI, SD, PBL_KEDDY, ZOFLE, SFT
     use cmn_parameters, only: M_AIR, AVOGNR, R_AIR, G0, LDEBUG
-    use cmn_sfc, only: landSurfTypeFrac, LANDUSE_IDX, VDEP, VGSTO3, LDEPEMEP2012
+    use cmn_sfc, only: landSurfTypeFrac, LANDUSE_IDX, VDEP, VGSTO3, LDDEPmOSaic
     use cmn_oslo, only: chem_idx, trsp_idx
     use bcoc_oslo, only: bcoc_setdrydep, bcoc_vdep2
     use soa_oslo, only: soa_setdrydep
@@ -470,8 +470,8 @@ contains
        call get_ctm2dep(MDAY,MSEASON,RFR, MP, &
             VO3,VHNO3,VPAN,VCO,VH2O2,VNO2, VSO2,VSO4,VMSA, VNH3)
 
-       if (LDEPEMEP2012) then
-          !// New dry deposition scheme (ala EMEP2012)
+       if (LDDEPmOSaic) then
+          !// New dry deposition scheme (ala mOSaic)
           
           !// Not to be standard yet...
           !// When it is, remember dtmax=300 in oc_tropchem
@@ -588,8 +588,8 @@ contains
       end do !// do I = MPBLKIB(MP),MPBLKIE(MP)
     end do !// do J = MPBLKJB(MP),MPBLKJE(MP)
     
-    if (LDEPEMEP2012) then
-       !//EMEP2012
+    if (LDDEPmOSaic) then
+       !// Simpson et al. (2012)
        !// Set dry deposition for BCOC (m/s)
        if (LBCOC) call bcoc_vdep2(VDEP,SCALESTABILITY,MP)
        !// Set dry deposition for SOA, sulphur and nitrate (m/s)
@@ -768,8 +768,8 @@ contains
   subroutine get_vdep2(UTTAU,BTT,AIRB,BTEM, MP, &
          VO3,VHNO3,VPAN,VH2O2,VNO2, VSO2,VNH3, VNO,VHCHO,VCH3CHO, VSto)
     !// --------------------------------------------------------------------
-    !// Calculate drydep of gases as in EMEP model, Simpson etal (2012),
-    !// ACP, doi:10.5194/acp-12-7825-2012, refered to as EMEP2012 in
+    !// Calculate drydep of gases as in EMEP model, Simpson et al. (2012),
+    !// ACP, doi:10.5194/acp-12-7825-2012, refered to as EMEP in
     !// this routine.
     !//
     !// Based on conventional one-dimensional resistance analogy where
@@ -792,12 +792,12 @@ contains
     use cmn_ctm, only: XGRD, YGRD, XDGRD, YDGRD, MPBLKJB, MPBLKJE, &
          MPBLKIB, MPBLKIE, IDAY, JMON, JDAY, PLAND, NRMETD, NROPSM
     use cmn_met, only: PRANDTLL1, P, SD, CI, USTR, ZOFLE, PRECLS, PRECCNV, &
-         CLDFR, PPFD, UMS, VMS, SFT, SWVL4
+         CLDFR, PPFD, UMS, VMS, SFT, SWVL3
     use cmn_parameters, only: R_AIR, R_UNIV
     use cmn_sfc, only: LAI, ZOI, landSurfTypeFrac, LANDUSE_IDX, StomRes, NVGPAR, &
-         EMEP_PAR, LGSMAP
+         DDEP_PAR, LGSMAP
     use cmn_oslo, only: trsp_idx
-    use utilities_oslo, only: landfrac2emep, set_vegetation_height, &
+    use utilities_oslo, only: landfrac2mosaic, set_vegetation_height, &
          GROWSEASON, MAPPED_GROWSEASON
     !// --------------------------------------------------------------------
     implicit none
@@ -813,7 +813,7 @@ contains
 
     !// Locals
     integer :: I,J,II,JJ, NN, KK, NTOTAL
-    real(r8) :: LAI_IJ, RTOTAL, PAR_IJ, SWVL4_IJ
+    real(r8) :: LAI_IJ, RTOTAL, PAR_IJ, SWVL3_IJ
     real(r8) :: tempVEGH
     integer :: GDAY, GLEN                   !// Growing season from megan
 
@@ -904,278 +904,278 @@ contains
     !//  9. Urban
     !// 10. Ice+snow (strictly, EMEP has this as category 9 and urban as 10)
     !// Maximal stomatal conductance
-    !// gmax = EMEP_PAR(1,:) !// mmmole O3 m-2 s-1
-    !// fmin = EMEP_PAR(2,:)
+    !// gmax = DDEP_PAR(1,:) !// mmmole O3 m-2 s-1
+    !// fmin = DDEP_PAR(2,:)
     !// Phenomenology fphen (Table S17)
-    !// phia = EMEP_PAR(3,:)
-    !// phib = EMEP_PAR(4,:)
-    !// phic = EMEP_PAR(5,:)
-    !// phid = EMEP_PAR(6,:)
-    !// phie = EMEP_PAR(7,:)
-    !// phif = EMEP_PAR(8,:)
-    !// phiAS = EMEP_PAR(9,:)
-    !// phiAE = EMEP_PAR(10,:)
+    !// phia = DDEP_PAR(3,:)
+    !// phib = DDEP_PAR(4,:)
+    !// phic = DDEP_PAR(5,:)
+    !// phid = DDEP_PAR(6,:)
+    !// phie = DDEP_PAR(7,:)
+    !// phif = DDEP_PAR(8,:)
+    !// phiAS = DDEP_PAR(9,:)
+    !// phiAE = DDEP_PAR(10,:)
     !// Light dependent scaling
-    !// flightalpha = EMEP_PAR(11,:)
+    !// flightalpha = DDEP_PAR(11,:)
     !// Temperature scaling fT (Supplement Eq. (17))
-    !// tmin = EMEP_PAR(12,:)
-    !// topt = EMEP_PAR(13,:)
-    !// tmax = EMEP_PAR(14,:)
+    !// tmin = DDEP_PAR(12,:)
+    !// topt = DDEP_PAR(13,:)
+    !// tmax = DDEP_PAR(14,:)
     !// Humidity dependent scaling fD (Supplement Eq. (18))
-    !// Dmax = EMEP_PAR(15,:)
-    !// Dmin = EMEP_PAR(16,:)
+    !// Dmax = DDEP_PAR(15,:)
+    !// Dmin = DDEP_PAR(16,:)
     !// Surface resistance
-    !// RgsSO2 = EMEP_PAR(18,:)
-    !// RgsO3  = EMEP_PAR(19,:)
+    !// RgsSO2 = DDEP_PAR(18,:)
+    !// RgsO3  = DDEP_PAR(19,:)
     !// Vegetation height
-    !// VEGH   = EMEP_PAR(20,:)
+    !// VEGH   = DDEP_PAR(20,:)
     !// Growing season
-    !// dSGS = EMEP_PAR(21,:)   !// Start
-    !// dEGS = EMEP_PAR(22,:)   !// End
-    !// ddSGS = EMEP_PAR(23,:)  !// Latitude dependent change of start (rate)
-    !// ddEGS = EMEP_PAR(24,:)  !// Latitude dependent change of end (rate)
+    !// dSGS = DDEP_PAR(21,:)   !// Start
+    !// dEGS = DDEP_PAR(22,:)   !// End
+    !// ddSGS = DDEP_PAR(23,:)  !// Latitude dependent change of start (rate)
+    !// ddEGS = DDEP_PAR(24,:)  !// Latitude dependent change of end (rate)
 
     !//  1. Forests, Mediterranean scrub
-    gmax(1)        = (sum(EMEP_PAR(1,1:4))+EMEP_PAR(1,10))/5._r8 
-    fmin(1)        = (sum(EMEP_PAR(2,1:4))+EMEP_PAR(2,10))/5._r8
-    phia(1)        = (sum(EMEP_PAR(3,1:4))+EMEP_PAR(3,10))/5._r8
-    phib(1)        = (sum(EMEP_PAR(4,1:4))+EMEP_PAR(4,10))/5._r8
-    phic(1)        = (sum(EMEP_PAR(5,1:4))+EMEP_PAR(5,10))/5._r8
-    phid(1)        = (sum(EMEP_PAR(6,1:4))+EMEP_PAR(6,10))/5._r8
-    phie(1)        = (sum(EMEP_PAR(7,1:4))+EMEP_PAR(7,10))/5._r8
-    phif(1)        = (sum(EMEP_PAR(8,1:4))+EMEP_PAR(8,10))/5._r8
-    phiAS(1)       = (sum(EMEP_PAR(9,1:4))+EMEP_PAR(9,10))/5._r8
-    phiAE(1)       = (sum(EMEP_PAR(10,1:4))+EMEP_PAR(10,10))/5._r8
-    flightalpha(1) = (sum(EMEP_PAR(11,1:4))+EMEP_PAR(11,10))/5._r8
-    tmin(1)        = (sum(EMEP_PAR(12,1:4))+EMEP_PAR(12,10))/5._r8
-    topt(1)        = (sum(EMEP_PAR(13,1:4))+EMEP_PAR(13,10))/5._r8
-    tmax(1)        = (sum(EMEP_PAR(14,1:4))+EMEP_PAR(14,10))/5._r8
-    Dmax(1)        = (sum(EMEP_PAR(15,1:4))+EMEP_PAR(15,10))/5._r8
-    Dmin(1)        = (sum(EMEP_PAR(16,1:4))+EMEP_PAR(16,10))/5._r8
-    RgsSO2(1)      = (sum(EMEP_PAR(18,1:4))+EMEP_PAR(18,10))/5._r8 
-    RgsO3(1)       = (sum(EMEP_PAR(19,1:4))+EMEP_PAR(19,10))/5._r8
+    gmax(1)        = (sum(DDEP_PAR(1,1:4))+DDEP_PAR(1,10))/5._r8 
+    fmin(1)        = (sum(DDEP_PAR(2,1:4))+DDEP_PAR(2,10))/5._r8
+    phia(1)        = (sum(DDEP_PAR(3,1:4))+DDEP_PAR(3,10))/5._r8
+    phib(1)        = (sum(DDEP_PAR(4,1:4))+DDEP_PAR(4,10))/5._r8
+    phic(1)        = (sum(DDEP_PAR(5,1:4))+DDEP_PAR(5,10))/5._r8
+    phid(1)        = (sum(DDEP_PAR(6,1:4))+DDEP_PAR(6,10))/5._r8
+    phie(1)        = (sum(DDEP_PAR(7,1:4))+DDEP_PAR(7,10))/5._r8
+    phif(1)        = (sum(DDEP_PAR(8,1:4))+DDEP_PAR(8,10))/5._r8
+    phiAS(1)       = (sum(DDEP_PAR(9,1:4))+DDEP_PAR(9,10))/5._r8
+    phiAE(1)       = (sum(DDEP_PAR(10,1:4))+DDEP_PAR(10,10))/5._r8
+    flightalpha(1) = (sum(DDEP_PAR(11,1:4))+DDEP_PAR(11,10))/5._r8
+    tmin(1)        = (sum(DDEP_PAR(12,1:4))+DDEP_PAR(12,10))/5._r8
+    topt(1)        = (sum(DDEP_PAR(13,1:4))+DDEP_PAR(13,10))/5._r8
+    tmax(1)        = (sum(DDEP_PAR(14,1:4))+DDEP_PAR(14,10))/5._r8
+    Dmax(1)        = (sum(DDEP_PAR(15,1:4))+DDEP_PAR(15,10))/5._r8
+    Dmin(1)        = (sum(DDEP_PAR(16,1:4))+DDEP_PAR(16,10))/5._r8
+    RgsSO2(1)      = (sum(DDEP_PAR(18,1:4))+DDEP_PAR(18,10))/5._r8 
+    RgsO3(1)       = (sum(DDEP_PAR(19,1:4))+DDEP_PAR(19,10))/5._r8
     VEGH(1)        = 0._r8 !// Will be modified
-    tempVEGH       = (sum(EMEP_PAR(20,1:4))+EMEP_PAR(20,10))/5._r8 
-    dSGS(1)        = (sum(EMEP_PAR(21,1:4))+EMEP_PAR(21,10))/5._r8  !// Start
-    dEGS(1)        = (sum(EMEP_PAR(22,1:4))+EMEP_PAR(22,10))/5._r8  !// End
-    ddSGS(1)       = (sum(EMEP_PAR(23,1:4))+EMEP_PAR(23,10))/5._r8  !// Latitude dependent change of start (rate)
-    ddEGS(1)       = (sum(EMEP_PAR(24,1:4))+EMEP_PAR(24,10))/5._r8
+    tempVEGH       = (sum(DDEP_PAR(20,1:4))+DDEP_PAR(20,10))/5._r8 
+    dSGS(1)        = (sum(DDEP_PAR(21,1:4))+DDEP_PAR(21,10))/5._r8  !// Start
+    dEGS(1)        = (sum(DDEP_PAR(22,1:4))+DDEP_PAR(22,10))/5._r8  !// End
+    ddSGS(1)       = (sum(DDEP_PAR(23,1:4))+DDEP_PAR(23,10))/5._r8  !// Latitude dependent change of start (rate)
+    ddEGS(1)       = (sum(DDEP_PAR(24,1:4))+DDEP_PAR(24,10))/5._r8
     !//  2. Crops
-    gmax(2)        = sum(EMEP_PAR(1,5:7))/3._r8
-    fmin(2)        = sum(EMEP_PAR(2,5:7))/3._r8
-    phia(2)        = sum(EMEP_PAR(3,5:7))/3._r8
-    phib(2)        = sum(EMEP_PAR(4,5:7))/3._r8
-    phic(2)        = sum(EMEP_PAR(5,5:7))/3._r8
-    phid(2)        = sum(EMEP_PAR(6,5:7))/3._r8
-    phie(2)        = sum(EMEP_PAR(7,5:7))/3._r8
-    phif(2)        = sum(EMEP_PAR(8,5:7))/3._r8
-    phiAS(2)       = sum(EMEP_PAR(9,5:7))/3._r8
-    phiAE(2)       = sum(EMEP_PAR(10,5:7))/3._r8
-    flightalpha(2) = sum(EMEP_PAR(11,5:7))/3._r8
-    tmin(2)        = sum(EMEP_PAR(12,5:7))/3._r8
-    topt(2)        = sum(EMEP_PAR(13,5:7))/3._r8
-    tmax(2)        = sum(EMEP_PAR(14,5:7))/3._r8
-    Dmax(2)        = sum(EMEP_PAR(15,5:7))/3._r8
-    Dmin(2)        = sum(EMEP_PAR(16,5:7))/3._r8
-    RgsSO2(2)      = sum(EMEP_PAR(18,5:7))/3._r8  !// Will be modified below (in-canopy ok, needs EMEP2012)
-    RgsO3(2)       = sum(EMEP_PAR(19,5:7))/3._r8
-    VEGH(2)        = sum(EMEP_PAR(20,5:7))/3._r8
-    dSGS(2)        = sum(EMEP_PAR(21,5:7))/3._r8  !// Start
-    dEGS(2)        = sum(EMEP_PAR(22,5:7))/3._r8  !// End
-    ddSGS(2)       = sum(EMEP_PAR(23,5:7))/3._r8  !// Latitude dependent change of start (rate)
-    ddEGS(2)       = sum(EMEP_PAR(24,5:7))/3._r8 
+    gmax(2)        = sum(DDEP_PAR(1,5:7))/3._r8
+    fmin(2)        = sum(DDEP_PAR(2,5:7))/3._r8
+    phia(2)        = sum(DDEP_PAR(3,5:7))/3._r8
+    phib(2)        = sum(DDEP_PAR(4,5:7))/3._r8
+    phic(2)        = sum(DDEP_PAR(5,5:7))/3._r8
+    phid(2)        = sum(DDEP_PAR(6,5:7))/3._r8
+    phie(2)        = sum(DDEP_PAR(7,5:7))/3._r8
+    phif(2)        = sum(DDEP_PAR(8,5:7))/3._r8
+    phiAS(2)       = sum(DDEP_PAR(9,5:7))/3._r8
+    phiAE(2)       = sum(DDEP_PAR(10,5:7))/3._r8
+    flightalpha(2) = sum(DDEP_PAR(11,5:7))/3._r8
+    tmin(2)        = sum(DDEP_PAR(12,5:7))/3._r8
+    topt(2)        = sum(DDEP_PAR(13,5:7))/3._r8
+    tmax(2)        = sum(DDEP_PAR(14,5:7))/3._r8
+    Dmax(2)        = sum(DDEP_PAR(15,5:7))/3._r8
+    Dmin(2)        = sum(DDEP_PAR(16,5:7))/3._r8
+    RgsSO2(2)      = sum(DDEP_PAR(18,5:7))/3._r8  !// Will be modified below (in-canopy ok, needs EMEP2012)
+    RgsO3(2)       = sum(DDEP_PAR(19,5:7))/3._r8
+    VEGH(2)        = sum(DDEP_PAR(20,5:7))/3._r8
+    dSGS(2)        = sum(DDEP_PAR(21,5:7))/3._r8  !// Start
+    dEGS(2)        = sum(DDEP_PAR(22,5:7))/3._r8  !// End
+    ddSGS(2)       = sum(DDEP_PAR(23,5:7))/3._r8  !// Latitude dependent change of start (rate)
+    ddEGS(2)       = sum(DDEP_PAR(24,5:7))/3._r8 
     !//  3. Moorland (savanna++)
-    gmax(3)        = EMEP_PAR(1,8)
-    fmin(3)        = EMEP_PAR(2,8)
-    phia(3)        = EMEP_PAR(3,8)
-    phib(3)        = EMEP_PAR(4,8)
-    phic(3)        = EMEP_PAR(5,8)
-    phid(3)        = EMEP_PAR(6,8)
-    phie(3)        = EMEP_PAR(7,8)
-    phif(3)        = EMEP_PAR(8,8)
-    phiAS(3)       = EMEP_PAR(9,8)
-    phiAE(3)       = EMEP_PAR(10,8)
-    flightalpha(3) = EMEP_PAR(11,8)
-    tmin(3)        = EMEP_PAR(12,8)
-    topt(3)        = EMEP_PAR(13,8)
-    tmax(3)        = EMEP_PAR(14,8)
-    Dmax(3)        = EMEP_PAR(15,8)
-    Dmin(3)        = EMEP_PAR(16,8)
-    RgsSO2(3)      = EMEP_PAR(18,8) !// Will be modified below (in-canopy ok, needs EMEP2012)
-    RgsO3(3)       = EMEP_PAR(19,8)
-    VEGH(3)        = EMEP_PAR(20,8)
-    dSGS(3)        = EMEP_PAR(21,8)  !// Start
-    dEGS(3)        = EMEP_PAR(22,8)  !// End
-    ddSGS(3)       = EMEP_PAR(23,8)  !// Latitude dependent change of start (rate)
-    ddEGS(3)       = EMEP_PAR(24,8) 
+    gmax(3)        = DDEP_PAR(1,8)
+    fmin(3)        = DDEP_PAR(2,8)
+    phia(3)        = DDEP_PAR(3,8)
+    phib(3)        = DDEP_PAR(4,8)
+    phic(3)        = DDEP_PAR(5,8)
+    phid(3)        = DDEP_PAR(6,8)
+    phie(3)        = DDEP_PAR(7,8)
+    phif(3)        = DDEP_PAR(8,8)
+    phiAS(3)       = DDEP_PAR(9,8)
+    phiAE(3)       = DDEP_PAR(10,8)
+    flightalpha(3) = DDEP_PAR(11,8)
+    tmin(3)        = DDEP_PAR(12,8)
+    topt(3)        = DDEP_PAR(13,8)
+    tmax(3)        = DDEP_PAR(14,8)
+    Dmax(3)        = DDEP_PAR(15,8)
+    Dmin(3)        = DDEP_PAR(16,8)
+    RgsSO2(3)      = DDEP_PAR(18,8) !// Will be modified below (in-canopy ok, needs EMEP2012)
+    RgsO3(3)       = DDEP_PAR(19,8)
+    VEGH(3)        = DDEP_PAR(20,8)
+    dSGS(3)        = DDEP_PAR(21,8)  !// Start
+    dEGS(3)        = DDEP_PAR(22,8)  !// End
+    ddSGS(3)       = DDEP_PAR(23,8)  !// Latitude dependent change of start (rate)
+    ddEGS(3)       = DDEP_PAR(24,8) 
     !//  4. Grassland
-    gmax(4)        = EMEP_PAR(1,9)
-    fmin(4)        = EMEP_PAR(2,9)
-    phia(4)        = EMEP_PAR(3,9)
-    phib(4)        = EMEP_PAR(4,9)
-    phic(4)        = EMEP_PAR(5,9)
-    phid(4)        = EMEP_PAR(6,9)
-    phie(4)        = EMEP_PAR(7,9)
-    phif(4)        = EMEP_PAR(8,9)
-    phiAS(4)       = EMEP_PAR(9,9)
-    phiAE(4)       = EMEP_PAR(10,9)
-    flightalpha(4) = EMEP_PAR(11,9)
-    tmin(4)        = EMEP_PAR(12,9)
-    topt(4)        = EMEP_PAR(13,9)
-    tmax(4)        = EMEP_PAR(14,9)
-    Dmax(4)        = EMEP_PAR(15,9)
-    Dmin(4)        = EMEP_PAR(16,9)
-    RgsSO2(4)      = EMEP_PAR(18,9) !// Will be modified below (in-canopy ok, needs EMEP2012)
-    RgsO3(4)       = EMEP_PAR(19,9)
-    VEGH(4)        = EMEP_PAR(20,9)
-    dSGS(4)        = EMEP_PAR(21,9)  !// Start
-    dEGS(4)        = EMEP_PAR(22,9)  !// End
-    ddSGS(4)       = EMEP_PAR(23,9)  !// Latitude dependent change of start (rate)
-    ddEGS(4)       = EMEP_PAR(24,9) 
+    gmax(4)        = DDEP_PAR(1,9)
+    fmin(4)        = DDEP_PAR(2,9)
+    phia(4)        = DDEP_PAR(3,9)
+    phib(4)        = DDEP_PAR(4,9)
+    phic(4)        = DDEP_PAR(5,9)
+    phid(4)        = DDEP_PAR(6,9)
+    phie(4)        = DDEP_PAR(7,9)
+    phif(4)        = DDEP_PAR(8,9)
+    phiAS(4)       = DDEP_PAR(9,9)
+    phiAE(4)       = DDEP_PAR(10,9)
+    flightalpha(4) = DDEP_PAR(11,9)
+    tmin(4)        = DDEP_PAR(12,9)
+    topt(4)        = DDEP_PAR(13,9)
+    tmax(4)        = DDEP_PAR(14,9)
+    Dmax(4)        = DDEP_PAR(15,9)
+    Dmin(4)        = DDEP_PAR(16,9)
+    RgsSO2(4)      = DDEP_PAR(18,9) !// Will be modified below (in-canopy ok, needs EMEP2012)
+    RgsO3(4)       = DDEP_PAR(19,9)
+    VEGH(4)        = DDEP_PAR(20,9)
+    dSGS(4)        = DDEP_PAR(21,9)  !// Start
+    dEGS(4)        = DDEP_PAR(22,9)  !// End
+    ddSGS(4)       = DDEP_PAR(23,9)  !// Latitude dependent change of start (rate)
+    ddEGS(4)       = DDEP_PAR(24,9) 
     !//  5. Wetlands
-    gmax(5)        = EMEP_PAR(1,11)
-    fmin(5)        = EMEP_PAR(2,11)
-    phia(5)        = EMEP_PAR(3,11)
-    phib(5)        = EMEP_PAR(4,11)
-    phic(5)        = EMEP_PAR(5,11)
-    phid(5)        = EMEP_PAR(6,11)
-    phie(5)        = EMEP_PAR(7,11)
-    phif(5)        = EMEP_PAR(8,11)
-    phiAS(5)       = EMEP_PAR(9,11)
-    phiAE(5)       = EMEP_PAR(10,11)
-    flightalpha(5) = EMEP_PAR(11,11)
-    tmin(5)        = EMEP_PAR(12,11)
-    topt(5)        = EMEP_PAR(13,11)
-    tmax(5)        = EMEP_PAR(14,11)
-    Dmax(5)        = EMEP_PAR(15,11)
-    Dmin(5)        = EMEP_PAR(16,11)
-    RgsSO2(5)      = EMEP_PAR(18,11) !// Will be modified below (in-canopy ok, needs EMEP2012)
-    RgsO3(5)       = EMEP_PAR(19,11)
-    VEGH(5)        = EMEP_PAR(20,11)
-    dSGS(5)        = EMEP_PAR(21,11)  !// Start
-    dEGS(5)        = EMEP_PAR(22,11)  !// End
-    ddSGS(5)       = EMEP_PAR(23,11)  !// Latitude dependent change of start (rate)
-    ddEGS(5)       = EMEP_PAR(24,11) 
+    gmax(5)        = DDEP_PAR(1,11)
+    fmin(5)        = DDEP_PAR(2,11)
+    phia(5)        = DDEP_PAR(3,11)
+    phib(5)        = DDEP_PAR(4,11)
+    phic(5)        = DDEP_PAR(5,11)
+    phid(5)        = DDEP_PAR(6,11)
+    phie(5)        = DDEP_PAR(7,11)
+    phif(5)        = DDEP_PAR(8,11)
+    phiAS(5)       = DDEP_PAR(9,11)
+    phiAE(5)       = DDEP_PAR(10,11)
+    flightalpha(5) = DDEP_PAR(11,11)
+    tmin(5)        = DDEP_PAR(12,11)
+    topt(5)        = DDEP_PAR(13,11)
+    tmax(5)        = DDEP_PAR(14,11)
+    Dmax(5)        = DDEP_PAR(15,11)
+    Dmin(5)        = DDEP_PAR(16,11)
+    RgsSO2(5)      = DDEP_PAR(18,11) !// Will be modified below (in-canopy ok, needs EMEP2012)
+    RgsO3(5)       = DDEP_PAR(19,11)
+    VEGH(5)        = DDEP_PAR(20,11)
+    dSGS(5)        = DDEP_PAR(21,11)  !// Start
+    dEGS(5)        = DDEP_PAR(22,11)  !// End
+    ddSGS(5)       = DDEP_PAR(23,11)  !// Latitude dependent change of start (rate)
+    ddEGS(5)       = DDEP_PAR(24,11) 
     !//  6. Tundra
-    gmax(6)        = EMEP_PAR(1,12)
-    fmin(6)        = EMEP_PAR(2,12)
-    phia(6)        = EMEP_PAR(3,12)
-    phib(6)        = EMEP_PAR(4,12)
-    phic(6)        = EMEP_PAR(5,12)
-    phid(6)        = EMEP_PAR(6,12)
-    phie(6)        = EMEP_PAR(7,12)
-    phif(6)        = EMEP_PAR(8,12)
-    phiAS(6)       = EMEP_PAR(9,12)
-    phiAE(6)       = EMEP_PAR(10,12)
-    flightalpha(6) = EMEP_PAR(11,12)
-    tmin(6)        = EMEP_PAR(12,12)
-    topt(6)        = EMEP_PAR(13,12)
-    tmax(6)        = EMEP_PAR(14,12)
-    Dmax(6)        = EMEP_PAR(15,12)
-    Dmin(6)        = EMEP_PAR(16,12)
-    RgsSO2(6)      = EMEP_PAR(18,12) !// Will be modified below (in-canopy ok, needs EMEP2012)
-    RgsO3(6)       = EMEP_PAR(19,12)
-    VEGH(6)        = EMEP_PAR(20,12)
-    dSGS(6)        = EMEP_PAR(21,12)  !// Start
-    dEGS(6)        = EMEP_PAR(22,12)  !// End
-    ddSGS(6)       = EMEP_PAR(23,12)  !// Latitude dependent change of start (rate)
-    ddEGS(6)       = EMEP_PAR(24,12) 
+    gmax(6)        = DDEP_PAR(1,12)
+    fmin(6)        = DDEP_PAR(2,12)
+    phia(6)        = DDEP_PAR(3,12)
+    phib(6)        = DDEP_PAR(4,12)
+    phic(6)        = DDEP_PAR(5,12)
+    phid(6)        = DDEP_PAR(6,12)
+    phie(6)        = DDEP_PAR(7,12)
+    phif(6)        = DDEP_PAR(8,12)
+    phiAS(6)       = DDEP_PAR(9,12)
+    phiAE(6)       = DDEP_PAR(10,12)
+    flightalpha(6) = DDEP_PAR(11,12)
+    tmin(6)        = DDEP_PAR(12,12)
+    topt(6)        = DDEP_PAR(13,12)
+    tmax(6)        = DDEP_PAR(14,12)
+    Dmax(6)        = DDEP_PAR(15,12)
+    Dmin(6)        = DDEP_PAR(16,12)
+    RgsSO2(6)      = DDEP_PAR(18,12) !// Will be modified below (in-canopy ok, needs EMEP2012)
+    RgsO3(6)       = DDEP_PAR(19,12)
+    VEGH(6)        = DDEP_PAR(20,12)
+    dSGS(6)        = DDEP_PAR(21,12)  !// Start
+    dEGS(6)        = DDEP_PAR(22,12)  !// End
+    ddSGS(6)       = DDEP_PAR(23,12)  !// Latitude dependent change of start (rate)
+    ddEGS(6)       = DDEP_PAR(24,12) 
     !//  7. Desert
-    gmax(7)        = EMEP_PAR(1,13)
-    fmin(7)        = EMEP_PAR(2,13)
-    phia(7)        = EMEP_PAR(3,13)
-    phib(7)        = EMEP_PAR(4,13)
-    phic(7)        = EMEP_PAR(5,13)
-    phid(7)        = EMEP_PAR(6,13)
-    phie(7)        = EMEP_PAR(7,13)
-    phif(7)        = EMEP_PAR(8,13)
-    phiAS(7)       = EMEP_PAR(9,13)
-    phiAE(7)       = EMEP_PAR(10,13)
-    flightalpha(7) = EMEP_PAR(11,13)
-    tmin(7)        = EMEP_PAR(12,13)
-    topt(7)        = EMEP_PAR(13,13)
-    tmax(7)        = EMEP_PAR(14,13)
-    Dmax(7)        = EMEP_PAR(15,13)
-    Dmin(7)        = EMEP_PAR(16,13)
-    RgsSO2(7)      = EMEP_PAR(18,13) !// Will be modified below (in-canopy ok, needs EMEP2012)
-    RgsO3(7)       = EMEP_PAR(19,13)
-    VEGH(7)        = EMEP_PAR(20,13)
-    dSGS(7)        = EMEP_PAR(21,13)  !// Start
-    dEGS(7)        = EMEP_PAR(22,13)  !// End
-    ddSGS(7)       = EMEP_PAR(23,13)  !// Latitude dependent change of start (rate)
-    ddEGS(7)       = EMEP_PAR(24,13) 
+    gmax(7)        = DDEP_PAR(1,13)
+    fmin(7)        = DDEP_PAR(2,13)
+    phia(7)        = DDEP_PAR(3,13)
+    phib(7)        = DDEP_PAR(4,13)
+    phic(7)        = DDEP_PAR(5,13)
+    phid(7)        = DDEP_PAR(6,13)
+    phie(7)        = DDEP_PAR(7,13)
+    phif(7)        = DDEP_PAR(8,13)
+    phiAS(7)       = DDEP_PAR(9,13)
+    phiAE(7)       = DDEP_PAR(10,13)
+    flightalpha(7) = DDEP_PAR(11,13)
+    tmin(7)        = DDEP_PAR(12,13)
+    topt(7)        = DDEP_PAR(13,13)
+    tmax(7)        = DDEP_PAR(14,13)
+    Dmax(7)        = DDEP_PAR(15,13)
+    Dmin(7)        = DDEP_PAR(16,13)
+    RgsSO2(7)      = DDEP_PAR(18,13) !// Will be modified below (in-canopy ok, needs EMEP2012)
+    RgsO3(7)       = DDEP_PAR(19,13)
+    VEGH(7)        = DDEP_PAR(20,13)
+    dSGS(7)        = DDEP_PAR(21,13)  !// Start
+    dEGS(7)        = DDEP_PAR(22,13)  !// End
+    ddSGS(7)       = DDEP_PAR(23,13)  !// Latitude dependent change of start (rate)
+    ddEGS(7)       = DDEP_PAR(24,13) 
     !//  8. Water
-    gmax(8)        = EMEP_PAR(1,14)
-    fmin(8)        = EMEP_PAR(2,14)
-    phia(8)        = EMEP_PAR(3,14)
-    phib(8)        = EMEP_PAR(4,14)
-    phic(8)        = EMEP_PAR(5,14)
-    phid(8)        = EMEP_PAR(6,14)
-    phie(8)        = EMEP_PAR(7,14)
-    phif(8)        = EMEP_PAR(8,14)
-    phiAS(8)       = EMEP_PAR(9,14)
-    phiAE(8)       = EMEP_PAR(10,14)
-    flightalpha(8) = EMEP_PAR(11,14)
-    tmin(8)        = EMEP_PAR(12,14)
-    topt(8)        = EMEP_PAR(13,14)
-    tmax(8)        = EMEP_PAR(14,14)
-    Dmax(8)        = EMEP_PAR(15,14)
-    Dmin(8)        = EMEP_PAR(16,14)
-    RgsSO2(8)      = EMEP_PAR(18,14) !// Will be modified below (in-canopy ok, needs EMEP2012)
-    RgsO3(8)       = EMEP_PAR(19,14)
-    VEGH(8)        = EMEP_PAR(20,14)
-    dSGS(8)        = EMEP_PAR(21,14)  !// Start
-    dEGS(8)        = EMEP_PAR(22,14)  !// End
-    ddSGS(8)       = EMEP_PAR(23,14)  !// Latitude dependent change of start (rate)
-    ddEGS(8)       = EMEP_PAR(24,14)
+    gmax(8)        = DDEP_PAR(1,14)
+    fmin(8)        = DDEP_PAR(2,14)
+    phia(8)        = DDEP_PAR(3,14)
+    phib(8)        = DDEP_PAR(4,14)
+    phic(8)        = DDEP_PAR(5,14)
+    phid(8)        = DDEP_PAR(6,14)
+    phie(8)        = DDEP_PAR(7,14)
+    phif(8)        = DDEP_PAR(8,14)
+    phiAS(8)       = DDEP_PAR(9,14)
+    phiAE(8)       = DDEP_PAR(10,14)
+    flightalpha(8) = DDEP_PAR(11,14)
+    tmin(8)        = DDEP_PAR(12,14)
+    topt(8)        = DDEP_PAR(13,14)
+    tmax(8)        = DDEP_PAR(14,14)
+    Dmax(8)        = DDEP_PAR(15,14)
+    Dmin(8)        = DDEP_PAR(16,14)
+    RgsSO2(8)      = DDEP_PAR(18,14) !// Will be modified below (in-canopy ok, needs EMEP2012)
+    RgsO3(8)       = DDEP_PAR(19,14)
+    VEGH(8)        = DDEP_PAR(20,14)
+    dSGS(8)        = DDEP_PAR(21,14)  !// Start
+    dEGS(8)        = DDEP_PAR(22,14)  !// End
+    ddSGS(8)       = DDEP_PAR(23,14)  !// Latitude dependent change of start (rate)
+    ddEGS(8)       = DDEP_PAR(24,14)
     !//  9. Urban
-    gmax(9)        = EMEP_PAR(1,16)
-    fmin(9)        = EMEP_PAR(2,16)
-    phia(9)        = EMEP_PAR(3,16)
-    phib(9)        = EMEP_PAR(4,16)
-    phic(9)        = EMEP_PAR(5,16)
-    phid(9)        = EMEP_PAR(6,16)
-    phie(9)        = EMEP_PAR(7,16)
-    phif(9)        = EMEP_PAR(8,16)
-    phiAS(9)       = EMEP_PAR(9,16)
-    phiAE(9)       = EMEP_PAR(10,16)
-    flightalpha(9) = EMEP_PAR(11,16)
-    tmin(9)        = EMEP_PAR(12,16)
-    topt(9)        = EMEP_PAR(13,16)
-    tmax(9)        = EMEP_PAR(14,16)
-    Dmax(9)        = EMEP_PAR(15,16)
-    Dmin(9)        = EMEP_PAR(16,16)
-    RgsSO2(9)      = EMEP_PAR(18,16) !// Will be modified below (in-canopy ok, needs EMEP2012)
-    RgsO3(9)       = EMEP_PAR(19,16)
-    VEGH(9)        = EMEP_PAR(20,16)
-    dSGS(9)        = EMEP_PAR(21,16)  !// Start
-    dEGS(9)        = EMEP_PAR(22,16)  !// End
-    ddSGS(9)       = EMEP_PAR(23,16)  !// Latitude dependent change of start (rate)
-    ddEGS(9)       = EMEP_PAR(24,16)
+    gmax(9)        = DDEP_PAR(1,16)
+    fmin(9)        = DDEP_PAR(2,16)
+    phia(9)        = DDEP_PAR(3,16)
+    phib(9)        = DDEP_PAR(4,16)
+    phic(9)        = DDEP_PAR(5,16)
+    phid(9)        = DDEP_PAR(6,16)
+    phie(9)        = DDEP_PAR(7,16)
+    phif(9)        = DDEP_PAR(8,16)
+    phiAS(9)       = DDEP_PAR(9,16)
+    phiAE(9)       = DDEP_PAR(10,16)
+    flightalpha(9) = DDEP_PAR(11,16)
+    tmin(9)        = DDEP_PAR(12,16)
+    topt(9)        = DDEP_PAR(13,16)
+    tmax(9)        = DDEP_PAR(14,16)
+    Dmax(9)        = DDEP_PAR(15,16)
+    Dmin(9)        = DDEP_PAR(16,16)
+    RgsSO2(9)      = DDEP_PAR(18,16) !// Will be modified below (in-canopy ok, needs EMEP2012)
+    RgsO3(9)       = DDEP_PAR(19,16)
+    VEGH(9)        = DDEP_PAR(20,16)
+    dSGS(9)        = DDEP_PAR(21,16)  !// Start
+    dEGS(9)        = DDEP_PAR(22,16)  !// End
+    ddSGS(9)       = DDEP_PAR(23,16)  !// Latitude dependent change of start (rate)
+    ddEGS(9)       = DDEP_PAR(24,16)
     !// 10. Ice+snow treated separately; not used)
-    gmax(10)        = EMEP_PAR(1,15)
-    fmin(10)        = EMEP_PAR(2,15)
-    phia(10)        = EMEP_PAR(3,15)
-    phib(10)        = EMEP_PAR(4,15)
-    phic(10)        = EMEP_PAR(5,15)
-    phid(10)        = EMEP_PAR(6,15)
-    phie(10)        = EMEP_PAR(7,15)
-    phif(10)        = EMEP_PAR(8,15)
-    phiAS(10)       = EMEP_PAR(9,15)
-    phiAE(10)       = EMEP_PAR(10,15)
-    flightalpha(10) = EMEP_PAR(11,15)
-    tmin(10)        = EMEP_PAR(12,15)
-    topt(10)        = EMEP_PAR(13,15)
-    tmax(10)        = EMEP_PAR(14,15)
-    Dmax(10)        = EMEP_PAR(15,15)
-    Dmin(10)        = EMEP_PAR(16,15)
-    RgsSO2(10)      = EMEP_PAR(18,15) !// Will be modified below (in-canopy ok, needs EMEP2012)
-    RgsO3(10)       = EMEP_PAR(19,15)
-    VEGH(10)        = EMEP_PAR(20,15)
-    dSGS(10)        = EMEP_PAR(21,15)  !// Start
-    dEGS(10)        = EMEP_PAR(22,15)  !// End
-    ddSGS(10)       = EMEP_PAR(23,15)  !// Latitude dependent change of start (rate)
-    ddEGS(10)       = EMEP_PAR(24,15)
+    gmax(10)        = DDEP_PAR(1,15)
+    fmin(10)        = DDEP_PAR(2,15)
+    phia(10)        = DDEP_PAR(3,15)
+    phib(10)        = DDEP_PAR(4,15)
+    phic(10)        = DDEP_PAR(5,15)
+    phid(10)        = DDEP_PAR(6,15)
+    phie(10)        = DDEP_PAR(7,15)
+    phif(10)        = DDEP_PAR(8,15)
+    phiAS(10)       = DDEP_PAR(9,15)
+    phiAE(10)       = DDEP_PAR(10,15)
+    flightalpha(10) = DDEP_PAR(11,15)
+    tmin(10)        = DDEP_PAR(12,15)
+    topt(10)        = DDEP_PAR(13,15)
+    tmax(10)        = DDEP_PAR(14,15)
+    Dmax(10)        = DDEP_PAR(15,15)
+    Dmin(10)        = DDEP_PAR(16,15)
+    RgsSO2(10)      = DDEP_PAR(18,15) !// Will be modified below (in-canopy ok, needs EMEP2012)
+    RgsO3(10)       = DDEP_PAR(19,15)
+    VEGH(10)        = DDEP_PAR(20,15)
+    dSGS(10)        = DDEP_PAR(21,15)  !// Start
+    dEGS(10)        = DDEP_PAR(22,15)  !// End
+    ddSGS(10)       = DDEP_PAR(23,15)  !// Latitude dependent change of start (rate)
+    ddEGS(10)       = DDEP_PAR(24,15)
     
     !// Initialize SAI0 for all categories
     !// Surface area index is zero for non-vegetated surfaces
@@ -1206,8 +1206,8 @@ contains
         II    = I - MPBLKIB(MP) + 1
 
 
-        !// Leaf area index: The method applies one-sided LAI, while the
-        !// CTM LAI is total LAI. Whether this is inconsistent is not clear.
+        !// Leaf area index: The method applies one-sided LAI.
+        !// LAI climatology from ISLSCP2 FASIR is one-sided.
         LAI_IJ = max(0._r8, LAI(I,J,JMON))
 
         !// SAI = total surface area index of vegetation
@@ -1252,7 +1252,7 @@ contains
         T2Mcel = T2M - 273.15_r8     !// Surface temperature (2m) [Celcius]
         PSFC   = P(I,J)              !// Surface pressure [hPa]
         PAR_IJ = PPFD(I,J)           !// Photosynthetic active radiation [W/m2]
-        SWVL4_IJ = SWVL4(I,J)        !// Soil water content in level 1 [0-1]
+        SWVL3_IJ = SWVL3(I,J)        !// Soil water content in level 1 [0-1]
 
         !// Wind at L1 center
         WINDL1  = sqrt(UMS(1,I,J)*UMS(1,I,J) + VMS(1,I,J)*VMS(1,I,J))
@@ -1313,10 +1313,10 @@ contains
            end where
         end if
         !// fSW based on soil moisture in the top soil layer (0-7 cm)
-        if (SWVL4_IJ .ge. 0.5) then
+        if (SWVL3_IJ .ge. 0.5) then
            fSW = 1._r8
         else
-           fSW = 2*SWVL4_IJ
+           fSW = 2*SWVL3_IJ
         end if
 
         !// Stomatal conductance
@@ -1373,7 +1373,7 @@ contains
 
 
         !// Set land fractions
-        call landfrac2emep(FL,NLCAT,landSurfTypeFrac(:,I,J), &
+        call landfrac2mosaic(FL,NLCAT,landSurfTypeFrac(:,I,J), &
              NVGPAR, YDGRD(J), LANDUSE_IDX)
         
         !// LAI:    Leaf area index (monthly means)
@@ -1489,12 +1489,15 @@ contains
         !//   SFMU = 6.2d-8*SFCT    ! abs.visc. 6.2d-8*T (lin fit:-30C to +40C)
         !//   SFNU = SFMU / SFCD    ! kinematic visc(nu) = mu/density  (m*m/s)
         !// or SFNU = 6.2d-8*T2M*T2M*287._r8/(100._r8*PSFC)
+        ! Sutherland's law should be used throughout the code instead
+        !SFNU  = ( 1.458e-6_r8*T2M**(3/2._r8)/(T2M+110.4_r8)* T2M * R_AIR) / (100._r8 * PSFC)
         SFNU  = (6.2e-8_r8 * T2M * T2M * R_AIR) / (100._r8 * PSFC)
         !z0w = min(0.135_r8*SFNU/USR + 1.83e-3_r8*USR**2, 2.e-3_r8)
         !// Maximum limit of 2mm surface roughness.
         if (WINDL1 .lt. 3._r8) then
            z0w = min(0.135_r8*SFNU/USR, 2.e-3_r8)
         else
+           ! So g is 9.836 ms-2
            z0w = min(1.83d-3*USR**2, 2.e-3_r8)
         end if
         !// Wu (J. Phys. Oceanogr., vol.10, 727-740,1980) suggest a correction
@@ -1522,8 +1525,8 @@ contains
         !//   e2 = (Zref - d) / MOL
         !//   e3 = z0 / MOL
         !// and Ra is found by
-        !//   Ra = (log(e1) - PHIH(e2) - PHIH(e2)) / (USR * VK)
-        !// This is problematic: When L>>z0, the equation would yield
+        !//   Ra = (log(e1) - PHIH(e2) + PHIH(e3)) / (USR * VK)
+        !// This is problematic: When MOL>>z0, the equation would yield
         !// (-PHIH(e2)+PHIH(e3)) < 0, possibly giving Ra<0.
         !// The same applies to EMEP2012 Ustar, so we cannot use that either.
 
@@ -1691,7 +1694,7 @@ contains
         !// gsto is estimated in EMEP parameterization, for each vegetation type, and
         !// above the average conductance Gstc_avg was calculated from this.
         !// The estimated canopy stomatal conductance is then:
-        !//GstO3 = LAI_IJ * Gstc_avg
+        !//GstO3 = LAI_IJ * Gstc_avg <- THIS IS WRONG AND NEEDS TO BE CORRECTED!!!
         !// where the vegetation fractions are taken into account.
         !//
         GstO3 = LAI_IJ*Gstc_avg
@@ -2394,7 +2397,7 @@ contains
     use cmn_sfc, only: landSurfTypeFrac, LANDUSE_IDX, NVGPAR, LAI
     use cmn_oslo, only: trsp_idx
     use soa_oslo, only: ndep_soa, soa_deps
-    use utilities_oslo, only: landfrac2emep, set_vegetation_height
+    use utilities_oslo, only: landfrac2mosaic, set_vegetation_height
     !// --------------------------------------------------------------------
     implicit none
     !// --------------------------------------------------------------------
@@ -2435,15 +2438,15 @@ contains
     !// 10. Ice+snow (strictly, EMEP has this as category 9 and urban as 10)
     !// Vegetation heights
     VEGH(1)  = 0._r8  !// Will be modified below 
-    tempVEGH = (sum(EMEP_PAR(20,1:4))+EMEP_PAR(20,10))/5._r8 
-    VEGH(2)  = sum(EMEP_PAR(20,5:7))/3._r8
-    VEGH(3)  = EMEP_PAR(20,8)
-    VEGH(4)  = EMEP_PAR(20,9)
-    VEGH(5)  = EMEP_PAR(20,11)
-    VEGH(6)  = EMEP_PAR(20,12)
-    VEGH(7)  = EMEP_PAR(20,13)
-    VEGH(8)  = EMEP_PAR(20,14)
-    VEGH(9)  = EMEP_PAR(20,16)
+    tempVEGH = (sum(DDEP_PAR(20,1:4))+DDEP_PAR(20,10))/5._r8 
+    VEGH(2)  = sum(DDEP_PAR(20,5:7))/3._r8
+    VEGH(3)  = DDEP_PAR(20,8)
+    VEGH(4)  = DDEP_PAR(20,9)
+    VEGH(5)  = DDEP_PAR(20,11)
+    VEGH(6)  = DDEP_PAR(20,12)
+    VEGH(7)  = DDEP_PAR(20,13)
+    VEGH(8)  = DDEP_PAR(20,14)
+    VEGH(9)  = DDEP_PAR(20,16)
     VEGH(10) = 0._r8
 
     !// Loop over latitude (J is global, JJ is block)
@@ -2493,7 +2496,7 @@ contains
 
 
         !// Set land fractions
-        call landfrac2emep(FL,NLCAT,landSurfTypeFrac(:,I,J), &
+        call landfrac2mosaic(FL,NLCAT,landSurfTypeFrac(:,I,J), &
              NVGPAR, YDGRD(J), LANDUSE_IDX)
 
 

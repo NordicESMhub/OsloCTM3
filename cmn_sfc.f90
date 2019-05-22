@@ -42,10 +42,10 @@ module CMN_SFC
   character(len=160) :: fileZOI
   integer :: ZOI_YEAR
   
-  !// DRYDEP EMEP parameter switch
-  logical :: LDEPEMEP2012
+  !// DRYDEP mOSaic parameter switch
+  logical :: LDDEPmOSaic
   !// Parameters and land use type from EMEP
-  real(r8), dimension(28,16) :: EMEP_PAR
+  real(r8), dimension(28,16) :: DDEP_PAR
   
   !// Displacement height [m] for given land type fraction (LS_FRAC)
   real(r8) :: ZPDVT_C3(NVGPAR)

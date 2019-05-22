@@ -61,7 +61,7 @@ contains
          CLDFR, CLDLWC, CLDIWC, &
          SLH, SHF, SMF, SFT, SFQ, SFU, SFV, BLH, BLH_CUR, BLH_NEXT, LBLH, &
          SA, PVU, UMS, VMS, CI, SD, SMLT, ES, SNFL, PhotActRad, MSLP, USTR, &
-         SWVL1, SWVL4, STL1, &
+         SWVL1, SWVL3, STL1, &
          PMEAN, PMEANW, MYEAR, &
          metTYPE, MPATH1, MPATH2, MFILE3
     use cmn_parameters, only: M_AIR, R_UNIV, R_AIR, R_H2O, A0, CPI
@@ -1252,6 +1252,13 @@ contains
        if (verbose) call skipData('SFC','Surface Thermal Radiation Downwards (STRD)')
     end if
 
+    !// Volumetric soil water layers          ------------------------------
+    !// --------------------------------------------------------------------
+    !// SWVL1 - 0-7 cm
+    !// SWVL2 - 7-28 cm
+    !// SWVL3 - 28-100 cm 
+    !// SWVL4 - 100-255 cm
+
     !// Volumetric soil water layer 1 (SWVL1) ------------------------------
     !// --------------------------------------------------------------------
     !// Unit: m3/m3
@@ -1266,15 +1273,15 @@ contains
     end if
     if (verbose) call gotData('2di','Volumetric soil water layer 1 (SWVL1)')
 
-    !// Volumetric soil water layer 4 (SWVL4) ------------------------------
+    !// Volumetric soil water layer  (SWVL3) ------------------------------
     !// --------------------------------------------------------------------
     !// Unit: m3/m3
-    call get_netcdf_var_2d(FNAME, 'SWVL4',W2D, IPARW, JPARW)
+    call get_netcdf_var_2d(FNAME, 'SWVL3',W2D, IPARW, JPARW)
     !// Limit to positive values just in case
     W2D(:,:) = max(W2D(:,:), 0._r8)
-    call TRUNG8(W2D, SWVL4, ZDEGI, ZDEGJ, IMAP, JMAP, IDGRD, &
+    call TRUNG8(W2D, SWVL3, ZDEGI, ZDEGJ, IMAP, JMAP, IDGRD, &
          JDGRD, IPARW, JPARW, IPAR, JPAR, 1, 1)
-    if (verbose) call gotData('2di','Volumetric soil water layer 4 (SWVL4)')
+    if (verbose) call gotData('2di','Volumetric soil water layer 3 (SWVL3)')
 
 
     !// Soil Temperature Level 1 (STL1 - ups, it is called SLT1 on file)
@@ -1304,7 +1311,7 @@ contains
     !// Volumetric soil water layer 2 (SWVL2)
     if (verbose) call skipData('SFC','SWVL2')
     !// Volumetric soil water layer 3 (SWVL3)
-    if (verbose) call skipData('SFC','SWVL3')
+    !// if (verbose) call skipData('SFC','SWVL3')
     !// Volumetric soil water layer 4 (SWVL4)
     if (verbose) call skipData('SFC','SWVL4')
     !// 10m wind gust

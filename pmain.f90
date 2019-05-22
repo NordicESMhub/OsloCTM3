@@ -29,7 +29,7 @@ program pmain
   use cmn_fjx, only: JVN_
   use cmn_met, only: MYEAR
   use cmn_parameters, only: LDEBUG
-  use cmn_sfc, only: LDEPEMEP2012
+  use cmn_sfc, only: LDDEPmOSaic
   !//-----------------------------------------------------------------------
   use averages, only: AVG_P1, AVG_WRT_NC4, AVG_ADD2, AVG_CLR2
   use budgets, only: TBGT_G, TBGT_P0, TBGT_P1, TBGT_P2, TBGT_IJ, TBGT_L
@@ -651,7 +651,7 @@ program pmain
         if (LDUST) call dustInstBdg(NDAY,NDAY0,NMET,NOPS,DTOPS)
 
         !// Diag for stomatal conductance and flux
-        if(LDEPEMEP2012 .and. LSTOM1HRS) then
+        if(LDDEPmOSaic .and. LSTOM1HRS) then
            call scav_diag_nmet_output_nc(JYEAR,JMON,JDATE,NDAY,NMET,NOPS)
         end if
 

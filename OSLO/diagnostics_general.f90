@@ -765,7 +765,7 @@ contains
     !// Ole Amund Sovde, February 2010
     !// --------------------------------------------------------------------
     use cmn_size, only: LBCOC, LOSLOCTROP, LOSLOCSTRAT
-    use cmn_sfc, only: LDEPEMEP2012, VGSTO3
+    use cmn_sfc, only: LDDEPmOSaic, VGSTO3
     use bcoc_oslo, only: bcsnow_nmet_output, bcsnow_nmet_output_nc
     use ch4routines, only: reportsfcch4
     use satelliteprofiles_mls, only: satprofs_mls_master
@@ -825,7 +825,7 @@ contains
     !call write_snapshot_the(nday,nmet,nops,1)
 
     !// Snapshot from stomatal conductance
-    if (LDEPEMEP2012) call scav_diag_put_gsto(NMET,VGSTO3)
+    if (LDDEPmOSaic) call scav_diag_put_gsto(NMET,VGSTO3)
 
     !// --------------------------------------------------------------------
   end subroutine nops_diag
@@ -841,7 +841,7 @@ contains
     !// Ole Amund Sovde, March 2010
     !// --------------------------------------------------------------------
     use cmn_size, only: IDBLK, JDBLK, NPAR, LPAR
-    use cmn_sfc, only: LDEPEMEP2012, VGSTO3
+    use cmn_sfc, only: LDDEPmOSaic, VGSTO3
     use diagnostics_scavenging, only: scav_diag_put_fsto
     !// --------------------------------------------------------------------
     implicit none
@@ -858,7 +858,7 @@ contains
     end if
     if (NSUB.eq.1. .and. CCYC.eq.1) then
        !// Snapshot from stomatal flux
-       if (LDEPEMEP2012) call scav_diag_put_fsto(BTT,NMET,VGSTO3,MP)
+       if (LDDEPmOSaic) call scav_diag_put_fsto(BTT,NMET,VGSTO3,MP)
     end if
     !// --------------------------------------------------------------------
   end subroutine mp_diag

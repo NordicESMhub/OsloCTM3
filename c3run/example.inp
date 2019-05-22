@@ -100,8 +100,8 @@ PFZON  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1
 --- Leaf area index ---
  0000  LAI_YEAR Year of the LAI (9999=meteorological year, 0000: climatology 1982-1998)
 'Indata_CTM3/surface/lai_islscp2_fasir_0.25x0.25_1982_1998.nc'
---- EMEP parameter list ---
-    T  LDEPEMEP2012 Dry deposition scheme / T = EMEP based dry deposition scheme, F = old scheme
+--- Dry deposition scheme and parameterlist ---
+    T  LDDEPmOSaic / T = mosaic dry dep scheme based on Simpson et al. (2012), F = old scheme
 'Indata_CTM3/DRYDEP/EMEP.par'
 --- PPFD directory and dummy filename ---
 '/projects/researchers/researchers01/sfalk/input_data/ctm_input/PPFD/'

@@ -494,7 +494,7 @@ contains
     use cmn_diag, only: nc4deflate_global, nc4shuffle_global
     use cmn_ctm, only: XDGRD, YDGRD, ZGRD, NRMETD
     use cmn_met, only: MYEAR
-    use cmn_sfc, only: LDEPEMEP2012
+    use cmn_sfc, only: LDDEPmOSaic
     use ncutils, only: handle_error
     !// --------------------------------------------------------------------
     implicit none
@@ -540,7 +540,7 @@ contains
     character(len=*), parameter :: subr = 'scav_diag_nmet_output_nc'
     !//---------------------------------------------------------------------
     !// No need to initialize if new dry deposition scheme is not used
-    if (.not.LDEPEMEP2012) return
+    if (.not.LDDEPmOSaic) return
     
     !// Time step
     nbr_steps = NOPS + (NMET-1)* 24 / NRMETD !3
@@ -1265,7 +1265,7 @@ contains
          nc4deflate_global, nc4shuffle_global
     use utilities, only: get_free_fileid
     use cmn_oslo, only: chem_idx
-    use cmn_sfc, only: LDEPEMEP2012
+    use cmn_sfc, only: LDDEPmOSaic
     use netcdf
     use ncutils, only: handle_error
     !// --------------------------------------------------------------------
@@ -1632,7 +1632,7 @@ contains
     end if
 
     !// Daily average of stomatal conductance
-    if(LDEPEMEP2012 .and. LDLYSCAV(7)) then
+    if(LDDEPmOSaic .and. LDLYSCAV(7)) then
        status = nf90_def_var(ncid,'GstO3_avg', &
             nf90_double, dim_lon_lat_id, gsto3_avg_id)
        if (status .ne. nf90_noerr) call handle_error(status, &
@@ -1801,7 +1801,7 @@ contains
     end if
 
     !// Stomatal conductance
-    if(LDEPEMEP2012 .and. LDLYSCAV(7)) then
+    if(LDDEPmOSaic .and. LDLYSCAV(7)) then
        status = nf90_put_var(ncid,gsto3_avg_id,GSTO3_AVG)
        if (status .ne. nf90_noerr) call handle_error(status, &
             f90file//':'//subr//': putting GstO3_avg')
