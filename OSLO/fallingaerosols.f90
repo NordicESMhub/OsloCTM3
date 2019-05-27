@@ -764,6 +764,7 @@ contains
          ETAA, ETAB, PLAND, JMON
     use cmn_met, only: ZOFLE, P, USTR, SHF, SFT
     use cmn_sfc, only: ZOI, NVGPAR, landSurfTypeFrac, ZPDVT_C3
+    use utilities_oslo, only: moninobukhov_length
     !// --------------------------------------------------------------------
     implicit none
     !// --------------------------------------------------------------------
@@ -803,8 +804,8 @@ contains
         !adens = QM(1) / (AREAXY(I,J)*DZ(1)) !// [kg/m3]
         adens = 1._r8 * P(I,J) / (SFT(I,J) * 287._r8) !// [kg/m3]
 
-        !// Calculate M-O length (as in p-pbl.f, differs from DUST code)
-        MO_LEN = -256._r8 * adens * SFT(I,J) * (USTR(I,J)**3) / SHF(I,J)
+        !// Calculate M-O length (differs from DUST code)
+        MO_LEN = moninobukhov_length(adens,SFT(I,J),USTR(I,J),SHF(I,J))
 
         !// Surface roughness [m] and displacement height [m]
         !// Similar to DEAD calculation, but with CTM3 metdata as input.

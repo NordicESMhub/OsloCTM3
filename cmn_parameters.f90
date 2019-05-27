@@ -22,15 +22,20 @@ module CMN_PARAMETERS
   !// Physical constants
   !//-----------------------------------------------------------------------
   !// Earth radius [m]
-  real(r8), parameter ::  A0      = 6371000._r8
+  real(r8), parameter :: A0        = 6371000._r8
   !// Gravitational constant [m/s^2]
-  real(r8), parameter ::  G0      = 9.80665_r8
+  real(r8), parameter :: G0        = 9.80665_r8
   !// pi & 2pi
-  real(r8), parameter ::  CPI     = 3.141592653589793_r8
-  real(r8), parameter ::  C2PI    = 2._r8*CPI
-  !// Conversions to & from radians
-  real(r8), parameter ::  CPI180  = CPI/180._r8
-  real(r8), parameter ::  ZPI180  = 1._r8/CPI180
+  real(r8), parameter :: CPI       = 3.141592653589793_r8
+  real(r8), parameter :: C2PI      = 2._r8*CPI
+  !// Conversions to / from radians
+  real(r8), parameter :: CPI180    = CPI/180._r8
+  real(r8), parameter :: ZPI180    = 1._r8/CPI180
+  !// Von Karman constant
+  real(r8), parameter :: VONKARMAN = 0.4_r8
+  !// Similarity profiles (from Kansas experiment)
+  real(r8), parameter :: CSIM_BETA      = 4.7_r8
+  real(r8), parameter :: CSIM_GAMMA     = 15._r8
 
 
   !// Chemistry constants

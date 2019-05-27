@@ -28,7 +28,9 @@ module drydeposition_oslo
   !//   - subroutine get_PPFD
   !//   - subroutine get_asn24h
   !//   - subroutine aer_vdep2
+  !//   - function PSIM, PSIH
   !//
+  !// Stefanie Falk, Mai 2019 - ??? 
   !// Stefanie Falk, Februar 2018 - July 2018
   !// Amund Sovde, December 2013 - January 2014
   !// ----------------------------------------------------------------------
@@ -232,7 +234,7 @@ contains
          JMON, GMTAU, XGRD,YGRD, IDAY, PLAND
     use cmn_fjx, only: SZAMAX
     use cmn_met, only: CI, SD, PBL_KEDDY, ZOFLE, SFT
-    use cmn_parameters, only: M_AIR, AVOGNR, R_AIR, G0, LDEBUG
+    use cmn_parameters, only: M_AIR, AVOGNR, R_AIR, G0, LDEBUG, VONKARMAN
     use cmn_sfc, only: landSurfTypeFrac, LANDUSE_IDX, VDEP, VGSTO3, LDDEPmOSaic
     use cmn_oslo, only: chem_idx, trsp_idx
     use bcoc_oslo, only: bcoc_setdrydep, bcoc_vdep2
@@ -263,7 +265,8 @@ contains
     real(r8)  :: RFR(5,IDBLK,JDBLK)   !// Fractions of land types (5 of them)
     real(r8)  :: SZA, U0, SOLF        !// To find night/day
 
-    real(r8),parameter :: VK=0.4_r8, BGK=1.d-19, &
+    real(r8),parameter :: &
+         BGK    = 1.d-19, &
          CONST  = 7.2_r8, &
          T2TV   = 3._r8/5._r8, &  !// Converting to virtual temperature
          ZG0    = 1._r8/G0
@@ -793,7 +796,7 @@ contains
          MPBLKIB, MPBLKIE, IDAY, JMON, JDAY, PLAND, NRMETD, NROPSM
     use cmn_met, only: PRANDTLL1, P, SD, CI, USTR, ZOFLE, PRECLS, PRECCNV, &
          CLDFR, PPFD, UMS, VMS, SFT, SWVL3
-    use cmn_parameters, only: R_AIR, R_UNIV
+    use cmn_parameters, only: R_AIR, R_UNIV, VONKARMAN
     use cmn_sfc, only: LAI, ZOI, landSurfTypeFrac, LANDUSE_IDX, StomRes, NVGPAR, &
          DDEP_PAR, LGSMAP
     use cmn_oslo, only: trsp_idx
@@ -873,8 +876,10 @@ contains
     real(r8), parameter :: &
          Sc_H20 = 0.6_r8, &   !// Schmidt number for H2O
          D_H2O  = 0.21e-4_r8, & !// Molecular diffusivity for H2O
-         RHlim  = 75._r8, Rd = 180._r8, Rw = 100._r8, &
-         VK = 0.4_r8          !// von Karman's constant
+         RHlim  = 75._r8, &
+         Rd     = 180._r8, &
+         Rw     = 100._r8
+        
     !// --------------------------------------------------------------------
     character(len=*), parameter :: subr = 'get_vdep2'
     !// --------------------------------------------------------------------
@@ -1462,7 +1467,7 @@ contains
         !// where U(Zref) is the wind at reference height Zref.
 
         !// Define reference height as layer 1 midpoint
-        Zthick = ZOFLE(2,I,J) - ZOFLE(1,I,J) !// L1 thickness
+        Zthick = ZOFLE(2,I,J) - ZOFLE(1,I,J)  !// L1 thickness
         Zref   = 0.5_r8 * Zthick              !// L1 center height
         d = 0.7_r8 !// a constant displacement height
 
@@ -1525,7 +1530,7 @@ contains
         !//   e2 = (Zref - d) / MOL
         !//   e3 = z0 / MOL
         !// and Ra is found by
-        !//   Ra = (log(e1) - PHIH(e2) + PHIH(e3)) / (USR * VK)
+        !//   Ra = (log(e1) - PHIH(e2) + PHIH(e3)) / (USR * VONKARMAN)
         !// This is problematic: When MOL>>z0, the equation would yield
         !// (-PHIH(e2)+PHIH(e3)) < 0, possibly giving Ra<0.
         !// The same applies to EMEP2012 Ustar, so we cannot use that either.
@@ -1540,11 +1545,11 @@ contains
            !// using Eqn.53 and Eqn.54 in EMEP2012.
 
            !// Land (cannot be zero due to USR having lower limit)
-           rbL = 2._r8 / (VK * USR) * (Sc_H20 * D_gas(KK) / PrL )**(2._r8/3._r8)
+           rbL = 2._r8 / (VONKARMAN * USR) * (Sc_H20 * D_gas(KK) / PrL )**(2._r8/3._r8)
 
            !// Ocean (use z0w, not z0)
            D_i = D_H2O / D_gas(KK) !// molecular diffusivity of the gas
-           rbO = log(z0w * VK * USR / D_i) / (USR * VK)
+           rbO = log(z0w * VONKARMAN * USR / D_i) / (USR * VONKARMAN)
            !// IMPORTANT
            !// RbO can be very large or even negative from this
            !// formula. Negative rbO can come from z0 being very small,
@@ -2703,8 +2708,68 @@ contains
     !// ------------------------------------------------------------------
   end subroutine aer_vdep2
   !// ------------------------------------------------------------------
-
-
+  !// ----------------------------------------------------------------------
+  real(r8) function PSIM(CETA)
+    !// --------------------------------------------------------------------
+    !// Description: 
+    !//  Calculate the integral function of the similarity profile of momentum.
+    !//  (Garratt, 1993)
+    !//  
+    !//
+    !// History: 
+    !//  Stefanie Falk, Mai 2019
+    !// --------------------------------------------------------------------
+    use cmn_parameters, only: CSIM_BETA, CSIM_GAMMA, CPI
+    !// --------------------------------------------------------------------
+    implicit none
+    !// --------------------------------------------------------------------
+    !// Input
+    real(r8), intent(in) :: CETA
+    !// Local variables
+    real(r8) :: x 
+    x = (1-CSIM_GAMMA*CETA)**0.25_r8
+    !// --------------------------------------------------------------------
+    if (CETA .lt. 0._r8) then
+       ! Unstable PBL
+       PSIM = LOG((1+x**2)*0.5_r8*((1+x)*0.5_r8)**2) - 2*ATAN(x+CPI*0.5_r8)
+    else
+       ! Stable PBL
+       PSIM = -1._r8*CSIM_BETA*CETA
+    end if
+    return
+  end function PSIM
+  !// ----------------------------------------------------------------------
+ !// ----------------------------------------------------------------------
+  real(r8) function PSIH(CETA)
+    !// --------------------------------------------------------------------
+    !// Description: 
+    !//  Calculate the integral function of the similarity profile of heat.
+    !//  (Garratt, 1993)
+    !//  
+    !//
+    !// History: 
+    !//  Stefanie Falk, Mai 2019
+    !// --------------------------------------------------------------------
+    use cmn_parameters, only: CSIM_BETA, CSIM_GAMMA, CPI
+    !// --------------------------------------------------------------------
+    implicit none
+    !// --------------------------------------------------------------------
+    !// Input
+    real(r8), intent(in) :: CETA
+    !// Local variables
+    real(r8) :: x 
+    x = (1-CSIM_GAMMA*CETA)**0.25_r8
+    !// --------------------------------------------------------------------
+    if (CETA .lt. 0._r8) then
+       ! Unstable PBL
+       PSIH = 2*LOG((1+x**2)*0.5_r8)
+    else
+       ! Stable PBL
+       PSIH = -1._r8*CSIM_BETA*CETA
+    end if
+    return
+  end function PSIH
+  !// ----------------------------------------------------------------------
   !// ------------------------------------------------------------------
 end module drydeposition_oslo
 !// ------------------------------------------------------------------

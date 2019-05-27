@@ -60,6 +60,7 @@ contains
          BLH, PBL_KEDDY, MO_LENGTH, PRANDTLL1, ZOFLE, U, V, T, Q
     use cmn_parameters, only: R_AIR
     use cmn_sfc, only: ZOI
+    use utilities_oslo, only: moninobukhov_length
     !// --------------------------------------------------------------------
     implicit none
     !// --------------------------------------------------------------------
@@ -134,18 +135,9 @@ contains
            SFCD  = SFCP/(SFCT * R_AIR) ! density                   ! kg/m^3
            SFMU  = 6.2e-8_r8*SFCT ! absol.visc. 6.2d-8*T (lin fit:-30C to +40C)
            SFNU  = SFMU / SFCD      ! kinematic visc(nu) = mu/density  (m*m/s)
-           MO_LEN = -256._r8*SFCD*SFCT*(USTAR**3)/SFCS    !  M-O length
-           if (MO_LEN .eq. 0._r8) then
-              write(6,'(a,2i5,4es16.6)') f90file//':'//subr//': MO_LEN is 0! -> 0.001: '// &
-                   'NBLX,I,J,SFCD,SFCT,USTAR,SFCS',NBLX,I,J,SFCD,SFCT,USTAR,SFCS
-              MO_LEN = 1.e-3_r8
-           end if
-           if (MO_LEN .ne. MO_LEN) then
-              write(6,'(a,2i5,4es16.6)') f90file//':'//subr//': MO_LEN is 0! -> 1000: '// &
-                   'NBLX,I,J,SFCD,SFCT,USTAR,SFCS',NBLX,I,J,SFCD,SFCT,USTAR,SFCS
-              MO_LEN = 1.e3_r8
-           end if
-           MO_LENGTH(II,JJ,MP) = MO_LEN !// Set MO-lenght
+
+           MO_LENGTH(II,JJ,MP) = moninobukhov_length(SFCD,SFCT,USTAR,SFCS) !  M-O length
+
            !ZO = ZOI(I,J,JMON)       ! surface roughness (m)
            !!// correct water surf roughness for wind/waves:
            !ZOW = min(0.135_r8*SFNU/USTAR + 1.83e-3_r8*USTAR**2, 2.e-3_r8)

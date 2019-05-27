@@ -860,6 +860,8 @@ contains
     !//
     !// To CTM3: Ole Amund Sovde, September 2009
     !// ------------------------------------------------------------------
+    use utilities_oslo, only: moninobukhov_length
+    !// ------------------------------------------------------------------
     implicit none
     !// ------------------------------------------------------------------
     !// INPUT
@@ -970,9 +972,7 @@ contains
              ustr_loc = 5.e-3_r8
           end if
           !// MONIN OBUKHOV LENGTH
-          LMO = ((-1._r8) * roair * Cp * SFT &
-                   * ustr_loc * ustr_loc * ustr_loc) &
-                   / (vonkarman * G0 * SSHF)
+          LMO = moninobukhov_length(roair,SFT,ustr_loc,SSHF)
 
           !// Limiting abs(z/L) to be between approx (-1 and 1) 
           IF (LMO.gt.0 .and. LMO.lt.z) LMO = z
