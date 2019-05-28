@@ -2712,9 +2712,9 @@ contains
   real(r8) function PSIM(CETA)
     !// --------------------------------------------------------------------
     !// Description: 
-    !//  Calculate the integral function of the similarity profile of momentum.
-    !//  (Garratt, 1993)
-    !//  
+    !//  The integral function of the similarity profile of momentum
+    !//  (Garratt, 1992). It is used to iteratively compute the local Ra
+    !//  in the mosaic approach to dry deposition.
     !//
     !// History: 
     !//  Stefanie Falk, Mai 2019
@@ -2739,13 +2739,13 @@ contains
     return
   end function PSIM
   !// ----------------------------------------------------------------------
- !// ----------------------------------------------------------------------
+  !// ----------------------------------------------------------------------
   real(r8) function PSIH(CETA)
     !// --------------------------------------------------------------------
     !// Description: 
-    !//  Calculate the integral function of the similarity profile of heat.
-    !//  (Garratt, 1993)
-    !//  
+    !//  The integral function of the similarity profile of heat
+    !//  (Garratt, 1992). It is used to iteratively compute the local Ra
+    !//  in the mosaic approach to dry deposition.
     !//
     !// History: 
     !//  Stefanie Falk, Mai 2019
