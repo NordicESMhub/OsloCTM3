@@ -44,6 +44,10 @@ module CMN_SFC
   
   !// DRYDEP mOSaic parameter switch
   logical :: LDDEPmOSaic
+  !// DRYDEP parameter file 
+  !// Path to default scheme is hardcoded in initialize!
+  !// ToDo: Check for right formate provided and read from x.inp!
+  character(len=160) :: fileDDEPpar
   !// Parameters and land use type from EMEP
   real(r8), dimension(28,16) :: DDEP_PAR
   

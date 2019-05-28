@@ -78,12 +78,13 @@ contains
     !//
     !// Amund Sovde, October 2008
     !// --------------------------------------------------------------------
-    use cmn_sfc, only: VDEP, VGSTO3
+    use cmn_sfc, only: VDEP, VGSTO3, LDDEPmOSaic, fileDDEPpar
+    use utilities, only: get_free_fileid
     !// --------------------------------------------------------------------
     implicit none
     !// --------------------------------------------------------------------
     !// Locals
-    integer :: I,J,IOS
+    integer :: I,J,IOS,IFNR
     character(len=80) :: FILE_NAME
     !// --------------------------------------------------------------------
     character(len=*), parameter :: subr = 'drydepinit'
@@ -97,67 +98,86 @@ contains
     !// Initialize stomata deposition
     write(6,'(a)') f90file//':'//subr//': initializing VGSTO3' 
     VGSTO3(:,:) = 0._r8
-    
-    !// read in Deposition velocities
-    FILE_NAME='./Indata_CTM3/drydep.ctm'
-    open(1,file=FILE_NAME,Status='OLD',Form='FORMATTED',IOSTAT=IOS)
-    if (IOS .eq. 0) then
-       write(6,'(a)') '** Reading dry deposition data from '//trim(FILE_NAME)
+    !// Get a free file id
+    IFNR = get_free_fileid()
+    !// Switch between default scheme and mOSaic scheme
+    if (LDDEPmOSaic) then
+       open(IFNR,file=fileDDEPpar,Status='OLD',action='read',IOSTAT=IOS)
+       if (IOS .eq. 0) then
+          write(6,'(a)') '** Reading dry deposition parameters from '//trim(fileDDEPpar)
+       else
+          write(6,'(a)') f90file//':'//subr//': File not found: '//trim(fileDDEPpar)
+          stop
+       end if
+       ! Read the table header
+       read(IFNR, *) 
+       ! Read the whole table as ascii (none floating point value in column one)
+       read(IFNR, *) temp
+       ! Split the temporary table and save the data
+       read(temp(2:,:),'(f10.0)') DDEP_PAR
+       write(6,*) temp
+       close(unit=ifnr)
     else
-       write(6,'(a)') f90file//':'//subr//': File not found: '//trim(FILE_NAME)
-       stop
+       !// read in Deposition velocities
+       open(IFNR,file=fileDDEPpar,Status='OLD',Form='FORMATTED',IOSTAT=IOS)
+       if (IOS .eq. 0) then
+          write(6,'(a)') '** Reading dry deposition data from '//trim(fileDDEPpar)
+       else
+          write(6,'(a)') f90file//':'//subr//': File not found: '//trim(fileDDEPpar)
+          stop
+       end if
+
+       do I = 1,4
+          read(IFNR,*)
+       end do
+       read(IFNR,*)
+       do I = 1,5
+          read(IFNR,1200) (VO3DDEP(I,J),J=1,6)
+       end do
+       read(IFNR,*)
+       do I = 1,5
+          read(IFNR,1200) (VHNO3DDEP(I,J),J=1,6)
+       end do
+       read(IFNR,*)
+       do I = 1,5
+          read(IFNR,1200) (VPANDDEP(I,J),J=1,6)
+       end do
+       read(IFNR,*)
+       do I = 1,5
+          read(IFNR,1200) (VCODDEP(I,J),J=1,6)
+       end do
+       read(IFNR,*)
+       do I = 1,5
+          read(IFNR,1200) (VH2O2DDEP(I,J),J=1,6)
+       end do
+       read(IFNR,*)
+       do I = 1,5
+          read(IFNR,1200) (VNOxDDEP(I,J),J=1,6)
+       end do
+
+       !// Read in dry deposition values for sulphur 
+       read(IFNR,*)
+       do I = 1,5
+          read(IFNR,1200) (VSO2DDEP(I,J),J=1,6)
+       end do
+       read(IFNR,*)
+       do I = 1,5
+          read(IFNR,1200) (VSO4DDEP(I,J),J=1,6)
+       end do
+       read(IFNR,*)
+       do I = 1,5
+          read(IFNR,1200) (VMSADDEP(I,J),J=1,6)
+       end do
+       !// Nitrate
+       read(IFNR,*)
+       do I = 1,5
+          read(IFNR,1200) (VNH3DDEP(I,J),J=1,6)
+       end do
+       
+       close (IFNR)
+!// Jump label - used in reading the file format!
+1200   Format(6(1x,f5.2))
     end if
-
-    do I = 1,4
-       read(1,*)
-    end do
-    read(1,*)
-    do I = 1,5
-       read(1,1200) (VO3DDEP(I,J),J=1,6)
-    end do
-    read(1,*)
-    do I = 1,5
-       read(1,1200) (VHNO3DDEP(I,J),J=1,6)
-    end do
-    read(1,*)
-    do I = 1,5
-       read(1,1200) (VPANDDEP(I,J),J=1,6)
-    end do
-    read(1,*)
-    do I = 1,5
-       read(1,1200) (VCODDEP(I,J),J=1,6)
-    end do
-    read(1,*)
-    do I = 1,5
-       read(1,1200) (VH2O2DDEP(I,J),J=1,6)
-    end do
-    read(1,*)
-    do I = 1,5
-       read(1,1200) (VNOxDDEP(I,J),J=1,6)
-    end do
-
-    !// Read in dry deposition values for sulphur 
-    read(1,*)
-    do I = 1,5
-       read(1,1200) (VSO2DDEP(I,J),J=1,6)
-    end do
-    read(1,*)
-    do I = 1,5
-       read(1,1200) (VSO4DDEP(I,J),J=1,6)
-    end do
-    read(1,*)
-    do I = 1,5
-       read(1,1200) (VMSADDEP(I,J),J=1,6)
-    end do
-    !// Nitrate
-    read(1,*)
-    do I = 1,5
-       read(1,1200) (VNH3DDEP(I,J),J=1,6)
-    end do
-
-    close (1)
-
-1200 Format(6(1x,f5.2))
 
     !// Initialize STC (will be read from file later)
     STC(:,:,:) = 0._r8
@@ -1202,7 +1222,7 @@ contains
       
       !// Set latitude dependent vegetation height for forests
       !// The function is based on the latitude based modification 
-      !// north of 60deg in Simpson et al. 
+      !// north of 60deg in Simpson et al. (2012)
       call set_vegetation_height(tempVEGH,YDGRD(J),VEGH(1))
       
       !// Loop over longitude (I is global, II is block)

@@ -190,8 +190,7 @@ contains
 
     !// UCI dry deposition (will be overwritten by Oslo treatment)
     call DRYSET_CTM3 (INFILE_DRY)
-    !// CTM3 dry deposition rates (used by setdrydep in
-    !// drydeposition_oslo.f90)
+    !// CTM3 dry deposition rates (used by setdrydep in drydeposition_oslo.f90)
     call drydepinit()
 
 
