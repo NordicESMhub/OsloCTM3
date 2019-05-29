@@ -23,7 +23,6 @@ module drydeposition_oslo
   !//   - subroutine setdrydep
   !//   - subroutine get_ctm2dep
   !//   - subroutine get_vdep2
-  !//   - subroutine get_STC
   !//   - subroutine get_PARMEAN
   !//   - subroutine get_PPFD
   !//   - subroutine get_asn24h
@@ -44,15 +43,14 @@ module drydeposition_oslo
   real(r8), dimension(5,6) :: &
        VO3DDEP, VHNO3DDEP, VPANDDEP, VCODDEP, VH2O2DDEP, &
        VNOXDDEP, VSO2DDEP, VSO4DDEP, VMSADDEP, VNH3DDEP
-  !// Stomatal conductance and mean photolytic active radiation
-  real(r8), dimension(IPAR,JPAR,12) :: STC, PARMEAN
-  ! Parameters and land use type from Simpson et al. (2012)
-  real(r8), dimension(28,16) :: DDEP_PAR
   !// Defines which VDEP to scale according to stability (i.e. only
   !// old CTM2 calculations)
   integer :: SCALESTABILITY(NPAR)
 
-
+  !// Stomatal conductance and mean photolytic active radiation
+  real(r8), dimension(IPAR,JPAR,12) :: PARMEAN
+  ! Parameters and land use type from Simpson et al. (2012)
+  real(r8), dimension(28,16) :: DDEP_PAR
   !// 24-hour average SO2/NH3 (size 96 to allow for NROPSM=12
   integer, parameter :: ASN24H_MAX_STEPS=96
   real(r8) :: ASN24H(ASN24H_MAX_STEPS,IPAR,JPAR)
@@ -95,7 +93,7 @@ contains
     !// Initialize dry deposition
     write(6,'(a)') f90file//':'//subr//': initializing VDEP' 
     VDEP(:,:,:) = 0._r8
-    !// Initialize stomata deposition
+    !// Initialize dry deposition velocities
     write(6,'(a)') f90file//':'//subr//': initializing VGSTO3' 
     VGSTO3(:,:) = 0._r8
     !// Get a free file id
@@ -118,7 +116,10 @@ contains
        write(6,*) temp
        close(unit=ifnr)
     else
-       !// read in Deposition velocities
+       !// Old scheme
+       !// Initialise scaling flags
+       SCALESTABILITY(:) = 1
+       !// Read in Deposition velocities from file for old CTM2 scheme
        open(IFNR,file=fileDDEPpar,Status='OLD',Form='FORMATTED',IOSTAT=IOS)
        if (IOS .eq. 0) then
           write(6,'(a)') '** Reading dry deposition data from '//trim(fileDDEPpar)
@@ -179,12 +180,10 @@ contains
 1200   Format(6(1x,f5.2))
     end if
 
-    !// Initialize STC (will be read from file later)
-    STC(:,:,:) = 0._r8
+    !// Initialize (will be read from file later)
     PARMEAN(:,:,:) = 0._r8
 
-    !// Initialise scaling flags
-    SCALESTABILITY(:) = 1
+    
 
     !// --------------------------------------------------------------------
   end subroutine drydepinit
@@ -838,7 +837,8 @@ contains
     integer :: I,J,II,JJ, NN, KK, NTOTAL
     real(r8) :: LAI_IJ, RTOTAL, PAR_IJ, SWVL3_IJ
     real(r8) :: tempVEGH
-    integer :: GDAY, GLEN                   !// Growing season from megan
+    !// Growing season
+    integer :: GDAY, GLEN                   
 
     !// Variables to be set for each EMEP category (10 is treated separately)
     integer, parameter :: NLCAT=10
@@ -1402,7 +1402,7 @@ contains
              NVGPAR, YDGRD(J), LANDUSE_IDX)
         
         !// LAI:    Leaf area index (monthly means)
-        !// STC:    Stomatal conductance (monthly means)
+        !// STC:    Stomatal conductance
         !// Rinc:   In-canopy resistance
         !// SAI:    Surface area index (LAI + SAI0)
         !// RgsO3:  Ground surface resistance O3
@@ -1968,143 +1968,6 @@ contains
   end subroutine get_vdep2
   !// ----------------------------------------------------------------------
 
-
-
-
-  !// ----------------------------------------------------------------------
-  subroutine get_STC()
-    !// --------------------------------------------------------------------
-    !// Read monthly averaged STC from file.
-    !// Called from update_drydepvariables.
-    !//
-    !// Amund Sovde, December 2013
-    !// --------------------------------------------------------------------
-    use cmn_ctm, only: XDEDG, YDEDG, AREAXY
-    use cmn_parameters, only: A0, CPI180
-    use cmn_met, only: MYEAR
-    use regridding, only: E_GRID
-    use ncutils, only: get_netcdf_var_1d, get_netcdf_var_3d
-    !// --------------------------------------------------------------------
-    implicit none
-    !// --------------------------------------------------------------------
-    !// Locals
-    integer,parameter :: IRES=360, JRES=150,J1x1=180
-    real(r8),dimension(IRES,JRES,12) :: indata
-    real(r8),dimension(IRES,J1x1,12) :: inSTC
-    real(r8) :: YBGRD(J1x1),YBEDGE(J1x1+1),XBEDGE(IRES+1),XYBOX(J1x1)
-    real(r8) :: RIN(IRES,J1x1), R8CTM(IPAR,JPAR)
-
-    character(len=80) :: filename,variable
-    INTEGER            :: status, ncid
-    INTEGER            :: nLon, nLat, nLev, nTime, I, J, M
-    CHARACTER(LEN=4)  :: cyear
-    REAL(r8), ALLOCATABLE, DIMENSION(:) :: inLon, inLat, inTime
-    !// --------------------------------------------------------------------
-
-    !// Hard-coded choice on climatology or year-specific STC
-    !// write(cyear(1:4),'(i4.4)') MYEAR
-    !// filename = 'Indata_CTM3/DRYDEP/mcond_'//cyear//'.nc'
-    !// variable = 'mcan_cond_tot'
-    filename = 'Indata_CTM3/DRYDEP/stc_climmean_1997-2006.nc'
-    variable = 'STC'
-
-    !// Check resolution (latitude/longitude/time)
-    !// This routine allocates inLon/inLat/inTime
-    call get_netcdf_var_1d( filename, 'lon',  inLon  )
-    call get_netcdf_var_1d( filename, 'lat',  inLat  )
-    call get_netcdf_var_1d( filename, 'time', inTime )
-
-    !// Assign non-standard latitudes
-    YBGRD(31:J1x1) = inLat(:)
-    !// Latitudes for the southern gridboxes not included on file
-    do J = 30, 1, -1
-       YBGRD(J) = YBGRD(J+1) - 1._r8
-    end do
-
-    nLon  = SIZE( inLon  )
-    nLat  = SIZE( inLat  )
-    nTime = SIZE( inTime )
-
-    !// Deallocate all local variables
-    IF ( ALLOCATED(inLon) ) DEALLOCATE(inLon)
-    IF ( ALLOCATED(inLat) ) DEALLOCATE(inLat)
-    IF ( ALLOCATED(inTime) ) DEALLOCATE(inTime)
-
-    if (nLon.ne.IRES .or. nLat.ne.JRES) then
-       write(6,'(a)') '* Horizontal resolution on file does not match specified resolution'
-       write(6,'(a)') '  File: '//trim(filename)
-       write(6,'(a,2(i5))') '  Specified:',IRES,JRES
-       write(6,'(a,2(i5))') '  On file:  ',nLon,nLat
-       stop
-    end if
-
-
-    call get_netcdf_var_3d( filename, variable, indata, nlon,nlat,ntime )
-
-    inSTC(:,:,:) = 0._r8
-    do M = 1, 12
-       do J = 1, JRES
-          do I = 1, IRES
-             if (indata(I,J,M) .lt. 0._r8) then
-                inSTC(I,J+30,M) = 0._r8
-             else    
-                !// Unit on files are reported as [(mm/s)/m^2], which is weird
-                !// since STC is usually either [mm/s] or  [(mmol/m^2)/s].
-                !// Values range from 0-11, so based on web search it fits
-                !// with [mm/s].
-                !// With this assumption we change to [m/s]
-                inSTC(I,J+30,M) = indata(I,J,M)*1.e-3_r8
-
-                !// Unit conversion of mmol/s/m2 to m/s (not necessary here):
-                !// At 273K and 1013.25hPa, molar density of a gas
-                !// is 44.6mol/m3.
-                !// From Boyle-Charles law we can find the value at 293K,
-                !// giving get n/V = 44.6mol/m3 * 273/293 ~= 41mol/m3.
-                !// To get m/s we then have to multiply by 1.d-3/41.
-             end if
-          end do
-       end do
-    end do
-
-    !// Interpolate
-    !// Set up x-edges (field grid is 0-1,1-2,..)
-    XBEDGE(1) = 0.5_r8
-    do I = 2, IRES+1
-       XBEDGE(I) = XBEDGE(I-1) + 1._r8
-    end do
-
-    !// Set up y-edges; assume halfway between grid box centers
-    YBEDGE(J1x1+1) = 90._r8
-    do J = J1x1, 2, -1
-       YBEDGE(J) = 0.5_r8 * (YBGRD(J) + YBGRD(J-1))
-    end do
-    YBEDGE(1) = -90._r8
-
-
-    !// Grid box areas
-    do J = 1, J1x1
-       XYBOX(J) =  A0*A0 * CPI180*(XBEDGE(2)-XBEDGE(1)) &
-            * (sin(CPI180*YBEDGE(J+1)) - sin(CPI180*YBEDGE(J)))
-    end do
-
-    do M = 1, 12
-       !// Multiply with area
-       do J = 1, J1x1
-          RIN(:,J) = inSTC(:,J,M) * XYBOX(J)
-       end do
-       call E_GRID(RIN(:,:),XBEDGE,YBEDGE,IRES,J1x1, &
-                  R8CTM,XDEDG,YDEDG,IPAR,JPAR,1)
-
-       STC(:,:,M) = R8CTM(:,:) / AREAXY(:,:)
-    end do
-
-    write(6,'(a,2es12.5)') '* Min/Max STC on file:     ', &
-         minval(inSTC),maxval(inSTC)
-    write(6,'(a,2es12.5)') '* Min/Max STC interpolated:', &
-         minval(STC),maxval(STC)
-    !// --------------------------------------------------------------------
-  end subroutine get_STC
-  !// ----------------------------------------------------------------------
 
   !// ----------------------------------------------------------------------
   subroutine get_PPFD(NMET, DTMET)
