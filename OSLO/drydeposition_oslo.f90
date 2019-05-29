@@ -40,6 +40,7 @@ module drydeposition_oslo
   !// ----------------------------------------------------------------------
 
   !// CTM2 dry deposition (for old scheme)
+  !// not initilized if new scheme is used!
   real(r8), dimension(5,6) :: &
        VO3DDEP, VHNO3DDEP, VPANDDEP, VCODDEP, VH2O2DDEP, &
        VNOXDDEP, VSO2DDEP, VSO4DDEP, VMSADDEP, VNH3DDEP
@@ -117,8 +118,6 @@ contains
        close(unit=ifnr)
     else
        !// Old scheme
-       !// Initialise scaling flags
-       SCALESTABILITY(:) = 1
        !// Read in Deposition velocities from file for old CTM2 scheme
        open(IFNR,file=fileDDEPpar,Status='OLD',Form='FORMATTED',IOSTAT=IOS)
        if (IOS .eq. 0) then
@@ -179,7 +178,8 @@ contains
 !// Jump label - used in reading the file format!
 1200   Format(6(1x,f5.2))
     end if
-
+    !// Initialise scaling flags
+       SCALESTABILITY(:) = 1
     !// Initialize (will be read from file later)
     PARMEAN(:,:,:) = 0._r8
 
