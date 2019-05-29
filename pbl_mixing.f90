@@ -60,7 +60,7 @@ contains
          BLH, PBL_KEDDY, MO_LENGTH, PRANDTLL1, ZOFLE, U, V, T, Q
     use cmn_parameters, only: R_AIR
     use cmn_sfc, only: ZOI
-    use utilities_oslo, only: moninobukhov_length
+    use utilities, only: moninobukhov_length
     !// --------------------------------------------------------------------
     implicit none
     !// --------------------------------------------------------------------
