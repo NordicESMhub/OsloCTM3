@@ -58,7 +58,7 @@ module CMN_SFC
   real(r8), dimension(IPAR,JPAR,5) :: LSMASK
 
   !// Dry deposition
-  real(r8), dimension(NPAR,IPAR,JPAR) :: VDEP      !// mean dry dep velocities
+  real(r8), dimension(NPAR,IPAR,JPAR) :: VDEP      !// dep veloc, mean
   real(r8), dimension(NPAR,3)         :: VDEPIN    !// UCI dep vel for land/ocean/cryo
   !// Stomatal conductance
   real(r8), dimension(IPAR,JPAR)      :: VGSTO3    !// dep veloc, stomata
