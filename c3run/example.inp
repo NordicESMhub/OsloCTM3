@@ -102,7 +102,7 @@ PFZON  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1
 'Indata_CTM3/surface/lai_islscp2_fasir_0.25x0.25_1982_1998.nc'
 --- Dry deposition scheme and parameterlist ---
     T  LDDEPmOSaic / T = mosaic dry dep scheme based on Simpson et al. (2012), F = old scheme
-'/projects/researchers/researchers01/sfalk/input_data/ctm_input/mOSaic.par'
+'tables/mOSaic.par'
 --- PPFD directory and dummy filename ---
 '/projects/researchers/researchers01/sfalk/input_data/ctm_input/PPFD/'
 'ECopenIFSc38r1_yYYYYmMMdDDhHH_T159N80L60'
