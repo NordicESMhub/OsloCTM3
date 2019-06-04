@@ -47,7 +47,7 @@ module drydeposition_oslo
   !// Stomatal conductance and mean photolytic active radiation
   real(r8), dimension(IPAR,JPAR,12) :: STC, PARMEAN
   ! Parameters and land use type from Simpson et al. (2012)
-  real(r8), dimension(28,16) :: DDEP_PAR
+  real(r8), dimension(28,14) :: DDEP_PAR
   !// Defines which VDEP to scale according to stability (i.e. only
   !// old CTM2 calculations)
   integer :: SCALESTABILITY(NPAR)
@@ -590,20 +590,25 @@ contains
         end do !// do N=1,NTM
       end do !// do I = MPBLKIB(MP),MPBLKIE(MP)
     end do !// do J = MPBLKJB(MP),MPBLKJE(MP)
-    
+    !// The following functions lack documentation and have not been tested.
+    !// Therefore they shall be disabled. To enable: uncomment all simple '!'
+    !// and remove the 'end if' 10 lines below.
     if (LDDEPmOSaic) then
+       write(6,'(a)') f90file//':'//subr// &
+            ': mOSaic implementation of BCOC and SOA dry deposition is disabled. Old scheme is used instead.'
        !// Simpson et al. (2012)
        !// Set dry deposition for BCOC (m/s)
-       if (LBCOC) call bcoc_vdep2(VDEP,SCALESTABILITY,MP)
+       !if (LBCOC) call bcoc_vdep2(VDEP,SCALESTABILITY,MP)
        !// Set dry deposition for SOA, sulphur and nitrate (m/s)
-       if (LSULPHUR .or. LNITRATE .or. LSOA) &
-            call aer_vdep2(VDEP,SCALESTABILITY,MP)
-    else
+       !if (LSULPHUR .or. LNITRATE .or. LSOA) &
+            !call aer_vdep2(VDEP,SCALESTABILITY,MP)
+    end if
+    !else
        !// Old treatment
        if (LBCOC) call bcoc_setdrydep(VDEP,RFR,MP)
        !// Set dry deposition for SOA (m/s)
        if (LSOA) call soa_setdrydep(VDEP,MP)
-    end if
+    !end if
 
     !// Set dry deposition for CH4 (m/s)
     call ch4drydep_bousquet(VDEP, BTT, DZ, MP)
@@ -798,7 +803,7 @@ contains
          CLDFR, PPFD, UMS, VMS, SFT, SWVL3
     use cmn_parameters, only: R_AIR, R_UNIV, VONKARMAN
     use cmn_sfc, only: LAI, ZOI, landSurfTypeFrac, LANDUSE_IDX, StomRes, NVGPAR, &
-         DDEP_PAR, LGSMAP
+         DDEP_PAR, LGSMAP, NLCAT
     use cmn_oslo, only: trsp_idx
     use utilities_oslo, only: landfrac2mosaic, set_vegetation_height, &
          GROWSEASON, MAPPED_GROWSEASON
@@ -817,13 +822,11 @@ contains
     !// Locals
     integer :: I,J,II,JJ, NN, KK, NTOTAL
     real(r8) :: LAI_IJ, RTOTAL, PAR_IJ, SWVL3_IJ
-    real(r8) :: tempVEGH
     integer :: GDAY, GLEN                   !// Growing season from megan
 
-    !// Variables to be set for each EMEP category (10 is treated separately)
-    integer, parameter :: NLCAT=10
     real(r8), dimension(NLCAT) :: SAI, SAI0,  FL, gsto, &
-          Rinc, GO3, GSO2, fLight, fsnowC, fstcT2, fphen, fD, fSW
+          Rinc, GO3, GSO2, fLight, fsnowC, fstcT2, fphen, fD, fSW, &
+          tmpVEGH
     !// Parameters from EMEP.par
     real(r8), dimension(NLCAT) :: gmax, fmin, Dmin, Dmax,   &
          phia, phib, phic, phid, phie, phif, phiAS, phiAE,  &
@@ -908,288 +911,64 @@ contains
     !//  8. Water
     !//  9. Urban
     !// 10. Ice+snow (strictly, EMEP has this as category 9 and urban as 10)
-    !// Maximal stomatal conductance
-    !// gmax = DDEP_PAR(1,:) !// mmmole O3 m-2 s-1
-    !// fmin = DDEP_PAR(2,:)
-    !// Phenomenology fphen (Table S17)
-    !// phia = DDEP_PAR(3,:)
-    !// phib = DDEP_PAR(4,:)
-    !// phic = DDEP_PAR(5,:)
-    !// phid = DDEP_PAR(6,:)
-    !// phie = DDEP_PAR(7,:)
-    !// phif = DDEP_PAR(8,:)
-    !// phiAS = DDEP_PAR(9,:)
-    !// phiAE = DDEP_PAR(10,:)
-    !// Light dependent scaling
-    !// flightalpha = DDEP_PAR(11,:)
-    !// Temperature scaling fT (Supplement Eq. (17))
-    !// tmin = DDEP_PAR(12,:)
-    !// topt = DDEP_PAR(13,:)
-    !// tmax = DDEP_PAR(14,:)
-    !// Humidity dependent scaling fD (Supplement Eq. (18))
-    !// Dmax = DDEP_PAR(15,:)
-    !// Dmin = DDEP_PAR(16,:)
-    !// Surface resistance
-    !// RgsSO2 = DDEP_PAR(18,:)
-    !// RgsO3  = DDEP_PAR(19,:)
-    !// Vegetation height
-    !// VEGH   = DDEP_PAR(20,:)
-    !// Growing season
-    !// dSGS = DDEP_PAR(21,:)   !// Start
-    !// dEGS = DDEP_PAR(22,:)   !// End
-    !// ddSGS = DDEP_PAR(23,:)  !// Latitude dependent change of start (rate)
-    !// ddEGS = DDEP_PAR(24,:)  !// Latitude dependent change of end (rate)
+    !// mOSaic categories (reduced from Simpson et al., 2012)
+    !//  1. Needleleaftree (temperated/boreal)
+    !//  2. Deciduoustree (temperated/boral)
+    !//  3. Needleleaftree (mediterranean)
+    !//  4. Broadleaftree (mediterranean)
+    !//  5. Crops <a,b,c>
+    !//  6. Moorland (savanna++)
+    !//  7. Grassland
+    !//  8. Scrubs (med.)
+    !//  9. Wetlands
+    !//  10. Tundra
+    !//  11. Desert
+    !//  12. Water
+    !//  13. Urban
+    !//  14. Ice/Snow - is treated seperately
 
-    !//  1. Forests, Mediterranean scrub
-    gmax(1)        = (sum(DDEP_PAR(1,1:4))+DDEP_PAR(1,10))/5._r8 
-    fmin(1)        = (sum(DDEP_PAR(2,1:4))+DDEP_PAR(2,10))/5._r8
-    phia(1)        = (sum(DDEP_PAR(3,1:4))+DDEP_PAR(3,10))/5._r8
-    phib(1)        = (sum(DDEP_PAR(4,1:4))+DDEP_PAR(4,10))/5._r8
-    phic(1)        = (sum(DDEP_PAR(5,1:4))+DDEP_PAR(5,10))/5._r8
-    phid(1)        = (sum(DDEP_PAR(6,1:4))+DDEP_PAR(6,10))/5._r8
-    phie(1)        = (sum(DDEP_PAR(7,1:4))+DDEP_PAR(7,10))/5._r8
-    phif(1)        = (sum(DDEP_PAR(8,1:4))+DDEP_PAR(8,10))/5._r8
-    phiAS(1)       = (sum(DDEP_PAR(9,1:4))+DDEP_PAR(9,10))/5._r8
-    phiAE(1)       = (sum(DDEP_PAR(10,1:4))+DDEP_PAR(10,10))/5._r8
-    flightalpha(1) = (sum(DDEP_PAR(11,1:4))+DDEP_PAR(11,10))/5._r8
-    tmin(1)        = (sum(DDEP_PAR(12,1:4))+DDEP_PAR(12,10))/5._r8
-    topt(1)        = (sum(DDEP_PAR(13,1:4))+DDEP_PAR(13,10))/5._r8
-    tmax(1)        = (sum(DDEP_PAR(14,1:4))+DDEP_PAR(14,10))/5._r8
-    Dmax(1)        = (sum(DDEP_PAR(15,1:4))+DDEP_PAR(15,10))/5._r8
-    Dmin(1)        = (sum(DDEP_PAR(16,1:4))+DDEP_PAR(16,10))/5._r8
-    RgsSO2(1)      = (sum(DDEP_PAR(18,1:4))+DDEP_PAR(18,10))/5._r8 
-    RgsO3(1)       = (sum(DDEP_PAR(19,1:4))+DDEP_PAR(19,10))/5._r8
-    VEGH(1)        = 0._r8 !// Will be modified
-    tempVEGH       = (sum(DDEP_PAR(20,1:4))+DDEP_PAR(20,10))/5._r8 
-    dSGS(1)        = (sum(DDEP_PAR(21,1:4))+DDEP_PAR(21,10))/5._r8  !// Start
-    dEGS(1)        = (sum(DDEP_PAR(22,1:4))+DDEP_PAR(22,10))/5._r8  !// End
-    ddSGS(1)       = (sum(DDEP_PAR(23,1:4))+DDEP_PAR(23,10))/5._r8  !// Latitude dependent change of start (rate)
-    ddEGS(1)       = (sum(DDEP_PAR(24,1:4))+DDEP_PAR(24,10))/5._r8
-    !//  2. Crops
-    gmax(2)        = sum(DDEP_PAR(1,5:7))/3._r8
-    fmin(2)        = sum(DDEP_PAR(2,5:7))/3._r8
-    phia(2)        = sum(DDEP_PAR(3,5:7))/3._r8
-    phib(2)        = sum(DDEP_PAR(4,5:7))/3._r8
-    phic(2)        = sum(DDEP_PAR(5,5:7))/3._r8
-    phid(2)        = sum(DDEP_PAR(6,5:7))/3._r8
-    phie(2)        = sum(DDEP_PAR(7,5:7))/3._r8
-    phif(2)        = sum(DDEP_PAR(8,5:7))/3._r8
-    phiAS(2)       = sum(DDEP_PAR(9,5:7))/3._r8
-    phiAE(2)       = sum(DDEP_PAR(10,5:7))/3._r8
-    flightalpha(2) = sum(DDEP_PAR(11,5:7))/3._r8
-    tmin(2)        = sum(DDEP_PAR(12,5:7))/3._r8
-    topt(2)        = sum(DDEP_PAR(13,5:7))/3._r8
-    tmax(2)        = sum(DDEP_PAR(14,5:7))/3._r8
-    Dmax(2)        = sum(DDEP_PAR(15,5:7))/3._r8
-    Dmin(2)        = sum(DDEP_PAR(16,5:7))/3._r8
-    RgsSO2(2)      = sum(DDEP_PAR(18,5:7))/3._r8  !// Will be modified below (in-canopy ok, needs EMEP2012)
-    RgsO3(2)       = sum(DDEP_PAR(19,5:7))/3._r8
-    VEGH(2)        = sum(DDEP_PAR(20,5:7))/3._r8
-    dSGS(2)        = sum(DDEP_PAR(21,5:7))/3._r8  !// Start
-    dEGS(2)        = sum(DDEP_PAR(22,5:7))/3._r8  !// End
-    ddSGS(2)       = sum(DDEP_PAR(23,5:7))/3._r8  !// Latitude dependent change of start (rate)
-    ddEGS(2)       = sum(DDEP_PAR(24,5:7))/3._r8 
-    !//  3. Moorland (savanna++)
-    gmax(3)        = DDEP_PAR(1,8)
-    fmin(3)        = DDEP_PAR(2,8)
-    phia(3)        = DDEP_PAR(3,8)
-    phib(3)        = DDEP_PAR(4,8)
-    phic(3)        = DDEP_PAR(5,8)
-    phid(3)        = DDEP_PAR(6,8)
-    phie(3)        = DDEP_PAR(7,8)
-    phif(3)        = DDEP_PAR(8,8)
-    phiAS(3)       = DDEP_PAR(9,8)
-    phiAE(3)       = DDEP_PAR(10,8)
-    flightalpha(3) = DDEP_PAR(11,8)
-    tmin(3)        = DDEP_PAR(12,8)
-    topt(3)        = DDEP_PAR(13,8)
-    tmax(3)        = DDEP_PAR(14,8)
-    Dmax(3)        = DDEP_PAR(15,8)
-    Dmin(3)        = DDEP_PAR(16,8)
-    RgsSO2(3)      = DDEP_PAR(18,8) !// Will be modified below (in-canopy ok, needs EMEP2012)
-    RgsO3(3)       = DDEP_PAR(19,8)
-    VEGH(3)        = DDEP_PAR(20,8)
-    dSGS(3)        = DDEP_PAR(21,8)  !// Start
-    dEGS(3)        = DDEP_PAR(22,8)  !// End
-    ddSGS(3)       = DDEP_PAR(23,8)  !// Latitude dependent change of start (rate)
-    ddEGS(3)       = DDEP_PAR(24,8) 
-    !//  4. Grassland
-    gmax(4)        = DDEP_PAR(1,9)
-    fmin(4)        = DDEP_PAR(2,9)
-    phia(4)        = DDEP_PAR(3,9)
-    phib(4)        = DDEP_PAR(4,9)
-    phic(4)        = DDEP_PAR(5,9)
-    phid(4)        = DDEP_PAR(6,9)
-    phie(4)        = DDEP_PAR(7,9)
-    phif(4)        = DDEP_PAR(8,9)
-    phiAS(4)       = DDEP_PAR(9,9)
-    phiAE(4)       = DDEP_PAR(10,9)
-    flightalpha(4) = DDEP_PAR(11,9)
-    tmin(4)        = DDEP_PAR(12,9)
-    topt(4)        = DDEP_PAR(13,9)
-    tmax(4)        = DDEP_PAR(14,9)
-    Dmax(4)        = DDEP_PAR(15,9)
-    Dmin(4)        = DDEP_PAR(16,9)
-    RgsSO2(4)      = DDEP_PAR(18,9) !// Will be modified below (in-canopy ok, needs EMEP2012)
-    RgsO3(4)       = DDEP_PAR(19,9)
-    VEGH(4)        = DDEP_PAR(20,9)
-    dSGS(4)        = DDEP_PAR(21,9)  !// Start
-    dEGS(4)        = DDEP_PAR(22,9)  !// End
-    ddSGS(4)       = DDEP_PAR(23,9)  !// Latitude dependent change of start (rate)
-    ddEGS(4)       = DDEP_PAR(24,9) 
-    !//  5. Wetlands
-    gmax(5)        = DDEP_PAR(1,11)
-    fmin(5)        = DDEP_PAR(2,11)
-    phia(5)        = DDEP_PAR(3,11)
-    phib(5)        = DDEP_PAR(4,11)
-    phic(5)        = DDEP_PAR(5,11)
-    phid(5)        = DDEP_PAR(6,11)
-    phie(5)        = DDEP_PAR(7,11)
-    phif(5)        = DDEP_PAR(8,11)
-    phiAS(5)       = DDEP_PAR(9,11)
-    phiAE(5)       = DDEP_PAR(10,11)
-    flightalpha(5) = DDEP_PAR(11,11)
-    tmin(5)        = DDEP_PAR(12,11)
-    topt(5)        = DDEP_PAR(13,11)
-    tmax(5)        = DDEP_PAR(14,11)
-    Dmax(5)        = DDEP_PAR(15,11)
-    Dmin(5)        = DDEP_PAR(16,11)
-    RgsSO2(5)      = DDEP_PAR(18,11) !// Will be modified below (in-canopy ok, needs EMEP2012)
-    RgsO3(5)       = DDEP_PAR(19,11)
-    VEGH(5)        = DDEP_PAR(20,11)
-    dSGS(5)        = DDEP_PAR(21,11)  !// Start
-    dEGS(5)        = DDEP_PAR(22,11)  !// End
-    ddSGS(5)       = DDEP_PAR(23,11)  !// Latitude dependent change of start (rate)
-    ddEGS(5)       = DDEP_PAR(24,11) 
-    !//  6. Tundra
-    gmax(6)        = DDEP_PAR(1,12)
-    fmin(6)        = DDEP_PAR(2,12)
-    phia(6)        = DDEP_PAR(3,12)
-    phib(6)        = DDEP_PAR(4,12)
-    phic(6)        = DDEP_PAR(5,12)
-    phid(6)        = DDEP_PAR(6,12)
-    phie(6)        = DDEP_PAR(7,12)
-    phif(6)        = DDEP_PAR(8,12)
-    phiAS(6)       = DDEP_PAR(9,12)
-    phiAE(6)       = DDEP_PAR(10,12)
-    flightalpha(6) = DDEP_PAR(11,12)
-    tmin(6)        = DDEP_PAR(12,12)
-    topt(6)        = DDEP_PAR(13,12)
-    tmax(6)        = DDEP_PAR(14,12)
-    Dmax(6)        = DDEP_PAR(15,12)
-    Dmin(6)        = DDEP_PAR(16,12)
-    RgsSO2(6)      = DDEP_PAR(18,12) !// Will be modified below (in-canopy ok, needs EMEP2012)
-    RgsO3(6)       = DDEP_PAR(19,12)
-    VEGH(6)        = DDEP_PAR(20,12)
-    dSGS(6)        = DDEP_PAR(21,12)  !// Start
-    dEGS(6)        = DDEP_PAR(22,12)  !// End
-    ddSGS(6)       = DDEP_PAR(23,12)  !// Latitude dependent change of start (rate)
-    ddEGS(6)       = DDEP_PAR(24,12) 
-    !//  7. Desert
-    gmax(7)        = DDEP_PAR(1,13)
-    fmin(7)        = DDEP_PAR(2,13)
-    phia(7)        = DDEP_PAR(3,13)
-    phib(7)        = DDEP_PAR(4,13)
-    phic(7)        = DDEP_PAR(5,13)
-    phid(7)        = DDEP_PAR(6,13)
-    phie(7)        = DDEP_PAR(7,13)
-    phif(7)        = DDEP_PAR(8,13)
-    phiAS(7)       = DDEP_PAR(9,13)
-    phiAE(7)       = DDEP_PAR(10,13)
-    flightalpha(7) = DDEP_PAR(11,13)
-    tmin(7)        = DDEP_PAR(12,13)
-    topt(7)        = DDEP_PAR(13,13)
-    tmax(7)        = DDEP_PAR(14,13)
-    Dmax(7)        = DDEP_PAR(15,13)
-    Dmin(7)        = DDEP_PAR(16,13)
-    RgsSO2(7)      = DDEP_PAR(18,13) !// Will be modified below (in-canopy ok, needs EMEP2012)
-    RgsO3(7)       = DDEP_PAR(19,13)
-    VEGH(7)        = DDEP_PAR(20,13)
-    dSGS(7)        = DDEP_PAR(21,13)  !// Start
-    dEGS(7)        = DDEP_PAR(22,13)  !// End
-    ddSGS(7)       = DDEP_PAR(23,13)  !// Latitude dependent change of start (rate)
-    ddEGS(7)       = DDEP_PAR(24,13) 
-    !//  8. Water
-    gmax(8)        = DDEP_PAR(1,14)
-    fmin(8)        = DDEP_PAR(2,14)
-    phia(8)        = DDEP_PAR(3,14)
-    phib(8)        = DDEP_PAR(4,14)
-    phic(8)        = DDEP_PAR(5,14)
-    phid(8)        = DDEP_PAR(6,14)
-    phie(8)        = DDEP_PAR(7,14)
-    phif(8)        = DDEP_PAR(8,14)
-    phiAS(8)       = DDEP_PAR(9,14)
-    phiAE(8)       = DDEP_PAR(10,14)
-    flightalpha(8) = DDEP_PAR(11,14)
-    tmin(8)        = DDEP_PAR(12,14)
-    topt(8)        = DDEP_PAR(13,14)
-    tmax(8)        = DDEP_PAR(14,14)
-    Dmax(8)        = DDEP_PAR(15,14)
-    Dmin(8)        = DDEP_PAR(16,14)
-    RgsSO2(8)      = DDEP_PAR(18,14) !// Will be modified below (in-canopy ok, needs EMEP2012)
-    RgsO3(8)       = DDEP_PAR(19,14)
-    VEGH(8)        = DDEP_PAR(20,14)
-    dSGS(8)        = DDEP_PAR(21,14)  !// Start
-    dEGS(8)        = DDEP_PAR(22,14)  !// End
-    ddSGS(8)       = DDEP_PAR(23,14)  !// Latitude dependent change of start (rate)
-    ddEGS(8)       = DDEP_PAR(24,14)
-    !//  9. Urban
-    gmax(9)        = DDEP_PAR(1,16)
-    fmin(9)        = DDEP_PAR(2,16)
-    phia(9)        = DDEP_PAR(3,16)
-    phib(9)        = DDEP_PAR(4,16)
-    phic(9)        = DDEP_PAR(5,16)
-    phid(9)        = DDEP_PAR(6,16)
-    phie(9)        = DDEP_PAR(7,16)
-    phif(9)        = DDEP_PAR(8,16)
-    phiAS(9)       = DDEP_PAR(9,16)
-    phiAE(9)       = DDEP_PAR(10,16)
-    flightalpha(9) = DDEP_PAR(11,16)
-    tmin(9)        = DDEP_PAR(12,16)
-    topt(9)        = DDEP_PAR(13,16)
-    tmax(9)        = DDEP_PAR(14,16)
-    Dmax(9)        = DDEP_PAR(15,16)
-    Dmin(9)        = DDEP_PAR(16,16)
-    RgsSO2(9)      = DDEP_PAR(18,16) !// Will be modified below (in-canopy ok, needs EMEP2012)
-    RgsO3(9)       = DDEP_PAR(19,16)
-    VEGH(9)        = DDEP_PAR(20,16)
-    dSGS(9)        = DDEP_PAR(21,16)  !// Start
-    dEGS(9)        = DDEP_PAR(22,16)  !// End
-    ddSGS(9)       = DDEP_PAR(23,16)  !// Latitude dependent change of start (rate)
-    ddEGS(9)       = DDEP_PAR(24,16)
-    !// 10. Ice+snow treated separately; not used)
-    gmax(10)        = DDEP_PAR(1,15)
-    fmin(10)        = DDEP_PAR(2,15)
-    phia(10)        = DDEP_PAR(3,15)
-    phib(10)        = DDEP_PAR(4,15)
-    phic(10)        = DDEP_PAR(5,15)
-    phid(10)        = DDEP_PAR(6,15)
-    phie(10)        = DDEP_PAR(7,15)
-    phif(10)        = DDEP_PAR(8,15)
-    phiAS(10)       = DDEP_PAR(9,15)
-    phiAE(10)       = DDEP_PAR(10,15)
-    flightalpha(10) = DDEP_PAR(11,15)
-    tmin(10)        = DDEP_PAR(12,15)
-    topt(10)        = DDEP_PAR(13,15)
-    tmax(10)        = DDEP_PAR(14,15)
-    Dmax(10)        = DDEP_PAR(15,15)
-    Dmin(10)        = DDEP_PAR(16,15)
-    RgsSO2(10)      = DDEP_PAR(18,15) !// Will be modified below (in-canopy ok, needs EMEP2012)
-    RgsO3(10)       = DDEP_PAR(19,15)
-    VEGH(10)        = DDEP_PAR(20,15)
-    dSGS(10)        = DDEP_PAR(21,15)  !// Start
-    dEGS(10)        = DDEP_PAR(22,15)  !// End
-    ddSGS(10)       = DDEP_PAR(23,15)  !// Latitude dependent change of start (rate)
-    ddEGS(10)       = DDEP_PAR(24,15)
-    
+
+    !// Maximal stomatal conductance
+    gmax = DDEP_PAR(1,:) !// mmmole O3 m-2 s-1
+    fmin = DDEP_PAR(2,:)
+    !// Phenomenology fphen (Table S17)
+    phia = DDEP_PAR(3,:)
+    phib = DDEP_PAR(4,:)
+    phic = DDEP_PAR(5,:)
+    phid = DDEP_PAR(6,:)
+    phie = DDEP_PAR(7,:)
+    phif = DDEP_PAR(8,:)
+    phiAS = DDEP_PAR(9,:)
+    phiAE = DDEP_PAR(10,:)
+    !// Light dependent scaling
+    flightalpha = DDEP_PAR(11,:)
+    !// Temperature scaling fT (Supplement Eq. (17))
+    tmin = DDEP_PAR(12,:)
+    topt = DDEP_PAR(13,:)
+    tmax = DDEP_PAR(14,:)
+    !// Humidity dependent scaling fD (Supplement Eq. (18))
+    Dmax = DDEP_PAR(15,:)
+    Dmin = DDEP_PAR(16,:)
+    !// Surface resistance
+    RgsSO2 = DDEP_PAR(18,:)
+    RgsO3  = DDEP_PAR(19,:)
+    !// Vegetation height
+    VEGH   = DDEP_PAR(20,:) !// Will be modified latitude dependently
+    tmpVEGH = DDEP_PAR(20,:)!// Temporare vegetation height
+    !// Growing season
+    dSGS = DDEP_PAR(21,:)   !// Start
+    dEGS = DDEP_PAR(22,:)   !// End
+    ddSGS = DDEP_PAR(23,:)  !// Latitude dependent change of start (rate)
+    ddEGS = DDEP_PAR(24,:)  !// Latitude dependent change of end (rate)
+   
     !// Initialize SAI0 for all categories
     !// Surface area index is zero for non-vegetated surfaces
     !// Spezial treatment for crops below
     SAI0    = 0._r8
-    !// Forests and scrubs
-    SAI0(1) = 1._r8
-    !// Wetlands
-    SAI0(5) = 1._r8
+    !// Forests
+    SAI0(1:4) = 1._r8
+    !// Scrubs and wetlands
+    SAI0(8:9) = 1._r8
 
     !// Total NOPS steps used for ASN24H average
     NTOTAL = NRMETD * NROPSM
@@ -1200,10 +979,17 @@ contains
     do J = MPBLKJB(MP),MPBLKJE(MP)
       JJ    = J - MPBLKJB(MP) + 1
       
-      !// Set latitude dependent vegetation height for forests
-      !// The function is based on the latitude based modification 
-      !// north of 60deg in Simpson et al. 
-      call set_vegetation_height(tempVEGH,YDGRD(J),VEGH(1))
+      !// Set latitude dependent vegetation height
+      !// The function is based on the latitude dependent describtion in Simpson et al. (2012) 
+      !// and modified towards tropics
+      !// Forests and crops
+      do NN=1, 5
+         call set_vegetation_height(tmpVEGH(NN),YDGRD(J),VEGH(NN))
+      end do
+      !// Grass and scrubs
+      do NN=7, 8
+         call set_vegetation_height(tmpVEGH(NN),YDGRD(J),VEGH(NN))
+      end do
       
       !// Loop over longitude (I is global, II is block)
       !// ------------------------------------------------------------------
@@ -1226,25 +1012,25 @@ contains
            !// NH dSGS=90, Ls=140, dEGS=270
            if (JDAY .gt. 90 .and. JDAY.le.140) then
               !// Growth season dSGS to dSGS+Ls
-              SAI(2) = 5._r8/3.5_r8 * LAI_IJ
+              SAI(5) = 5._r8/3.5_r8 * LAI_IJ
            else if (JDAY .gt. 140 .and. JDAY.le.270) then
               !// Growth season dSGS+Ls to dEGS
-              SAI(2) = 1.5_r8 + LAI_IJ
+              SAI(5) = 1.5_r8 + LAI_IJ
            else
-              SAI(2) = 0._r8
+              SAI(5) = 0._r8
            end if
         else
            !// SH dSGS=182+90, Ls=182+140, dEGS=182+270
            if (JDAY .gt. 272 .and. JDAY.le.322) then
-              SAI(2) = 5._r8/3.5_r8 * LAI_IJ
+              SAI(5) = 5._r8/3.5_r8 * LAI_IJ
            else if (JDAY .gt. 322 .and. JDAY.le.366) then
               !// Growth season dSGS+Ls to dEGS - part 1
-              SAI(2) = 1.5_r8 + LAI_IJ
+              SAI(5) = 1.5_r8 + LAI_IJ
            else if (JDAY .gt. 0 .and. JDAY.le.87) then
               !// Growth season dSGS+Ls to dEGS - part 2
-              SAI(2) = 1.5_r8 + LAI_IJ
+              SAI(5) = 1.5_r8 + LAI_IJ
            else
-              SAI(2) = 0._r8
+              SAI(5) = 0._r8
            end if
         end if
 
@@ -1257,7 +1043,7 @@ contains
         T2Mcel = T2M - 273.15_r8     !// Surface temperature (2m) [Celcius]
         PSFC   = P(I,J)              !// Surface pressure [hPa]
         PAR_IJ = PPFD(I,J)           !// Photosynthetic active radiation [W/m2]
-        SWVL3_IJ = SWVL3(I,J)        !// Soil water content in level 1 [0-1]
+        SWVL3_IJ = SWVL3(I,J)        !// Soil water content in level 3 (28-100)cm
 
         !// Wind at L1 center
         WINDL1  = sqrt(UMS(1,I,J)*UMS(1,I,J) + VMS(1,I,J)*VMS(1,I,J))
@@ -1413,7 +1199,7 @@ contains
               !// Assume snow depth covers only land
               snowD = SD(I,J) / PLAND(I,J) * 10._r8
            else
-              if (CI(I,J) .ge. FL(8)) then
+              if (CI(I,J) .ge. FL(12)) then
                  !// More sea ice than water; should not occur, but we accept
                  !// it for now and assume ocean to be fully covered by ice.
                  snowD = SD(I,J) * 10._r8
@@ -1421,7 +1207,7 @@ contains
                  !// Part of water is ice covered. The part of the gridbox
                  !// which is NOT covered by snow is (focean - CI(I,J)),
                  !// so we adjust snow depth for the covered part.
-                 snowD = SD(I,J) / (1._r8 - (FL(8) - CI(I,J))) * 10._r8
+                 snowD = SD(I,J) / (1._r8 - (FL(12) - CI(I,J))) * 10._r8
               end if
            end if
         else
@@ -1449,9 +1235,9 @@ contains
            end if
         end do
         !// Adjust ocean
-        if (FL(8) .gt. 0._r8) fsnowC(8) = min(1._r8, CI(I,J) / FL(8))
+        if (FL(12) .gt. 0._r8) fsnowC(12) = min(1._r8, CI(I,J) / FL(12))
         !// Snow land is of course snow covered
-        fsnowC(10)= 1._r8
+        fsnowC(14)= 1._r8
 
         !// No need to make a gridbox average fsnow
 
@@ -1678,8 +1464,8 @@ contains
 
         end do
 
-        !// Finally include FL(10) as snow
-        if (FL(10) .gt. 0._r8) GnsO3 = GnsO3 + FL(10)/RsnowO3
+        !// Finally include FL(14) as snow
+        if (FL(14) .gt. 0._r8) GnsO3 = GnsO3 + FL(14)/RsnowO3
 
         !// Zhang etal (2003, ACP, doi:10.5194/acp-3-2067-2003) suggest
         !// night-time value of R=400s/m for non-stomatal conductance,
@@ -1817,8 +1603,8 @@ contains
         do NN = 1, NLCAT-1
            GnsSO2 = GnsSO2 + FL(NN) * GSO2(NN)
         end do
-        !// Include FL(10) as snow
-        if (FL(10) .gt. 0._r8) GnsSO2 = GnsSO2 + FL(10)/RsnowSO2
+        !// Include FL(14) as snow
+        if (FL(14) .gt. 0._r8) GnsSO2 = GnsSO2 + FL(14)/RsnowSO2
 
 
         !// Now we have Rc for SO2
@@ -2399,7 +2185,7 @@ contains
          YDGRD, PLAND
     use cmn_met, only: PRECLS, PRECCNV, MO_LENGTH, USTR, SFT, CI, SD, &
          CLDFR
-    use cmn_sfc, only: landSurfTypeFrac, LANDUSE_IDX, NVGPAR, LAI
+    use cmn_sfc, only: landSurfTypeFrac, LANDUSE_IDX, NVGPAR, LAI, NLCAT
     use cmn_oslo, only: trsp_idx
     use soa_oslo, only: ndep_soa, soa_deps
     use utilities_oslo, only: landfrac2mosaic, set_vegetation_height
@@ -2416,9 +2202,7 @@ contains
     integer :: I,II,J,JJ,N, K, NN
     real(r8) :: SAI1, MOL, USR, RAIN, T2M, &
          a1L, a1W, a1I, a1Lfor, amol, amolN, Vtot, WETFRAC, fice, snowD
-    real(r8) :: tempVEGH
-    integer, parameter :: NLCAT=10
-    real(r8),dimension(NLCAT) :: FL, VD, VEGH, fsnowC
+    real(r8),dimension(NLCAT) :: FL, VD, VEGH, fsnowC, tmpVEGH
 
     !// Ustar mean for year 2006 0.293m = 29.3cm
     !real(r8), parameter :: ZmeanUSR = 1._r8/29.3_r8
@@ -2430,36 +2214,41 @@ contains
     !// for now)
     if (.not.(LSULPHUR .or. LNITRATE .or. LSOA)) return
 
-    !// EMEP categories
-    !//  1. Forrests, Mediterranean scrub
-    !//  2. Crops
-    !//  3. Moorland (savanna++)
-    !//  4. Grassland
-    !//  5. Wetlands
-    !//  6. Tundra
-    !//  7. Desert
-    !//  8. Water
-    !//  9. Urban
-    !// 10. Ice+snow (strictly, EMEP has this as category 9 and urban as 10)
-    !// Vegetation heights
-    VEGH(1)  = 0._r8  !// Will be modified below 
-    tempVEGH = (sum(DDEP_PAR(20,1:4))+DDEP_PAR(20,10))/5._r8 
-    VEGH(2)  = sum(DDEP_PAR(20,5:7))/3._r8
-    VEGH(3)  = DDEP_PAR(20,8)
-    VEGH(4)  = DDEP_PAR(20,9)
-    VEGH(5)  = DDEP_PAR(20,11)
-    VEGH(6)  = DDEP_PAR(20,12)
-    VEGH(7)  = DDEP_PAR(20,13)
-    VEGH(8)  = DDEP_PAR(20,14)
-    VEGH(9)  = DDEP_PAR(20,16)
-    VEGH(10) = 0._r8
+    !// mOSaic categories (reduced from Simpson et al., 2012)
+    !//  1. Needleleaftree (temperated/boreal)
+    !//  2. Deciduoustree (temperated/boral)
+    !//  3. Needleleaftree (mediterranean)
+    !//  4. Broadleaftree (mediterranean)
+    !//  5. Crops <a,b,c>
+    !//  6. Moorland (savanna++)
+    !//  7. Grassland
+    !//  8. Scrubs (med.)
+    !//  9. Wetlands
+    !//  10. Tundra
+    !//  11. Desert
+    !//  12. Water
+    !//  13. Urban
+    !//  14. Ice/Snow - is treated seperately
+
+    !// Vegetation height
+    VEGH   = DDEP_PAR(20,:) !// Will be modified latitude dependently
+    tmpVEGH = DDEP_PAR(20,:)!// Temporare vegetation height
 
     !// Loop over latitude (J is global, JJ is block)
     do J = MPBLKJB(MP),MPBLKJE(MP)
       JJ    = J - MPBLKJB(MP) + 1
       
-      !// Set latitude dependent vegetation height for forests
-      call set_vegetation_height(tempVEGH,YDGRD(J),VEGH(1))
+      !// Set latitude dependent vegetation height
+      !// The function is based on the latitude dependent describtion in Simpson et al. (2012) 
+      !// and modified towards tropics
+      !// Forests and crops
+      do NN=1, 5
+         call set_vegetation_height(tmpVEGH(NN),YDGRD(J),VEGH(NN))
+      end do
+      !// Grass and scrubs
+      do NN=7, 8
+         call set_vegetation_height(tmpVEGH(NN),YDGRD(J),VEGH(NN))
+      end do
       
       !// Loop over longitude (I is global, II is block)
       do I = MPBLKIB(MP),MPBLKIE(MP)
@@ -2513,7 +2302,7 @@ contains
               !// Assume snow depth covers only land
               snowD = SD(I,J) / PLAND(I,J) * 10._r8
            else
-              if (CI(I,J) .ge. FL(8)) then
+              if (CI(I,J) .ge. FL(12)) then
                  !// More sea ice than water; should not occur, but we accept
                  !// it for now and assume ocean to be fully covered by ice.
                  snowD = SD(I,J) * 10._r8
@@ -2521,7 +2310,7 @@ contains
                  !// Part of water is ice covered. The part of the gridbox
                  !// which is NOT covered by snow is (focean - CI(I,J)),
                  !// so we adjust snow depth for the covered part.
-                 snowD = SD(I,J) / (1._r8 - (FL(8) - CI(I,J))) * 10._r8
+                 snowD = SD(I,J) / (1._r8 - (FL(12) - CI(I,J))) * 10._r8
               end if
            end if
         else
@@ -2550,7 +2339,7 @@ contains
         end do
         !// Ocean snow cover is done below where fice is calculated.
         !// Snow land is of course snow covered
-        fsnowC(10)= 1._r8
+        fsnowC(14)= 1._r8
 
 
         !// Sea ice - check if we need to reduce fraction of ocean
@@ -2559,13 +2348,13 @@ contains
         else
            !// Cannot have more sea ice than sea, so the fraction of sea
            !// covered by ice is
-           if (FL(8) .gt. 0._r8) then
-              fice = min(CI(I,J)/FL(8), 1._r8)
+           if (FL(12) .gt. 0._r8) then
+              fice = min(CI(I,J)/FL(12), 1._r8)
            else
               fice = 0._r8
            end if
         end if
-        fsnowC(8) = fice
+        fsnowC(12) = fice
 
         !// Taking snow cover and sea ice into account.
         !// Above 0C, snow should be treated as a wet surface.
@@ -2575,26 +2364,26 @@ contains
         !// Change snow covered land fractions to snow/ice when T<0C
         if (T2M.le.273.15_r8) then
            !// Check for snow cover at cold temperatures
-           do NN = 1, 9
+           do NN = 1, NLCAT-1
               if (fsnowC(NN).gt.0._r8) then
-                 !// Move the snow covered fraction of each land type to FL(10)
-                 FL(10) = FL(10) + FL(NN)*fsnowC(NN)
+                 !// Move the snow covered fraction of each land type to ice/snow (FL(14))
+                 FL(14) = FL(14) + FL(NN)*fsnowC(NN)
                  FL(NN) = FL(NN) * (1._r8 - fsnowC(NN))
               end if
            end do
         else
            !// Snow cover for T>0C should be treated as wet surface.
-           !// To simplify, we put all wet surfaces into FL(8).
-           do NN = 1, 7
+           !// To simplify, we put all wet surfaces into FL(12).
+           do NN = 1, 11
               if (fsnowC(NN).gt.0._r8) then
-                 !// Move the snow covered fraction of each land type to FL(8)
-                 FL(8) = FL(8) + FL(NN)*fsnowC(NN)
+                 !// Move the snow covered fraction of each land type to water (FL(12))
+                 FL(12) = FL(12) + FL(NN)*fsnowC(NN)
                  FL(NN) = FL(NN) * (1._r8 - fsnowC(NN))
               end if
            end do
-           do NN = 9, 10
+           do NN = NLCAT-1, NLCAT
               if (fsnowC(NN).gt.0._r8) then
-                 FL(8) = FL(8) + FL(NN)*fsnowC(NN)
+                 FL(12) = FL(12) + FL(NN)*fsnowC(NN)
                  FL(NN) = FL(NN) * (1._r8 - fsnowC(NN))
               end if
            end do
@@ -2602,9 +2391,9 @@ contains
 
 
         !// Final check: wetland is wet when T>0C, but assume ice when T<0C
-        if (T2M .lt. 273.15_r8 .and. FL(5).gt.0._r8) then
-           FL(10) = FL(10) + FL(5)
-           FL(5) = 0._r8
+        if (T2M .lt. 273.15_r8 .and. FL(9).gt.0._r8) then
+           FL(14) = FL(14) + FL(9)
+           FL(9) = 0._r8
         end if
 
 

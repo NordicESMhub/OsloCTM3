@@ -31,6 +31,7 @@ module utilities_oslo
   !//   subroutine tpauseb_o3
   !//   subroutine SZA_PN
   !//   subroutine stringUpCase
+  !//   subroutine landfrac2mosaic
   !//   subroutine GROWSEASON
   !//   subroutine MAPPED_GROWSEASON
   !//
@@ -1127,60 +1128,83 @@ contains
        !// 14=Cropland/Natural Vegetation Mosaic 15=Permanent Snow and Ice
        !// 16=Barren or Sparsely Vegetated       17=Unclassified
        !// ----------------------------------------------------------------
-       !// EMEP categories
-       !//  1. Forests, Mediterranean scrub
-       !//  2. Crops
-       !//  3. Moorland (savanna++)
-       !//  4. Grassland
-       !//  5. Wetlands
-       !//  6. Tundra
-       !//  7. Desert
-       !//  8. Water
-       !//  9. Urban
-       !// MODIS -> EMEP
-       !// 1: 1,2,3,4,5
-       !// 2: 12,14
-       !// 3: 6,7,8,9
-       !// 4: 10
-       !// 5: 11
-       !// 6: 16(90S-60S,60N-90N)
-       !// 7: 16(60S-60N), 17
-       !// 8: 1.d0 - PLAND(I,J)
-       !// 9: 13
-       !// Missing: 15 (will be treated under snow/ice)
+       !// mOSaic categories (reduced from Simpson et al., 2012)
+       !//  1. Needleleaftree (temperated/boreal)
+       !//  2. Deciduoustree (temperated/boral)
+       !//  3. Needleleaftree (mediterranean)
+       !//  4. Broadleaftree (mdeiterranean)
+       !//  5. Crops <a,b,c>
+       !//  6. Moorland (savanna++)
+       !//  7. Grassland
+       !//  8. Scrubs (med.)
+       !//  9. Wetlands
+       !//  10. Tundra
+       !//  11. Desert
+       !//  12. Water
+       !//  13. Urban
+       !//  14. Ice/Snow
+       !// MODIS -> mOSaic
+       !// 1: 1(90-45S, 45-90N),3, 0.5*5
+       !// 2: 4, 0.5*5
+       !// 3: 1 (45S-45N)
+       !// 4: 2
+       !// 5: 12,14
+       !// 6: -
+       !// 7: 10
+       !// 8: 6,7,8,9
+       !// 9: 11
+       !// 10: 16(90S-60S,60N-90N)
+       !// 11: 16(60S-60N), 17
+       !// 12: 1.d0 - PLAND(I,J)
+       !// 13: 13
+       !// 14: 15 (but will be treated seperately under snow/ice)
        !// ----------------------------------------------------------------
-
-       LFmosaic(1) = sum(LFin(1:5))
-       LFmosaic(2) = LFin(12) + LFin(14)
-       LFmosaic(3) = sum(LFin(6:9))
-       LFmosaic(4) = LFin(10)
-       LFmosaic(5) = LFin(11)
-       if (lat.lt.-60._r8 .or. lat.gt.60._r8) then
-          LFmosaic(6) = LFin(16)
-          LFmosaic(7) = 0._r8
+       LFmosaic(1) = LFin(3)+0.5_r8*LFin(5)
+       LFmosaic(2) = LFin(4)+0.5_r8*LFin(5)
+       LFmosaic(3) = 0._r8
+       if (lat.lt.-45 .or. lat.gt.45) then
+          LFmosaic(1) = LFmosaic(1)+LFin(1)
        else
-          LFmosaic(6) = 0._r8
-          LFmosaic(7) = LFin(16)
+          LFmosaic(3) = LFmosaic(3)+LFin(1)
        end if
-       LFmosaic(7) = LFmosaic(7) + LFin(17)
-       LFmosaic(9) = LFin(13)
-       LFmosaic(10)= LFin(15)
-       !// Set LFmosaic(8) at the end
-       LFmosaic(8) = max(0._r8, 1._r8 - (sum(LFmosaic(1:7)) + sum(LFmosaic(9:10))))
+       LFmosaic(4) = LFin(2)
+       LFmosaic(5) = LFin(12) + LFin(14)
+       LFmosaic(6) = 0._r8
+       LFmosaic(7) = LFin(10)
+       LFmosaic(8) = sum(LFin(6:9))
+       LFmosaic(9) = LFin(11)
+
+       if (lat.lt.-60._r8 .or. lat.gt.60._r8) then
+          LFmosaic(10) = LFin(16)
+          LFmosaic(11) = 0._r8
+       else
+          LFmosaic(10) = 0._r8
+          LFmosaic(11) = LFin(16)
+       end if
+       LFmosaic(11) = LFmosaic(11) + LFin(17)
+       LFmosaic(13) = LFin(13)
+       LFmosaic(14) = LFin(15)
+       !// Set Category "ocean" at the end
+       LFmosaic(12) = max(0._r8, 1._r8 - (sum(LFmosaic(1:11)) + sum(LFmosaic(13:))))
 
     else if (LANDUSE_IDX .eq. 3) then
 
        !// --------------------------------------------------------------------
-       !// EMEP categories
-       !//  1. Forests, Mediterranean scrub
-       !//  2. Crops
-       !//  3. Moorland (savanna++)
-       !//  4. Grassland
-       !//  5. Wetlands
-       !//  6. Tundra
-       !//  7. Desert
-       !//  8. Water
-       !//  9. Urban
+       !// mOSaic categories (reduced from Simpson et al., 2012)
+       !//  1. Needleleaftree (temperated/boreal)
+       !//  2. Deciduoustree (temperated/boral)
+       !//  3. Needleleaftree (mediterranean)
+       !//  4. Broadleaftree (mediterranean)
+       !//  5. Crops <a,b,c>
+       !//  6. Moorland (savanna++)
+       !//  7. Grassland
+       !//  8. Scrubs (med.)
+       !//  9. Wetlands
+       !//  10. Tundra
+       !//  11. Desert
+       !//  12. Water
+       !//  13. Urban
+       !//  14. Ice/Snow
        !// CLM categories
        !// CLM  CTM indices
        !//  1    17    Barren land
@@ -1200,20 +1224,43 @@ contains
        !// 15    14    C4 grass (warm)
        !// 16    15    Crop1
        !// 17    16    Crop2
+       !// CLM -> mOSaic
+       !// 1: 1 (90-45S, 45-90N) 2,3
+       !// 2: 5,7,8
+       !// 3: 1 (45S-45N)
+       !// 4: 4,6
+       !// 5: 15,16
+       !// 6: -
+       !// 7: 13,14
+       !// 8: 9,10
+       !// 9: -
+       !// 10: 11,12
+       !// 11: 17
+       !// 12: Ocean (1-PLAND)
+       !// 13: -
+       !// 14: -
        !// --------------------------------------------------------------------
-       LFmosaic(1) = sum(LFin(1:10))
-       LFmosaic(2) = sum(LFin(15:16))
-       LFmosaic(3) = LFin(14)
-       LFmosaic(4) = sum(LFin(12:13))
-       LFmosaic(5) = 0._r8
-       LFmosaic(6) = LFin(11)
-       LFmosaic(7) = LFin(17)
-       !Set LFmosaic(8) from sum at the end
+       LFmosaic(1) = LFin(2)+ LFin(3)
+       LFmosaic(2) = sum(LFin(5:8))
+       LFmosaic(3) = 0._r8
+       if (lat.lt.-45 .or. lat.gt.45) then
+          LFmosaic(1) = LFmosaic(1)+LFin(1)
+       else
+          LFmosaic(3) = LFmosaic(3)+LFin(1)
+       end if
+       LFmosaic(4) = sum(LFin(4:6))
+       LFmosaic(5) = LFin(15) + LFin(16)
+       LFmosaic(6) = 0._r8
+       LFmosaic(7) = LFin(13) + LFin(14)
+       LFmosaic(8) = LFin(9) + LFin(10)
        LFmosaic(9) = 0._r8
-       LFmosaic(10) = 0._r8
-
+       LFmosaic(10) = LFin(11) + LFin(12)
+       LFmosaic(11) = LFin(17)       
+       LFmosaic(13) = 0._r8
+       LFmosaic(14) = 0._r8 ! Will be handeled seperately
+      
        !// Ocean may not be fully compatible with 1-PLAND:
-       LFmosaic(8) = max(0._r8, 1._r8 - (sum(LFmosaic(1:7)) + sum(LFmosaic(9:10))))
+       LFmosaic(12) = max(0._r8, 1._r8 - (sum(LFmosaic(1:7)) + sum(LFmosaic(9:10))))
 
     else
        write(6,'(a,i5)') f90file//':'//subr// &

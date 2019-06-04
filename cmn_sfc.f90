@@ -23,6 +23,7 @@ module CMN_SFC
 
   !// Surface and vegetation data:  fraction in each LandSurface type
   integer, parameter ::  NVGPAR = 17    ! number of vegetation types
+  integer, parameter ::  NLCAT = 14     ! number of mOSaic landuse categories
   !real(r8), dimension(IPAR,JPAR,NVGPAR) :: LS_FRAC
   real(r8), dimension(NVGPAR,IPAR,JPAR) :: landSurfTypeFrac
   !// Stomatal resistance (conductance is inverse of resistance)
@@ -45,7 +46,7 @@ module CMN_SFC
   !// DRYDEP mOSaic parameter switch
   logical :: LDDEPmOSaic
   !// Parameters and land use type from EMEP
-  real(r8), dimension(28,16) :: DDEP_PAR
+  real(r8), dimension(28,NLCAT) :: DDEP_PAR
   
   !// Displacement height [m] for given land type fraction (LS_FRAC)
   real(r8) :: ZPDVT_C3(NVGPAR)
