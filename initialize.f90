@@ -67,7 +67,7 @@ contains
          MET_ROOT, MYEAR, PMEANW, HnativeRES, VRES, VRESW, PPFDPATH, PPFDFILE
     use cmn_sfc, only: LANDUSE_IDX, LANDUSE_YEAR, fileLandSurfTypeFrac, &
          LAI_YEAR, fileLAI, ZOI_YEAR, fileZOI, LDDEPmOSaic, DDEP_PAR, &
-         LGSMAP, fileGSMAP
+         LGSMAP, fileGSMAP, NLCAT
     use cloudjx, only: CLDFLAG, NRANDO, RANSEED, &
          LCLDQMD, LCLDQMN, LCLDRANA, LCLDRANQ, LCLDAVG
     use grid, only: SET_GRID, SET_GRID_VERT, SET_MEAN_PSFC, &
@@ -96,7 +96,7 @@ contains
     character(len=4) :: CCNR,CRNR,NRES
     !// --------------------------------------------------------------------
     !// Temporare ascii array
-    character(len=8), dimension(29,16) :: temp
+    character(len=8), dimension(29,NLCAT) :: tmpDDEP_PAR
     !// --------------------------------------------------------------------
     character(len=*), parameter :: subr = 'input'
     !//---------------------------------------------------------------------
@@ -492,10 +492,10 @@ contains
        ! Read the table header
        read(IFNR, *) 
        ! Read the whole table as ascii (none floating point value in column one)
-       read(IFNR, *) temp
+       read(IFNR, *) tmpDDEP_PAR
        ! Split the temporary table and save the data
-       read(temp(2:,:),'(f10.0)') DDEP_PAR
-       write(6,*) temp
+       read(tmpDDEP_PAR(2:,:),'(f10.0)') DDEP_PAR
+       write(6,*) tmpDDEP_PAR
        close(unit=ifnr)
     end if
     !// Growing season
