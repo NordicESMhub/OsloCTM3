@@ -1149,9 +1149,9 @@ contains
        !// 3: 1 (45S-45N)
        !// 4: 2
        !// 5: 12,14
-       !// 6: -
+       !// 6: - [6,7,8,9]
        !// 7: 10
-       !// 8: 6,7,8,9
+       !// 8: 6,7,8,9 [-]
        !// 9: 11
        !// 10: 16(90S-60S,60N-90N)
        !// 11: 16(60S-60N), 17
@@ -1169,9 +1169,11 @@ contains
        end if
        LFmosaic(4) = LFin(2)
        LFmosaic(5) = LFin(12) + LFin(14)
-       LFmosaic(6) = 0._r8
+       !LFmosaic(6) = 0._r8
+       LFmosaic(6) = sum(LFin(6:9))
        LFmosaic(7) = LFin(10)
-       LFmosaic(8) = sum(LFin(6:9))
+       !LFmosaic(8) = sum(LFin(6:9))
+       LFmosaic(8) = 0._r8
        LFmosaic(9) = LFin(11)
 
        if (lat.lt.-60._r8 .or. lat.gt.60._r8) then
@@ -1230,31 +1232,34 @@ contains
        !// 3: 1 (45S-45N)
        !// 4: 4,6
        !// 5: 15,16
-       !// 6: -
-       !// 7: 13,14
+       !// 6: - [14]
+       !// 7: 13,14 [12,13]
        !// 8: 9,10
        !// 9: -
-       !// 10: 11,12
+       !// 10: 11,12 [11]
        !// 11: 17
        !// 12: Ocean (1-PLAND)
        !// 13: -
        !// 14: -
        !// --------------------------------------------------------------------
        LFmosaic(1) = LFin(2)+ LFin(3)
-       LFmosaic(2) = sum(LFin(5:8))
+       LFmosaic(2) = LFin(5) + sum(LFin(7:8))
        LFmosaic(3) = 0._r8
        if (lat.lt.-45 .or. lat.gt.45) then
           LFmosaic(1) = LFmosaic(1)+LFin(1)
        else
           LFmosaic(3) = LFmosaic(3)+LFin(1)
        end if
-       LFmosaic(4) = sum(LFin(4:6))
-       LFmosaic(5) = LFin(15) + LFin(16)
-       LFmosaic(6) = 0._r8
-       LFmosaic(7) = LFin(13) + LFin(14)
+       LFmosaic(4) = LFin(4) + LFin(6)
+       LFmosaic(5) = sum(LFin(15:16))
+       !LFmosaic(6) = 0._r8
+       LFmosaic(6) = LFin(14)
+       !LFmosaic(7) = LFin(13) + LFin(14)
+       LFmosaic(7) = sum(LFin(12:13))
        LFmosaic(8) = LFin(9) + LFin(10)
        LFmosaic(9) = 0._r8
-       LFmosaic(10) = LFin(11) + LFin(12)
+       !LFmosaic(10) = LFin(11) + LFin(12)
+       LFmosaic(10) = LFin(11)
        LFmosaic(11) = LFin(17)       
        LFmosaic(13) = 0._r8
        LFmosaic(14) = 0._r8 ! Will be handeled seperately
