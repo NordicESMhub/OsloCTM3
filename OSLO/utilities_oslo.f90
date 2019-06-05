@@ -1265,7 +1265,7 @@ contains
        LFmosaic(14) = 0._r8 ! Will be handeled seperately
       
        !// Ocean may not be fully compatible with 1-PLAND:
-       LFmosaic(12) = max(0._r8, 1._r8 - (sum(LFmosaic(1:7)) + sum(LFmosaic(9:10))))
+       LFmosaic(12) = max(0._r8, 1._r8 - (sum(LFmosaic(1:11)) + sum(LFmosaic(13:))))
 
     else
        write(6,'(a,i5)') f90file//':'//subr// &
