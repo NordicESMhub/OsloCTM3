@@ -987,9 +987,10 @@ contains
          call set_vegetation_height(tmpVEGH(NN),YDGRD(J),VEGH(NN))
       end do
       !// Grass and scrubs
-      do NN=7, 8
-         call set_vegetation_height(tmpVEGH(NN),YDGRD(J),VEGH(NN))
-      end do
+      ! do NN=7, 8
+      call set_vegetation_height(tmpVEGH(NN),YDGRD(J),VEGH(8))
+      ! end do
+
       
       !// Loop over longitude (I is global, II is block)
       !// ------------------------------------------------------------------
