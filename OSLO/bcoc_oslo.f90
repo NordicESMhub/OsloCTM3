@@ -968,7 +968,7 @@ contains
     real(r8) :: SAI1, MOL, USR, RAIN, T2M, &
          a1L, a1W, a1I, a1Lfor, amol, Vtot, WETFRAC, fice, snowD, &
          focean
-    real(r8),dimension(NLCAT) :: FL, VD, VEGH, fsnowC, tmpVEGH
+    real(r8),dimension(NLCAT) :: FL, VDLCAT, VEGH, fsnowC, tmpVEGH
 
     !// Ustar mean for year 2006 0.293m = 29.3cm
     real(r8), parameter :: ZmeanUSR = 1._r8/29.3_r8
@@ -1201,33 +1201,33 @@ contains
 
             !// If rain, perhaps wet forest/shrubs should increase?
             !// Try increasing 1.5 times.
-            VD(1:4) = (a1Lfor * (1._r8 - WETFRAC) &
+            VDLCAT(1:4) = (a1Lfor * (1._r8 - WETFRAC) &
                           + 1.5_r8 * a1Lfor * WETFRAC) * USR * amol
-            VD(8)   = (a1Lfor * (1._r8 - WETFRAC) &
+            VDLCAT(8)   = (a1Lfor * (1._r8 - WETFRAC) &
                           + 1.5_r8 * a1Lfor * WETFRAC) * USR * amol
 
 
             !// Assume wetland is wet. Have already checked it for temperature,
             !// assuming T<0C is to treated as snow/ice.
             !// Also multiply with amol
-            VD(9)  = a1W * USR * amol
+            VDLCAT(9)  = a1W * USR * amol
             !// Ocean is wet
-            VD(12) = a1W * USR * amol
+            VDLCAT(12) = a1W * USR * amol
 
             !// Non-wet surfaces - weight with WETFRAC
             !// Also multiply with amol
-            VD(5:7)   = (a1L * (1._r8 - WETFRAC) + a1W * WETFRAC) * USR * amol
-            VD(10:11) = (a1L * (1._r8 - WETFRAC) + a1W * WETFRAC) * USR * amol
-            VD(13)    = (a1L * (1._r8 - WETFRAC) + a1W * WETFRAC) * USR * amol
+            VDLCAT(5:7)   = (a1L * (1._r8 - WETFRAC) + a1W * WETFRAC) * USR * amol
+            VDLCAT(10:11) = (a1L * (1._r8 - WETFRAC) + a1W * WETFRAC) * USR * amol
+            VDLCAT(13)    = (a1L * (1._r8 - WETFRAC) + a1W * WETFRAC) * USR * amol
             
             !// Ice - weight with WETFRAC
-            VD(14)    = (a1I * (1._r8 - WETFRAC) + a1W * WETFRAC) * USR * amol
+            VDLCAT(14)    = (a1I * (1._r8 - WETFRAC) + a1W * WETFRAC) * USR * amol
 
 
             !// Make average velocity
             Vtot = 0._r8
             do NN = 1, NLCAT
-               Vtot = Vtot + VD(NN) * FL(NN)
+               Vtot = Vtot + VDLCAT(NN) * FL(NN)
             end do
             VDEP(N,I,J) = Vtot
 
@@ -1252,33 +1252,33 @@ contains
 
             !// If rain, perhaps wet forest/shrubs should increase?
             !// Try increasing 1.5 times.
-            VD(1:4) = (a1Lfor * (1._r8 - WETFRAC) &
+            VDLCAT(1:4) = (a1Lfor * (1._r8 - WETFRAC) &
                           + 1.5_r8 * a1Lfor * WETFRAC) * USR * amol
-            VD(8)   = (a1Lfor * (1._r8 - WETFRAC) &
+            VDLCAT(8)   = (a1Lfor * (1._r8 - WETFRAC) &
                           + 1.5_r8 * a1Lfor * WETFRAC) * USR * amol
 
 
             !// Assume wetland is wet. Have already checked it for temperature,
             !// assuming T<0C is to treated as snow/ice.
             !// Also multiply with amol
-            VD(9)  = a1W * USR * amol
+            VDLCAT(9)  = a1W * USR * amol
             !// Ocean is wet
-            VD(12) = a1W * USR * amol
+            VDLCAT(12) = a1W * USR * amol
 
             !// Non-wet surfaces - weight with WETFRAC
             !// Also multiply with amol
-            VD(5:7)   = (a1L * (1._r8 - WETFRAC) + a1W * WETFRAC) * USR * amol
-            VD(10:11) = (a1L * (1._r8 - WETFRAC) + a1W * WETFRAC) * USR * amol
-            VD(13)    = (a1L * (1._r8 - WETFRAC) + a1W * WETFRAC) * USR * amol
+            VDLCAT(5:7)   = (a1L * (1._r8 - WETFRAC) + a1W * WETFRAC) * USR * amol
+            VDLCAT(10:11) = (a1L * (1._r8 - WETFRAC) + a1W * WETFRAC) * USR * amol
+            VDLCAT(13)    = (a1L * (1._r8 - WETFRAC) + a1W * WETFRAC) * USR * amol
             
             !// Ice - weight with WETFRAC
-            VD(14)    = (a1I * (1._r8 - WETFRAC) + a1W * WETFRAC) * USR * amol
+            VDLCAT(14)    = (a1I * (1._r8 - WETFRAC) + a1W * WETFRAC) * USR * amol
 
 
             !// Make average velocity
             Vtot = 0._r8
             do NN = 1, NLCAT
-               Vtot = Vtot + VD(NN) * FL(NN)
+               Vtot = Vtot + VDLCAT(NN) * FL(NN)
             end do
             VDEP(N,I,J) = Vtot
 
