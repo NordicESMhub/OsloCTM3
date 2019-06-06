@@ -1019,7 +1019,7 @@ contains
       end do
       !// [Grass and] scrubs
       ! do NN=7, 8
-      call set_vegetation_height(tmpVEGH(NN),YDGRD(J),VEGH(8))
+      call set_vegetation_height(tmpVEGH(8),YDGRD(J),VEGH(8))
       ! end do
       
       !// Loop over longitude (I is global, II is block)
@@ -1135,7 +1135,7 @@ contains
         !// Change snow covered land fractions to snow/ice when T<0C
         if (T2M .le. 273.15_r8) then
            !// Check for snow cover at cold temperatures
-           do NN = 1, LNCAT-1
+           do NN = 1, NLCAT-1
               if (fsnowC(NN) .gt. 0._r8) then
                  !// Move the snow covered fraction of each land type to FL(14)
                  FL(14) = FL(14) + FL(NN)*fsnowC(NN)
@@ -1152,7 +1152,7 @@ contains
                  FL(NN) = FL(NN) * (1._r8 - fsnowC(NN))
               end if
            end do
-           do NN = LNCAT-1, LNCAT
+           do NN = NLCAT-1, NLCAT
               if (fsnowC(NN) .gt. 0._r8) then
                  FL(12) = FL(12) + FL(NN)*fsnowC(NN)
                  FL(NN) = FL(NN) * (1._r8 - fsnowC(NN))
@@ -1203,30 +1203,30 @@ contains
             !// Try increasing 1.5 times.
             VD(1:4) = (a1Lfor * (1._r8 - WETFRAC) &
                           + 1.5_r8 * a1Lfor * WETFRAC) * USR * amol
-            VD(8) = (a1Lfor * (1._r8 - WETFRAC) &
+            VD(8)   = (a1Lfor * (1._r8 - WETFRAC) &
                           + 1.5_r8 * a1Lfor * WETFRAC) * USR * amol
 
 
             !// Assume wetland is wet. Have already checked it for temperature,
             !// assuming T<0C is to treated as snow/ice.
             !// Also multiply with amol
-            VD(9) = a1W * USR * amol
+            VD(9)  = a1W * USR * amol
             !// Ocean is wet
             VD(12) = a1W * USR * amol
 
             !// Non-wet surfaces - weight with WETFRAC
             !// Also multiply with amol
-            VD(5:7) = (a1L * (1._r8 - WETFRAC) + a1W * WETFRAC) * USR * amol
+            VD(5:7)   = (a1L * (1._r8 - WETFRAC) + a1W * WETFRAC) * USR * amol
             VD(10:11) = (a1L * (1._r8 - WETFRAC) + a1W * WETFRAC) * USR * amol
-            VD(13) = (a1L * (1._r8 - WETFRAC) + a1W * WETFRAC) * USR * amol
+            VD(13)    = (a1L * (1._r8 - WETFRAC) + a1W * WETFRAC) * USR * amol
             
             !// Ice - weight with WETFRAC
-            VD(14) = (a1I * (1._r8 - WETFRAC) + a1W * WETFRAC) * USR * amol
+            VD(14)    = (a1I * (1._r8 - WETFRAC) + a1W * WETFRAC) * USR * amol
 
 
             !// Make average velocity
             Vtot = 0._r8
-            do NN = 1, LNCAT
+            do NN = 1, NLCAT
                Vtot = Vtot + VD(NN) * FL(NN)
             end do
             VDEP(N,I,J) = Vtot
@@ -1250,35 +1250,34 @@ contains
             !// Forest; limit forest to our land value
             a1Lfor = max(0.008_r8 * SAI1*0.1_r8, a1L)
 
-            !// If rain, perhaps wet forest should increase?
+            !// If rain, perhaps wet forest/shrubs should increase?
             !// Try increasing 1.5 times.
-            VD(1) = (a1Lfor * (1._r8 - WETFRAC) &
+            VD(1:4) = (a1Lfor * (1._r8 - WETFRAC) &
+                          + 1.5_r8 * a1Lfor * WETFRAC) * USR * amol
+            VD(8)   = (a1Lfor * (1._r8 - WETFRAC) &
                           + 1.5_r8 * a1Lfor * WETFRAC) * USR * amol
 
 
             !// Assume wetland is wet. Have already checked it for temperature,
             !// assuming T<0C is to treated as snow/ice.
             !// Also multiply with amol
-            VD(9) = a1W * USR * amol
+            VD(9)  = a1W * USR * amol
             !// Ocean is wet
             VD(12) = a1W * USR * amol
 
             !// Non-wet surfaces - weight with WETFRAC
             !// Also multiply with amol
-            VD(2) = (a1L * (1._r8 - WETFRAC) + a1W * WETFRAC) * USR * amol
-            VD(3) = (a1L * (1._r8 - WETFRAC) + a1W * WETFRAC) * USR * amol
-            VD(4) = (a1L * (1._r8 - WETFRAC) + a1W * WETFRAC) * USR * amol
-            VD(6) = (a1L * (1._r8 - WETFRAC) + a1W * WETFRAC) * USR * amol
-            VD(7) = (a1L * (1._r8 - WETFRAC) + a1W * WETFRAC) * USR * amol
-            VD(9) = (a1L * (1._r8 - WETFRAC) + a1W * WETFRAC) * USR * amol
-
+            VD(5:7)   = (a1L * (1._r8 - WETFRAC) + a1W * WETFRAC) * USR * amol
+            VD(10:11) = (a1L * (1._r8 - WETFRAC) + a1W * WETFRAC) * USR * amol
+            VD(13)    = (a1L * (1._r8 - WETFRAC) + a1W * WETFRAC) * USR * amol
+            
             !// Ice - weight with WETFRAC
-            VD(14) = (a1I * (1._r8 - WETFRAC) + a1W * WETFRAC) * USR * amol
+            VD(14)    = (a1I * (1._r8 - WETFRAC) + a1W * WETFRAC) * USR * amol
 
 
             !// Make average velocity
             Vtot = 0._r8
-            do NN = 1, LNCAT
+            do NN = 1, NLCAT
                Vtot = Vtot + VD(NN) * FL(NN)
             end do
             VDEP(N,I,J) = Vtot
