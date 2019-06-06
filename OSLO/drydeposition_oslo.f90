@@ -980,13 +980,28 @@ contains
       JJ    = J - MPBLKJB(MP) + 1
       
       !// Set latitude dependent vegetation height
-      !// The function is based on the latitude dependent describtion in Simpson et al. (2012) 
-      !// and modified towards tropics
-      !// Forests and crops
-      do NN=1, 5
+      !// The function is based on the latitude dependent description in Simpson et al. (2012) 
+      !// and modified towards tropics (see utilities_oslo.f90).
+      !// -------------------
+      !// Test (Stefanie Falk, Juni 2019)
+      !// Impact of the vegetation height on ozone concentration.
+      !// Date in experiment: 01-01-2005
+      !// Case 1: Forest, crops, grass, and scrubs vary height
+      !// Case 2: Forest, crops, and scrubs vary height
+      !// Case 3: Forest, and scrubs vary height (default)
+      !// Case1-Case2 => [O_3] = [-1.6-8.1]x10-6 g/m3, positive values in arid regions 
+      !/                                             (e.g. Australia, US Westcoast)
+      !// Case2-Case3 => [O_3] = [-6.6-2.4]x10-6 g/m3, negative in arid regions, positive in
+      !//                                            humid-tropical regions
+      !// Case1-Case3 => [O_3] = [-1.6-4.6]x10-6 g/m3, positive values in arid regions
+      !//
+      !// => [O_3] can be reduced by switching on variation of height for more vegetation types!
+      !// -------------------
+      !// Forests [and crops]
+      do NN=1, 4 ![5]
          call set_vegetation_height(tmpVEGH(NN),YDGRD(J),VEGH(NN))
       end do
-      !// Grass and scrubs
+      !// [Grass and] scrubs
       ! do NN=7, 8
       call set_vegetation_height(tmpVEGH(NN),YDGRD(J),VEGH(8))
       ! end do
