@@ -46,8 +46,7 @@ module drydeposition_oslo
        VNOXDDEP, VSO2DDEP, VSO4DDEP, VMSADDEP, VNH3DDEP
   !// Stomatal conductance and mean photolytic active radiation
   real(r8), dimension(IPAR,JPAR,12) :: STC, PARMEAN
-  ! Parameters and land use type from Simpson et al. (2012)
-  real(r8), dimension(28,14) :: DDEP_PAR
+  
   !// Defines which VDEP to scale according to stability (i.e. only
   !// old CTM2 calculations)
   integer :: SCALESTABILITY(NPAR)
@@ -474,11 +473,7 @@ contains
             VO3,VHNO3,VPAN,VCO,VH2O2,VNO2, VSO2,VSO4,VMSA, VNH3)
 
        if (LDDEPmOSaic) then
-          !// New dry deposition scheme (ala mOSaic)
-          
-          !// Not to be standard yet...
-          !// When it is, remember dtmax=300 in oc_tropchem
-
+          !// New dry deposition scheme (aka mOSaic)
           !// Get new dry deposition values [m/s]
           call get_vdep2(UTTAU, BTT, AIRB, BTEM, MP, &
                VO3,VHNO3,VPAN,VH2O2,VNO2, VSO2,VNH3, VNO,VHCHO,VCH3CHO, VSto)
@@ -590,8 +585,10 @@ contains
         end do !// do N=1,NTM
       end do !// do I = MPBLKIB(MP),MPBLKIE(MP)
     end do !// do J = MPBLKJB(MP),MPBLKJE(MP)
+
     !// The following functions lack documentation and have not been tested.
-    !// Therefore they shall be disabled. To enable: uncomment all simple '!'
+    !// Therefore they shall be disabled! 
+    !// To enable: uncomment all simple '!'
     !// and remove the 'end if' 10 lines below.
     if (LDDEPmOSaic) then
        write(6,'(a)') f90file//':'//subr// &
@@ -803,7 +800,7 @@ contains
          CLDFR, PPFD, UMS, VMS, SFT, SWVL3
     use cmn_parameters, only: R_AIR, R_UNIV, VONKARMAN
     use cmn_sfc, only: LAI, ZOI, landSurfTypeFrac, LANDUSE_IDX, StomRes, NVGPAR, &
-         DDEP_PAR, LGSMAP, NLCAT
+         LGSMAP, NLCAT, DDEP_PAR
     use cmn_oslo, only: trsp_idx
     use utilities_oslo, only: landfrac2mosaic, set_vegetation_height, &
          GROWSEASON, MAPPED_GROWSEASON
@@ -825,13 +822,13 @@ contains
     integer :: GDAY, GLEN                   !// Growing season from megan
 
     real(r8), dimension(NLCAT) :: SAI, SAI0,  FL, gsto, &
-          Rinc, GO3, GSO2, fLight, fsnowC, fstcT2, fphen, fD, fSW, &
-          tmpVEGH
+          Rinc, GO3, GSO2
     !// Parameters from EMEP.par
     real(r8), dimension(NLCAT) :: gmax, fmin, Dmin, Dmax,   &
+         fLight, fsnowC, fstcT2, fphen, fD, fSW, fLightAlpha, &
          phia, phib, phic, phid, phie, phif, phiAS, phiAE,  &
          RgsO3, RgsSO2, VEGH, topt, tmin, tmax, dSGS, dEGS, &
-         fLightAlpha, ddSGS, ddEGS
+         ddSGS, ddEGS, tmpVEGH
     !// Resistances and deposition velocities
     integer, parameter :: NDDEP = 14
     real(r8)                   :: Ra, Tot_res
@@ -926,8 +923,7 @@ contains
     !//  12. Water
     !//  13. Urban
     !//  14. Ice/Snow - is treated seperately
-
-
+    
     !// Maximal stomatal conductance
     gmax = DDEP_PAR(1,:) !// mmmole O3 m-2 s-1
     fmin = DDEP_PAR(2,:)
@@ -1003,7 +999,7 @@ contains
       end do
       !// [Grass and] scrubs
       ! do NN=7, 8
-      call set_vegetation_height(tmpVEGH(NN),YDGRD(J),VEGH(8))
+      call set_vegetation_height(tmpVEGH(8),YDGRD(J),VEGH(8))
       ! end do
 
       
@@ -1419,7 +1415,7 @@ contains
         !// SO2 has a smaller resistance which is temperature dependent.
         !// Both are according to EMEP2012.
         !// Rsnow will only be used if snow cover fsnowC(NN)>0
-        RsnowO3 = RgsO3(10)
+        RsnowO3 = RgsO3(NLCAT)
         if (T2Mcel .ge. 1._r8) then
            RsnowSO2 = 70._r8
         else if (T2Mcel .ge. -1._r8) then
@@ -1550,7 +1546,7 @@ contains
 
 
         !// Only loop through vegetative categories
-        do NN = 1, 4
+        do NN = 1, 8
 
            !// EMEP2012 --->
            if (RH .eq. 0._r8) then
@@ -1588,7 +1584,7 @@ contains
 
 
         !// Only loop through non-vegetative categories
-        do NN = 5, NLCAT-1
+        do NN = 9, NLCAT-1
 
            Rgs = RgsSO2(NN) !// Land-type resistance
 
@@ -1732,7 +1728,7 @@ contains
         VNO(II,JJ)     = VD(3)
         VHNO3(II,JJ)   = VD(4)
         VH2O2(II,JJ)   = VD(5)
-        VCH3CHO(II,JJ) = VD(6)
+        VCH3CHO(II,JJ) = VD(6) !// Aceta
         VHCHO(II,JJ)   = VD(7)
         VPAN(II,JJ)    = VD(8)
         VNO2(II,JJ)    = VD(9)
@@ -2201,7 +2197,8 @@ contains
          YDGRD, PLAND
     use cmn_met, only: PRECLS, PRECCNV, MO_LENGTH, USTR, SFT, CI, SD, &
          CLDFR
-    use cmn_sfc, only: landSurfTypeFrac, LANDUSE_IDX, NVGPAR, LAI, NLCAT
+    use cmn_sfc, only: landSurfTypeFrac, LANDUSE_IDX, NVGPAR, LAI, NLCAT, &
+         DDEP_PAR
     use cmn_oslo, only: trsp_idx
     use soa_oslo, only: ndep_soa, soa_deps
     use utilities_oslo, only: landfrac2mosaic, set_vegetation_height
@@ -2218,7 +2215,7 @@ contains
     integer :: I,II,J,JJ,N, K, NN
     real(r8) :: SAI1, MOL, USR, RAIN, T2M, &
          a1L, a1W, a1I, a1Lfor, amol, amolN, Vtot, WETFRAC, fice, snowD
-    real(r8),dimension(NLCAT) :: FL, VD, VEGH, fsnowC, tmpVEGH
+    real(r8),dimension(NLCAT) :: FL, VDLCAT, VEGH, fsnowC, tmpVEGH
 
     !// Ustar mean for year 2006 0.293m = 29.3cm
     !real(r8), parameter :: ZmeanUSR = 1._r8/29.3_r8
@@ -2255,16 +2252,16 @@ contains
       JJ    = J - MPBLKJB(MP) + 1
       
       !// Set latitude dependent vegetation height
-      !// The function is based on the latitude dependent describtion in Simpson et al. (2012) 
-      !// and modified towards tropics
-      !// Forests and crops
-      do NN=1, 5
+      !// The function is based on the latitude dependent description in Simpson et al. (2012) 
+      !// and modified towards tropics (see utilities_oslo.f90).
+      !// Forests [and crops]
+      do NN=1, 4 ![5]
          call set_vegetation_height(tmpVEGH(NN),YDGRD(J),VEGH(NN))
       end do
-      !// Grass and scrubs
-      do NN=7, 8
-         call set_vegetation_height(tmpVEGH(NN),YDGRD(J),VEGH(NN))
-      end do
+      !// [Grass and] scrubs
+      ! do NN=7, 8
+      call set_vegetation_height(tmpVEGH(8),YDGRD(J),VEGH(8))
+      ! end do
       
       !// Loop over longitude (I is global, II is block)
       do I = MPBLKIB(MP),MPBLKIE(MP)
@@ -2436,32 +2433,38 @@ contains
         !// Forest; limit forest to our land value
         a1Lfor = max(0.008_r8 * SAI1*0.1_r8, a1L)
 
-        !// All VDs must be multiplied with amol or amolN.
+        !// All VDLCATs must be multiplied with amol or amolN.
         !// This is done at the end as separate factors
 
-        !// If rain, perhaps wet forest should increase? Try increasing
-        !// 1.5 times.
-        VD(1) = (a1Lfor * (1._r8 - WETFRAC) &
-                  + 1.5_r8 * a1Lfor * WETFRAC) * USR
+        !// If rain, perhaps wet forest/shrubs should increase?
+        !// Try increasing 1.5 times.
+        VDLCAT(1:4) = (a1Lfor * (1._r8 - WETFRAC) &
+             + 1.5_r8 * a1Lfor * WETFRAC) * USR * amol
+        VDLCAT(8)   = (a1Lfor * (1._r8 - WETFRAC) &
+             + 1.5_r8 * a1Lfor * WETFRAC) * USR * amol
+        
+        
         !// Assume wetland is wet. Have already checked it for temperature,
         !// assuming T<0C is to treated as snow/ice.
-        VD(5) = a1W * USR
+        !// Also multiply with amol
+        VDLCAT(9)  = a1W * USR * amol
         !// Ocean is wet
-        VD(8) = a1W * USR
+        VDLCAT(12) = a1W * USR * amol
+        
         !// Non-wet surfaces - weight with WETFRAC
-        VD(2) = (a1L * (1._r8 - WETFRAC) + a1W * WETFRAC) * USR
-        VD(3) = (a1L * (1._r8 - WETFRAC) + a1W * WETFRAC) * USR
-        VD(4) = (a1L * (1._r8 - WETFRAC) + a1W * WETFRAC) * USR
-        VD(6) = (a1L * (1._r8 - WETFRAC) + a1W * WETFRAC) * USR
-        VD(7) = (a1L * (1._r8 - WETFRAC) + a1W * WETFRAC) * USR
-        VD(9) = (a1L * (1._r8 - WETFRAC) + a1W * WETFRAC) * USR
+        !// Also multiply with amol
+        VDLCAT(5:7)   = (a1L * (1._r8 - WETFRAC) + a1W * WETFRAC) * USR * amol
+        VDLCAT(10:11) = (a1L * (1._r8 - WETFRAC) + a1W * WETFRAC) * USR * amol
+        VDLCAT(13)    = (a1L * (1._r8 - WETFRAC) + a1W * WETFRAC) * USR * amol
+        
         !// Ice - weight with WETFRAC
-        VD(10) = (a1I * (1._r8 - WETFRAC) + a1W * WETFRAC) * USR
-
+        VDLCAT(14)    = (a1I * (1._r8 - WETFRAC) + a1W * WETFRAC) * USR * amol
+        
+        
         !// Make average velocity
         Vtot = 0._r8
-        do NN=1,10
-           Vtot = Vtot + VD(NN) * FL(NN)
+        do NN = 1, NLCAT
+           Vtot = Vtot + VDLCAT(NN) * FL(NN)
         end do
 
         !// Sulphur
