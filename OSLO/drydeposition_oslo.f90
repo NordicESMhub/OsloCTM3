@@ -797,7 +797,7 @@ contains
     use cmn_ctm, only: XGRD, YGRD, XDGRD, YDGRD, MPBLKJB, MPBLKJE, &
          MPBLKIB, MPBLKIE, IDAY, JMON, JDAY, PLAND, NRMETD, NROPSM
     use cmn_met, only: PRANDTLL1, P, SD, CI, USTR, ZOFLE, PRECLS, PRECCNV, &
-         CLDFR, PPFD, UMS, VMS, SFT, SWVL3
+         CLDFR, PPFD, UMS, VMS, SFT, SWVL3, MO_LENGTH
     use cmn_parameters, only: R_AIR, R_UNIV, VONKARMAN
     use cmn_sfc, only: LAI, ZOI, landSurfTypeFrac, LANDUSE_IDX, StomRes, NVGPAR, &
          LGSMAP, NLCAT, DDEP_PAR
@@ -822,7 +822,7 @@ contains
     integer :: GDAY, GLEN                   !// Growing season from megan
 
     real(r8), dimension(NLCAT) :: SAI, SAI0,  FL, gsto, &
-          Rinc, GO3, GSO2
+          Rinc, GO3, GSO2, depl_height, z0
     !// Parameters from EMEP.par
     real(r8), dimension(NLCAT) :: gmax, fmin, Dmin, Dmax,   &
          fLight, fsnowC, fstcT2, fphen, fD, fSW, fLightAlpha, &
@@ -831,16 +831,19 @@ contains
          ddSGS, ddEGS, tmpVEGH
     !// Resistances and deposition velocities
     integer, parameter :: NDDEP = 14
-    real(r8)                   :: Ra, Tot_res
+    real(r8), dimension(NLCAT) :: Ra, Tot_res
     real(r8), dimension(NDDEP) :: Rb, Rc, VD
 
     !// Meteorological variables
-    real(r8) :: z0, z0w, zref, zthick, RAIN, T2M, PrL, USR, SFNU, PSFC, &
+    real(r8) :: z0w, ZREF, zthick, RAIN, T2M, PrL, USR, SFNU, PSFC, &
          WINDL1, snowD
+    !// To calculate Ra
+    real(r8) :: WIND_ZREF, RHO_ZREF, T_ZREF, &
+         SHF, MOL
     !// To calculate Rb
     real(r8) :: d_i, RbL, RbO
     !// To calculate Rc
-    real(r8) :: RsnowO3, RsnowSO2, GnsO3, GcO3, GstO3, d, gext, &
+    real(r8) :: RsnowO3, RsnowSO2, GnsO3, GcO3, GstO3, gext, &
          Rgs, FT, VPD, &
          T2Mcel, ee, RH, M_SO2, M_NH3, Asn, Asn24, &
          GnsSO2, GSO2_dry, GSO2_wet, &
@@ -994,11 +997,11 @@ contains
       !// => [O_3] can be reduced by switching on variation of height for more vegetation types!
       !// -------------------
       !// Forests [and crops]
-      do NN=1, 4 ![5]
+      do NN = 1, 4 ![5]
          call set_vegetation_height(tmpVEGH(NN),YDGRD(J),VEGH(NN))
       end do
       !// [Grass and] scrubs
-      ! do NN=7, 8
+      ! do NN = 7, 8
       call set_vegetation_height(tmpVEGH(8),YDGRD(J),VEGH(8))
       ! end do
 
@@ -1048,7 +1051,7 @@ contains
 
         !// Meteorolgical variables (from metdata or pbl-routine)
         PrL    = PRANDTLL1(II,JJ,MP) !// Prandtl number
-        !//MOL    = MO_LENGTH(II,JJ,MP) !// Obukhov lenght
+        MOL    = MO_LENGTH(II,JJ,MP) !// Obukhov lenght
         USR    = USTR(I,J)           !// Friction velocity
         if (USR .le. 0._r8) USR = 5.e-3_r8 !// USR should not be <=0
         T2M    = SFT(I,J)            !// Surface temperature (2m) [K]
@@ -1261,27 +1264,35 @@ contains
         !// Tsfc=temperature at surface, T(z)=temp at hight z,
         !// SHF=sensible heat flux.
         !// This can be rewritten (e.g. Monteith, 1973) to
-        !//   RaH = U(Zref)/(Ustar*Ustar)
-        !// where U(Zref) is the wind at reference height Zref.
+        !//   RaH = U(ZREF)/(Ustar*Ustar)
+        !// where U(ZREF) is the wind at reference height ZREF.
 
         !// Define reference height as layer 1 midpoint
-        Zthick = ZOFLE(2,I,J) - ZOFLE(1,I,J)  !// L1 thickness
-        Zref   = 0.5_r8 * Zthick              !// L1 center height
-        d = 0.7_r8 !// a constant displacement height
+        Zthick = ZOFLE(3,I,J) - ZOFLE(2,I,J)  !// L2 thickness
+        ZREF   = 0.5_r8 * Zthick              !// L2 center height
+        !// Displacement height
+        depl_height = 0.7_r8 * VEGH           !// other vegetation
+        depl_height(1:4) = 0.78_r8 * VEGH(1:4)!// forests
+        !// Roughness length
+        z0 = 0.1_r8                           !// other vegetation
+        z0(1:4) = 0.07_r8 * VEGH(1:4)         !// forests
 
-        if (zref .lt. d) then
-           write(6,'(a)') f90file//':'//subr//': zref < d: This is WRONG!'
-           print*,'zref,d',zref,d
-           stop
-        end if
+        do NN = 1, NLCAT
+           if (ZREF .lt. depl_height(NN)) then
+              write(6,'(a)') f90file//':'//subr//': ZREF < deplacement height: This is WRONG!'
+              print*,'NN,ZREF,d',NN,ZREF,depl_height(NN)
+              stop
+           end if
+        end do
+        
+        
+        !// Roughness length (z0) for water surfaces.
+        !// ZOI is zero for these. z0 over water is generally small.
+        !// Will distinguish between z0 and z0w.
+        !// Do not allow z0 > (ZREF-d)
+        z0(12)   = min(ZOI(I,J,JMON), (ZREF - depl_height(12)) * 0.999_r8)
 
-        !// Roughness length (z0) will only be used for water surfaces, and
-        !// ZOI is zero for these. That said, z0 over water is generally small.
-        !// Will distinguish between z0 and z0w anyway.
-        !// Do not allow z0 > (zref-d)
-        z0   = min(ZOI(I,J,JMON), (Zref - d) * 0.999_r8)
-
-        !// Water roughness lenght
+        !// Water roughness lenghth
         !// Calm sea: 0.11 * nu / USR, nu=eta/rho=kin.visc. of air (Hinze,1975)
         !//                            here we use 0.135 instead of 0.11.
         !// Rough sea: a * USR^2 / g, where a=0.016 (Charnock, 1955) here 0.018
@@ -1300,7 +1311,7 @@ contains
         if (WINDL1 .lt. 3._r8) then
            z0w = min(0.135_r8*SFNU/USR, 2.e-3_r8)
         else
-           ! So g is 9.836 ms-2
+           ! g is 9.836 ms-2
            z0w = min(1.83d-3*USR**2, 2.e-3_r8)
         end if
         !// Wu (J. Phys. Oceanogr., vol.10, 727-740,1980) suggest a correction
@@ -1309,7 +1320,7 @@ contains
         !// Set minimum value to avoid division by zero later (Berge, 1990,
         !/  Tellus B, 42, 389407, doi:10.1034/j.1600-0889.1990.t01-3-00001.x)
         if (z0w .le. 0._r8) z0w = 1.5e-5_r8
-        if (z0 .le. 0._r8) z0 = 1.5e-5_r8
+        if (z0(12) .le. 0._r8) z0(12) = 1.5e-5_r8
 
         !// Calculation of Ra
         !// Because we already have L and Ustar, we instead assume Ra=RaH
@@ -1324,8 +1335,8 @@ contains
         !// Water, Air and Soil Pollution, vol. 143, pp 123-137,
         !// doi: 10.1023/A:1022890603066, 2003).
         !// These calculations are based upon three variables
-        !//   e1 = (Zref - d) / z0
-        !//   e2 = (Zref - d) / MOL
+        !//   e1 = (ZREF - d) / z0
+        !//   e2 = (ZREF - d) / MOL
         !//   e3 = z0 / MOL
         !// and Ra is found by
         !//   Ra = (log(e1) - PHIH(e2) + PHIH(e3)) / (USR * VONKARMAN)
@@ -1703,22 +1714,26 @@ contains
         !// ----------------------------------------------------------------
         do KK = 1, nddep
            Tot_res = Ra + Rb(KK) + Rc(KK)
-           if (Tot_res .ne. Tot_res) then
-              write(6,'(a,i3,3es9.3)') f90file//':'//subr// &
-                   ': Total resistance is NAN!', KK,Ra,Rb(KK),Rc(KK)
-              stop
-           end if
+           do NN = 1, NLCAT
+              if (Tot_res(NN) .ne. Tot_res(NN)) then
+                 write(6,'(a,i3,3es9.3)') f90file//':'//subr// &
+                      ': Total resistance is NAN!', NN,KK,Ra(NN),Rb(KK),Rc(KK)
+                 stop
+              end if
+           end do
  
            !// Unit is m/s
-           if (Tot_res .gt. 0._r8) then
-              VD(KK) = 1._r8 / Tot_res
-           else
-              !// Fail-safe check
-              write(6,'(a,i3,4es9.3)') f90file//':'//subr// &
-                   ': Tot_res is zero/negative/nan!',&
-                      KK, Tot_res, Ra, Rb(KK), Rc(KK)
-              stop
-           end if
+           do NN = 1, NLCAT
+              if (Tot_res(NN) .gt. 0._r8) then
+                 VD(KK) = 1._r8 / Tot_res(NN)
+              else
+                 !// Fail-safe check
+                 write(6,'(a,i3,4es9.3)') f90file//':'//subr// &
+                      ': Tot_res is zero/negative/nan!',&
+                      NN, KK, Tot_res(NN), Ra(NN), Rb(KK), Rc(KK)
+                 stop
+              end if
+           end do
         end do
 
 
@@ -2516,6 +2531,41 @@ contains
     !// ------------------------------------------------------------------
   end subroutine aer_vdep2
   !// ------------------------------------------------------------------
+
+  !// ----------------------------------------------------------------------
+  subroutine aerodyn_res(z0, d, ZREF, WIND_ZREF, RHO_ZREF, T_ZREF, SHF, MOL, Ra)
+    !// ----------------------------------------------------------------------
+    !// Description: 
+    !//  Compute the aerodynamical resistance following Simpson et al. (2012).
+    !//  Windspeed at the center of level 2 (~ ZREF = 45 m) is used here.
+    !//  We iterativelty calculate local values of turbulence paramters (USTR, MOL).
+    !//  Roughness length (z0 = 0.07*VEGH - forests; 0.1*VEGH - other veg.) 
+    !//  and deplacement height(d = 0.78*VEGH - forests; 0.7 - other veg.)
+    !//  
+    !// History:
+    !//  Stefanie Falk, May 2019
+    !// ----------------------------------------------------------------------
+    use cmn_parameters, only: VONKARMAN, cp_air, G0
+    !// ----------------------------------------------------------------------
+    implicit none
+    !// --------------------------------------------------------------------
+    !// Input
+    real(r8), intent(in) :: z0, d, ZREF, WIND_ZREF, RHO_ZREF, T_ZREF, SHF, MOL
+    !// Output
+    real(r8), intent(out) :: Ra
+    !// Local variables
+    real(r8) :: USTR_LOC, MOL_LOC
+    !// --------------------------------------------------------------------
+
+    USTR_LOC = WIND_ZREF * VONKARMAN / (LOG((ZREF-d)/z0) - PSIM((ZREF-d)/MOL) + PSIM(z0/MOL))
+
+    MOL_LOC = -1._r8 * (RHO_ZREF * cp_air * T_ZREF * USTR_LOC**3) / (VONKARMAN * G0 * SHF)
+
+    Ra = 1._r8/(VONKARMAN * USTR_LOC) * (LOG((ZREF-d)/z0) - PSIH((ZREF-d)/MOL) + PSIH(z0/MOL))
+    !// ----------------------------------------------------------------------
+  end subroutine aerodyn_res
+  !// ----------------------------------------------------------------------
+
   !// ----------------------------------------------------------------------
   real(r8) function PSIM(CETA)
     !// --------------------------------------------------------------------
@@ -2525,7 +2575,7 @@ contains
     !//  in the mosaic approach to dry deposition.
     !//
     !// History: 
-    !//  Stefanie Falk, Mai 2019
+    !//  Stefanie Falk, May 2019
     !// --------------------------------------------------------------------
     use cmn_parameters, only: CSIM_BETA, CSIM_GAMMA, CPI
     !// --------------------------------------------------------------------
