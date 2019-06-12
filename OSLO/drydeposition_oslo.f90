@@ -795,9 +795,10 @@ contains
     !// --------------------------------------------------------------------
     use cmn_size, only: LPAR, IDBLK, JDBLK, LSULPHUR, LNITRATE
     use cmn_ctm, only: XGRD, YGRD, XDGRD, YDGRD, MPBLKJB, MPBLKJE, &
-         MPBLKIB, MPBLKIE, IDAY, JMON, JDAY, PLAND, NRMETD, NROPSM
-    use cmn_met, only: PRANDTLL1, P, SD, CI, USTR, ZOFLE, PRECLS, PRECCNV, &
-         CLDFR, PPFD, UMS, VMS, SFT, SWVL3, MO_LENGTH
+         MPBLKIB, MPBLKIE, IDAY, JMON, JDAY, PLAND, NRMETD, NROPSM, &
+         ETAA, ETAB
+    use cmn_met, only: PRANDTLL1, P, T, SD, CI, USTR, ZOFLE, PRECLS, PRECCNV, &
+         CLDFR, PPFD, UMS, VMS, SFT, SWVL3, MO_LENGTH, SHF
     use cmn_parameters, only: R_AIR, R_UNIV, VONKARMAN
     use cmn_sfc, only: LAI, ZOI, landSurfTypeFrac, LANDUSE_IDX, StomRes, NVGPAR, &
          LGSMAP, NLCAT, DDEP_PAR
@@ -835,11 +836,12 @@ contains
     real(r8), dimension(NDDEP) :: Rb, Rc, VD
 
     !// Meteorological variables
-    real(r8) :: z0w, ZREF, zthick, RAIN, T2M, PrL, USR, SFNU, PSFC, &
-         WINDL1, snowD
+    real(r8) :: RAIN, T2M, PrL, USR, SFNU, WINDL1, SNOWD, MOL
+    !// Pressure variables
+    real(r8) :: PSFC, P1, P2
     !// To calculate Ra
-    real(r8) :: WIND_ZREF, RHO_ZREF, T_ZREF, &
-         SHF, MOL
+    real(r8) :: ZREF, zthick, WIND_ZREF, RHO_ZREF, T_ZREF, P_ZREF, SHF_IJ
+         
     !// To calculate Rb
     real(r8) :: d_i, RbL, RbO
     !// To calculate Rc
@@ -887,13 +889,6 @@ contains
     character(len=*), parameter :: subr = 'get_vdep2'
     !// --------------------------------------------------------------------
       
-    !// Check for correct land use fractions
-!    if (LANDUSE_IDX .ne. 2) then
-!       write(6,'(a)') f90file//':'//subr// &
-!            ': not programmed LANDUSE_IDX /= 2 yet'
-!       stop
-!    end if
-
     !// Set parameters to be used for the 8 LPJ land use categories
     !// RgsO3:  Ground surface resistance
     !// RgsSO2: Ground surface resistance
@@ -1256,26 +1251,31 @@ contains
 
         !// No need to make a gridbox average fsnow
 
+        !// ----------------------------------------------------------------
         !// Aerodynamic resistance (Ra)
         !// ----------------------------------------------------------------
-        !// Ra can be defined for heat or moisture.
-        !//   RaH = rho * Cp * (Tsfc - T(z)) / SHF
-        !// where rho=air density, Cp=specific heat of air at constant pressure
-        !// Tsfc=temperature at surface, T(z)=temp at hight z,
-        !// SHF=sensible heat flux.
-        !// This can be rewritten (e.g. Monteith, 1973) to
-        !//   RaH = U(ZREF)/(Ustar*Ustar)
-        !// where U(ZREF) is the wind at reference height ZREF.
-
-        !// Define reference height as layer 1 midpoint
-        Zthick = ZOFLE(3,I,J) - ZOFLE(2,I,J)  !// L2 thickness
-        ZREF   = 0.5_r8 * Zthick              !// L2 center height
+        
+        !// Define reference height as level 2 midpoint (~ 45 m)
+        Zthick = ZOFLE(3,I,J) - ZOFLE(2,I,J)     !// L2 thickness
+        ZREF   = 0.5_r8 * Zthick + ZOFLE(2,I,J)  !// L2 center height
+       
+        !// Interpolate meteorology at ZREF 
+        !// May need to check if values are defined for center or not.
+        WIND_ZREF = sqrt(UMS(2,I,J)*UMS(2,I,J) + VMS(2,I,J)*VMS(2,I,J))
+        T_ZREF    = (T(I,J,3)+ T(I,J,2)) * 0.5_r8
+        SHF_IJ    = SHF(I,J)                      !// Surface heat flux
+        !// Get pressure from sigma levels
+        P2        = ETAA(3) + ETAB(3) * PSFC
+        P1        = ETAA(2) + ETAB(2) * PSFC
+        P_ZREF    = (P1 + P2) * 0.5_r8
+        !// Density
+        RHO_ZREF  = P_ZREF/(T_ZREF * R_AIR)
         !// Displacement height
-        depl_height = 0.7_r8 * VEGH           !// other vegetation
-        depl_height(1:4) = 0.78_r8 * VEGH(1:4)!// forests
+        depl_height      = 0.7_r8 * VEGH         !// other vegetation
+        depl_height(1:4) = 0.78_r8 * VEGH(1:4)   !// forests
         !// Roughness length
-        z0 = 0.1_r8                           !// other vegetation
-        z0(1:4) = 0.07_r8 * VEGH(1:4)         !// forests
+        z0      = 0.1_r8                         !// other vegetation
+        z0(1:4) = 0.07_r8 * VEGH(1:4)            !// forests
 
         do NN = 1, NLCAT
            if (ZREF .lt. depl_height(NN)) then
@@ -1288,7 +1288,7 @@ contains
         
         !// Roughness length (z0) for water surfaces.
         !// ZOI is zero for these. z0 over water is generally small.
-        !// Will distinguish between z0 and z0w.
+        !// Will distinguish between z0 and z0(12).
         !// Do not allow z0 > (ZREF-d)
         z0(12)   = min(ZOI(I,J,JMON), (ZREF - depl_height(12)) * 0.999_r8)
 
@@ -1306,46 +1306,32 @@ contains
         ! Sutherland's law should be used throughout the code instead
         !SFNU  = ( 1.458e-6_r8*T2M**(3/2._r8)/(T2M+110.4_r8)* T2M * R_AIR) / (100._r8 * PSFC)
         SFNU  = (6.2e-8_r8 * T2M * T2M * R_AIR) / (100._r8 * PSFC)
-        !z0w = min(0.135_r8*SFNU/USR + 1.83e-3_r8*USR**2, 2.e-3_r8)
+        !z0(12) = min(0.135_r8*SFNU/USR + 1.83e-3_r8*USR**2, 2.e-3_r8)
         !// Maximum limit of 2mm surface roughness.
         if (WINDL1 .lt. 3._r8) then
-           z0w = min(0.135_r8*SFNU/USR, 2.e-3_r8)
+           z0(12) = min(0.135_r8*SFNU/USR, 2.e-3_r8)
         else
            ! g is 9.836 ms-2
-           z0w = min(1.83d-3*USR**2, 2.e-3_r8)
+           z0(12) = min(1.83d-3*USR**2, 2.e-3_r8)
         end if
         !// Wu (J. Phys. Oceanogr., vol.10, 727-740,1980) suggest a correction
         !// to the Charnock relation, but we skip this here.
 
         !// Set minimum value to avoid division by zero later (Berge, 1990,
         !/  Tellus B, 42, 389407, doi:10.1034/j.1600-0889.1990.t01-3-00001.x)
-        if (z0w .le. 0._r8) z0w = 1.5e-5_r8
         if (z0(12) .le. 0._r8) z0(12) = 1.5e-5_r8
-
-        !// Calculation of Ra
-        !// Because we already have L and Ustar, we instead assume Ra=RaH
-        !// from Monteith (1973):
-        Ra = WINDL1 / (USR * USR)
-
-        !// Ra in EMEP2012
-        !// Simpson etal (2012) calculate L and Ustar, but do not describe Ra.
-        !// Their Ustar (Eqn.52) is an expression similar to an equation for
-        !// Ra in EMEP2003 (Eqn.4 in Simpson et al, Characteristics
-        !// of an ozone deposition module II: Sensitivity analysis,
-        !// Water, Air and Soil Pollution, vol. 143, pp 123-137,
-        !// doi: 10.1023/A:1022890603066, 2003).
-        !// These calculations are based upon three variables
-        !//   e1 = (ZREF - d) / z0
-        !//   e2 = (ZREF - d) / MOL
-        !//   e3 = z0 / MOL
-        !// and Ra is found by
-        !//   Ra = (log(e1) - PHIH(e2) + PHIH(e3)) / (USR * VONKARMAN)
-        !// This is problematic: When MOL>>z0, the equation would yield
-        !// (-PHIH(e2)+PHIH(e3)) < 0, possibly giving Ra<0.
-        !// The same applies to EMEP2012 Ustar, so we cannot use that either.
-
-
-
+        
+        !// Calculation of Ra from Simpson etal (2012)
+        do NN = 1, NLCAT
+           call aerodyn_res(z0(NN), depl_height(NN), ZREF, WIND_ZREF, RHO_ZREF, T_ZREF, SHF_IJ, MOL, Ra(NN))
+           !// This should never happen include it anyway.
+           if (Ra(NN) .lt. 0) then
+              write(6,'(a)') f90file//':'//subr//': VERY WRONG: Ra ZERO/NEGATIVE!!!'
+              print*,z0(NN), depl_height(NN), ZREF, WIND_ZREF, RHO_ZREF, T_ZREF, SHF_IJ, MOL, Ra(NN)
+              stop
+           end if
+        end do
+        !// ------------------------------------------------------------------
         !// Quasi-laminar resistance (Rb)
         !// ------------------------------------------------------------------
         do KK = 1, NDDEP
@@ -1356,9 +1342,9 @@ contains
            !// Land (cannot be zero due to USR having lower limit)
            rbL = 2._r8 / (VONKARMAN * USR) * (Sc_H20 * D_gas(KK) / PrL )**(2._r8/3._r8)
 
-           !// Ocean (use z0w, not z0)
+           !// Ocean (use z0(12), not z0)
            D_i = D_H2O / D_gas(KK) !// molecular diffusivity of the gas
-           rbO = log(z0w * VONKARMAN * USR / D_i) / (USR * VONKARMAN)
+           rbO = log(z0(12) * VONKARMAN * USR / D_i) / (USR * VONKARMAN)
            !// IMPORTANT
            !// RbO can be very large or even negative from this
            !// formula. Negative rbO can come from z0 being very small,
@@ -1712,7 +1698,7 @@ contains
 
         !// Calculate deposition velocity
         !// ----------------------------------------------------------------
-        do KK = 1, nddep
+        do KK = 1, NDDEP
            Tot_res = Ra + Rb(KK) + Rc(KK)
            do NN = 1, NLCAT
               if (Tot_res(NN) .ne. Tot_res(NN)) then
@@ -1724,9 +1710,7 @@ contains
  
            !// Unit is m/s
            do NN = 1, NLCAT
-              if (Tot_res(NN) .gt. 0._r8) then
-                 VD(KK) = 1._r8 / Tot_res(NN)
-              else
+              if (Tot_res(NN) .le. 0._r8) then
                  !// Fail-safe check
                  write(6,'(a,i3,4es9.3)') f90file//':'//subr// &
                       ': Tot_res is zero/negative/nan!',&
@@ -1734,6 +1718,7 @@ contains
                  stop
               end if
            end do
+           VD(KK) = SUM(1._r8 / Tot_res) / NLCAT
         end do
 
 
