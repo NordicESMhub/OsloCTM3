@@ -840,7 +840,7 @@ contains
     !// Pressure variables
     real(r8) :: PSFC, P1, P2
     !// To calculate Ra
-    real(r8) :: ZREF, zthick, WIND_ZREF, RHO_ZREF, T_ZREF, P_ZREF, SHF_IJ
+    real(r8) :: ZREF, WIND_ZREF, RHO_ZREF, T_ZREF, P_ZREF, SHF_IJ
          
     !// To calculate Rb
     real(r8) :: d_i, RbL, RbO
@@ -1255,18 +1255,17 @@ contains
         !// Aerodynamic resistance (Ra)
         !// ----------------------------------------------------------------
         
-        !// Define reference height as level 2 midpoint (~ 45 m)
-        Zthick = ZOFLE(3,I,J) - ZOFLE(2,I,J)     !// L2 thickness
-        ZREF   = 0.5_r8 * Zthick + ZOFLE(2,I,J)  !// L2 center height
+        !// Define reference height as level 4 center (<45 m>)
+        ZREF   = ( ZOFLE(5,I,J) + ZOFLE(4,I,J) ) * 0.5_r8
        
         !// Interpolate meteorology at ZREF 
         !// May need to check if values are defined for center or not.
-        WIND_ZREF = sqrt(UMS(2,I,J)*UMS(2,I,J) + VMS(2,I,J)*VMS(2,I,J))
-        T_ZREF    = (T(I,J,3)+ T(I,J,2)) * 0.5_r8
+        WIND_ZREF = sqrt(UMS(4,I,J)*UMS(4,I,J) + VMS(4,I,J)*VMS(4,I,J))
+        T_ZREF    = T(I,J,4)
         SHF_IJ    = SHF(I,J)                      !// Surface heat flux
         !// Get pressure from sigma levels
-        P2        = ETAA(3) + ETAB(3) * PSFC
-        P1        = ETAA(2) + ETAB(2) * PSFC
+        P2        = ETAA(5) + ETAB(5) * PSFC
+        P1        = ETAA(4) + ETAB(4) * PSFC
         P_ZREF    = (P1 + P2) * 0.5_r8
         !// Density
         RHO_ZREF  = P_ZREF/(T_ZREF * R_AIR)
@@ -1280,7 +1279,7 @@ contains
         do NN = 1, NLCAT
            if (ZREF .lt. depl_height(NN)) then
               write(6,'(a)') f90file//':'//subr//': ZREF < deplacement height: This is WRONG!'
-              print*,'NN,ZREF,d',NN,ZREF,depl_height(NN)
+              print*,'NN,ZREF, d, ZOFLE',NN,ZREF,depl_height(NN), ZOFLE(:,I,J)
               stop
            end if
         end do
