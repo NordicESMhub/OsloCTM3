@@ -833,7 +833,8 @@ contains
     !// Resistances and deposition velocities
     integer, parameter :: NDDEP = 14
     real(r8), dimension(NLCAT) :: Ra, Tot_res
-    real(r8), dimension(NDDEP) :: Rb, Rc, VD
+    real(r8), dimension(NDDEP,NLCAT) :: Rb
+    real(r8), dimension(NDDEP) :: Rc, VD
 
     !// Meteorological variables
     real(r8) :: RAIN, T2M, PrL, USR, SFNU, WINDL1, SNOWD, MOL
@@ -1120,8 +1121,133 @@ contains
            fSW = 2*SWVL3_IJ
         end if
 
+        !// ----------------------------------------------------------------
+        !// Aerodynamic resistance (Ra)
+        !// ----------------------------------------------------------------
+        
+        !// Define reference height as level 4 center (<45 m>)
+        ZREF   = ( ZOFLE(5,I,J) + ZOFLE(4,I,J) ) * 0.5_r8
+       
+        !// Interpolate meteorology at ZREF 
+        !// May need to check if values are defined for center or not.
+        WIND_ZREF = sqrt(UMS(4,I,J)*UMS(4,I,J) + VMS(4,I,J)*VMS(4,I,J))
+        T_ZREF    = T(I,J,4)
+        SHF_IJ    = SHF(I,J)                      !// Surface heat flux
+        !// Get pressure from sigma levels
+        P2        = ETAA(5) + ETAB(5) * PSFC
+        P1        = ETAA(4) + ETAB(4) * PSFC
+        P_ZREF    = (P1 + P2) * 0.5_r8
+        !// Density
+        RHO_ZREF  = P_ZREF/(T_ZREF * R_AIR)
+        !// Displacement height
+        depl_height      = 0.7_r8 * VEGH         !// other vegetation
+        depl_height(1:4) = 0.78_r8 * VEGH(1:4)   !// forests
+        !// Roughness length
+        z0      = 0.1_r8                         !// other vegetation
+        z0(1:4) = 0.07_r8 * VEGH(1:4)            !// forests
+
+        do NN = 1, NLCAT
+           if (ZREF .lt. depl_height(NN)) then
+              write(6,'(a)') f90file//':'//subr//': ZREF < deplacement height: This is WRONG!'
+              print*,'NN,ZREF, d, ZOFLE',NN,ZREF,depl_height(NN), ZOFLE(:,I,J)
+              stop
+           end if
+        end do
+        
+        
+        !// Roughness length (z0) for water surfaces.
+        !// ZOI is zero for these. z0 over water is generally small.
+        !// Will distinguish between z0 and z0(12).
+        !// Do not allow z0 > (ZREF-d)
+        z0(12)   = min(ZOI(I,J,JMON), (ZREF - depl_height(12)) * 0.999_r8)
+
+        !// Water roughness lenghth
+        !// Calm sea: 0.11 * nu / USR, nu=eta/rho=kin.visc. of air (Hinze,1975)
+        !//                            here we use 0.135 instead of 0.11.
+        !// Rough sea: a * USR^2 / g, where a=0.016 (Charnock, 1955) here 0.018
+        !//                           here a=0.018 (Garratt 1992)
+        !// Will use wind of 3m/s to separate these.
+        !// SFNU = kinematic visc(nu) = mu/density  (m*m/s), found as in PBL:
+        !//   SFCD = SFCP/(SFCT*287._r8) ! density (kg/m^3)
+        !//   SFMU = 6.2d-8*SFCT    ! abs.visc. 6.2d-8*T (lin fit:-30C to +40C)
+        !//   SFNU = SFMU / SFCD    ! kinematic visc(nu) = mu/density  (m*m/s)
+        !// or SFNU = 6.2d-8*T2M*T2M*287._r8/(100._r8*PSFC)
+        ! Sutherland's law should be used throughout the code instead
+        !SFNU  = ( 1.458e-6_r8*T2M**(3/2._r8)/(T2M+110.4_r8)* T2M * R_AIR) / (100._r8 * PSFC)
+        SFNU  = (6.2e-8_r8 * T2M * T2M * R_AIR) / (100._r8 * PSFC)
+        !z0(12) = min(0.135_r8*SFNU/USR + 1.83e-3_r8*USR**2, 2.e-3_r8)
+        !// Maximum limit of 2mm surface roughness.
+        if (WINDL1 .lt. 3._r8) then
+           z0(12) = min(0.135_r8*SFNU/USR, 2.e-3_r8)
+        else
+           ! g is 9.836 ms-2
+           z0(12) = min(1.83d-3*USR**2, 2.e-3_r8)
+        end if
+        !// Wu (J. Phys. Oceanogr., vol.10, 727-740,1980) suggest a correction
+        !// to the Charnock relation, but we skip this here.
+
+        !// Set minimum value to avoid division by zero later (Berge, 1990,
+        !/  Tellus B, 42, 389407, doi:10.1034/j.1600-0889.1990.t01-3-00001.x)
+        if (z0(12) .le. 0._r8) z0(12) = 1.5e-5_r8
+        
+        !// Calculation of Ra from Simpson etal (2012)
+        do NN = 1, NLCAT
+           call aerodyn_res(z0(NN), depl_height(NN), ZREF, WIND_ZREF, RHO_ZREF, T_ZREF, SHF_IJ, MOL, Ra(NN))
+           !// This should never happen include it anyway.
+           if (Ra(NN) .lt. 0) then
+              write(6,'(a)') f90file//':'//subr//': VERY WRONG: Ra ZERO/NEGATIVE!!!'
+              print*,z0(NN), depl_height(NN), ZREF, WIND_ZREF, RHO_ZREF, T_ZREF, SHF_IJ, MOL, Ra(NN)
+              stop
+           end if
+        end do
+
+        !// ------------------------------------------------------------------
+        !// Quasi-laminar resistance (Rb)
+        !// ------------------------------------------------------------------
+        do KK = 1, NDDEP
+
+           !// Rb is calculated differently for land and ocean, respectively
+           !// using Eqn.53 and Eqn.54 in EMEP2012.
+
+           !// Land (cannot be zero due to USR having lower limit)
+           rbL = 2._r8 / (VONKARMAN * USR) * (Sc_H20 * D_gas(KK) / PrL )**(2._r8/3._r8)
+
+           !// Ocean (use z0(12), not z0)
+           D_i = D_H2O / D_gas(KK) !// molecular diffusivity of the gas
+           rbO = log(z0(12) * VONKARMAN * USR / D_i) / (USR * VONKARMAN)
+           !// IMPORTANT
+           !// RbO can be very large or even negative from this
+           !// formula. Negative rbO can come from z0 being very small,
+           !// as is often the case over water.
+           !// We impose limits:
+           rbO = min( 1000._r8, rbO ) !// i.g. min velocity 0.001 m/s
+           rbO = max(   10._r8, rbO ) !// i.e. max velocity 0.10 m/s
+
+           !// Make a weighted mean using land fraction (weighting conductances)
+           !Rb(KK) = 1._r8 / (PLAND(I,J) / rbL  +  (1._r8 - PLAND(I,J)) / rbO)
+           do NN = 1, 11
+              Rb(KK,NN) = rbL
+           end do
+           do NN = 13, 14
+              Rb(KK,NN) = rbL
+           end do
+           Rb(KK,12) = rbO
+        end do !// do N = 1, nddep
+
+        !// ----------------------------------------------------------------
+        !// Surface (or canopy) resistance (Rc)
+        !// ----------------------------------------------------------------
+        !// Rc is in general calculated as in EMEP2012.
+        !//
+        !// The general formula for canopy conductances is
+        !//   Gc = LAI * gsto + Gns
+        !// where LAI is one-sided leaf-area index and gsto is the stomatal
+        !// conductance. Gns is the non-stomatal conductance.
+        !// These are calculated separately, and Gns is calculated separately
+        !// for each land-use type.
+        !// ----------------------------------------------------------------
         !// Stomatal conductance
-             
+        !// ----------------------------------------------------------------    
         !// Unit conversion of [mmol s-1 m-2] to [m s-1]:
         !// Ideal gas law Vm = V/n = R * T/P
         !// Factor 1.d-5 derived from unit conversation:
@@ -1130,7 +1256,8 @@ contains
         !// This can be off by +/-25%
         gsto = gmax*fPhen*fLight*max(fmin, fstcT2*fD*fSW)
         gsto = gsto*1.d-5*R_UNIV*T2M/PSFC
-        
+        !print *,"GSTO"
+        !print *,I,J, gsto
         !// Fraction of water/ocean in gridbox
         !// Not used, will be set below.
         !focean = max(0._r8, 1._r8 - PLAND(I,J))
@@ -1252,125 +1379,8 @@ contains
         !// No need to make a gridbox average fsnow
 
         !// ----------------------------------------------------------------
-        !// Aerodynamic resistance (Ra)
-        !// ----------------------------------------------------------------
-        
-        !// Define reference height as level 4 center (<45 m>)
-        ZREF   = ( ZOFLE(5,I,J) + ZOFLE(4,I,J) ) * 0.5_r8
-       
-        !// Interpolate meteorology at ZREF 
-        !// May need to check if values are defined for center or not.
-        WIND_ZREF = sqrt(UMS(4,I,J)*UMS(4,I,J) + VMS(4,I,J)*VMS(4,I,J))
-        T_ZREF    = T(I,J,4)
-        SHF_IJ    = SHF(I,J)                      !// Surface heat flux
-        !// Get pressure from sigma levels
-        P2        = ETAA(5) + ETAB(5) * PSFC
-        P1        = ETAA(4) + ETAB(4) * PSFC
-        P_ZREF    = (P1 + P2) * 0.5_r8
-        !// Density
-        RHO_ZREF  = P_ZREF/(T_ZREF * R_AIR)
-        !// Displacement height
-        depl_height      = 0.7_r8 * VEGH         !// other vegetation
-        depl_height(1:4) = 0.78_r8 * VEGH(1:4)   !// forests
-        !// Roughness length
-        z0      = 0.1_r8                         !// other vegetation
-        z0(1:4) = 0.07_r8 * VEGH(1:4)            !// forests
-
-        do NN = 1, NLCAT
-           if (ZREF .lt. depl_height(NN)) then
-              write(6,'(a)') f90file//':'//subr//': ZREF < deplacement height: This is WRONG!'
-              print*,'NN,ZREF, d, ZOFLE',NN,ZREF,depl_height(NN), ZOFLE(:,I,J)
-              stop
-           end if
-        end do
-        
-        
-        !// Roughness length (z0) for water surfaces.
-        !// ZOI is zero for these. z0 over water is generally small.
-        !// Will distinguish between z0 and z0(12).
-        !// Do not allow z0 > (ZREF-d)
-        z0(12)   = min(ZOI(I,J,JMON), (ZREF - depl_height(12)) * 0.999_r8)
-
-        !// Water roughness lenghth
-        !// Calm sea: 0.11 * nu / USR, nu=eta/rho=kin.visc. of air (Hinze,1975)
-        !//                            here we use 0.135 instead of 0.11.
-        !// Rough sea: a * USR^2 / g, where a=0.016 (Charnock, 1955) here 0.018
-        !//                           here a=0.018 (Garratt 1992)
-        !// Will use wind of 3m/s to separate these.
-        !// SFNU = kinematic visc(nu) = mu/density  (m*m/s), found as in PBL:
-        !//   SFCD = SFCP/(SFCT*287._r8) ! density (kg/m^3)
-        !//   SFMU = 6.2d-8*SFCT    ! abs.visc. 6.2d-8*T (lin fit:-30C to +40C)
-        !//   SFNU = SFMU / SFCD    ! kinematic visc(nu) = mu/density  (m*m/s)
-        !// or SFNU = 6.2d-8*T2M*T2M*287._r8/(100._r8*PSFC)
-        ! Sutherland's law should be used throughout the code instead
-        !SFNU  = ( 1.458e-6_r8*T2M**(3/2._r8)/(T2M+110.4_r8)* T2M * R_AIR) / (100._r8 * PSFC)
-        SFNU  = (6.2e-8_r8 * T2M * T2M * R_AIR) / (100._r8 * PSFC)
-        !z0(12) = min(0.135_r8*SFNU/USR + 1.83e-3_r8*USR**2, 2.e-3_r8)
-        !// Maximum limit of 2mm surface roughness.
-        if (WINDL1 .lt. 3._r8) then
-           z0(12) = min(0.135_r8*SFNU/USR, 2.e-3_r8)
-        else
-           ! g is 9.836 ms-2
-           z0(12) = min(1.83d-3*USR**2, 2.e-3_r8)
-        end if
-        !// Wu (J. Phys. Oceanogr., vol.10, 727-740,1980) suggest a correction
-        !// to the Charnock relation, but we skip this here.
-
-        !// Set minimum value to avoid division by zero later (Berge, 1990,
-        !/  Tellus B, 42, 389407, doi:10.1034/j.1600-0889.1990.t01-3-00001.x)
-        if (z0(12) .le. 0._r8) z0(12) = 1.5e-5_r8
-        
-        !// Calculation of Ra from Simpson etal (2012)
-        do NN = 1, NLCAT
-           call aerodyn_res(z0(NN), depl_height(NN), ZREF, WIND_ZREF, RHO_ZREF, T_ZREF, SHF_IJ, MOL, Ra(NN))
-           !// This should never happen include it anyway.
-           if (Ra(NN) .lt. 0) then
-              write(6,'(a)') f90file//':'//subr//': VERY WRONG: Ra ZERO/NEGATIVE!!!'
-              print*,z0(NN), depl_height(NN), ZREF, WIND_ZREF, RHO_ZREF, T_ZREF, SHF_IJ, MOL, Ra(NN)
-              stop
-           end if
-        end do
-        !// ------------------------------------------------------------------
-        !// Quasi-laminar resistance (Rb)
-        !// ------------------------------------------------------------------
-        do KK = 1, NDDEP
-
-           !// Rb is calculated differently for land and ocean, respectively
-           !// using Eqn.53 and Eqn.54 in EMEP2012.
-
-           !// Land (cannot be zero due to USR having lower limit)
-           rbL = 2._r8 / (VONKARMAN * USR) * (Sc_H20 * D_gas(KK) / PrL )**(2._r8/3._r8)
-
-           !// Ocean (use z0(12), not z0)
-           D_i = D_H2O / D_gas(KK) !// molecular diffusivity of the gas
-           rbO = log(z0(12) * VONKARMAN * USR / D_i) / (USR * VONKARMAN)
-           !// IMPORTANT
-           !// RbO can be very large or even negative from this
-           !// formula. Negative rbO can come from z0 being very small,
-           !// as is often the case over water.
-           !// We impose limits:
-           rbO = min( 1000._r8, rbO ) !// i.g. min velocity 0.001 m/s
-           rbO = max(   10._r8, rbO ) !// i.e. max velocity 0.10 m/s
-
-           !// Make a weighted mean using land fraction (weighting conductances)
-           Rb(KK) = 1._r8 / (PLAND(I,J) / rbL  +  (1._r8 - PLAND(I,J)) / rbO)
-
-        end do !// do N = 1, nddep
-
-        !// Surface (or canopy) resistance (Rc)
-        !// ----------------------------------------------------------------
-        !// Rc is in general calculated as in EMEP2012.
-        !//
-        !// The general formula for canopy conductances is
-        !//   Gc = LAI * gsto + Gns
-        !// where LAI is one-sided leaf-area index and gsto is the stomatal
-        !// conductance. Gns is the non-stomatal conductance.
-        !// These are calculated separately, and Gns is calculated separately
-        !// for each land-use type.
-
-
         !// Non stomatal conductance Gns - Ozone
-        !// ------------------------------------
+        !// ----------------------------------------------------------------
         !// In EMEP2012, the Gns for O3 is found from
         !//   GnsO3 = SAI/(rext*FT) + 1/(Rinc + RgsO3)
         !// where FT is temperature correction, and we define
@@ -1514,9 +1524,6 @@ contains
            stop
         end if
         
-
-
-
 
         !// Non-stomatal conductance Gns - SO2
         !// ----------------------------------
@@ -1698,11 +1705,11 @@ contains
         !// Calculate deposition velocity
         !// ----------------------------------------------------------------
         do KK = 1, NDDEP
-           Tot_res = Ra + Rb(KK) + Rc(KK)
+           Tot_res = Ra + Rb(KK,:) + Rc(KK)
            do NN = 1, NLCAT
               if (Tot_res(NN) .ne. Tot_res(NN)) then
                  write(6,'(a,i3,3es9.3)') f90file//':'//subr// &
-                      ': Total resistance is NAN!', NN,KK,Ra(NN),Rb(KK),Rc(KK)
+                      ': Total resistance is NAN!', NN,KK,Ra(NN),Rb(KK,NN),Rc(KK)
                  stop
               end if
            end do
@@ -1713,7 +1720,7 @@ contains
                  !// Fail-safe check
                  write(6,'(a,i3,4es9.3)') f90file//':'//subr// &
                       ': Tot_res is zero/negative/nan!',&
-                      NN, KK, Tot_res(NN), Ra(NN), Rb(KK), Rc(KK)
+                      NN, KK, Tot_res(NN), Ra(NN), Rb(KK,NN), Rc(KK)
                  stop
               end if
            end do
