@@ -823,7 +823,7 @@ contains
     integer :: GDAY, GLEN                   !// Growing season from megan
 
     real(r8), dimension(NLCAT) :: SAI, SAI0,  FL, gsto, &
-          Rinc, GO3, GSO2, depl_height, z0
+          Rinc, depl_height, z0
     !// Parameters from EMEP.par
     real(r8), dimension(NLCAT) :: gmax, fmin, Dmin, Dmax,   &
          fLight, fsnowC, fstcT2, fphen, fD, fSW, fLightAlpha, &
@@ -833,8 +833,8 @@ contains
     !// Resistances and deposition velocities
     integer, parameter :: NDDEP = 14
     real(r8), dimension(NLCAT) :: Ra, Tot_res
-    real(r8), dimension(NDDEP,NLCAT) :: Rb
-    real(r8), dimension(NDDEP) :: Rc, VD
+    real(r8), dimension(NDDEP,NLCAT) :: Rb, Rc
+    real(r8), dimension(NDDEP) ::  VD
 
     !// Meteorological variables
     real(r8) :: RAIN, T2M, PrL, USR, SFNU, WINDL1, SNOWD, MOL
@@ -846,11 +846,11 @@ contains
     !// To calculate Rb
     real(r8) :: d_i, RbL, RbO
     !// To calculate Rc
-    real(r8) :: RsnowO3, RsnowSO2, GnsO3, GcO3, GstO3, gext, &
+    real(r8) :: RsnowO3, RsnowSO2, gext, &
          Rgs, FT, VPD, &
          T2Mcel, ee, RH, M_SO2, M_NH3, Asn, Asn24, &
-         GnsSO2, GSO2_dry, GSO2_wet, &
          Gstc_avg 
+    real(r8), dimension(NLCAT) :: GstO3, GnsO3, GcO3, GnsSO2
     
     !// Uptake parameters taken from Wesley (Atm.Env., 1989,
     !// doi:10.1016/0004-6981(89)90153-4)
@@ -1245,6 +1245,7 @@ contains
         !// conductance. Gns is the non-stomatal conductance.
         !// These are calculated separately, and Gns is calculated separately
         !// for each land-use type.
+
         !// ----------------------------------------------------------------
         !// Stomatal conductance
         !// ----------------------------------------------------------------    
@@ -1254,13 +1255,9 @@ contains
         !// mmol => 1.d-3 mol and 1/hPa => 1.d-2/Pa
         !// Simpson et al. has gmax = gmaxm/41000
         !// This can be off by +/-25%
+
         gsto = gmax*fPhen*fLight*max(fmin, fstcT2*fD*fSW)
         gsto = gsto*1.d-5*R_UNIV*T2M/PSFC
-        !print *,"GSTO"
-        !print *,I,J, gsto
-        !// Fraction of water/ocean in gridbox
-        !// Not used, will be set below.
-        !focean = max(0._r8, 1._r8 - PLAND(I,J))
 
         !// Acidity ratio to be used for SO2 and NH3
         !// ----------------------------------------
@@ -1311,13 +1308,7 @@ contains
         !// RgsO3:  Ground surface resistance O3
         !// RgsSO2: Ground surface resistance SO2
         !// VEG_H:  Vegetation height (needed to get Rinc)
-
-
-        !// Compute the grid-cell-average stomatal conductance
-        !// Devide by sum(FL) to be sure that it is normalized!
-        !// Skip barren land (same as gmax=0 in EMEP.par)
-        Gstc_avg = sum(FL*gsto)/sum(FL)
-                        
+             
         !// Rinc = In-canopy resistance = (SAI * VEGH) *  14/Ustar
         do NN = 1, NLCAT-1
            Rinc(NN) = SAI(NN) * VEGH(NN) * 14._r8 / USR
@@ -1431,11 +1422,10 @@ contains
         end if
 
 
-        !// To calculate GnsO3, we calculate it for each land-type as GO3(NN).
-        !// Then we correct GO3(NN) for snow cover, and finally find
-        !// the gridbox mean GnsO3 from FL and GO3.
+        !// To calculate GnsO3, we calculate it for each land-type as GnsO3(NN).
+        !// Then we correct GnsO3(NN) for snow cover.
 
-        GnsO3 = 0._r8 !// Grid-average GnsO3
+        GnsO3 = 0._r8
         do NN = 1, NLCAT-1
 
            Rgs = RgsO3(NN) !// Land-type resistance from tabulated values
@@ -1474,16 +1464,13 @@ contains
 
            !// GnsO3 for this land type
            !// (GnsO3 = SAI/(rext*FT) + 1/(Rinc + RgsO3)
-           GO3(NN) = SAI(NN) * gext
-           if (Rgs .gt. 0._r8) GO3(NN) = GO3(NN) + 1._r8 / Rgs
-
-           !// Grid-average GnsO3
-           GnsO3 = GnsO3 + FL(NN) * GO3(NN)
+           GnsO3(NN) = SAI(NN) * gext
+           if (Rgs .gt. 0._r8) GnsO3(NN) = GnsO3(NN) + 1._r8 / Rgs
 
         end do
 
         !// Finally include FL(14) as snow
-        if (FL(14) .gt. 0._r8) GnsO3 = GnsO3 + FL(14)/RsnowO3
+        GnsO3(14) = FL(14)/RsnowO3
 
         !// Zhang etal (2003, ACP, doi:10.5194/acp-3-2067-2003) suggest
         !// night-time value of R=400s/m for non-stomatal conductance,
@@ -1500,30 +1487,30 @@ contains
         !// conductance from leaf stomatal contuctance, where gsto is the
         !// latter.
 
-        !// gsto is estimated in EMEP parameterization, for each vegetation type, and
-        !// above the average conductance Gstc_avg was calculated from this.
-        !// The estimated canopy stomatal conductance is then:
-        !//GstO3 = LAI_IJ * Gstc_avg <- THIS IS WRONG AND NEEDS TO BE CORRECTED!!!
-        !// where the vegetation fractions are taken into account.
-        !//
-        GstO3 = LAI_IJ*Gstc_avg
+        !// The estimated canopy stomatal conductance:
+        GstO3 = LAI_IJ*gsto
+
+        !// Compute the grid-cell-average stomatal conductance
+        !// Devide by sum(FL) to be sure that it is normalized!
+        !// Skip barren land (same as gmax=0 in EMEP.par)
+        Gstc_avg = sum(FL*gsto)/sum(FL)
+
         !//
         !// Total canopy conductance for O3
         GcO3 = GstO3 + GnsO3
         !// Total canopy resistance for O3
-        if (GcO3 .gt. 0._r8) then
-           Rc(1) = 1._r8 / GcO3
-        else
-           !// This should never happen because RgsO3 was defined for all
-           !// land-use types. But I include it anyway.
-           write(6,'(a)') f90file//':'//subr//': VERY WRONG: GnsO3 ZERO/NEGATIVE!!!'
-           print*,GstO3,GnsO3,PAR_IJ,PARMEAN(I,J,JMON),fstcT2
-           do NN = 1, NLCAT
-              write(6,'(i2,3es12.3)') NN,GO3(NN),FL(NN),fsnowC(NN)
-           end do
-           stop
-        end if
-        
+        do NN = 1, NLCAT
+           if (GcO3(NN) .gt. 0._r8) then
+              Rc(1,NN) = 1._r8 / GcO3(NN)
+           else
+              !// This should never happen because RgsO3 was defined for all
+              !// land-use types. But I include it anyway.
+              write(6,'(a)') f90file//':'//subr//': VERY WRONG: GnsO3 ZERO/NEGATIVE!!!'
+              print*,GstO3,GnsO3,PAR_IJ,PARMEAN(I,J,JMON),fstcT2
+              write(6,'(i2,3es12.3)') NN,GnsO3(NN),FL(NN),fsnowC(NN)
+              stop
+           end if
+        end do
 
         !// Non-stomatal conductance Gns - SO2
         !// ----------------------------------
@@ -1580,7 +1567,7 @@ contains
               !// Skip FT for SO2 when using EMEP2012 vegetated surfaces
               Rgs = Rgs
            end if
-           GSO2(NN) = 1._r8 / Rgs
+           GnsSO2(NN) = 1._r8 / Rgs
            RgsSO2(NN) = Rgs !// Not necessary (not used further down)
            !// EMEP2012 <---
         end do
@@ -1604,37 +1591,35 @@ contains
               Rgs = FT * Rgs
            end if
 
-           !// Do *NOT* update RgsSO2 here, only GSO2 for this land type
+           !// Do *NOT* update RgsSO2 here, only GnsSO2 for this land type
            if (Rgs .gt. 0._r8) then
-              GSO2(NN) =  1._r8 / Rgs
+              GnsSO2(NN) =  1._r8 / Rgs
            else
-              GSO2(NN) = 0._r8
+              GnsSO2(NN) = 0._r8
            end if
 
         end do
 
-        !// Gridbox average GnsSO2 (all categories)
         GnsSO2 = 0._r8
-        do NN = 1, NLCAT-1
-           GnsSO2 = GnsSO2 + FL(NN) * GSO2(NN)
-        end do
+        
         !// Include FL(14) as snow
-        if (FL(14) .gt. 0._r8) GnsSO2 = GnsSO2 + FL(14)/RsnowSO2
+        if (FL(14) .gt. 0._r8) GnsSO2(14) = FL(14)/RsnowSO2
 
-
-        !// Now we have Rc for SO2
-        if (GnsSO2 .gt. 0._r8) then
-           Rc(2) = 1._r8 / GnsSO2
-        else
-           !// This should not happen, I think GSO2 has values for all
-           !// land-use types. But I include it anyway.
-           write(6,'(a)') f90file//':'//subr// &
-                ': VERY WRONG: GnsSO2 ZERO/NEGATIVE!!!'
-           print*,GSO2
-           print*,fsnowC
-           stop
-        end if
-
+        do NN = 1, NLCAT-1
+           
+           !// Now we have Rc for SO2
+           if (GnsSO2(NN) .gt. 0._r8) then
+              Rc(2,NN) = 1._r8 / GnsSO2(NN)
+           else
+              !// This should not happen, I think GnsSO2 has values for all
+              !// land-use types. But I include it anyway.
+              write(6,'(a)') f90file//':'//subr// &
+                   ': VERY WRONG: GnsSO2 ZERO/NEGATIVE!!!'
+              print*,GnsSO2
+              print*,fsnowC
+              stop
+           end if
+        end do
 
 
 
@@ -1648,11 +1633,11 @@ contains
         !// NH3 (KK=ndep) will be done separately below.
         !// HNO3 (KK=4) will be reset below.
         do KK = 3, nddep-1
-
+           
            !// Use total GnsSO2 and GcO3 in interpolation to other gases.
            !// Another possibility is to do this for each vegetation
            !// category, but there should be no need to do that yet.
-           Rc(KK) = 1._r8 / (1.e-5_r8 * Hstar(KK) * GnsSO2 + f0(KK) * GcO3)
+           Rc(KK,:) = 1._r8 / (1.e-5_r8 * Hstar(KK) * GnsSO2 + f0(KK) * GcO3)
 
         end do
 
@@ -1666,7 +1651,7 @@ contains
         !// EMEP2012 use a different RclowHNO3, namely 10s/m.
         !// They also use Ts, surface temperature, but I understand that as
         !// 2m temperature.
-        Rc(4) = max(1._r8, -2._r8*T2Mcel)
+        Rc(4,:) = max(1._r8, -2._r8*T2Mcel)
 
 
 
@@ -1685,19 +1670,19 @@ contains
            !// from 1000/200 to 500/100 compared to EMEP2003, so we use these
            if (T2M .le. 268._r8) then
               !// Cold temperatures (T<-5C)
-              Rc(14) = 500._r8
+              Rc(14,:) = 500._r8
            else if  (T2M .gt. 268._r8 .and. T2M .le. 273._r8 ) then   
               !// Just below 0C (-5C<T<0C)
-              Rc(14) = 100._r8
+              Rc(14,:) = 100._r8
            else
               !// Above 0C.
               !// Equation uses temperature in C, not K.
-              Rc(14) = 0.0455_r8 * 10._r8 * log10(T2Mcel + 2._r8) &
+              Rc(14,:) = 0.0455_r8 * 10._r8 * log10(T2Mcel + 2._r8) &
                        * exp((100._r8 - RH)/7._r8) &
                        * 10._r8**(-1.1099_r8 * Asn + 1.6769_r8)
               !// Impose some limits on Rc (EMEP2012)
-              Rc(14) = min( 200.0,Rc(14))
-              Rc(14) = max(  10.0,Rc(14))
+              Rc(14,:) = min( 200.0,Rc(14,:))
+              Rc(14,:) = max(  10.0,Rc(14,:))
            end if
         end if
 
@@ -1705,11 +1690,11 @@ contains
         !// Calculate deposition velocity
         !// ----------------------------------------------------------------
         do KK = 1, NDDEP
-           Tot_res = Ra + Rb(KK,:) + Rc(KK)
+           Tot_res = Ra + Rb(KK,:) + Rc(KK,:)
            do NN = 1, NLCAT
               if (Tot_res(NN) .ne. Tot_res(NN)) then
                  write(6,'(a,i3,3es9.3)') f90file//':'//subr// &
-                      ': Total resistance is NAN!', NN,KK,Ra(NN),Rb(KK,NN),Rc(KK)
+                      ': Total resistance is NAN!', NN,KK,Ra(NN),Rb(KK,NN),Rc(KK,NN)
                  stop
               end if
            end do
@@ -1720,7 +1705,7 @@ contains
                  !// Fail-safe check
                  write(6,'(a,i3,4es9.3)') f90file//':'//subr// &
                       ': Tot_res is zero/negative/nan!',&
-                      NN, KK, Tot_res(NN), Ra(NN), Rb(KK,NN), Rc(KK)
+                      NN, KK, Tot_res(NN), Ra(NN), Rb(KK,NN), Rc(KK,NN)
                  stop
               end if
            end do
