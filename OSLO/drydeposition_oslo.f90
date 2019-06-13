@@ -1095,11 +1095,14 @@ contains
         else
            call GROWSEASON(JDAY, YDGRD(J), GDAY, GLEN)
         end if
+
+        if ((GLEN .ge. 365) .and. (YDGRD(J) .ge. -23._r8) .and. (YDGRD(J) .le. 23._r8)) then
+           print*,'! Exclude tropics!'
+           fPhen = 1._r8
+        end if
+
         if (GDAY .eq. 0) then
            fphen = 0._r8
-        elseif (GLEN .ge. 365) then
-           ! Exclude tropics!
-           fPhen = 1._r8
         else
            !fPhen = max(phia, phic)
            where (GDAY .le. phiAS)
