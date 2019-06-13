@@ -1471,7 +1471,7 @@ contains
         end do
 
         !// Finally include FL(NLCAT) as snow
-        GnsO3(NLCAT) = FL(NLCAT)/RsnowO3
+        GnsO3(NLCAT) = 1._r8/RsnowO3
 
         !// Zhang etal (2003, ACP, doi:10.5194/acp-3-2067-2003) suggest
         !// night-time value of R=400s/m for non-stomatal conductance,
@@ -1612,8 +1612,8 @@ contains
 
         end do
 
-        !// Include FL(NLCAT) as snow
-        GnsSO2(NLCAT) = FL(NLCAT)/RsnowSO2
+        !// Include snow
+        GnsSO2(NLCAT) = 1._r8/RsnowSO2
 
         if (SUM(GnsSO2) .le. 0._r8) then
            !// This should never happen because RgsO3 was defined for all land-use types.
