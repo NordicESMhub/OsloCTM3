@@ -1228,7 +1228,7 @@ contains
            do NN = 1, 11
               Rb(KK,NN) = rbL
            end do
-           do NN = 13, 14
+           do NN = 13, NLCAT
               Rb(KK,NN) = rbL
            end do
            Rb(KK,12) = rbO
@@ -1255,7 +1255,7 @@ contains
         !// mmol => 1.d-3 mol and 1/hPa => 1.d-2/Pa
         !// Simpson et al. has gmax = gmaxm/41000
         !// This can be off by +/-25%
-
+        gsto = 0._r8 ! initialisation
         gsto = gmax*fPhen*fLight*max(fmin, fstcT2*fD*fSW)
         gsto = gsto*1.d-5*R_UNIV*T2M/PSFC
 
@@ -1365,7 +1365,7 @@ contains
         !// Adjust ocean
         if (FL(12) .gt. 0._r8) fsnowC(12) = min(1._r8, CI(I,J) / FL(12))
         !// Snow land is of course snow covered
-        fsnowC(14)= 1._r8
+        fsnowC(NLCAT)= 1._r8
 
         !// No need to make a gridbox average fsnow
 
@@ -1425,7 +1425,8 @@ contains
         !// To calculate GnsO3, we calculate it for each land-type as GnsO3(NN).
         !// Then we correct GnsO3(NN) for snow cover.
 
-        GnsO3 = 0._r8
+        GnsO3 = 0._r8 ! initiaisation
+
         do NN = 1, NLCAT-1
 
            Rgs = RgsO3(NN) !// Land-type resistance from tabulated values
@@ -1469,8 +1470,8 @@ contains
 
         end do
 
-        !// Finally include FL(14) as snow
-        GnsO3(14) = FL(14)/RsnowO3
+        !// Finally include FL(NLCAT) as snow
+        GnsO3(NLCAT) = FL(NLCAT)/RsnowO3
 
         !// Zhang etal (2003, ACP, doi:10.5194/acp-3-2067-2003) suggest
         !// night-time value of R=400s/m for non-stomatal conductance,
@@ -1495,20 +1496,30 @@ contains
         !// Skip barren land (same as gmax=0 in EMEP.par)
         Gstc_avg = sum(FL*gsto)/sum(FL)
 
-        !//
         !// Total canopy conductance for O3
         GcO3 = GstO3 + GnsO3
+
+        
+        if (SUM(GcO3) .le. 0._r8) then
+           !// This should never happen because RgsO3 was defined for all land-use types.
+           write(6,'(a)') f90file//':'//subr//': VERY WRONG: GcO3 ZERO/NEGATIVE!!!'
+           write(6,'(a)') 'GcO3, GstO3, GnsO3, FL'
+           print*,GcO3
+           print*,GstO3
+           print*,GnsO3
+           print*,FL
+           !print*,PAR_IJ,PARMEAN(I,J,JMON),fstcT2
+           !write(6,'(i2,3es12.3)') NN,GnsO3(NN),FL(NN),fsnowC(NN)
+           stop
+        end if
+
         !// Total canopy resistance for O3
         do NN = 1, NLCAT
            if (GcO3(NN) .gt. 0._r8) then
               Rc(1,NN) = 1._r8 / GcO3(NN)
            else
-              !// This should never happen because RgsO3 was defined for all
-              !// land-use types. But I include it anyway.
-              write(6,'(a)') f90file//':'//subr//': VERY WRONG: GnsO3 ZERO/NEGATIVE!!!'
-              print*,GstO3,GnsO3,PAR_IJ,PARMEAN(I,J,JMON),fstcT2
-              write(6,'(i2,3es12.3)') NN,GnsO3(NN),FL(NN),fsnowC(NN)
-              stop
+              !// That category is apparently empty.
+              Rc(1,NN) = 0._r8
            end if
         end do
 
@@ -1534,11 +1545,11 @@ contains
         !// Non-vegetated surfaces are done with standard table values
         !// for RgsSO2.
 
+        GnsSO2 = 0._r8  ! initiaisation
 
         !// Only loop through vegetative categories
         do NN = 1, 8
 
-           !// EMEP2012 --->
            if (RH .eq. 0._r8) then
               Rgs = 1000._r8 !// To avoid infinity
            else
@@ -1563,13 +1574,14 @@ contains
               else
                  Rgs = RsnowSO2 / fsnowC(NN)
               end if
-           else
-              !// Skip FT for SO2 when using EMEP2012 vegetated surfaces
-              Rgs = Rgs
            end if
-           GnsSO2(NN) = 1._r8 / Rgs
-           RgsSO2(NN) = Rgs !// Not necessary (not used further down)
-           !// EMEP2012 <---
+           if (Rgs .gt. 0._r8) then
+              GnsSO2(NN) = 1._r8 / Rgs
+           else
+              ! Apparently this category is not set.
+              GnsSO2(NN) = 0._r8
+           end if
+           
         end do
 
 
@@ -1600,27 +1612,33 @@ contains
 
         end do
 
-        GnsSO2 = 0._r8
-        
-        !// Include FL(14) as snow
-        if (FL(14) .gt. 0._r8) GnsSO2(14) = FL(14)/RsnowSO2
+        !// Include FL(NLCAT) as snow
+        GnsSO2(NLCAT) = FL(NLCAT)/RsnowSO2
 
-        do NN = 1, NLCAT-1
-           
+        if (SUM(GnsSO2) .le. 0._r8) then
+           !// This should never happen because RgsO3 was defined for all land-use types.
+           write(6,'(a)') f90file//':'//subr// &
+                ': VERY WRONG: GnsSO2 ZERO/NEGATIVE!!!'
+           write(6,'(a)') 'GnsSO2, fsnowC, FL'
+           print*,GnsSO2
+           print*,fsnowC
+           print*,FL
+           stop
+        end if
+
+        do NN = 1, NLCAT
            !// Now we have Rc for SO2
            if (GnsSO2(NN) .gt. 0._r8) then
               Rc(2,NN) = 1._r8 / GnsSO2(NN)
            else
-              !// This should not happen, I think GnsSO2 has values for all
-              !// land-use types. But I include it anyway.
-              write(6,'(a)') f90file//':'//subr// &
-                   ': VERY WRONG: GnsSO2 ZERO/NEGATIVE!!!'
-              print*,GnsSO2
-              print*,fsnowC
-              stop
+              !// That category is apparently empty.
+              Rc(2,NN) = 0._r8              
            end if
         end do
 
+        !write(6,'(a)') f90file//':'//subr// &
+        !     ': GnsSO2'
+        !print*,GnsSO2
 
 
         !// Non-stomatal conductance Gns - Other gases
@@ -1637,7 +1655,15 @@ contains
            !// Use total GnsSO2 and GcO3 in interpolation to other gases.
            !// Another possibility is to do this for each vegetation
            !// category, but there should be no need to do that yet.
-           Rc(KK,:) = 1._r8 / (1.e-5_r8 * Hstar(KK) * GnsSO2 + f0(KK) * GcO3)
+           do NN = 1, NLCAT
+              if ( ( GnsSO2(NN) .gt. 0._r8 ) .and. ( GcO3(NN) .gt. 0._r8 ) ) then
+                 Rc(KK,NN) = 1._r8 / (1.e-5_r8 * Hstar(KK) * GnsSO2(NN) + f0(KK) * GcO3(NN))
+              else
+                 ! That category is apparently not set.
+                 ! Can happen if there is no snow/ice cover!
+                 Rc(KK,NN) = 0._r8
+              end if
+           end do
 
         end do
 
@@ -1670,19 +1696,19 @@ contains
            !// from 1000/200 to 500/100 compared to EMEP2003, so we use these
            if (T2M .le. 268._r8) then
               !// Cold temperatures (T<-5C)
-              Rc(14,:) = 500._r8
+              Rc(NLCAT,:) = 500._r8
            else if  (T2M .gt. 268._r8 .and. T2M .le. 273._r8 ) then   
               !// Just below 0C (-5C<T<0C)
-              Rc(14,:) = 100._r8
+              Rc(NLCAT,:) = 100._r8
            else
               !// Above 0C.
               !// Equation uses temperature in C, not K.
-              Rc(14,:) = 0.0455_r8 * 10._r8 * log10(T2Mcel + 2._r8) &
+              Rc(NLCAT,:) = 0.0455_r8 * 10._r8 * log10(T2Mcel + 2._r8) &
                        * exp((100._r8 - RH)/7._r8) &
                        * 10._r8**(-1.1099_r8 * Asn + 1.6769_r8)
               !// Impose some limits on Rc (EMEP2012)
-              Rc(14,:) = min( 200.0,Rc(14,:))
-              Rc(14,:) = max(  10.0,Rc(14,:))
+              Rc(NLCAT,:) = min( 200.0,Rc(NLCAT,:))
+              Rc(NLCAT,:) = max(  10.0,Rc(NLCAT,:))
            end if
         end if
 
@@ -2343,7 +2369,7 @@ contains
         end do
         !// Ocean snow cover is done below where fice is calculated.
         !// Snow land is of course snow covered
-        fsnowC(14)= 1._r8
+        fsnowC(NLCAT)= 1._r8
 
 
         !// Sea ice - check if we need to reduce fraction of ocean
@@ -2370,8 +2396,8 @@ contains
            !// Check for snow cover at cold temperatures
            do NN = 1, NLCAT-1
               if (fsnowC(NN).gt.0._r8) then
-                 !// Move the snow covered fraction of each land type to ice/snow (FL(14))
-                 FL(14) = FL(14) + FL(NN)*fsnowC(NN)
+                 !// Move the snow covered fraction of each land type to ice/snow (FL(NLCAT))
+                 FL(NLCAT) = FL(NLCAT) + FL(NN)*fsnowC(NN)
                  FL(NN) = FL(NN) * (1._r8 - fsnowC(NN))
               end if
            end do
@@ -2396,7 +2422,7 @@ contains
 
         !// Final check: wetland is wet when T>0C, but assume ice when T<0C
         if (T2M .lt. 273.15_r8 .and. FL(9).gt.0._r8) then
-           FL(14) = FL(14) + FL(9)
+           FL(NLCAT) = FL(NLCAT) + FL(9)
            FL(9) = 0._r8
         end if
 
@@ -2449,7 +2475,7 @@ contains
         VDLCAT(13)    = (a1L * (1._r8 - WETFRAC) + a1W * WETFRAC) * USR * amol
         
         !// Ice - weight with WETFRAC
-        VDLCAT(14)    = (a1I * (1._r8 - WETFRAC) + a1W * WETFRAC) * USR * amol
+        VDLCAT(NLCAT)    = (a1I * (1._r8 - WETFRAC) + a1W * WETFRAC) * USR * amol
         
         
         !// Make average velocity
