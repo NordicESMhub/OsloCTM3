@@ -1636,11 +1636,6 @@ contains
            end if
         end do
 
-        !write(6,'(a)') f90file//':'//subr// &
-        !     ': GnsSO2'
-        !print*,GnsSO2
-
-
         !// Non-stomatal conductance Gns - Other gases
         !// ------------------------------------------
         !// Other gases Gns is obtained by interpolating between values for
@@ -1735,7 +1730,8 @@ contains
                  stop
               end if
            end do
-           VD(KK) = SUM(1._r8 / Tot_res) / NLCAT
+           !// Compute weighted mean
+           VD(KK) = SUM( 1._r8 / Tot_res * FL ) / SUM(FL)
         end do
 
 
