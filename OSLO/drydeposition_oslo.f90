@@ -95,7 +95,7 @@ contains
     VDEP(:,:,:) = 0._r8
     !// Initialize stomata deposition
     write(6,'(a)') f90file//':'//subr//': initializing VGSTO3' 
-    VGSTO3(:,:) = 0._r8
+    VGSTO3(:,:,:) = 0._r8
     
     !// read in Deposition velocities
     FILE_NAME='./Indata_CTM3/drydep.ctm'
@@ -234,7 +234,7 @@ contains
     use cmn_fjx, only: SZAMAX
     use cmn_met, only: CI, SD, PBL_KEDDY, ZOFLE, SFT
     use cmn_parameters, only: M_AIR, AVOGNR, R_AIR, G0, LDEBUG, VONKARMAN
-    use cmn_sfc, only: landSurfTypeFrac, LANDUSE_IDX, VDEP, VGSTO3, LDDEPmOSaic
+    use cmn_sfc, only: landSurfTypeFrac, LANDUSE_IDX, VDEP, VGSTO3, LDDEPmOSaic, NLCAT
     use cmn_oslo, only: chem_idx, trsp_idx
     use bcoc_oslo, only: bcoc_setdrydep, bcoc_vdep2
     use soa_oslo, only: soa_setdrydep
@@ -256,8 +256,8 @@ contains
     real(r8),dimension(IDBLK,JDBLK) :: DZ, &
          VNO2, VO3, VHNO3, VPAN, VCO, VH2O2, &
          VSO2, VSO4, VMSA, VNH3, &
-         VNO,  VHCHO, VCH3CHO, &
-         VSto
+         VNO,  VHCHO, VCH3CHO
+    real(r8),dimension(IDBLK,JDBLK,NLCAT) :: VSto
 
     integer :: MDAY(IDBLK,JDBLK)    !// 1=day, 2=night
     integer :: MSEASON(IDBLK,JDBLK) !// 0=summer, 3=winter
@@ -512,7 +512,7 @@ contains
           VNO(:,:)     = 0._r8
           VHCHO(:,:)   = 0._r8
           VCH3CHO(:,:) = 0._r8
-          VSto(:,:)    = 0._r8
+          VSto(:,:,:)  = 0._r8
 
           !// All are scaled by stability
           SCALESTABILITY(:) = 1
@@ -531,7 +531,7 @@ contains
        VNO(:,:)     = 0._r8
        VHCHO(:,:)   = 0._r8
        VCH3CHO(:,:) = 0._r8
-       VSto(:,:)    = 0._r8
+       VSto(:,:,:)  = 0._r8
 
     end if !// if (LOSLOCTROP) then
 
@@ -545,7 +545,7 @@ contains
       !// Loop over longitude (I is global, II is block)
       do I = MPBLKIB(MP),MPBLKIE(MP)
         II    = I - MPBLKIB(MP) + 1
-        VGSTO3(I,J) = VStO(II, JJ)                   !// Stomata deposition
+        VGSTO3(I,J,:) = VStO(II, JJ, :)              !// Stomatal drydeposition velocity
         do N = 1,NTM
 
           if (chem_idx(N) .eq. 1) then               !// Standard tropchem ---v
@@ -815,7 +815,8 @@ contains
     integer, intent(in) :: MP
     !// Output
     real(r8),dimension(IDBLK,JDBLK), intent(out) :: &
-         VO3,VHNO3,VPAN,VH2O2,VNO2, VSO2,VNH3, VNO,VHCHO,VCH3CHO, VSto
+         VO3,VHNO3,VPAN,VH2O2,VNO2, VSO2,VNH3, VNO,VHCHO,VCH3CHO
+    real(r8),dimension(IDBLK,JDBLK,NLCAT), intent(out) :: VSto
 
     !// Locals
     integer :: I,J,II,JJ, NN, KK, NTOTAL
@@ -848,8 +849,7 @@ contains
     !// To calculate Rc
     real(r8) :: RsnowO3, RsnowSO2, gext, &
          Rgs, FT, VPD, &
-         T2Mcel, ee, RH, M_SO2, M_NH3, Asn, Asn24, &
-         Gstc_avg 
+         T2Mcel, ee, RH, M_SO2, M_NH3, Asn, Asn24
     real(r8), dimension(NLCAT) :: GstO3, GnsO3, GcO3, GnsSO2
     
     !// Uptake parameters taken from Wesley (Atm.Env., 1989,
@@ -1497,11 +1497,6 @@ contains
         !// The estimated canopy stomatal conductance:
         GstO3 = LAI_IJ*gsto
 
-        !// Compute the grid-cell-average stomatal conductance
-        !// Devide by sum(FL) to be sure that it is normalized!
-        !// Skip barren land (same as gmax=0 in EMEP.par)
-        Gstc_avg = sum(FL*gsto)/sum(FL)
-
         !// Total canopy conductance for O3
         GcO3 = GstO3 + GnsO3
 
@@ -1757,7 +1752,7 @@ contains
         !//should be used here (Emberson et al. 2000).
         !//Multiply with ozone concentration yields stomatal flux.
         !//unit [mmol m-2s-1]
-        VSto(II,JJ)    = Gstc_avg/(1.d-5*R_UNIV*T2M/PSFC)
+        VSto(II,JJ,:)    = FL*gsto/(1.d-5*R_UNIV*T2M/PSFC)
      end do !// do I = MPBLKIB(MP),MPBLKIE(MP)
     end do !// do J = MPBLKJB(MP),MPBLKJE(MP)
 

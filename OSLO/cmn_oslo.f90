@@ -31,6 +31,7 @@ module cmn_oslo
   use cmn_precision, only: r8, rAvg
   use cmn_size, only: IPAR, JPAR, LPAR, LWEPAR, IDBLK, JDBLK, MPBLK, &
        NPAR, NOTRPAR, NPAR_DUST, TRACER_ID_MAX, TNAMELEN
+  use cmn_sfc, only: NLCAT
   use cmn_chem, only: ETPAR
   use cmn_fjx, only: JVN_
   !//-----------------------------------------------------------------------
@@ -309,9 +310,9 @@ module cmn_oslo
 
   !//--- Diagnose stomatal ozone uptake ------------------------------------
   !// Stomatal conductance: daily average
-  real(r8), dimension(IPAR,JPAR) :: GSTO3_AVG
+  real(r8), dimension(IPAR,JPAR,NLCAT) :: GSTO3_AVG
   !// Stomatal flux: daily average
-  real(r8), dimension(IPAR,JPAR) :: FSTO3_AVG
+  real(r8), dimension(IPAR,JPAR,NLCAT) :: FSTO3_AVG
   
   !// --- Help variables ---------------------------------------------------
   !// Days of month

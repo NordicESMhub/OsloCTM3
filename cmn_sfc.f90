@@ -58,7 +58,7 @@ module CMN_SFC
   real(r8), dimension(NPAR,IPAR,JPAR) :: VDEP      !// dep veloc, mean
   real(r8), dimension(NPAR,3)         :: VDEPIN    !// UCI dep vel for land/ocean/cryo
   !// Stomatal conductance
-  real(r8), dimension(IPAR,JPAR)      :: VGSTO3    !// dep veloc, stomata
+  real(r8), dimension(IPAR,JPAR,NLCAT):: VGSTO3    !// dep veloc, stomata
 
   !// Growing season
   logical :: LGSMAP

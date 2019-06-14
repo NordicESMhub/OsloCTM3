@@ -35,7 +35,7 @@ module diagnostics_scavenging
   use cmn_size, only: IPAR, JPAR, LPAR, NPAR, MPBLK, IDBLK, JDBLK
   use cmn_oslo, only: SCAV_LS, SCAV_CN, SCAV_DD, SCAV_BRD, SCAV_DIAG, &
        SCAV_MAP_WLS, SCAV_MAP_WCN, SCAV_MAP_DRY, GSTO3_AVG, FSTO3_AVG
-  use cmn_sfc, only: VGSTO3
+  use cmn_sfc, only: VGSTO3, NLCAT
   !// ----------------------------------------------------------------------
   implicit none
   !// ----------------------------------------------------------------------
@@ -74,8 +74,8 @@ contains
     SCAV_MAP_WCN(:,:,:,:) = 0._r8
     SCAV_MAP_DRY(:,:,:,:) = 0._r8
     !// Stomatal uptake
-    GSTO3_AVG(:,:) = 0._r8
-    FSTO3_AVG(:,:) = 0._r8
+    GSTO3_AVG(:,:,:) = 0._r8
+    FSTO3_AVG(:,:,:) = 0._r8
     !// --------------------------------------------------------------------
   end subroutine scav_diag_init
   !// ----------------------------------------------------------------------
@@ -403,7 +403,7 @@ contains
     implicit none
     !// --------------------------------------------------------------------
     !// Input
-    real(r8), dimension(IPAR,JPAR), intent(in) :: VGSTO3
+    real(r8), dimension(IPAR,JPAR,NLCAT), intent(in) :: VGSTO3
     integer,intent(in) :: NMET
     
     !// --------------------------------------------------------------------
@@ -433,18 +433,18 @@ contains
     implicit none
     !// --------------------------------------------------------------------
     !// Input
-    real(r8), dimension(IPAR,JPAR), intent(in) :: VGSTO3
+    real(r8), dimension(IPAR,JPAR,NLCAT), intent(in) :: VGSTO3
     integer,  intent(in) :: NMET, MP
     real(r8), intent(in)  :: BTT(LPAR,NPAR,IDBLK,JDBLK)
     !// For looping
     integer :: I, J, II, JJ
     real(r8) :: RDUM, VMR_O3
     !// Local
-    real(r8), dimension(IPAR,JPAR) :: fsto3_tmp
+    real(r8), dimension(IPAR,JPAR,NLCAT) :: fsto3_tmp
     !// --------------------------------------------------------------------
     
     !// Initialize fsto3_tmp
-    fsto3_tmp(:,:) = 0._r8 
+    fsto3_tmp(:,:,:) = 0._r8 
     !// Loop over latitude (J is global, JJ is block)
     do J = MPBLKJB(MP), MPBLKJE(MP)
        JJ    = J - MPBLKJB(MP) + 1
@@ -455,7 +455,7 @@ contains
           !// DV_IJ and AIRMOLEC_IJ are zero during the first call(?)
           !// Prevent NAN-spread
           if ( DV_IJ(1,II,JJ,MP) .eq. 0._r8 .or. AIRMOLEC_IJ(1,II,JJ,MP).eq. 0._r8 ) then
-             fsto3_tmp(I,J) = 0._r8
+             fsto3_tmp(I,J,:) = 0._r8
           else
              !// Convert O3 [kg/gridbox] to [molec/cm3]
              RDUM =  1.e-3_r8 * AVOGNR / TMASS(1) / DV_IJ(1,II,JJ,MP)
@@ -463,7 +463,7 @@ contains
              !// VMR_O3 at ground level
              VMR_O3 = (BTT(1,1,II,JJ)*RDUM)/AIRMOLEC_IJ(1,II,JJ,MP)
              !// fsto3_tmp(I,J) units [mmol m-2 s-1]
-             fsto3_tmp(I,J) = VGSTO3(I,J)*VMR_O3
+             fsto3_tmp(I,J,:) = VGSTO3(I,J,:)*VMR_O3
           end if
        end do !// do I = MPBLKIB(MP), MPBLKIE(MP)
     end do !// do J = MPBLKJB(MP), MPBLKJE(MP)
@@ -503,35 +503,40 @@ contains
     integer, intent(in) :: JYEAR, JMONTH, JDATE, NDAY, NMET, NOPS
     !// Locals
     character(len=80) :: filename
-    character(len=3)  :: cday          !Name of start day in character
-    character(len=2)  :: cmonth        !Name of start month in character
-    character(len=4)  :: cyear         !Name of start year in character
+    character(len=3)  :: cday           !Name of start day in character
+    character(len=2)  :: cmonth         !Name of start month in character
+    character(len=4)  :: cyear          !Name of start year in character
     !// Dimensions ID and counters
-    integer :: lat_dim_id              !Dimension ID for latitude
-    integer :: lon_dim_id              !Dimension ID for longitude
-    integer :: time_dim_id             !Dimension ID for time
-    integer :: lat_id                  !Variable ID for latitude
-    integer :: lon_id                  !Variable ID for longitude
-    integer :: time_id                 !Variable ID for time
-    integer :: dim_lon_lat_time(3)     !Dimension ID for processes
-    integer :: srt_lon_lat_time(3)     !Start array for lon/lat/time
-    integer :: cnt_lon_lat_time(3)     !Counting array for lon/lat/time
-    integer :: srt_time(1)             !starting point for time array
-    integer :: gsto3_inst_id           !Variable ID for stomatal conductance
-    integer :: fsto3_inst_id           !Variable ID for stomatal flux
+    integer :: lat_dim_id               !Dimension ID for latitude
+    integer :: lon_dim_id               !Dimension ID for longitude
+    integer :: nlcat_dim_id             !Dimension ID for NLCAT
+    integer :: time_dim_id              !Dimension ID for time
+    integer :: lat_id                   !Variable ID for latitude
+    integer :: lon_id                   !Variable ID for longitude
+    integer :: nlcat_id                 !Variable ID for NLCAT
+    integer :: time_id                  !Variable ID for time
+    integer :: dim_lon_lat_time(3)      !Dimension ID for processes
+    integer :: srt_lon_lat_time(3)      !Start array for lon/lat/time
+    integer :: cnt_lon_lat_time(3)      !Counting array for lon/lat/time
+    integer :: dim_lon_lat_nlcat_time(4)!Dimension ID for processes
+    integer :: srt_lon_lat_nlcat_time(4)!Start array for lon/lat/nlcat/time
+    integer :: cnt_lon_lat_nlcat_time(4)!Counting array for lon/lat/nlcat/time
+    integer :: srt_time(1)              !starting point for time array
+    integer :: gsto3_inst_id            !Variable ID for stomatal conductance
+    integer :: fsto3_inst_id            !Variable ID for stomatal flux
   
     !// Other locals
-    integer :: ncid                    !File ID for nc file
-    integer :: status                  !Error status for nc file
-    integer :: nlons                   !Number of longitudes found in file
-    integer :: nlats                   !Number of latitudes found in file
-    integer :: nsteps                  !Number of steps found in file 
-    character(len=80) :: time_label    !Label for variable "time"
-    real(r8)  :: time                  !Time in this timestep
-    integer :: nbr_steps               !Step number
+    integer :: ncid                     !File ID for nc file
+    integer :: status                   !Error status for nc file
+    integer :: nlons                    !Number of longitudes found in file
+    integer :: nlats                    !Number of latitudes found in file
+    integer :: nsteps                   !Number of steps found in file 
+    character(len=80) :: time_label     !Label for variable "time"
+    real(r8)  :: time                   !Time in this timestep
+    integer :: nbr_steps                !Step number
 
-    real(r8), save, dimension(IPAR,JPAR) :: GSTO3_priv=0._r8, FSTO3_priv=0._r8
-    real(r8), dimension(IPAR,JPAR,1) :: GSTO3_inst, FSTO3_inst
+    real(r8), save, dimension(IPAR,JPAR,NLCAT) :: GSTO3_priv=0._r8, FSTO3_priv=0._r8
+    real(r8), dimension(IPAR,JPAR,NLCAT,1) :: GSTO3_inst, FSTO3_inst
     
     !// --------------------------------------------------------------------
     integer, parameter :: nc4deflate = nc4deflate_global
@@ -556,8 +561,8 @@ contains
     !// Deaccumulate GSTO3_AVG and FSTO_AVG
     write(6,'(a)') f90file//':'//subr// ': Deaccumulating stomatal fields'
   
-    GSTO3_inst(:,:,1) = GSTO3_AVG-GSTO3_priv
-    FSTO3_inst(:,:,1) = FSTO3_AVG-FSTO3_priv
+    GSTO3_inst(:,:,:,1) = GSTO3_AVG-GSTO3_priv
+    FSTO3_inst(:,:,:,1) = FSTO3_AVG-FSTO3_priv
     !// Save previous step
     GSTO3_priv = GSTO3_AVG
     FSTO3_priv = FSTO3_AVG
@@ -613,6 +618,12 @@ contains
        dim_lon_lat_time(2)=lat_dim_id
        dim_lon_lat_time(3)=time_dim_id
 
+       !// Defining the combined id for a field (lon /lat/ nlcat /time)
+       dim_lon_lat_nlcat_time(1)=lon_dim_id
+       dim_lon_lat_nlcat_time(2)=lat_dim_id
+       dim_lon_lat_nlcat_time(3)=nlcat_dim_id
+       dim_lon_lat_nlcat_time(4)=time_dim_id
+
        !// Defining the lon/lat/time-variable
        status = nf90_def_var(ncid,"lon",nf90_float,lon_dim_id,lon_id)
        if (status/=nf90_noerr) call handle_error(status, &
@@ -624,6 +635,21 @@ contains
        if (status/=nf90_noerr) call handle_error(status, &
             f90file//':'//subr//': define time variable')
 
+       !// Defining the lon/lat/nlcat/time-variable
+       status = nf90_def_var(ncid,"lon",nf90_float,lon_dim_id,lon_id)
+       if (status/=nf90_noerr) call handle_error(status, &
+            f90file//':'//subr//': define lon variable')
+       status = nf90_def_var(ncid,"lat",nf90_float,lat_dim_id,lat_id)
+       if (status/=nf90_noerr) call handle_error(status, &
+            f90file//':'//subr//': define lat variable')
+       status = nf90_def_var(ncid,"nlcat",nf90_float,nlcat_dim_id,nlcat_id)
+       if (status/=nf90_noerr) call handle_error(status, &
+            f90file//':'//subr//': define nlcat variable')
+       status = nf90_def_var(ncid,"time",nf90_float,time_dim_id,time_id)
+       if (status/=nf90_noerr) call handle_error(status, &
+            f90file//':'//subr//': define time variable')
+
+
        !// Putting attributes to /lon/lat variables
        status = nf90_put_att(ncid,lon_id,'units','degree_east')
        if (status/=nf90_noerr) call handle_error(status, &
@@ -631,6 +657,8 @@ contains
        status = nf90_put_att(ncid,lat_id,'units','degree_north')
        if (status/=nf90_noerr) call handle_error(status, &
             f90file//':'//subr//': attribute units lat')
+
+
       
        !// Putting attributes to time variable
        time_label='hours since yyyy-mm-dd 00:00:00'
@@ -642,7 +670,7 @@ contains
 
        !// Daily average of stomatal conductance
        status = nf90_def_var(ncid,'GstO3_inst', &
-            nf90_double, dim_lon_lat_time, gsto3_inst_id)
+            nf90_double, dim_lon_lat_nlcat_time, gsto3_inst_id)
        if (status .ne. nf90_noerr) call handle_error(status, &
             f90file//':'//subr//': define variable GstO3_inst ')
        status = nf90_def_var_deflate(ncid, gsto3_inst_id, &
@@ -655,7 +683,7 @@ contains
 
        !// Daily average of stomatal flux
        status = nf90_def_var(ncid,'FstO3_inst', &
-            nf90_double, dim_lon_lat_time, fsto3_inst_id)
+            nf90_double, dim_lon_lat_nlcat_time, fsto3_inst_id)
        if (status .ne. nf90_noerr) call handle_error(status, &
             f90file//':'//subr//': define variable FstO3_inst ')
        status = nf90_def_var_deflate(ncid, fsto3_inst_id, &
@@ -755,15 +783,15 @@ contains
     status = nf90_put_var(ncid, &               !File id
          gsto3_inst_id, &                       !field_id for netCDF file (should match id set in def_var) 
          gsto3_inst, &                          !Tracer field (REAL4)
-         start=srt_lon_lat_time, &              !starting point for writing
-         count=cnt_lon_lat_time )               !Counts how many bytes written
+         start=srt_lon_lat_nlcat_time, &        !starting point for writing
+         count=cnt_lon_lat_nlcat_time )         !Counts how many bytes written
     if (status/=nf90_noerr) call handle_error(status, &
             f90file//':'//subr//': putting GstO3_inst data')
     status = nf90_put_var(ncid, &               !File id
          fsto3_inst_id, &                       !field_id for netCDF file (should match id set in def_var) 
          fsto3_inst, &                          !Tracer field (REAL4)
-         start=srt_lon_lat_time, &              !starting point for writing
-         count=cnt_lon_lat_time )               !Counts how many bytes written
+         start=srt_lon_lat_nlcat_time, &        !starting point for writing
+         count=cnt_lon_lat_nlcat_time )         !Counts how many bytes written
     if (status/=nf90_noerr) call handle_error(status, &
          f90file//':'//subr//': putting FstO3_inst data')
 
@@ -825,6 +853,7 @@ contains
          status, &                 !Status for netcdf file 0=OK
          ncid, &                   !file id for output netcdf file
          ncomps_dim_id, &          !Dimension id for NPAR
+         nlcat_dim_id, &           !Dimension id for NLCAT
          days_dim_id, &            !Dimension id for days
          days_id, &                !Dimension id for days of year (1:366)
          tracer_name_len_dim_id, & !Dimension id for tname charater length
@@ -951,9 +980,15 @@ contains
     status = nf90_def_dim(ncid,"NCOMPS",NPAR,ncomps_dim_id)
     if (status .ne. nf90_noerr) call handle_error(status, &
          f90file//':'//subr//': define NCOMPS dim')
+
     status = nf90_def_dim(ncid,"DAYS",366,days_dim_id)
     if (status .ne. nf90_noerr) call handle_error(status, &
          f90file//':'//subr//': define DAYS dim')
+
+    !// Defining nlcat variable (lat on interstices)
+    status = nf90_def_dim(ncid,"NLCAT",NPAR,nlcat_dim_id)
+    if (status .ne. nf90_noerr) call handle_error(status, &
+         f90file//':'//subr//': define NLCAT dim')
 
     !// Define length of tracer name string (use TNAME for this)
     status = nf90_def_dim(ncid,"tracer_name_len",TNAMELEN,tracer_name_len_dim_id)
@@ -1288,13 +1323,16 @@ contains
     integer :: ilon_dim_id            !Dimension ID for longitude interstices
     integer :: ilat_dim_id            !Dimension ID for latitude interstices
     integer :: ncomps_dim_id          !Dimension ID for NPAR
+    integer :: nlcat_dim_id           !Dimension ID for NLCAT
     integer :: tracer_name_len_dim_id !Dimension ID for tname charater length
     integer :: lon_id                 !Variable ID for longitude
     integer :: lat_id                 !Variable ID for latitude
     integer :: ilon_id                !Variable ID for longitude interstices
     integer :: ilat_id                !Variable ID for latitude interstices
+    integer :: nlcat_id               !Variable ID for nlcat
     integer :: tracer_idx_id          !ID for all tracer number
-    integer :: dim_lon_lat_id(2)
+    integer :: dim_lon_lat_id(2)      !IF for lon/lat
+    integer :: dim_lon_lat_nlcat_id(3)!ID for lon/lat/nlcat
     integer :: version_id             !ID for file version number
     integer :: tracer_molw_id         !ID for all tracer molecular weights
     integer :: tracer_name_id         !ID for all tracer names
@@ -1311,7 +1349,8 @@ contains
     integer :: scav_ls_id(NPAR), &
          scav_cnv_id(NPAR), &
          scav_dry_id(NPAR)
-    integer :: gsto3_avg_id, &
+    integer :: &
+         gsto3_avg_id, &
          fsto3_avg_id
 
     !// Other locals
@@ -1380,6 +1419,11 @@ contains
     status = nf90_def_dim(ncid,"NCOMPS",NPAR,ncomps_dim_id)
     if (status .ne. nf90_noerr) call handle_error(status, &
          f90file//':'//subr//': define NCOMPS dim')
+
+    !// Define NLCAT = NLCAT
+    status = nf90_def_dim(ncid,"NLCAT",NLCAT,nlcat_dim_id)
+    if (status .ne. nf90_noerr) call handle_error(status, &
+         f90file//':'//subr//': define NLCAT dim')
 
     !// Define ilat/ilon
     status = nf90_def_dim(ncid,"ilat",JPAR+1,ilat_dim_id)
@@ -1514,7 +1558,11 @@ contains
     !// Defining the combined id for a 2d field (lon,lat)
     dim_lon_lat_id(1) = lon_dim_id
     dim_lon_lat_id(2) = lat_dim_id
-
+    !// Defining the combined id for a 3d field (lon,lat,nlcat)
+    dim_lon_lat_nlcat_id(1) = lon_dim_id
+    dim_lon_lat_nlcat_id(2) = lat_dim_id
+    dim_lon_lat_nlcat_id(3) = nlcat_dim_id
+   
 
     !// Defining the lon variable
     status = nf90_def_var(ncid,"lon",nf90_double,lon_dim_id,lon_id)
@@ -1564,6 +1612,7 @@ contains
     if (status .ne. nf90_noerr) call handle_error(status, &
          f90file//':'//subr//': attribute description ilat')
 
+        
 
     !// Grid area (r8), deflate netcdf4
     status = nf90_def_var(ncid,"gridarea",nf90_double,dim_lon_lat_id,areaxy_id)
@@ -1634,7 +1683,7 @@ contains
     !// Daily average of stomatal conductance
     if(LDDEPmOSaic .and. LDLYSCAV(7)) then
        status = nf90_def_var(ncid,'GstO3_avg', &
-            nf90_double, dim_lon_lat_id, gsto3_avg_id)
+            nf90_double, dim_lon_lat_nlcat_id, gsto3_avg_id)
        if (status .ne. nf90_noerr) call handle_error(status, &
             f90file//':'//subr//': define variable GstO3_avg ')
        status = nf90_def_var_deflate(ncid, gsto3_avg_id, &
@@ -1646,7 +1695,7 @@ contains
             f90file//':'//subr//': attribute unit GstO3_avg ')
        !// Daily average of stomatal flux
        status = nf90_def_var(ncid,'FstO3_avg', &
-            nf90_double, dim_lon_lat_id, fsto3_avg_id)
+            nf90_double, dim_lon_lat_nlcat_id, fsto3_avg_id)
        if (status .ne. nf90_noerr) call handle_error(status, &
             f90file//':'//subr//': define variable FstO3_avg ')
        status = nf90_def_var_deflate(ncid, fsto3_avg_id, &
@@ -1678,6 +1727,11 @@ contains
     status = nf90_put_var(ncid,ilat_id,YDEDG)
     if (status .ne. nf90_noerr) call handle_error(status, &
          f90file//':'//subr//': putting ilat')
+
+    !// Putting the NLCAT variables
+    status = nf90_put_var(ncid,nlcat_id,YDEDG)
+    if (status .ne. nf90_noerr) call handle_error(status, &
+         f90file//':'//subr//': putting nlcat')
 
     !// Info about date
     status = nf90_put_var(ncid,date_year_id,YEAR)
@@ -1822,8 +1876,8 @@ contains
     SCAV_MAP_WLS(:,:,:,:) = 0._r8
     SCAV_MAP_WCN(:,:,:,:) = 0._r8
     SCAV_MAP_DRY(:,:,:,:) = 0._r8
-    GSTO3_AVG(:,:) = 0._r8
-    FSTO3_AVG(:,:) = 0._r8
+    GSTO3_AVG(:,:,:) = 0._r8
+    FSTO3_AVG(:,:,:) = 0._r8
     !// --------------------------------------------------------------------
   end subroutine scav_diag_2fileB
   !// ----------------------------------------------------------------------
