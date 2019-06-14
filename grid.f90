@@ -2815,8 +2815,8 @@ contains
     !// Allocate
     allocate( GDAY_MAP(IPAR,JPAR,totdays) )
     !// Initialize
-    GDAY_MAP(:,:,:) = 0
-    GLEN_MAP(:,:) = 0
+    GDAY_MAP(:,:,:) = 0._r8
+    GLEN_MAP(:,:) = 0._r8
     !// Allocate 2D arrays - native resolution
     allocate( W2D(IPARW,JPARW) )
     !// Allocate 2D arrays - window resolution (IPAR/JPAR)
@@ -2838,7 +2838,7 @@ contains
     call get_netcdf_var_2d(fileGSMAP, 'GLEN',W2D, IPARW, JPARW)
     call TRUNG8(W2D, R8XY, ZDEGI, ZDEGJ, IMAP, JMAP, IDGRD, &
          JDGRD, IPARW, JPARW, IPAR, JPAR, 1, 1)
-     GLEN_MAP(:,:) = max(0._r8, R8XY(:,:))  !// Limit to positive values
+    GLEN_MAP(:,:) = max(0._r8, R8XY(:,:))  !// Limit to positive values
     if (verbose) call gotData('2da','GLEN')
     
     call get_netcdf_var_3d(fileGSMAP, 'GDAY',W3D, IPARW, JPARW, totdays)
@@ -2846,7 +2846,7 @@ contains
          JDGRD, IPARW, JPARW, IPAR, JPAR, totdays, 1)
     GDAY_MAP(:,:,:) = max(0._r8, R8XYZ(:,:,:))  !// Limit to positive values
     if (verbose) call gotData('3da','GDAY')
-
+       
     !// --------------------------------------------------------------------
   end subroutine read_growing_season
   !// ----------------------------------------------------------------------

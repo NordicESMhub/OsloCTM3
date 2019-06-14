@@ -1059,70 +1059,7 @@ contains
         !// Wind at L1 center
         WINDL1  = sqrt(UMS(1,I,J)*UMS(1,I,J) + VMS(1,I,J)*VMS(1,I,J))
 
-        !// Temperature scaling factor for STC
-        where (T2Mcel .le. tmin .or. T2Mcel .ge. tmax)
-           !// When outside range, the equation may yield NaN, so
-           !// a test is necessary. Use lower limit value.
-           fstcT2 = 0.01_r8
-        elsewhere
-           fstcT2 = (T2Mcel - tmin)/(topt - tmin) * &
-               ((tmax - T2Mcel)/(tmax - topt))**((tmax-topt)/(topt-tmin))
-        end where
-        !// Apply lower limit value if needed
-        where (fstcT2 .lt. 0.01_r8)
-           fstcT2 = 0.01_r8
-        end where
-       
-        !// Saturation partial pressure of water, Rogers and Yau, page 16
-        ee = 6.112_r8*exp(17.67_r8 * T2Mcel / (T2Mcel + 243.5_r8))
-        !// Use formulas in Rogers and Yau page 17
-        RH = max( ee / PSFC * 100._r8, 100._r8)
-        !// Compute the vapour pressure deficit
-        VPD = ee * (1-RH/100._r8)
-        !// fD from Eq. (18) in Simpson et al. Supplement
-        fD = fmin + (1-fmin)*(Dmin-VPD)/(Dmin-Dmax)
-        !// TODO: Accumulation of water vapor deficit:
-        !// desiged to prevent afternoon gsto increasing after a period of morn-
-        !// ing water stress, as suggested by Uddling et al. (2004) and LRTAP (2009)
         
-        fLight = 1._r8-exp(-flightalpha*PAR_IJ)
-        !fLight = 1._r8
-        !// Phenomenology from Table S17
-        !// Simpson et al. only defined it for northern hemisphere
-        !// Therefore we shall skip it for the time being
-        if (LGSMAP) then
-           call MAPPED_GROWSEASON(JDAY, I, J, GDAY, GLEN)
-        else
-           call GROWSEASON(JDAY, YDGRD(J), GDAY, GLEN)
-        end if
-
-        if ((GLEN .ge. 365) .and. (YDGRD(J) .ge. -23._r8) .and. (YDGRD(J) .le. 23._r8)) then
-           print*,'! Exclude tropics!'
-           fPhen = 1._r8
-        end if
-
-        if (GDAY .eq. 0) then
-           fphen = 0._r8
-        else
-           !fPhen = max(phia, phic)
-           where (GDAY .le. phiAS)
-              fPhen = phia
-           elsewhere (GDAY .le. phiAS+phie)
-              fPhen = phib+(phic-phib)*(GDAY-phiAS)/phie
-           elsewhere (GDAY .le. GLEN-phiAE-phif)
-              fPhen = phic
-           elsewhere (GDAY .le. GLEN-phiAE)
-              fPhen = phid+(phic-phid)*(GLEN-phiAE-GDAY)/phif
-           elsewhere
-              fPhen = phid
-           end where
-        end if
-        !// fSW based on soil moisture in the top soil layer (0-7 cm)
-        if (SWVL3_IJ .ge. 0.5) then
-           fSW = 1._r8
-        else
-           fSW = 2*SWVL3_IJ
-        end if
 
         !// ----------------------------------------------------------------
         !// Aerodynamic resistance (Ra)
@@ -1148,7 +1085,7 @@ contains
         !// Roughness length
         z0      = 0.1_r8                         !// other vegetation
         z0(1:4) = 0.07_r8 * VEGH(1:4)            !// forests
-
+        z0(1:4) = MIN(z0(1:4),1._r8)             !// upper limit following Simpson et al. (2012)
         do NN = 1, NLCAT
            if (ZREF .lt. depl_height(NN)) then
               write(6,'(a)') f90file//':'//subr//': ZREF < deplacement height: This is WRONG!'
@@ -1251,7 +1188,73 @@ contains
 
         !// ----------------------------------------------------------------
         !// Stomatal conductance
-        !// ----------------------------------------------------------------    
+        !// ----------------------------------------------------------------
+
+        !// Temperature scaling factor for STC
+        where (T2Mcel .le. tmin .or. T2Mcel .ge. tmax)
+           !// When outside range, the equation may yield NaN, so
+           !// a test is necessary. Use lower limit value.
+           fstcT2 = 0.01_r8
+        elsewhere
+           fstcT2 = (T2Mcel - tmin)/(topt - tmin) * &
+               ((tmax - T2Mcel)/(tmax - topt))**((tmax-topt)/(topt-tmin))
+        end where
+        !// Apply lower limit value if needed
+        where (fstcT2 .lt. 0.01_r8)
+           fstcT2 = 0.01_r8
+        end where
+       
+        !// Saturation partial pressure of water, Rogers and Yau, page 16
+        ee = 6.112_r8*exp(17.67_r8 * T2Mcel / (T2Mcel + 243.5_r8))
+        !// Use formulas in Rogers and Yau page 17
+        RH = max( ee / PSFC * 100._r8, 100._r8)
+        !// Compute the vapour pressure deficit
+        VPD = ee * (1-RH/100._r8)
+        !// fD from Eq. (18) in Simpson et al. Supplement
+        fD = fmin + (1-fmin)*(Dmin-VPD)/(Dmin-Dmax)
+        !// TODO: Accumulation of water vapor deficit:
+        !// desiged to prevent afternoon gsto increasing after a period of morn-
+        !// ing water stress, as suggested by Uddling et al. (2004) and LRTAP (2009)
+        
+        fLight = 1._r8-exp(-flightalpha*PAR_IJ)
+        !fLight = 1._r8
+        !// Phenomenology from Table S17
+        !// Simpson et al. only defined it for northern hemisphere
+        !// Therefore we shall skip it for the time being
+        if (LGSMAP) then
+           call MAPPED_GROWSEASON(JDAY, I, J, GDAY, GLEN)
+        else
+           call GROWSEASON(JDAY, YDGRD(J), GDAY, GLEN)
+        end if
+
+        print*, 'JDAY, YDGRD(J), GDAY, GLEN'
+        print*, JDAY, YDGRD(J), GDAY, GLEN
+
+        fPhen = 0._r8  !// Initilize
+        if ((YDGRD(J) .ge. -23._r8) .and. (YDGRD(J) .le. 23._r8)) then
+           fPhen = 1._r8
+        else
+           !fPhen = max(phia, phic)
+           where (GDAY .le. phiAS)
+              fPhen = phia
+           elsewhere (GDAY .le. phiAS+phie)
+              fPhen = phib+(phic-phib)*(GDAY-phiAS)/phie
+           elsewhere (GDAY .le. GLEN-phiAE-phif)
+              fPhen = phic
+           elsewhere (GDAY .le. GLEN-phiAE)
+              fPhen = phid+(phic-phid)*(GLEN-phiAE-GDAY)/phif
+           elsewhere
+              fPhen = phid
+           end where
+        end if
+       
+        !// fSW based on soil moisture in third soil layer
+        if (SWVL3_IJ .ge. 0.5) then
+           fSW = 1._r8
+        else
+           fSW = 2*SWVL3_IJ
+        end if
+    
         !// Unit conversion of [mmol s-1 m-2] to [m s-1]:
         !// Ideal gas law Vm = V/n = R * T/P
         !// Factor 1.d-5 derived from unit conversation:
