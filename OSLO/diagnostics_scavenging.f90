@@ -612,6 +612,10 @@ contains
        status = nf90_def_dim(ncid,"time",nf90_unlimited,time_dim_id)
        if (status/=nf90_noerr) call handle_error(status, &
             f90file//':'//subr//': define time dim')
+       !// Defining nlcat dimension
+       status = nf90_def_dim(ncid,"NLCAT",NLCAT,nlcat_dim_id)
+       if (status .ne. nf90_noerr) call handle_error(status, &
+            f90file//':'//subr//': define NLCAT dim')
 
        !// Defining the combined id for a field (lon /lat /time)
        dim_lon_lat_time(1)=lon_dim_id
@@ -635,19 +639,14 @@ contains
        if (status/=nf90_noerr) call handle_error(status, &
             f90file//':'//subr//': define time variable')
 
-       !// Defining the lon/lat/nlcat/time-variable
-       status = nf90_def_var(ncid,"lon",nf90_float,lon_dim_id,lon_id)
-       if (status/=nf90_noerr) call handle_error(status, &
-            f90file//':'//subr//': define lon variable')
-       status = nf90_def_var(ncid,"lat",nf90_float,lat_dim_id,lat_id)
-       if (status/=nf90_noerr) call handle_error(status, &
-            f90file//':'//subr//': define lat variable')
-       status = nf90_def_var(ncid,"nlcat",nf90_float,nlcat_dim_id,nlcat_id)
-       if (status/=nf90_noerr) call handle_error(status, &
+       !// Defining the nlcat-variable
+       status = nf90_def_var(ncid,"NLCAT",nf90_int,nlcat_dim_id,nlcat_id)
+       if (status .ne. nf90_noerr) call handle_error(status, &
             f90file//':'//subr//': define nlcat variable')
-       status = nf90_def_var(ncid,"time",nf90_float,time_dim_id,time_id)
-       if (status/=nf90_noerr) call handle_error(status, &
-            f90file//':'//subr//': define time variable')
+       status = nf90_put_att(ncid,nlcat_id,'description', &
+            'Landuse categories used in Oslo CTM3. CF-DF-NF-BF-TC-SNL-GR-MS-WE-TU-DE-W-ICE-U')
+       if (status .ne. nf90_noerr) call handle_error(status, &
+            f90file//':'//subr//': attribute description nlcat')       
 
 
        !// Putting attributes to /lon/lat variables
@@ -858,6 +857,7 @@ contains
          days_id, &                !Dimension id for days of year (1:366)
          tracer_name_len_dim_id, & !Dimension id for tname charater length
          tracer_idx_id, &          !ID for all tracer number
+         nlcat_id, &               !ID for land use categories
          dim_ncomps_days_id(2), &
          version_id, &             !ID for file version number
          tracer_molw_id, &         !ID for all tracer molecular weights
@@ -980,21 +980,6 @@ contains
     status = nf90_def_dim(ncid,"NCOMPS",NPAR,ncomps_dim_id)
     if (status .ne. nf90_noerr) call handle_error(status, &
          f90file//':'//subr//': define NCOMPS dim')
-
-    status = nf90_def_dim(ncid,"DAYS",366,days_dim_id)
-    if (status .ne. nf90_noerr) call handle_error(status, &
-         f90file//':'//subr//': define DAYS dim')
-
-    !// Defining nlcat variable (lat on interstices)
-    status = nf90_def_dim(ncid,"NLCAT",NPAR,nlcat_dim_id)
-    if (status .ne. nf90_noerr) call handle_error(status, &
-         f90file//':'//subr//': define NLCAT dim')
-
-    !// Define length of tracer name string (use TNAME for this)
-    status = nf90_def_dim(ncid,"tracer_name_len",TNAMELEN,tracer_name_len_dim_id)
-    if (status .ne. nf90_noerr) call handle_error(status, &
-         f90file//':'//subr//': define tracer_name_len dim')
-
     !// All the component IDs
     status = nf90_def_var(ncid,"tracer_idx",nf90_int,ncomps_dim_id,tracer_idx_id)
     if (status .ne. nf90_noerr) call handle_error(status, &
@@ -1004,7 +989,15 @@ contains
     if (status .ne. nf90_noerr) call handle_error(status, &
          f90file//':'//subr//': attribute description tracer_idx')
 
-    !// Defining the DAYS variable
+    !// Define length of tracer name string (use TNAME for this)
+    status = nf90_def_dim(ncid,"tracer_name_len",TNAMELEN,tracer_name_len_dim_id)
+    if (status .ne. nf90_noerr) call handle_error(status, &
+         f90file//':'//subr//': define tracer_name_len dim')
+
+        !// Defining the DAYS variable
+    status = nf90_def_dim(ncid,"DAYS",366,days_dim_id)
+    if (status .ne. nf90_noerr) call handle_error(status, &
+         f90file//':'//subr//': define DAYS dim')
     status = nf90_def_var(ncid,"DAYS",nf90_int,days_dim_id,days_id)
     if (status .ne. nf90_noerr) call handle_error(status, &
          f90file//':'//subr//': define DAYS variable')
@@ -1211,6 +1204,11 @@ contains
     if (status .ne. nf90_noerr) call handle_error(status, &
          f90file//':'//subr//':putting tracer_idx')
 
+    !// The land use categories
+    status = nf90_put_var(ncid,nlcat_id,(/1,2,3,4,5,6,7,8,9,10,11,12,13,14/))
+    if (status .ne. nf90_noerr) call handle_error(status, &
+         f90file//':'//subr//':putting nlcat_id')
+
     !// Molecular masses of transported components (r8)
     status = nf90_put_var(ncid,tracer_molw_id,TMASS)
     if (status .ne. nf90_noerr) call handle_error(status, &
@@ -1411,19 +1409,20 @@ contains
     status = nf90_def_dim(ncid,"lat",JPAR,lat_dim_id)
     if (status .ne. nf90_noerr) call handle_error(status, &
          f90file//':'//subr//': define lat dim')
+
     status = nf90_def_dim(ncid,"lon",IPAR,lon_dim_id)
     if (status .ne. nf90_noerr) call handle_error(status, &
          f90file//':'//subr//': define lon dim')
 
+    !// Defining nlcat
+    status = nf90_def_dim(ncid,"NLCAT",NLCAT,nlcat_dim_id)
+    if (status .ne. nf90_noerr) call handle_error(status, &
+         f90file//':'//subr//': define NLCAT dim')
+    
     !// Define NCOMPS = NPAR
     status = nf90_def_dim(ncid,"NCOMPS",NPAR,ncomps_dim_id)
     if (status .ne. nf90_noerr) call handle_error(status, &
          f90file//':'//subr//': define NCOMPS dim')
-
-    !// Define NLCAT = NLCAT
-    status = nf90_def_dim(ncid,"NLCAT",NLCAT,nlcat_dim_id)
-    if (status .ne. nf90_noerr) call handle_error(status, &
-         f90file//':'//subr//': define NLCAT dim')
 
     !// Define ilat/ilon
     status = nf90_def_dim(ncid,"ilat",JPAR+1,ilat_dim_id)
@@ -1612,7 +1611,14 @@ contains
     if (status .ne. nf90_noerr) call handle_error(status, &
          f90file//':'//subr//': attribute description ilat')
 
-        
+    !// Defining the nlcat-variable
+    status = nf90_def_var(ncid,"NLCAT",nf90_int,nlcat_dim_id,nlcat_id)
+    if (status .ne. nf90_noerr) call handle_error(status, &
+         f90file//':'//subr//': define nlcat variable')
+    status = nf90_put_att(ncid,nlcat_id,'description', &
+         'Landuse categories used in Oslo CTM3. CF-DF-NF-BF-TC-SNL-GR-MS-WE-TU-DE-W-ICE-U')
+    if (status .ne. nf90_noerr) call handle_error(status, &
+         f90file//':'//subr//': attribute description nlcat')       
 
     !// Grid area (r8), deflate netcdf4
     status = nf90_def_var(ncid,"gridarea",nf90_double,dim_lon_lat_id,areaxy_id)
@@ -1775,6 +1781,11 @@ contains
     status = nf90_put_var(ncid,tracer_idx_id,chem_idx)
     if (status .ne. nf90_noerr) call handle_error(status, &
          f90file//':'//subr//':putting tracer_idx')
+
+    !// The land use categories
+    status = nf90_put_var(ncid,nlcat_id,(/1,2,3,4,5,6,7,8,9,10,11,12,13,14/))
+    if (status .ne. nf90_noerr) call handle_error(status, &
+         f90file//':'//subr//':putting nlcat_id')
 
     !// Molecular masses of transported components (r8)
     status = nf90_put_var(ncid,tracer_molw_id,TMASS)
