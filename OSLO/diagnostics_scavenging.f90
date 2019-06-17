@@ -532,8 +532,9 @@ contains
     real(r8):: time                     !Time in this timestep
     integer :: nbr_steps                !Step number
     integer :: ncats                    !Numer of land use categories found in file
+    integer :: K
     integer, dimension(NLCAT) :: LCAT =  &   !Landuse category numbering
-         (/1,2,3,4,5,6,7,8,9,10,11,12,13,14/)         
+         (/(K, K=1,NLCAT, 1)/)         
 
     real(r8), save, dimension(IPAR,JPAR,NLCAT) :: GSTO3_priv=0._r8, FSTO3_priv=0._r8
     real(r8), dimension(IPAR,JPAR,NLCAT,1) :: GSTO3_inst, FSTO3_inst
@@ -650,20 +651,20 @@ contains
 
        !// Putting attributes to nlcat variable
        status = nf90_put_att(ncid,nlcat_id,'description', &
-            'Landuse categories used in Oslo CTM3.' // &
-            '01 - Needleleaftree temp./bor.(CF)' // &
-            '02 - Deciduoustree temp./bor. (DF)' // &
-            '03 - Needleleaftree med. (NF)' // &
-            '04 - Broadleaftree (BF)' // &
-            '05 - Crops (TC)' // &
-            '06 - Moorland (SNL)' // &
-            '07 - Grassland (GR)' // &
-            '08 - Scrubs med. (MS)' // &
-            '09 - Wetlands (WE)' // &
-            '10 - Tundra (TU)' // &
-            '11 - Desert (DE)' // &
-            '12 - Water (W)' // &
-            '13 - Urban (U)' // &
+            'Landuse categories used in Oslo CTM3.\n' // &
+            '01 - Needleleaftree temp./bor.(CF)\n' // &
+            '02 - Deciduoustree temp./bor. (DF)\n' // &
+            '03 - Needleleaftree med. (NF)\n' // &
+            '04 - Broadleaftree (BF)\n' // &
+            '05 - Crops (TC)\n' // &
+            '06 - Moorland (SNL)\n' // &
+            '07 - Grassland (GR)\n' // &
+            '08 - Scrubs med. (MS)\n' // &
+            '09 - Wetlands (WE)\n' // &
+            '10 - Tundra (TU)\n' // &
+            '11 - Desert (DE)\n' // &
+            '12 - Water (W)\n' // &
+            '13 - Urban (U)\n' // &
             '14 - Ice/Snow (ICE)') 
        if (status .ne. nf90_noerr) call handle_error(status, &
             f90file//':'//subr//': attribute description nlcat')  
@@ -1328,7 +1329,7 @@ contains
     character(len=80) :: filename
     character(len=4) :: CYEAR, CDATE
     real(r8) :: RDUM(IPAR,JPAR,NPAR)
-    integer :: I,J,II,JJ,N,MP
+    integer :: I,J,II,JJ,N,MP,K
     !// --------------------------------------------------------------------
     integer, parameter :: version = 3
     !//---------------------------------------------------------------------
@@ -1373,7 +1374,7 @@ contains
     integer :: status                 !Status for netcdf file 0=OK
     integer :: ncid                   !file id for output netcdf file
     integer, dimension(NLCAT) :: LCAT =  &   !Landuse category numbering
-         (/1,2,3,4,5,6,7,8,9,10,11,12,13,14/)    
+         (/(K, K=1,NLCAT, 1)/) 
 
     character(len=TNAMELEN), dimension(NPAR) :: tracer_name
     real(r8), dimension(NPAR) :: tracer_molw
@@ -1636,20 +1637,20 @@ contains
     if (status .ne. nf90_noerr) call handle_error(status, &
          f90file//':'//subr//': define nlcat variable')
     status = nf90_put_att(ncid,nlcat_id,'description', &
-         'Landuse categories used in Oslo CTM3.' // &
-            '01 - Needleleaftree temp./bor.(CF)' // &
-            '02 - Deciduoustree temp./bor. (DF)' // &
-            '03 - Needleleaftree med. (NF)' // &
-            '04 - Broadleaftree (BF)' // &
-            '05 - Crops (TC)' // &
-            '06 - Moorland (SNL)' // &
-            '07 - Grassland (GR)' // &
-            '08 - Scrubs med. (MS)' // &
-            '09 - Wetlands (WE)' // &
-            '10 - Tundra (TU)' // &
-            '11 - Desert (DE)' // &
-            '12 - Water (W)' // &
-            '13 - Urban (U)' // &
+         'Landuse categories used in Oslo CTM3.\n' // &
+            '01 - Needleleaftree temp./bor.(CF)\n' // &
+            '02 - Deciduoustree temp./bor. (DF)\n' // &
+            '03 - Needleleaftree med. (NF)\n' // &
+            '04 - Broadleaftree (BF)\n' // &
+            '05 - Crops (TC)\n' // &
+            '06 - Moorland (SNL)\n' // &
+            '07 - Grassland (GR)\n' // &
+            '08 - Scrubs med. (MS)\n' // &
+            '09 - Wetlands (WE)\n' // &
+            '10 - Tundra (TU)\n' // &
+            '11 - Desert (DE)\n' // &
+            '12 - Water (W)\n' // &
+            '13 - Urban (U)\n' // &
             '14 - Ice/Snow (ICE)')
     if (status .ne. nf90_noerr) call handle_error(status, &
          f90file//':'//subr//': attribute description nlcat')       
