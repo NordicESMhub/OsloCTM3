@@ -515,9 +515,6 @@ contains
     integer :: lon_id                   !Variable ID for longitude
     integer :: nlcat_id                 !Variable ID for NLCAT
     integer :: time_id                  !Variable ID for time
-    integer :: dim_lon_lat_time(3)      !Dimension ID for processes
-    integer :: srt_lon_lat_time(3)      !Start array for lon/lat/time
-    integer :: cnt_lon_lat_time(3)      !Counting array for lon/lat/time
     integer :: dim_lon_lat_nlcat_time(4)!Dimension ID for processes
     integer :: srt_lon_lat_nlcat_time(4)!Start array for lon/lat/nlcat/time
     integer :: cnt_lon_lat_nlcat_time(4)!Counting array for lon/lat/nlcat/time
@@ -532,8 +529,11 @@ contains
     integer :: nlats                    !Number of latitudes found in file
     integer :: nsteps                   !Number of steps found in file 
     character(len=80) :: time_label     !Label for variable "time"
-    real(r8)  :: time                   !Time in this timestep
+    real(r8):: time                     !Time in this timestep
     integer :: nbr_steps                !Step number
+    integer :: ncats                    !Numer of land use categories found in file
+    integer, dimension(NLCAT) :: LCAT =  &   !Landuse category numbering
+         (/1,2,3,4,5,6,7,8,9,10,11,12,13,14/)         
 
     real(r8), save, dimension(IPAR,JPAR,NLCAT) :: GSTO3_priv=0._r8, FSTO3_priv=0._r8
     real(r8), dimension(IPAR,JPAR,NLCAT,1) :: GSTO3_inst, FSTO3_inst
@@ -601,26 +601,22 @@ contains
        if (status/=nf90_noerr) call handle_error(status,f90file//':'//subr//': contactinfo')
 
        !// Define sizes
-       !// Define dimensions (JM, IM, time)
+       !// Define dimensions (JM, IM, NLCAT, time)
        status = nf90_def_dim(ncid,"lat",JPAR,lat_dim_id)
        if (status .ne. nf90_noerr) call handle_error(status, &
             f90file//':'//subr//': define lat dim')
        status = nf90_def_dim(ncid,"lon",IPAR,lon_dim_id)
        if (status .ne. nf90_noerr) call handle_error(status, &
             f90file//':'//subr//': define lon dim')
-       !// Defining dimension time of length unlimited
-       status = nf90_def_dim(ncid,"time",nf90_unlimited,time_dim_id)
-       if (status/=nf90_noerr) call handle_error(status, &
-            f90file//':'//subr//': define time dim')
        !// Defining nlcat dimension
        status = nf90_def_dim(ncid,"NLCAT",NLCAT,nlcat_dim_id)
        if (status .ne. nf90_noerr) call handle_error(status, &
             f90file//':'//subr//': define NLCAT dim')
-
-       !// Defining the combined id for a field (lon /lat /time)
-       dim_lon_lat_time(1)=lon_dim_id
-       dim_lon_lat_time(2)=lat_dim_id
-       dim_lon_lat_time(3)=time_dim_id
+       !// Defining dimension time of length unlimited
+       status = nf90_def_dim(ncid,"time",nf90_unlimited,time_dim_id)
+       if (status/=nf90_noerr) call handle_error(status, &
+            f90file//':'//subr//': define time dim')
+      
 
        !// Defining the combined id for a field (lon /lat/ nlcat /time)
        dim_lon_lat_nlcat_time(1)=lon_dim_id
@@ -638,16 +634,11 @@ contains
        status = nf90_def_var(ncid,"time",nf90_float,time_dim_id,time_id)
        if (status/=nf90_noerr) call handle_error(status, &
             f90file//':'//subr//': define time variable')
-
        !// Defining the nlcat-variable
        status = nf90_def_var(ncid,"NLCAT",nf90_int,nlcat_dim_id,nlcat_id)
        if (status .ne. nf90_noerr) call handle_error(status, &
             f90file//':'//subr//': define nlcat variable')
-       status = nf90_put_att(ncid,nlcat_id,'description', &
-            'Landuse categories used in Oslo CTM3. CF-DF-NF-BF-TC-SNL-GR-MS-WE-TU-DE-W-ICE-U')
-       if (status .ne. nf90_noerr) call handle_error(status, &
-            f90file//':'//subr//': attribute description nlcat')       
-
+       
 
        !// Putting attributes to /lon/lat variables
        status = nf90_put_att(ncid,lon_id,'units','degree_east')
@@ -657,7 +648,25 @@ contains
        if (status/=nf90_noerr) call handle_error(status, &
             f90file//':'//subr//': attribute units lat')
 
-
+       !// Putting attributes to nlcat variable
+       status = nf90_put_att(ncid,nlcat_id,'description', &
+            'Landuse categories used in Oslo CTM3.' // &
+            '01 - Needleleaftree temp./bor.(CF)' // &
+            '02 - Deciduoustree temp./bor. (DF)' // &
+            '03 - Needleleaftree med. (NF)' // &
+            '04 - Broadleaftree (BF)' // &
+            '05 - Crops (TC)' // &
+            '06 - Moorland (SNL)' // &
+            '07 - Grassland (GR)' // &
+            '08 - Scrubs med. (MS)' // &
+            '09 - Wetlands (WE)' // &
+            '10 - Tundra (TU)' // &
+            '11 - Desert (DE)' // &
+            '12 - Water (W)' // &
+            '13 - Urban (U)' // &
+            '14 - Ice/Snow (ICE)') 
+       if (status .ne. nf90_noerr) call handle_error(status, &
+            f90file//':'//subr//': attribute description nlcat')  
       
        !// Putting attributes to time variable
        time_label='hours since yyyy-mm-dd 00:00:00'
@@ -699,13 +708,17 @@ contains
        if (status .ne. nf90_noerr) call handle_error(status, &
             f90file//':'//subr//': end defmode')
        !//---------------------------------------------------------------------
-       !// Putting the lon/lat variables
+       !// Putting the lon/lat/nlcat variables
        status = nf90_put_var(ncid,lon_id,XDGRD)
        if (status/=nf90_noerr) call handle_error(status, &
             f90file//':'//subr//': putting lon')
        status = nf90_put_var(ncid,lat_id,YDGRD)
        if (status/=nf90_noerr) call handle_error(status, &
             f90file//':'//subr//': putting lat')
+       !// Putting the NLCAT variables
+       status = nf90_put_var(ncid,nlcat_id,LCAT)
+       if (status .ne. nf90_noerr) call handle_error(status, &
+            f90file//':'//subr//': putting nlcat')
        
     else                                      !// THE FILE HAS BEEN USED BEFORE
        !// Open the existing file
@@ -720,6 +733,9 @@ contains
        status = nf90_inq_dimid(ncid,"lon",lon_dim_id)
        if (status/=nf90_noerr) call handle_error(status, &
             f90file//':'//subr//': getting lon')
+       status = nf90_inq_dimid(ncid,"NLCAT",nlcat_dim_id)
+       if (status/=nf90_noerr) call handle_error(status, &
+            f90file//':'//subr//': getting NLCAT')
        status = nf90_inq_dimid(ncid,"time",time_dim_id)
        if (status/=nf90_noerr) call handle_error(status, &
             f90file//':'//subr//': getting time')
@@ -737,6 +753,13 @@ contains
             f90file//':'//subr//': inq lon dim')
        if (nlons/=IPAR) then
           write(6,*) f90file//':'//subr//': reports IM = ',nlons,IPAR
+          stop
+       end if
+       status = nf90_Inquire_Dimension(ncid,nlcat_dim_id,len=ncats)
+       if (status/=nf90_noerr) call handle_error(status, &
+            f90file//':'//subr//': inq NLCAT dim')
+       if (nsteps.lt.0) then
+          write(6,*) f90file//':'//subr//': reports NLCAT = ',ncats, NLCAT
           stop
        end if
        status = nf90_Inquire_Dimension(ncid,time_dim_id,len=nsteps)
@@ -766,9 +789,9 @@ contains
 
     !// For the tracer fields:
     !// Defining how far to count for each time a data set is added
-    cnt_lon_lat_time = (/IPAR , JPAR , 1/)
+    cnt_lon_lat_nlcat_time = (/IPAR , JPAR , NLCAT, 1/)
     !// Defining where to start adding the new time step
-    srt_lon_lat_time = (/1, 1, nbr_steps/)
+    srt_lon_lat_nlcat_time = (/1, 1, 1, nbr_steps/)
 
     !// Start value for new time step
     srt_time(1) = nbr_steps
@@ -1204,11 +1227,6 @@ contains
     if (status .ne. nf90_noerr) call handle_error(status, &
          f90file//':'//subr//':putting tracer_idx')
 
-    !// The land use categories
-    status = nf90_put_var(ncid,nlcat_id,(/1,2,3,4,5,6,7,8,9,10,11,12,13,14/))
-    if (status .ne. nf90_noerr) call handle_error(status, &
-         f90file//':'//subr//':putting nlcat_id')
-
     !// Molecular masses of transported components (r8)
     status = nf90_put_var(ncid,tracer_molw_id,TMASS)
     if (status .ne. nf90_noerr) call handle_error(status, &
@@ -1354,6 +1372,8 @@ contains
     !// Other locals
     integer :: status                 !Status for netcdf file 0=OK
     integer :: ncid                   !file id for output netcdf file
+    integer, dimension(NLCAT) :: LCAT =  &   !Landuse category numbering
+         (/1,2,3,4,5,6,7,8,9,10,11,12,13,14/)    
 
     character(len=TNAMELEN), dimension(NPAR) :: tracer_name
     real(r8), dimension(NPAR) :: tracer_molw
@@ -1616,7 +1636,21 @@ contains
     if (status .ne. nf90_noerr) call handle_error(status, &
          f90file//':'//subr//': define nlcat variable')
     status = nf90_put_att(ncid,nlcat_id,'description', &
-         'Landuse categories used in Oslo CTM3. CF-DF-NF-BF-TC-SNL-GR-MS-WE-TU-DE-W-ICE-U')
+         'Landuse categories used in Oslo CTM3.' // &
+            '01 - Needleleaftree temp./bor.(CF)' // &
+            '02 - Deciduoustree temp./bor. (DF)' // &
+            '03 - Needleleaftree med. (NF)' // &
+            '04 - Broadleaftree (BF)' // &
+            '05 - Crops (TC)' // &
+            '06 - Moorland (SNL)' // &
+            '07 - Grassland (GR)' // &
+            '08 - Scrubs med. (MS)' // &
+            '09 - Wetlands (WE)' // &
+            '10 - Tundra (TU)' // &
+            '11 - Desert (DE)' // &
+            '12 - Water (W)' // &
+            '13 - Urban (U)' // &
+            '14 - Ice/Snow (ICE)')
     if (status .ne. nf90_noerr) call handle_error(status, &
          f90file//':'//subr//': attribute description nlcat')       
 
@@ -1735,7 +1769,7 @@ contains
          f90file//':'//subr//': putting ilat')
 
     !// Putting the NLCAT variables
-    status = nf90_put_var(ncid,nlcat_id,YDEDG)
+    status = nf90_put_var(ncid,nlcat_id,LCAT)
     if (status .ne. nf90_noerr) call handle_error(status, &
          f90file//':'//subr//': putting nlcat')
 
@@ -1783,7 +1817,7 @@ contains
          f90file//':'//subr//':putting tracer_idx')
 
     !// The land use categories
-    status = nf90_put_var(ncid,nlcat_id,(/1,2,3,4,5,6,7,8,9,10,11,12,13,14/))
+    status = nf90_put_var(ncid,nlcat_id,LCAT)
     if (status .ne. nf90_noerr) call handle_error(status, &
          f90file//':'//subr//':putting nlcat_id')
 
