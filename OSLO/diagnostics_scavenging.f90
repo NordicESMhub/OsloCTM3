@@ -34,7 +34,8 @@ module diagnostics_scavenging
   use cmn_precision, only: r8
   use cmn_size, only: IPAR, JPAR, LPAR, NPAR, MPBLK, IDBLK, JDBLK
   use cmn_oslo, only: SCAV_LS, SCAV_CN, SCAV_DD, SCAV_BRD, SCAV_DIAG, &
-       SCAV_MAP_WLS, SCAV_MAP_WCN, SCAV_MAP_DRY, GSTO3_AVG, FSTO3_AVG
+       SCAV_MAP_WLS, SCAV_MAP_WCN, SCAV_MAP_DRY, &
+       GSTO3_AVG, FSTO3_AVG, VRAO3_AVG, VRBO3_AVG, VRCO3_AVG
   use cmn_sfc, only: VGSTO3, NLCAT
   !// ----------------------------------------------------------------------
   implicit none
@@ -46,7 +47,8 @@ module diagnostics_scavenging
   public scav_diag_init, scav_diag_put_ddep, scav_diag_brd, scav_diag_ls, &
        scav_diag_cn, scav_diag_collect_daily, &
        scav_diag_2fileA, scav_diag_2fileB, &
-       scav_diag_put_gsto, scav_diag_put_fsto, scav_diag_nmet_output_nc
+       scav_diag_put_gsto, scav_diag_put_drydepvelo, &
+       scav_diag_put_fsto, scav_diag_nmet_output_nc
   !// ----------------------------------------------------------------------
 
 contains
@@ -73,9 +75,14 @@ contains
     SCAV_MAP_WLS(:,:,:,:) = 0._r8
     SCAV_MAP_WCN(:,:,:,:) = 0._r8
     SCAV_MAP_DRY(:,:,:,:) = 0._r8
-    !// Stomatal uptake
+    !// Dry deposition velocities
     GSTO3_AVG(:,:,:) = 0._r8
+    VRAO3_AVG(:,:,:) = 0._r8
+    VRBO3_AVG(:,:,:) = 0._r8
+    VRCO3_AVG(:,:,:) = 0._r8
+    !// Leaf levelStomatal flux
     FSTO3_AVG(:,:,:) = 0._r8
+
     !// --------------------------------------------------------------------
   end subroutine scav_diag_init
   !// ----------------------------------------------------------------------
@@ -335,7 +342,10 @@ contains
     else
        TD = KDAY
     end if
-
+    !// Daily average of dry deposition velocites -> devide by (NROPSM*NRMETD)
+    VRAO3_AVG = VRAO3_AVG / (NROPSM*NRMETD)
+    VRBO3_AVG = VRBO3_AVG / (NROPSM*NRMETD)
+    VRCO3_AVG = VRCO3_AVG / (NROPSM*NRMETD)
     !// Daily average of stomatal conductance -> devide by (NROPSM*NRMETD)
     GSTO3_AVG = GSTO3_AVG / (NROPSM*NRMETD)
     !// Daily average of stomatal flux -> devide by (NROPSM*NRMETD)
@@ -388,7 +398,32 @@ contains
     !// --------------------------------------------------------------------
   end subroutine scav_diag_collect_daily
   !// ----------------------------------------------------------------------
-
+ !// ----------------------------------------------------------------------
+  subroutine scav_diag_put_drydepvelo(NMET,VRAO3,VRBO3,VRCO3)
+    !// --------------------------------------------------------------------
+    !// Compute the daily average dry deposition velocitites.
+    !//
+    !// VRaO3, VRbO3, and VRcO3 arein units of ms-1.
+    !//
+    !// Stefanie Falk, July 2018
+    !// --------------------------------------------------------------------
+    
+    !// --------------------------------------------------------------------
+    implicit none
+    !// --------------------------------------------------------------------
+    !// Input
+    real(r8), dimension(IPAR,JPAR,NLCAT), intent(in) :: VRAO3,VRBO3,VRCO3
+    integer,intent(in) :: NMET
+    
+    !// --------------------------------------------------------------------
+    !// Collect totals
+    !// average will be calculated in scav_diag_collect_daily
+    VRAO3_AVG = VRAO3_AVG + VRAO3
+    VRBO3_AVG = VRBO3_AVG + VRBO3
+    VRCO3_AVG = VRCO3_AVG + VRCO3
+    !// --------------------------------------------------------------------
+  end subroutine scav_diag_put_drydepvelo
+  !// ----------------------------------------------------------------------
   !// ----------------------------------------------------------------------
   subroutine scav_diag_put_gsto(NMET,VGSTO3)
     !// --------------------------------------------------------------------
@@ -1368,6 +1403,9 @@ contains
          scav_dry_id(NPAR)
     integer :: &
          gsto3_avg_id, &
+         vrao3_avg_id, &
+         vrbo3_avg_id, &
+         vrco3_avg_id, &
          fsto3_avg_id
 
     !// Other locals
@@ -1721,8 +1759,8 @@ contains
        end do
     end if
 
-    !// Daily average of stomatal conductance
     if(LDDEPmOSaic .and. LDLYSCAV(7)) then
+       !// Daily average of stomatal conductance
        status = nf90_def_var(ncid,'GstO3_avg', &
             nf90_double, dim_lon_lat_nlcat_id, gsto3_avg_id)
        if (status .ne. nf90_noerr) call handle_error(status, &
@@ -1734,6 +1772,46 @@ contains
        status = nf90_put_att(ncid, gsto3_avg_id,'unit','mmol m-2 s-1')
        if (status .ne. nf90_noerr) call handle_error(status, &
             f90file//':'//subr//': attribute unit GstO3_avg ')
+
+       !// Daily average of aerodynamical dry deposition velocity
+       status = nf90_def_var(ncid,'VRaO3_avg', &
+            nf90_double, dim_lon_lat_nlcat_id, vrao3_avg_id)
+       if (status .ne. nf90_noerr) call handle_error(status, &
+            f90file//':'//subr//': define variable VRaO3_avg ')
+       status = nf90_def_var_deflate(ncid, vrao3_avg_id, &
+            nc4shuffle, 1, nc4deflate)
+       if (status .ne. nf90_noerr) call handle_error(status, &
+            f90file//':'//subr//': define deflate variable VRaO3_avg ')
+       status = nf90_put_att(ncid, vrao3_avg_id,'unit','m s-1')
+       if (status .ne. nf90_noerr) call handle_error(status, &
+            f90file//':'//subr//': attribute unit VRaO3_avg ')
+
+       !// Daily average of quasi-laminar dry deposition velocity
+       status = nf90_def_var(ncid,'VRbO3_avg', &
+            nf90_double, dim_lon_lat_nlcat_id, vrbo3_avg_id)
+       if (status .ne. nf90_noerr) call handle_error(status, &
+            f90file//':'//subr//': define variable VRbO3_avg ')
+       status = nf90_def_var_deflate(ncid, vrbo3_avg_id, &
+            nc4shuffle, 1, nc4deflate)
+       if (status .ne. nf90_noerr) call handle_error(status, &
+            f90file//':'//subr//': define deflate variable VRbO3_avg ')
+       status = nf90_put_att(ncid, vrbo3_avg_id,'unit','m s-1')
+       if (status .ne. nf90_noerr) call handle_error(status, &
+            f90file//':'//subr//': attribute unit VRbO3_avg ')
+
+       !// Daily average of canopy dry deposition velocity
+       status = nf90_def_var(ncid,'VRcO3_avg', &
+            nf90_double, dim_lon_lat_nlcat_id, vrco3_avg_id)
+       if (status .ne. nf90_noerr) call handle_error(status, &
+            f90file//':'//subr//': define variable VRcO3_avg ')
+       status = nf90_def_var_deflate(ncid, vrco3_avg_id, &
+            nc4shuffle, 1, nc4deflate)
+       if (status .ne. nf90_noerr) call handle_error(status, &
+            f90file//':'//subr//': define deflate variable VRcO3_avg ')
+       status = nf90_put_att(ncid, vrco3_avg_id,'unit','m s-1')
+       if (status .ne. nf90_noerr) call handle_error(status, &
+            f90file//':'//subr//': attribute unit VRcO3_avg ')
+
        !// Daily average of stomatal flux
        status = nf90_def_var(ncid,'FstO3_avg', &
             nf90_double, dim_lon_lat_nlcat_id, fsto3_avg_id)
@@ -1900,15 +1978,24 @@ contains
        end do
     end if
 
-    !// Stomatal conductance
+    !// Dry deposition velocities
     if(LDDEPmOSaic .and. LDLYSCAV(7)) then
        status = nf90_put_var(ncid,gsto3_avg_id,GSTO3_AVG)
        if (status .ne. nf90_noerr) call handle_error(status, &
             f90file//':'//subr//': putting GstO3_avg')
+       status = nf90_put_var(ncid,vrao3_avg_id,VRAO3_AVG)
+       if (status .ne. nf90_noerr) call handle_error(status, &
+            f90file//':'//subr//': putting VRaO3_avg')
+       status = nf90_put_var(ncid,vrbo3_avg_id,VRBO3_AVG)
+       if (status .ne. nf90_noerr) call handle_error(status, &
+            f90file//':'//subr//': putting VRbO3_avg')
+       status = nf90_put_var(ncid,vrco3_avg_id,VRCO3_AVG)
+       if (status .ne. nf90_noerr) call handle_error(status, &
+            f90file//':'//subr//': putting VRcO3_avg')
        !// [mmol m-2 s-1] -> [nmol m-2 s-1]
        status = nf90_put_var(ncid,fsto3_avg_id,FSTO3_AVG*1.e6_r8)
        if (status .ne. nf90_noerr) call handle_error(status, &
-            f90file//':'//subr//': putting Fsto3_avg')
+            f90file//':'//subr//': putting FstO3_avg')
     end if
     !//---------------------------------------------------------------------
     !// close netcdf file
@@ -1923,6 +2010,9 @@ contains
     SCAV_MAP_WCN(:,:,:,:) = 0._r8
     SCAV_MAP_DRY(:,:,:,:) = 0._r8
     GSTO3_AVG(:,:,:) = 0._r8
+    VRAO3_AVG(:,:,:) = 0._r8
+    VRBO3_AVG(:,:,:) = 0._r8
+    VRCO3_AVG(:,:,:) = 0._r8
     FSTO3_AVG(:,:,:) = 0._r8
     !// --------------------------------------------------------------------
   end subroutine scav_diag_2fileB

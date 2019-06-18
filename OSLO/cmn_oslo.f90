@@ -313,6 +313,10 @@ module cmn_oslo
   real(r8), dimension(IPAR,JPAR,NLCAT) :: GSTO3_AVG
   !// Stomatal flux: daily average
   real(r8), dimension(IPAR,JPAR,NLCAT) :: FSTO3_AVG
+  !// Dry deposition velocities
+  real(r8), dimension(IPAR,JPAR,NLCAT) :: VRAO3_AVG
+  real(r8), dimension(IPAR,JPAR,NLCAT) :: VRBO3_AVG
+  real(r8), dimension(IPAR,JPAR,NLCAT) :: VRCO3_AVG
   
   !// --- Help variables ---------------------------------------------------
   !// Days of month

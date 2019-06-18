@@ -77,7 +77,7 @@ contains
     !//
     !// Amund Sovde, October 2008
     !// --------------------------------------------------------------------
-    use cmn_sfc, only: VDEP, VGSTO3
+    use cmn_sfc, only: VDEP, VGSTO3, VGNSO3, VRAO3, VRBO3, VRCO3
     !// --------------------------------------------------------------------
     implicit none
     !// --------------------------------------------------------------------
@@ -93,10 +93,14 @@ contains
     !// Initialize dry deposition
     write(6,'(a)') f90file//':'//subr//': initializing VDEP' 
     VDEP(:,:,:) = 0._r8
-    !// Initialize stomata deposition
-    write(6,'(a)') f90file//':'//subr//': initializing VGSTO3' 
+    !// Initialize output variables
+    write(6,'(a)') f90file//':'//subr//': initializing VGSTO3, VGNSO3, ' // &
+         'VRAO3, VRBO3, VRCO3' 
     VGSTO3(:,:,:) = 0._r8
-    
+    VGNSO3(:,:,:) = 0._r8
+    VRAO3(:,:,:) = 0._r8
+    VRBO3(:,:,:) = 0._r8
+    VRCO3(:,:,:) = 0._r8
     !// read in Deposition velocities
     FILE_NAME='./Indata_CTM3/drydep.ctm'
     open(1,file=FILE_NAME,Status='OLD',Form='FORMATTED',IOSTAT=IOS)
@@ -234,7 +238,8 @@ contains
     use cmn_fjx, only: SZAMAX
     use cmn_met, only: CI, SD, PBL_KEDDY, ZOFLE, SFT
     use cmn_parameters, only: M_AIR, AVOGNR, R_AIR, G0, LDEBUG, VONKARMAN
-    use cmn_sfc, only: landSurfTypeFrac, LANDUSE_IDX, VDEP, VGSTO3, LDDEPmOSaic, NLCAT
+    use cmn_sfc, only: landSurfTypeFrac, LANDUSE_IDX, LDDEPmOSaic, NLCAT, &
+         VDEP, VGSTO3, VGNSO3, VRAO3, VRBO3, VRCO3
     use cmn_oslo, only: chem_idx, trsp_idx
     use bcoc_oslo, only: bcoc_setdrydep, bcoc_vdep2
     use soa_oslo, only: soa_setdrydep
@@ -257,7 +262,8 @@ contains
          VNO2, VO3, VHNO3, VPAN, VCO, VH2O2, &
          VSO2, VSO4, VMSA, VNH3, &
          VNO,  VHCHO, VCH3CHO
-    real(r8),dimension(IDBLK,JDBLK,NLCAT) :: VSto
+    !// Local variable to output GSTO3/GNSO3, and Ra, Rb, Rc
+    real(r8),dimension(IDBLK,JDBLK,NLCAT) :: VSto, VNSto, VRa, VRb, VRc
 
     integer :: MDAY(IDBLK,JDBLK)    !// 1=day, 2=night
     integer :: MSEASON(IDBLK,JDBLK) !// 0=summer, 3=winter
@@ -476,7 +482,8 @@ contains
           !// New dry deposition scheme (aka mOSaic)
           !// Get new dry deposition values [m/s]
           call get_vdep2(UTTAU, BTT, AIRB, BTEM, MP, &
-               VO3,VHNO3,VPAN,VH2O2,VNO2, VSO2,VNH3, VNO,VHCHO,VCH3CHO, VSto)
+               VO3,VHNO3,VPAN,VH2O2,VNO2, VSO2,VNH3, VNO,VHCHO,VCH3CHO, &
+               VSto, VNSto, VRa, VRb, VRc)
 
           !// CTM2 drydep is crude and needs to be adjusted to stability
           !// parameters. This is not the case for VDEP2 treatment, which
@@ -513,6 +520,10 @@ contains
           VHCHO(:,:)   = 0._r8
           VCH3CHO(:,:) = 0._r8
           VSto(:,:,:)  = 0._r8
+          VNSto(:,:,:)  = 0._r8
+          VRa(:,:,:)  = 0._r8
+          VRb(:,:,:)  = 0._r8
+          VRc(:,:,:)  = 0._r8
 
           !// All are scaled by stability
           SCALESTABILITY(:) = 1
@@ -532,6 +543,10 @@ contains
        VHCHO(:,:)   = 0._r8
        VCH3CHO(:,:) = 0._r8
        VSto(:,:,:)  = 0._r8
+       VNSto(:,:,:)  = 0._r8
+       VRa(:,:,:)  = 0._r8
+       VRb(:,:,:)  = 0._r8
+       VRc(:,:,:)  = 0._r8
 
     end if !// if (LOSLOCTROP) then
 
@@ -545,7 +560,12 @@ contains
       !// Loop over longitude (I is global, II is block)
       do I = MPBLKIB(MP),MPBLKIE(MP)
         II    = I - MPBLKIB(MP) + 1
-        VGSTO3(I,J,:) = VStO(II, JJ, :)              !// Stomatal drydeposition velocity
+        VGSTO3(I,J,:) = VSto(II, JJ, :)              !// Stomatal drydeposition velocity
+        VGNSO3(I,J,:) = VNSto(II, JJ, :)
+        VRAO3(I,J,:) = VRa(II, JJ, :)
+        VRBO3(I,J,:) = VRb(II, JJ, :)
+        VRCO3(I,J,:) = VRc(II, JJ, :)
+
         do N = 1,NTM
 
           if (chem_idx(N) .eq. 1) then               !// Standard tropchem ---v
@@ -771,7 +791,8 @@ contains
 
   !// ----------------------------------------------------------------------
   subroutine get_vdep2(UTTAU,BTT,AIRB,BTEM, MP, &
-         VO3,VHNO3,VPAN,VH2O2,VNO2, VSO2,VNH3, VNO,VHCHO,VCH3CHO, VSto)
+         VO3,VHNO3,VPAN,VH2O2,VNO2, VSO2,VNH3, VNO,VHCHO,VCH3CHO, &
+         VSto, VNSto, VRa, VRb, VRc)
     !// --------------------------------------------------------------------
     !// Calculate drydep of gases as in EMEP model, Simpson et al. (2012),
     !// ACP, doi:10.5194/acp-12-7825-2012, refered to as EMEP in
@@ -800,7 +821,7 @@ contains
     use cmn_met, only: PRANDTLL1, P, T, SD, CI, USTR, ZOFLE, PRECLS, PRECCNV, &
          CLDFR, PPFD, UMS, VMS, SFT, SWVL3, MO_LENGTH, SHF
     use cmn_parameters, only: R_AIR, R_UNIV, VONKARMAN
-    use cmn_sfc, only: LAI, ZOI, landSurfTypeFrac, LANDUSE_IDX, StomRes, NVGPAR, &
+    use cmn_sfc, only: LAI, ZOI, landSurfTypeFrac, LANDUSE_IDX, NVGPAR, &
          LGSMAP, NLCAT, DDEP_PAR
     use cmn_oslo, only: trsp_idx
     use utilities_oslo, only: landfrac2mosaic, set_vegetation_height, &
@@ -816,7 +837,8 @@ contains
     !// Output
     real(r8),dimension(IDBLK,JDBLK), intent(out) :: &
          VO3,VHNO3,VPAN,VH2O2,VNO2, VSO2,VNH3, VNO,VHCHO,VCH3CHO
-    real(r8),dimension(IDBLK,JDBLK,NLCAT), intent(out) :: VSto
+    real(r8),dimension(IDBLK,JDBLK,NLCAT), intent(out) :: &
+         VSto, VNSto, VRa, VRb, VRc
 
     !// Locals
     integer :: I,J,II,JJ, NN, KK, NTOTAL
@@ -1141,6 +1163,13 @@ contains
            end if
         end do
 
+        !// Save aerodynamical reistance for output
+        WHERE (Ra .gt. 0._r8)
+           VRa(II,JJ,:) = 1._r8/Ra*FL
+        ELSEWHERE
+           VRa(II,JJ,:) = 0._r8
+        end WHERE
+
         !// ------------------------------------------------------------------
         !// Quasi-laminar resistance (Rb)
         !// ------------------------------------------------------------------
@@ -1163,8 +1192,6 @@ contains
            rbO = min( 1000._r8, rbO ) !// i.g. min velocity 0.001 m/s
            rbO = max(   10._r8, rbO ) !// i.e. max velocity 0.10 m/s
 
-           !// Make a weighted mean using land fraction (weighting conductances)
-           !Rb(KK) = 1._r8 / (PLAND(I,J) / rbL  +  (1._r8 - PLAND(I,J)) / rbO)
            do NN = 1, 11
               Rb(KK,NN) = rbL
            end do
@@ -1173,6 +1200,13 @@ contains
            end do
            Rb(KK,12) = rbO
         end do !// do N = 1, nddep
+
+        !// Save quasi-laminar resistance for output
+        WHERE (Rb(1,:) .gt. 0._r8)
+           VRb(II,JJ,:) = 1._r8/Rb(1,:) * FL
+        ELSEWHERE
+           VRb(II,JJ,:) = 0._r8
+        end WHERE
 
         !// ----------------------------------------------------------------
         !// Surface (or canopy) resistance (Rc)
@@ -1255,14 +1289,16 @@ contains
            fSW = 2*SWVL3_IJ
         end if
     
+        !// Computation of leaf-level stomatal contuctance gsto
+        gsto = 0._r8 ! initialisation
+        gsto = gmax*fPhen*fLight*max(fmin, fstcT2*fD*fSW)
+
         !// Unit conversion of [mmol s-1 m-2] to [m s-1]:
         !// Ideal gas law Vm = V/n = R * T/P
         !// Factor 1.d-5 derived from unit conversation:
         !// mmol => 1.d-3 mol and 1/hPa => 1.d-2/Pa
         !// Simpson et al. has gmax = gmaxm/41000
         !// This can be off by +/-25%
-        gsto = 0._r8 ! initialisation
-        gsto = gmax*fPhen*fLight*max(fmin, fstcT2*fD*fSW)
         gsto = gsto*1.d-5*R_UNIV*T2M/PSFC
 
         !// Acidity ratio to be used for SO2 and NH3
@@ -1373,8 +1409,7 @@ contains
         !// Snow land is of course snow covered
         fsnowC(NLCAT)= 1._r8
 
-        !// No need to make a gridbox average fsnow
-
+       
         !// ----------------------------------------------------------------
         !// Non stomatal conductance Gns - Ozone
         !// ----------------------------------------------------------------
@@ -1692,23 +1727,29 @@ contains
            !// from 1000/200 to 500/100 compared to EMEP2003, so we use these
            if (T2M .le. 268._r8) then
               !// Cold temperatures (T<-5C)
-              Rc(NLCAT,:) = 500._r8
+              Rc(NDDEP,:) = 500._r8
            else if  (T2M .gt. 268._r8 .and. T2M .le. 273._r8 ) then   
               !// Just below 0C (-5C<T<0C)
-              Rc(NLCAT,:) = 100._r8
+              Rc(NDDEP,:) = 100._r8
            else
               !// Above 0C.
               !// Equation uses temperature in C, not K.
-              Rc(NLCAT,:) = 0.0455_r8 * 10._r8 * log10(T2Mcel + 2._r8) &
+              Rc(NDDEP,:) = 0.0455_r8 * 10._r8 * log10(T2Mcel + 2._r8) &
                        * exp((100._r8 - RH)/7._r8) &
                        * 10._r8**(-1.1099_r8 * Asn + 1.6769_r8)
               !// Impose some limits on Rc (EMEP2012)
-              Rc(NLCAT,:) = min( 200.0,Rc(NLCAT,:))
-              Rc(NLCAT,:) = max(  10.0,Rc(NLCAT,:))
+              Rc(NDDEP,:) = min( 200.0,Rc(NDDEP,:))
+              Rc(NDDEP,:) = max(  10.0,Rc(NDDEP,:))
            end if
         end if
 
-
+        !// Save canopy resistance for output
+        WHERE(Rc(1,:) .gt. 0._r8)
+           VRc(II,JJ,:) = 1._r8/Rc(1,:)*FL
+        ELSEWHERE
+           VRc(II,JJ,:) = 0._r8
+        end WHERE
+        
         !// Calculate deposition velocity
         !// ----------------------------------------------------------------
         do KK = 1, NDDEP
@@ -1735,7 +1776,6 @@ contains
            VD(KK) = SUM( 1._r8 / Tot_res * FL ) / SUM(FL)
         end do
 
-
         !// Assign to IJ-block values [m/s]
         VO3(II,JJ)     = VD(1)
         VSO2(II,JJ)    = VD(2)
@@ -1753,6 +1793,9 @@ contains
         !//Multiply with ozone concentration yields stomatal flux.
         !//unit [mmol m-2s-1]
         VSto(II,JJ,:)    = FL*gsto/(1.d-5*R_UNIV*T2M/PSFC)
+
+        !// Save non-stomatal conductance for output
+        VNSto(II,JJ,:)   = FL * GnsO3
      end do !// do I = MPBLKIB(MP),MPBLKIE(MP)
     end do !// do J = MPBLKJB(MP),MPBLKJE(MP)
 

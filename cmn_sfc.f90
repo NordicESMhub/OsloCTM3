@@ -57,8 +57,13 @@ module CMN_SFC
   !// Dry deposition
   real(r8), dimension(NPAR,IPAR,JPAR) :: VDEP      !// dep veloc, mean
   real(r8), dimension(NPAR,3)         :: VDEPIN    !// UCI dep vel for land/ocean/cryo
-  !// Stomatal conductance
-  real(r8), dimension(IPAR,JPAR,NLCAT):: VGSTO3    !// dep veloc, stomata
+  !// Ozone dry deposition velocities
+  real(r8), dimension(IPAR,JPAR,NLCAT):: VGSTO3    !// stomatal
+  real(r8), dimension(IPAR,JPAR,NLCAT):: VGNSO3    !// non-stomatal
+  real(r8), dimension(IPAR,JPAR,NLCAT):: VRAO3     !// aerodynamic
+  real(r8), dimension(IPAR,JPAR,NLCAT):: VRBO3     !// quasi-laminar
+  real(r8), dimension(IPAR,JPAR,NLCAT):: VRCO3     !// canopy
+
 
   !// Growing season
   logical :: LGSMAP
