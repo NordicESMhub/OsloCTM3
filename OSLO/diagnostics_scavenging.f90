@@ -651,20 +651,20 @@ contains
 
        !// Putting attributes to nlcat variable
        status = nf90_put_att(ncid,nlcat_id,'description', &
-            'Landuse categories used in Oslo CTM3.' // char(10) &
-            '01 - Needleleaftree temp./bor.(CF)' // char(10) &
-            '02 - Deciduoustree temp./bor. (DF)' // char(10) &
-            '03 - Needleleaftree med. (NF)' // char(10) &
-            '04 - Broadleaftree (BF)' // char(10) &
-            '05 - Crops (TC)' // char(10) &
-            '06 - Moorland (SNL)' // char(10) &
-            '07 - Grassland (GR)' // char(10) &
-            '08 - Scrubs med. (MS)' // char(10) &
-            '09 - Wetlands (WE)' // char(10) &
-            '10 - Tundra (TU)' // char(10) &
-            '11 - Desert (DE)' // char(10) &
-            '12 - Water (W)' // char(10) &
-            '13 - Urban (U)' // char(10) &
+            'Landuse categories used in Oslo CTM3.' // char(10) // &
+            '01 - Needleleaftree temp./bor.(CF)' // char(10) // &
+            '02 - Deciduoustree temp./bor. (DF)' // char(10) // &
+            '03 - Needleleaftree med. (NF)' // char(10) // &
+            '04 - Broadleaftree (BF)' // char(10) // &
+            '05 - Crops (TC)' // char(10) // &
+            '06 - Moorland (SNL)' // char(10) // &
+            '07 - Grassland (GR)' // char(10) // &
+            '08 - Scrubs med. (MS)' // char(10) // &
+            '09 - Wetlands (WE)' // char(10) // &
+            '10 - Tundra (TU)' // char(10) // &
+            '11 - Desert (DE)' // char(10) // &
+            '12 - Water (W)' // char(10) // &
+            '13 - Urban (U)' // char(10) // &
             '14 - Ice/Snow (ICE)') 
        if (status .ne. nf90_noerr) call handle_error(status, &
             f90file//':'//subr//': attribute description nlcat')  
@@ -1637,20 +1637,20 @@ contains
     if (status .ne. nf90_noerr) call handle_error(status, &
          f90file//':'//subr//': define nlcat variable')
     status = nf90_put_att(ncid,nlcat_id,'description', &
-         'Landuse categories used in Oslo CTM3.' // char(10) &
-            '01 - Needleleaftree temp./bor.(CF)' // char(10) &
-            '02 - Deciduoustree temp./bor. (DF)' // char(10) &
-            '03 - Needleleaftree med. (NF)' // char(10) &
-            '04 - Broadleaftree (BF)' // char(10) &
-            '05 - Crops (TC)' // char(10) &
-            '06 - Moorland (SNL)' // char(10) &
-            '07 - Grassland (GR)' // char(10) &
-            '08 - Scrubs med. (MS)' // char(10) &
-            '09 - Wetlands (WE)' // char(10) &
-            '10 - Tundra (TU)' // char(10) &
-            '11 - Desert (DE)' // char(10) &
-            '12 - Water (W)' // char(10) &
-            '13 - Urban (U)' // char(10) &
+         'Landuse categories used in Oslo CTM3.' // char(10) // &
+            '01 - Needleleaftree temp./bor.(CF)' // char(10) // &
+            '02 - Deciduoustree temp./bor. (DF)' // char(10) // &
+            '03 - Needleleaftree med. (NF)' // char(10) // &
+            '04 - Broadleaftree (BF)' // char(10) // &
+            '05 - Crops (TC)' // char(10) // &
+            '06 - Moorland (SNL)' // char(10) // &
+            '07 - Grassland (GR)' // char(10) // &
+            '08 - Scrubs med. (MS)' // char(10) // &
+            '09 - Wetlands (WE)' // char(10) // &
+            '10 - Tundra (TU)' // char(10) // &
+            '11 - Desert (DE)' // char(10) // &
+            '12 - Water (W)' // char(10) // &
+            '13 - Urban (U)' // char(10) // &
             '14 - Ice/Snow (ICE)')
     if (status .ne. nf90_noerr) call handle_error(status, &
          f90file//':'//subr//': attribute description nlcat')       
