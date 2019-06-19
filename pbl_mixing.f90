@@ -284,7 +284,7 @@ contains
                    'NBLX,I,J,SFCD,SFCT,USTAR,SFCS',NBLX,I,J,SFCD,SFCT,USTAR,SFCS
               MO_LEN = 1.e3_r8
            end if
-           MO_LENGTH(II,JJ,MP) = MO_LEN !// Set MO-lenght
+           MO_LENGTH(II,JJ,MP) = MO_LEN !// Set MO-length
            !ZO = ZOI(I,J,JMON)       ! surface roughness (m)
            !// correct water surf roughness for wind/waves:
            !ZOW = 0.135_r8 * SFNU / USTAR + 1.83e-3_r8 * USTAR**2
