@@ -278,7 +278,12 @@ contains
     !// --------------------------------------------------------------------
     character(len=*), parameter :: subr = 'setdrydep'
     !// --------------------------------------------------------------------
-
+    !// Initialization
+    VRa(:,:,:) = 0._r8 
+    VRb(:,:,:) = 0._r8 
+    VRc(:,:,:) = 0._r8
+    VSto(:,:,:) = 0._r8 
+    VNSto(:,:,:) = 0._r8
 
     !// Find day/night and vegetation fractions
     !// --------------------------------------------------------------------
@@ -565,7 +570,7 @@ contains
         VRAO3(I,J,:) = VRa(II, JJ, :)
         VRBO3(I,J,:) = VRb(II, JJ, :)
         VRCO3(I,J,:) = VRc(II, JJ, :)
-
+                
         do N = 1,NTM
 
           if (chem_idx(N) .eq. 1) then               !// Standard tropchem ---v
@@ -651,6 +656,7 @@ contains
       end do !// do I = MPBLKIB(MP),MPBLKIE(MP)
     end do !// do J = MPBLKJB(MP),MPBLKJE(MP)
 
+    
 
     !// --------------------------------------------------------------------
   end subroutine setdrydep
@@ -907,11 +913,16 @@ contains
          RHlim  = 75._r8, &
          Rd     = 180._r8, &
          Rw     = 100._r8
-        
+
     !// --------------------------------------------------------------------
     character(len=*), parameter :: subr = 'get_vdep2'
     !// --------------------------------------------------------------------
       
+    !// Initialization
+    Ra = 0._r8 
+    Rb(:,:) = 0._r8 
+    Rc(:,:) = 0._r8
+    
     !// Set parameters to be used for the 8 LPJ land use categories
     !// RgsO3:  Ground surface resistance
     !// RgsSO2: Ground surface resistance
@@ -1022,7 +1033,6 @@ contains
       ! do NN = 7, 8
       call set_vegetation_height(tmpVEGH(8),YDGRD(J),VEGH(8))
       ! end do
-
       
       !// Loop over longitude (I is global, II is block)
       !// ------------------------------------------------------------------
@@ -1081,133 +1091,12 @@ contains
         !// Wind at L1 center
         WINDL1  = sqrt(UMS(1,I,J)*UMS(1,I,J) + VMS(1,I,J)*VMS(1,I,J))
 
-        
+        !// Set land fractions
+        call landfrac2mosaic(FL,NLCAT,landSurfTypeFrac(:,I,J), &
+             NVGPAR, YDGRD(J), LANDUSE_IDX)
 
-        !// ----------------------------------------------------------------
-        !// Aerodynamic resistance (Ra)
-        !// ----------------------------------------------------------------
-        
-        !// Define reference height as level 4 center (<45 m>)
-        ZREF   = ( ZOFLE(5,I,J) + ZOFLE(4,I,J) ) * 0.5_r8
-       
-        !// Interpolate meteorology at ZREF 
-        !// May need to check if values are defined for center or not.
-        WIND_ZREF = sqrt(UMS(4,I,J)*UMS(4,I,J) + VMS(4,I,J)*VMS(4,I,J))
-        T_ZREF    = T(I,J,4)
-        SHF_IJ    = SHF(I,J)                      !// Surface heat flux
-        !// Get pressure from sigma levels
-        P2        = ETAA(5) + ETAB(5) * PSFC
-        P1        = ETAA(4) + ETAB(4) * PSFC
-        P_ZREF    = (P1 + P2) * 0.5_r8
-        !// Density
-        RHO_ZREF  = P_ZREF/(T_ZREF * R_AIR)
-        !// Displacement height
-        depl_height      = 0.7_r8 * VEGH         !// other vegetation
-        depl_height(1:4) = 0.78_r8 * VEGH(1:4)   !// forests
-        !// Roughness length
-        z0      = 0.1_r8                         !// other vegetation
-        z0(1:4) = 0.07_r8 * VEGH(1:4)            !// forests
-        z0(1:4) = MIN(z0(1:4),1._r8)             !// upper limit following Simpson et al. (2012)
-        do NN = 1, NLCAT
-           if (ZREF .lt. depl_height(NN)) then
-              write(6,'(a)') f90file//':'//subr//': ZREF < deplacement height: This is WRONG!'
-              print*,'NN,ZREF, d, ZOFLE',NN,ZREF,depl_height(NN), ZOFLE(:,I,J)
-              stop
-           end if
-        end do
         
         
-        !// Roughness length (z0) for water surfaces.
-        !// ZOI is zero for these. z0 over water is generally small.
-        !// Will distinguish between z0 and z0(12).
-        !// Do not allow z0 > (ZREF-d)
-        z0(12)   = min(ZOI(I,J,JMON), (ZREF - depl_height(12)) * 0.999_r8)
-
-        !// Water roughness lenghth
-        !// Calm sea: 0.11 * nu / USR, nu=eta/rho=kin.visc. of air (Hinze,1975)
-        !//                            here we use 0.135 instead of 0.11.
-        !// Rough sea: a * USR^2 / g, where a=0.016 (Charnock, 1955) here 0.018
-        !//                           here a=0.018 (Garratt 1992)
-        !// Will use wind of 3m/s to separate these.
-        !// SFNU = kinematic visc(nu) = mu/density  (m*m/s), found as in PBL:
-        !//   SFCD = SFCP/(SFCT*287._r8) ! density (kg/m^3)
-        !//   SFMU = 6.2d-8*SFCT    ! abs.visc. 6.2d-8*T (lin fit:-30C to +40C)
-        !//   SFNU = SFMU / SFCD    ! kinematic visc(nu) = mu/density  (m*m/s)
-        !// or SFNU = 6.2d-8*T2M*T2M*287._r8/(100._r8*PSFC)
-        ! Sutherland's law should be used throughout the code instead
-        !SFNU  = ( 1.458e-6_r8*T2M**(3/2._r8)/(T2M+110.4_r8)* T2M * R_AIR) / (100._r8 * PSFC)
-        SFNU  = (6.2e-8_r8 * T2M * T2M * R_AIR) / (100._r8 * PSFC)
-        !z0(12) = min(0.135_r8*SFNU/USR + 1.83e-3_r8*USR**2, 2.e-3_r8)
-        !// Maximum limit of 2mm surface roughness.
-        if (WINDL1 .lt. 3._r8) then
-           z0(12) = min(0.135_r8*SFNU/USR, 2.e-3_r8)
-        else
-           ! g is 9.836 ms-2
-           z0(12) = min(1.83d-3*USR**2, 2.e-3_r8)
-        end if
-        !// Wu (J. Phys. Oceanogr., vol.10, 727-740,1980) suggest a correction
-        !// to the Charnock relation, but we skip this here.
-
-        !// Set minimum value to avoid division by zero later (Berge, 1990,
-        !/  Tellus B, 42, 389407, doi:10.1034/j.1600-0889.1990.t01-3-00001.x)
-        if (z0(12) .le. 0._r8) z0(12) = 1.5e-5_r8
-        
-        !// Calculation of Ra from Simpson etal (2012)
-        do NN = 1, NLCAT
-           call aerodyn_res(z0(NN), depl_height(NN), ZREF, WIND_ZREF, RHO_ZREF, T_ZREF, SHF_IJ, MOL, Ra(NN))
-           !// This should never happen include it anyway.
-           if (Ra(NN) .lt. 0) then
-              write(6,'(a)') f90file//':'//subr//': VERY WRONG: Ra ZERO/NEGATIVE!!!'
-              print*,z0(NN), depl_height(NN), ZREF, WIND_ZREF, RHO_ZREF, T_ZREF, SHF_IJ, MOL, Ra(NN)
-              stop
-           end if
-        end do
-
-        !// Save aerodynamical reistance for output
-        WHERE (Ra .gt. 0._r8)
-           VRa(II,JJ,:) = 1._r8/Ra*FL
-        ELSEWHERE
-           VRa(II,JJ,:) = 0._r8
-        end WHERE
-
-        !// ------------------------------------------------------------------
-        !// Quasi-laminar resistance (Rb)
-        !// ------------------------------------------------------------------
-        do KK = 1, NDDEP
-
-           !// Rb is calculated differently for land and ocean, respectively
-           !// using Eqn.53 and Eqn.54 in EMEP2012.
-
-           !// Land (cannot be zero due to USR having lower limit)
-           rbL = 2._r8 / (VONKARMAN * USR) * (Sc_H20 * D_gas(KK) / PrL )**(2._r8/3._r8)
-
-           !// Ocean (use z0(12), not z0)
-           D_i = D_H2O / D_gas(KK) !// molecular diffusivity of the gas
-           rbO = log(z0(12) * VONKARMAN * USR / D_i) / (USR * VONKARMAN)
-           !// IMPORTANT
-           !// RbO can be very large or even negative from this
-           !// formula. Negative rbO can come from z0 being very small,
-           !// as is often the case over water.
-           !// We impose limits:
-           rbO = min( 1000._r8, rbO ) !// i.g. min velocity 0.001 m/s
-           rbO = max(   10._r8, rbO ) !// i.e. max velocity 0.10 m/s
-
-           do NN = 1, 11
-              Rb(KK,NN) = rbL
-           end do
-           do NN = 13, NLCAT
-              Rb(KK,NN) = rbL
-           end do
-           Rb(KK,12) = rbO
-        end do !// do N = 1, nddep
-
-        !// Save quasi-laminar resistance for output
-        WHERE (Rb(1,:) .gt. 0._r8)
-           VRb(II,JJ,:) = 1._r8/Rb(1,:) * FL
-        ELSEWHERE
-           VRb(II,JJ,:) = 0._r8
-        end WHERE
-
         !// ----------------------------------------------------------------
         !// Surface (or canopy) resistance (Rc)
         !// ----------------------------------------------------------------
@@ -1260,9 +1149,6 @@ contains
         else
            call GROWSEASON(JDAY, YDGRD(J), GDAY, GLEN)
         end if
-
-        print*, 'JDAY, YDGRD(J), GDAY, GLEN'
-        print*, JDAY, YDGRD(J), GDAY, GLEN
 
         fPhen = 0._r8  !// Initilize
         if ((YDGRD(J) .ge. -23._r8) .and. (YDGRD(J) .le. 23._r8)) then
@@ -1337,11 +1223,6 @@ contains
                 'Remove stop in source code if you want to use Asn=1'
            stop
         end if
-
-
-        !// Set land fractions
-        call landfrac2mosaic(FL,NLCAT,landSurfTypeFrac(:,I,J), &
-             NVGPAR, YDGRD(J), LANDUSE_IDX)
         
         !// LAI:    Leaf area index (monthly means)
         !// STC:    Stomatal conductance (monthly means)
@@ -1540,11 +1421,11 @@ contains
            !// This should never happen because RgsO3 was defined for all land-use types.
            write(6,'(a)') f90file//':'//subr//': VERY WRONG: GcO3 ZERO/NEGATIVE!!!'
            write(6,'(a)') 'GcO3, GstO3, GnsO3, FL'
-           print*,GcO3
-           print*,GstO3
-           print*,GnsO3
-           print*,FL
-           !print*,PAR_IJ,PARMEAN(I,J,JMON),fstcT2
+           write(6,*) GcO3
+           write(6,*) GstO3
+           write(6,*) GnsO3
+           write(6,*) FL
+           !write(6,*) PAR_IJ,PARMEAN(I,J,JMON),fstcT2
            !write(6,'(i2,3es12.3)') NN,GnsO3(NN),FL(NN),fsnowC(NN)
            stop
         end if
@@ -1656,9 +1537,9 @@ contains
            write(6,'(a)') f90file//':'//subr// &
                 ': VERY WRONG: GnsSO2 ZERO/NEGATIVE!!!'
            write(6,'(a)') 'GnsSO2, fsnowC, FL'
-           print*,GnsSO2
-           print*,fsnowC
-           print*,FL
+           write(6,*) GnsSO2
+           write(6,*) fsnowC
+           write(6,*) FL
            stop
         end if
 
@@ -1749,6 +1630,148 @@ contains
         ELSEWHERE
            VRc(II,JJ,:) = 0._r8
         end WHERE
+
+!// ----------------------------------------------------------------
+        !// Aerodynamic resistance (Ra)
+        !// ----------------------------------------------------------------
+
+        !// Define reference height as level 4 center (<45 m>)
+        ZREF   = ( ZOFLE(5,I,J) + ZOFLE(4,I,J) ) * 0.5_r8
+       
+        !// Interpolate meteorology at ZREF 
+        !// May need to check if values are defined for center or not.
+        WIND_ZREF = sqrt(UMS(4,I,J)*UMS(4,I,J) + VMS(4,I,J)*VMS(4,I,J))
+        T_ZREF    = T(I,J,4)
+        SHF_IJ    = SHF(I,J)                      !// Surface heat flux
+        !// Get pressure from sigma levels
+        P2        = ETAA(5) + ETAB(5) * PSFC
+        P1        = ETAA(4) + ETAB(4) * PSFC
+        P_ZREF    = (P1 + P2) * 0.5_r8
+        !// Density
+        RHO_ZREF  = P_ZREF/(T_ZREF * R_AIR)
+        !// Displacement height
+        depl_height      = 0.7_r8 * VEGH         !// other vegetation
+        depl_height(1:4) = 0.78_r8 * VEGH(1:4)   !// forests
+        !// Roughness length
+        z0      = 0.1_r8                         !// other vegetation
+        z0(1:4) = 0.07_r8 * VEGH(1:4)            !// forests
+        z0(1:4) = MIN(z0(1:4),1._r8)             !// upper limit following Simpson et al. (2012)
+        do NN = 1, NLCAT
+           if (ZREF .lt. depl_height(NN)) then
+              write(6,'(a)') f90file//':'//subr//': ZREF < deplacement height: This is WRONG!'
+              write(6,*) 'NN,ZREF, d, ZOFLE',NN,ZREF,depl_height(NN), ZOFLE(:,I,J)
+              stop
+           end if
+        end do
+        
+        
+        !// Roughness length (z0) for water surfaces.
+        !// ZOI is zero for these. z0 over water is generally small.
+        !// Will distinguish between z0 and z0(12).
+        !// Do not allow z0 > (ZREF-d)
+        z0(12)   = min(ZOI(I,J,JMON), (ZREF - depl_height(12)) * 0.999_r8)
+
+        !// Water roughness lenghth
+        !// Calm sea: 0.11 * nu / USR, nu=eta/rho=kin.visc. of air (Hinze,1975)
+        !//                            here we use 0.135 instead of 0.11.
+        !// Rough sea: a * USR^2 / g, where a=0.016 (Charnock, 1955) here 0.018
+        !//                           here a=0.018 (Garratt 1992)
+        !// Will use wind of 3m/s to separate these.
+        !// SFNU = kinematic visc(nu) = mu/density  (m*m/s), found as in PBL:
+        !//   SFCD = SFCP/(SFCT*287._r8) ! density (kg/m^3)
+        !//   SFMU = 6.2d-8*SFCT    ! abs.visc. 6.2d-8*T (lin fit:-30C to +40C)
+        !//   SFNU = SFMU / SFCD    ! kinematic visc(nu) = mu/density  (m*m/s)
+        !// or SFNU = 6.2d-8*T2M*T2M*287._r8/(100._r8*PSFC)
+        ! Sutherland's law should be used throughout the code instead
+        !SFNU  = ( 1.458e-6_r8*T2M**(3/2._r8)/(T2M+110.4_r8)* T2M * R_AIR) / (100._r8 * PSFC)
+        SFNU  = (6.2e-8_r8 * T2M * T2M * R_AIR) / (100._r8 * PSFC)
+        !z0(12) = min(0.135_r8*SFNU/USR + 1.83e-3_r8*USR**2, 2.e-3_r8)
+        !// Maximum limit of 2mm surface roughness.
+        if (WINDL1 .lt. 3._r8) then
+           z0(12) = min(0.135_r8*SFNU/USR, 2.e-3_r8)
+        else
+           ! g is 9.836 ms-2
+           z0(12) = min(1.83d-3*USR**2, 2.e-3_r8)
+        end if
+        !// Wu (J. Phys. Oceanogr., vol.10, 727-740,1980) suggest a correction
+        !// to the Charnock relation, but we skip this here.
+
+        !// Set minimum value to avoid division by zero later (Berge, 1990,
+        !/  Tellus B, 42, 389407, doi:10.1034/j.1600-0889.1990.t01-3-00001.x)
+        if (z0(12) .le. 0._r8) z0(12) = 1.5e-5_r8
+        
+        !// Calculation of Ra from Simpson etal (2012)
+        do NN = 1, NLCAT
+           call aerodyn_res(z0(NN), depl_height(NN), ZREF, WIND_ZREF, RHO_ZREF, T_ZREF, SHF_IJ, MOL, Ra(NN))
+           !// This should never happen include it anyway.
+           if (Ra(NN) .lt. 0._r8) then
+              write(6,'(a)') f90file//':'//subr//': VERY WRONG: Ra ZERO/NEGATIVE!!!'
+              write(6,*) z0(NN), depl_height(NN), ZREF, WIND_ZREF, RHO_ZREF, T_ZREF, SHF_IJ, MOL, Ra(NN)
+              stop
+           end if
+        end do
+
+        
+        !// Save aerodynamical reistance for output
+        WHERE (Ra .gt. 0._r8)
+           VRa(II,JJ,:) = 1._r8/Ra*FL
+        ELSEWHERE
+           VRa(II,JJ,:) = 0._r8
+        end WHERE
+
+        !// Test for NaN
+        if (ANY(VRa .ne. VRa)) then
+           write(6,'(a)') f90file//':'//subr//': VERY WRONG: VRa is NaN!!!'
+           write(6,'(a)') 'VRa, Ra, I, II, J, JJ'
+           write(6,*), VRa, Ra, I, II, J, JJ
+           stop
+        end if
+
+        !// ------------------------------------------------------------------
+        !// Quasi-laminar resistance (Rb)
+        !// ------------------------------------------------------------------
+        do KK = 1, NDDEP
+
+           !// Rb is calculated differently for land and ocean, respectively
+           !// using Eqn.53 and Eqn.54 in EMEP2012.
+
+           !// Land (cannot be zero due to USR having lower limit)
+           rbL = 2._r8 / (VONKARMAN * USR) * (Sc_H20 * D_gas(KK) / PrL )**(2._r8/3._r8)
+
+           !// Ocean (use z0(12), not z0)
+           D_i = D_H2O / D_gas(KK) !// molecular diffusivity of the gas
+           rbO = log(z0(12) * VONKARMAN * USR / D_i) / (USR * VONKARMAN)
+           !// IMPORTANT
+           !// RbO can be very large or even negative from this
+           !// formula. Negative rbO can come from z0 being very small,
+           !// as is often the case over water.
+           !// We impose limits:
+           rbO = min( 1000._r8, rbO ) !// i.g. min velocity 0.001 m/s
+           rbO = max(   10._r8, rbO ) !// i.e. max velocity 0.10 m/s
+
+           do NN = 1, 11
+              Rb(KK,NN) = rbL
+           end do
+           do NN = 13, NLCAT
+              Rb(KK,NN) = rbL
+           end do
+           Rb(KK,12) = rbO
+        end do !// do N = 1, nddep
+
+        !// Save quasi-laminar resistance for output
+        WHERE (Rb(1,:) .gt. 0._r8)
+           VRb(II,JJ,:) = 1._r8/Rb(1,:) * FL
+        ELSEWHERE
+           VRb(II,JJ,:) = 0._r8
+        end WHERE
+
+        !// Test for NaN
+        if (ANY(VRb .ne. VRb)) then
+           write(6,'(a)') f90file//':'//subr//': VERY WRONG: VRb is NaN!!!'
+           write(6,'(a)') 'VRb, Rb, I, II, J, JJ'
+           write(6,*), VRa, Rb, I, II, J, JJ
+           stop
+        end if
         
         !// Calculate deposition velocity
         !// ----------------------------------------------------------------
