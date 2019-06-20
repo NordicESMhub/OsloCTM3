@@ -794,7 +794,7 @@ contains
        status = nf90_Inquire_Dimension(ncid,nlcat_dim_id,len=ncats)
        if (status/=nf90_noerr) call handle_error(status, &
             f90file//':'//subr//': inq NLCAT dim')
-       if (nsteps.lt.0) then
+       if (ncats/=NLCAT) then
           write(6,*) f90file//':'//subr//': reports NLCAT = ',ncats, NLCAT
           stop
        end if
