@@ -1262,12 +1262,12 @@ contains
        LFmosaic(10) = LFin(11)
        if ((lat.gt.-60) .and. (lat.lt.60)) then
           LFmosaic(11) = LFin(17)
-          LFmosaic(13) = 0._r8
+          LFmosaic(14) = 0._r8
        else
-          LFmosaic(13) = LFin(17)
+          LFmosaic(14) = LFin(17)
           LFmosaic(11) = 0._r8
        end if
-       LFmosaic(14) = 0._r8 ! Will be handeled seperately
+       LFmosaic(13) = 0._r8
       
        !// Ocean may not be fully compatible with 1-PLAND:
        LFmosaic(12) = max(0._r8, 1._r8 - (sum(LFmosaic(1:11)) + sum(LFmosaic(13:))))
