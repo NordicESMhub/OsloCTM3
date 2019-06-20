@@ -1245,7 +1245,7 @@ contains
        LFmosaic(1) = LFin(2)+ LFin(3)
        LFmosaic(2) = LFin(5) + sum(LFin(7:8))
        LFmosaic(3) = 0._r8
-       if (lat.lt.-45 .or. lat.gt.45) then
+       if ((lat.lt.-45) .or. (lat.gt.45)) then
           LFmosaic(1) = LFmosaic(1)+LFin(1)
        else
           LFmosaic(3) = LFmosaic(3)+LFin(1)
@@ -1260,8 +1260,13 @@ contains
        LFmosaic(9) = 0._r8
        !LFmosaic(10) = LFin(11) + LFin(12)
        LFmosaic(10) = LFin(11)
-       LFmosaic(11) = LFin(17)       
-       LFmosaic(13) = 0._r8
+       if ((lat.gt.-60) .and. (lat.lt.60)) then
+          LFmosaic(11) = LFin(17)
+          LFmosaic(13) = 0._r8
+       else
+          LFmosaic(13) = LFin(17)
+          LFmosaic(11) = 0._r8
+       end if
        LFmosaic(14) = 0._r8 ! Will be handeled seperately
       
        !// Ocean may not be fully compatible with 1-PLAND:

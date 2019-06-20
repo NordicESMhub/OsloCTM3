@@ -1347,7 +1347,7 @@ contains
         !// To calculate GnsO3, we calculate it for each land-type as GnsO3(NN).
         !// Then we correct GnsO3(NN) for snow cover.
 
-        GnsO3 = 0._r8 ! initiaisation
+        GnsO3 = 0._r8 ! initialisation
 
         do NN = 1, NLCAT-1
 
