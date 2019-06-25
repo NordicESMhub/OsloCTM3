@@ -479,7 +479,6 @@ contains
     read(5,*)
     read(5,*)  PPFDPATH
     read(5,*)  PPFDFILE
-
     !// Initialize dry deposition parameters
     if (LDDEPmOSaic) then
        IFNR = get_free_fileid()
@@ -499,7 +498,6 @@ contains
        write(6,*) tmpDDEP_PAR
        close(unit=ifnr)
     end if
-
     !// Growing season
     read(5,*)
     read(5,'(l5)') LGSMAP ! Switch between preprocessed GDAY/GLEN and fixed latitude based callculation

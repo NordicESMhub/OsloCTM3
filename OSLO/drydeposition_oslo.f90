@@ -41,7 +41,6 @@ module drydeposition_oslo
   !// ----------------------------------------------------------------------
 
   !// CTM2 dry deposition (for old scheme)
-  !// not initilized if new scheme is used!
   real(r8), dimension(5,6) :: &
        VO3DDEP, VHNO3DDEP, VPANDDEP, VCODDEP, VH2O2DDEP, &
        VNOXDDEP, VSO2DDEP, VSO4DDEP, VMSADDEP, VNH3DDEP
@@ -83,7 +82,7 @@ contains
     implicit none
     !// --------------------------------------------------------------------
     !// Locals
-    integer :: I,J,IOS,IFNR
+    integer :: I,J,IOS
     character(len=80) :: FILE_NAME
     !// --------------------------------------------------------------------
     character(len=*), parameter :: subr = 'drydepinit'
@@ -94,7 +93,6 @@ contains
     !// Initialize dry deposition
     write(6,'(a)') f90file//':'//subr//': initializing VDEP' 
     VDEP(:,:,:) = 0._r8
-
     !// Initialize output variables
     write(6,'(a)') f90file//':'//subr//': initializing VGSTO3, VGNSO3, ' // &
          'VRAO3, VRBO3, VRCO3' 
@@ -114,55 +112,55 @@ contains
     end if
 
     do I = 1,4
-       read(IFNR,*)
+       read(1,*)
     end do
-    read(IFNR,*)
+    read(1,*)
     do I = 1,5
-       read(IFNR,1200) (VO3DDEP(I,J),J=1,6)
+       read(1,1200) (VO3DDEP(I,J),J=1,6)
     end do
-    read(IFNR,*)
+    read(1,*)
     do I = 1,5
-       read(IFNR,1200) (VHNO3DDEP(I,J),J=1,6)
+       read(1,1200) (VHNO3DDEP(I,J),J=1,6)
     end do
-    read(IFNR,*)
+    read(1,*)
     do I = 1,5
-       read(IFNR,1200) (VPANDDEP(I,J),J=1,6)
+       read(1,1200) (VPANDDEP(I,J),J=1,6)
     end do
-    read(IFNR,*)
+    read(1,*)
     do I = 1,5
-       read(IFNR,1200) (VCODDEP(I,J),J=1,6)
+       read(1,1200) (VCODDEP(I,J),J=1,6)
     end do
-    read(IFNR,*)
+    read(1,*)
     do I = 1,5
-       read(IFNR,1200) (VH2O2DDEP(I,J),J=1,6)
+       read(1,1200) (VH2O2DDEP(I,J),J=1,6)
     end do
-    read(IFNR,*)
+    read(1,*)
     do I = 1,5
-       read(IFNR,1200) (VNOxDDEP(I,J),J=1,6)
+       read(1,1200) (VNOxDDEP(I,J),J=1,6)
     end do
 
     !// Read in dry deposition values for sulphur 
-    read(IFNR,*)
+    read(1,*)
     do I = 1,5
-       read(IFNR,1200) (VSO2DDEP(I,J),J=1,6)
+       read(1,1200) (VSO2DDEP(I,J),J=1,6)
     end do
-    read(IFNR,*)
+    read(1,*)
     do I = 1,5
-       read(IFNR,1200) (VSO4DDEP(I,J),J=1,6)
+       read(1,1200) (VSO4DDEP(I,J),J=1,6)
     end do
-    read(IFNR,*)
+    read(1,*)
     do I = 1,5
-       read(IFNR,1200) (VMSADDEP(I,J),J=1,6)
+       read(1,1200) (VMSADDEP(I,J),J=1,6)
     end do
     !// Nitrate
-    read(IFNR,*)
+    read(1,*)
     do I = 1,5
-       read(IFNR,1200) (VNH3DDEP(I,J),J=1,6)
+       read(1,1200) (VNH3DDEP(I,J),J=1,6)
     end do
        
-    close (IFNR)
-!// Jump label - used in reading the file format!
-1200   Format(6(1x,f5.2))
+    close (1)
+
+1200 Format(6(1x,f5.2))
     
     !// Initialize STC (will be read from file later)
     STC(:,:,:) = 0._r8
