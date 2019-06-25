@@ -5,7 +5,7 @@
 #SBATCH --job-name=C3RUN_example
 #
 # Project (enter your noturn project number):
-#SBATCH --account=$PROJECT
+#SBATCH --account=nn2806k
 #
 # Wall clock limit (setting for one year 96:0:0):
 #SBATCH --time=0:30:0
