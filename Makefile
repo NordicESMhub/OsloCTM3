@@ -258,6 +258,7 @@ CORE_SRC := \
 	cmn_fjx.f90 \
 	cmn_sfc.f90 \
 	cmn_parameters.f90 \
+	utilities.f90 \
 	averages.f90 \
 	budgets.f90 \
 	cloudjx.f90 \
@@ -279,7 +280,6 @@ CORE_SRC := \
 	scavenging_largescale_uci.f90 \
 	p-series.f \
 	source_uci.f90 \
-	utilities.f90 \
 	p-vect3.f \
 	steflux.f90 \
 	spectral_routines.f \
@@ -798,7 +798,8 @@ $(filter %pbl_mixing.o, $(ALL_OBJ)): \
 	$(filter %cmn_ctm.o, $(ALL_OBJ)) \
 	$(filter %cmn_met.o, $(ALL_OBJ)) \
 	$(filter %cmn_parameters.o, $(ALL_OBJ)) \
-	$(filter %cmn_sfc.o, $(ALL_OBJ))
+	$(filter %cmn_sfc.o, $(ALL_OBJ)) \
+	$(filter %utilities.o, $(ALL_OBJ))
 # regridding.o dependencies
 $(filter %regridding.o, $(ALL_OBJ)): \
 	$(filter %cmn_precision.o, $(ALL_OBJ)) \

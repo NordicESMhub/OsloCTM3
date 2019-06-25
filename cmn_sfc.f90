@@ -23,6 +23,7 @@ module CMN_SFC
 
   !// Surface and vegetation data:  fraction in each LandSurface type
   integer, parameter ::  NVGPAR = 17    ! number of vegetation types
+  integer, parameter ::  NLCAT = 14     ! number of mOSaic landuse categories
   !real(r8), dimension(IPAR,JPAR,NVGPAR) :: LS_FRAC
   real(r8), dimension(NVGPAR,IPAR,JPAR) :: landSurfTypeFrac
   !// Stomatal resistance (conductance is inverse of resistance)
@@ -49,7 +50,7 @@ module CMN_SFC
   !// ToDo: Check for right formate provided and read from x.inp!
   character(len=160) :: fileDDEPpar
   !// Parameters and land use type from EMEP
-  real(r8), dimension(28,16) :: DDEP_PAR
+  real(r8), dimension(28,NLCAT) :: DDEP_PAR
   
   !// Displacement height [m] for given land type fraction (LS_FRAC)
   real(r8) :: ZPDVT_C3(NVGPAR)
@@ -60,8 +61,13 @@ module CMN_SFC
   !// Dry deposition
   real(r8), dimension(NPAR,IPAR,JPAR) :: VDEP      !// dep veloc, mean
   real(r8), dimension(NPAR,3)         :: VDEPIN    !// UCI dep vel for land/ocean/cryo
-  !// Stomatal conductance
-  real(r8), dimension(IPAR,JPAR)      :: VGSTO3    !// dep veloc, stomata
+  !// Ozone dry deposition velocities
+  real(r8), dimension(IPAR,JPAR,NLCAT):: VGSTO3    !// stomatal
+  real(r8), dimension(IPAR,JPAR,NLCAT):: VGNSO3    !// non-stomatal
+  real(r8), dimension(IPAR,JPAR,NLCAT):: VRAO3     !// aerodynamic
+  real(r8), dimension(IPAR,JPAR,NLCAT):: VRBO3     !// quasi-laminar
+  real(r8), dimension(IPAR,JPAR,NLCAT):: VRCO3     !// canopy
+
 
   !// Growing season
   logical :: LGSMAP

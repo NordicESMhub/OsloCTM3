@@ -860,7 +860,7 @@ contains
     !//
     !// To CTM3: Ole Amund Sovde, September 2009
     !// ------------------------------------------------------------------
-    use utilities_oslo, only: moninobukhov_length
+    use utilities, only: moninobukhov_length
     !// ------------------------------------------------------------------
     implicit none
     !// ------------------------------------------------------------------

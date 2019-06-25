@@ -2,13 +2,13 @@
 # Script for running on Abel.
 # --------------------------------------------------------------------------
 # Job name (enter your distinct job name):
-#SBATCH --job-name=C3RUN_example
+#SBATCH --job-name=C3RUN_default
 #
 # Project (enter your noturn project number):
 #SBATCH --account=nn2806k
 #
 # Wall clock limit (setting for one year 96:0:0):
-#SBATCH --time=0:30:0
+#SBATCH --time=96:0:0
 #
 # Does your job exceed one week, use "--partition=long":
 # ####SBATCH --partition=long
@@ -71,19 +71,19 @@ export RESULTDIR=$WORK/$SCEN.$PID
 export RESTARTDIR=$RESULTDIR/restart_$PID
 
 # Set input file name
-export INPUTFILE=example.inp
+export INPUTFILE=default.inp
 
 # Name of main program
 export PROGFILE=osloctm3
 
 # Job file (this file)
-export JOBFILENAME=c3run_example.job
+export JOBFILENAME=c3run_default.job
 
 # The dust file
 export DUSTFILE=OSLO/DEAD_COLUMN/dustinput/dst_T159.nc
 
 # Load a restart file 
-# ! In example.inp: LNCR T: use restart file in netCDF, F: old .sav format
+# ! In default.inp: LNCR T: use restart file in netCDF, F: old .sav format
 export RESTARTFILE=$CTM3_USR_INPUT/restart.sav
 
 # --------------------------------------------------------------------------
@@ -101,7 +101,7 @@ cp $MODELDIR/$DUSTFILE                  $SCRATCH/
  
 # CTM3 restart
 echo "Coping $RESTARTFILE."
-echo "WARNING: LNCR in example.inp has to be set accordingly."
+echo "WARNING: LNCR in default.inp has to be set accordingly."
 if [[ $RESTARTFILE =~ ".sav" ]]; then 
     echo "WARNING: This is an old restart file."
     cp $RESTARTFILE                $SCRATCH/restart.sav

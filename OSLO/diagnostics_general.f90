@@ -765,7 +765,7 @@ contains
     !// Ole Amund Sovde, February 2010
     !// --------------------------------------------------------------------
     use cmn_size, only: LBCOC, LOSLOCTROP, LOSLOCSTRAT
-    use cmn_sfc, only: LDDEPmOSaic, VGSTO3
+    use cmn_sfc, only: LDDEPmOSaic, VGSTO3, VRAO3, VRBO3, VRCO3
     use bcoc_oslo, only: bcsnow_nmet_output, bcsnow_nmet_output_nc
     use ch4routines, only: reportsfcch4
     use satelliteprofiles_mls, only: satprofs_mls_master
@@ -776,7 +776,7 @@ contains
     use troccinox_fal, only: troccifal_master
     use troccinox_geo, only: troccigeo_master
     use troccinox_ban, only: trocciban_master
-    use diagnostics_scavenging, only: scav_diag_put_gsto
+    use diagnostics_scavenging, only: scav_diag_put_gsto, scav_diag_put_drydepvelo
     !// --------------------------------------------------------------------
     implicit none
     !// --------------------------------------------------------------------
@@ -825,8 +825,10 @@ contains
     !call write_snapshot_the(nday,nmet,nops,1)
 
     !// Snapshot from stomatal conductance
-    if (LDDEPmOSaic) call scav_diag_put_gsto(NMET,VGSTO3)
-
+    if (LDDEPmOSaic) then
+       call scav_diag_put_gsto(NMET,VGSTO3)
+       call scav_diag_put_drydepvelo(NMET,VRAO3,VRBO3,VRCO3)
+    end if
     !// --------------------------------------------------------------------
   end subroutine nops_diag
   !// ----------------------------------------------------------------------

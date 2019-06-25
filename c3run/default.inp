@@ -2,7 +2,7 @@
 --------------------------------------------------------------------------------
  2005  IYEAR = reference year to which NDAI/NDAYE are offset
     1  NDAYI = day of year to begin CTM run at 0000 hhmm UT (can be >365)
-    2  NDAYE = day at end of CTM run, finishes at end of day=NDAYE-1
+  366  NDAYE = day at end of CTM run, finishes at end of day=NDAYE-1
 --------------------------------------------------------------------------------
     F  LCLDQMD  = Mid point of quadrature cloud cover ICAs                     
     F  LCLDQMN  = Mean quadrature cloud cover ICAs                             
@@ -101,13 +101,13 @@ PFZON  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1
  0000  LAI_YEAR Year of the LAI (9999=meteorological year, 0000: climatology 1982-1998)
 'Indata_CTM3/surface/lai_islscp2_fasir_0.25x0.25_1982_1998.nc'
 --- Dry deposition scheme and parameterlist ---
-    T  LDDEPmOSaic / T = mosaic dry dep scheme based on Simpson et al. (2012), F = old scheme
+    F  LDDEPmOSaic / T = mosaic dry dep scheme based on Simpson et al. (2012), F = old scheme
 'tables/mOSaic.par'
 --- PPFD directory and dummy filename ---
 '/projects/researchers/researchers01/sfalk/input_data/ctm_input/PPFD/'
 'ECopenIFSc38r1_yYYYYmMMdDDhHH_T159N80L60'
 --- Growing Season ---
-    T  LGSMAP Growing season (GDAY/GLEN) / T = Use preprocessed  maps, F = use fixed latitudinal bands
+    F  LGSMAP Growing season (GDAY/GLEN) / T = Use preprocessed  maps, F = use fixed latitudinal bands
 '/projects/researchers/researchers01/sfalk/input_data/ctm_input/GROWING_SEASON/GROWING_SEASON_2005.nc'
 --- tracer specific section ---
  T  1  LCONT T: start from restart file, F: set START_AVG: 0: start from STT=0, 1: CTM3 average, 2: CTM2 average

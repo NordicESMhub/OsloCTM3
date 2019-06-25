@@ -764,7 +764,7 @@ contains
          ETAA, ETAB, PLAND, JMON
     use cmn_met, only: ZOFLE, P, USTR, SHF, SFT
     use cmn_sfc, only: ZOI, NVGPAR, landSurfTypeFrac, ZPDVT_C3
-    use utilities_oslo, only: moninobukhov_length
+    use utilities, only: moninobukhov_length
     !// --------------------------------------------------------------------
     implicit none
     !// --------------------------------------------------------------------

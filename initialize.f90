@@ -67,7 +67,7 @@ contains
          MET_ROOT, MYEAR, PMEANW, HnativeRES, VRES, VRESW, PPFDPATH, PPFDFILE
     use cmn_sfc, only: LANDUSE_IDX, LANDUSE_YEAR, fileLandSurfTypeFrac, &
          LAI_YEAR, fileLAI, ZOI_YEAR, fileZOI, LDDEPmOSaic, DDEP_PAR, &
-         LGSMAP, fileGSMAP, fileDDEPpar
+         LGSMAP, fileGSMAP, NLCAT
     use cloudjx, only: CLDFLAG, NRANDO, RANSEED, &
          LCLDQMD, LCLDQMN, LCLDRANA, LCLDRANQ, LCLDAVG
     use grid, only: SET_GRID, SET_GRID_VERT, SET_MEAN_PSFC, &
@@ -87,16 +87,16 @@ contains
     !// Locals
     character(len=80) :: INFILE1,INFILE2,INFILE3, TITLE
     real(r8) :: XLNG(2), YLAT(2), GM00Z
-    integer :: I,J,L,M,N, IMX,JMX,LMX, NOPSTL, K, I1,I2,J1,J2,IOS
+    integer :: I,J,L,M,N, IMX,JMX,LMX, NOPSTL, K, I1,I2,J1,J2,IFNR,IOS
     integer :: POLAVG(25)
     integer :: II, JMPOLR
     logical :: LISLSCP2, LCLDFLAG
-    character(len=160) :: fileGS
+    character(len=160) :: fileDDEPpar, fileGS
     character(len=70) :: TITCLD(8)
     character(len=4) :: CCNR,CRNR,NRES
     !// --------------------------------------------------------------------
     !// Temporare ascii array
-    character(len=8), dimension(29,16) :: temp
+    character(len=8), dimension(29,NLCAT) :: tmpDDEP_PAR
     !// --------------------------------------------------------------------
     character(len=*), parameter :: subr = 'input'
     !//---------------------------------------------------------------------
@@ -470,19 +470,36 @@ contains
     read(5,'(l5)') LDDEPmOSaic ! Switch between new and old dry deposition scheme
     if (LDDEPmOSaic) then
        write(6,'(a)') f90file//':'//subr// ': DRYDEP: Using mOSaic scheme.'
-       !// Read the location of the dry deposition parameter list taken from Simpson et al. (2012)
-       read(5,*)  fileDDEPpar
     else
-       write(6,'(a)') f90file//':'//subr// ': DRYDEP: Using default scheme.'
-       read(5,*)
-       fileDDEPpar = './Indata_CTM3/drydep.ctm'
+       write(6,'(a)') f90file//':'//subr// ': DRYDEP: Using old scheme.'
     end if
-    write(6,'(a)') f90file//':'//subr// ': DRYDEP: Parameters in file: '//fileDDEPpar
+    !// Read the location of the dry deposition parameter list taken from Simpson et al. (2012)
+    read(5,*)  fileDDEPpar
     !// Read the location of the PPFD files
     read(5,*)
     read(5,*)  PPFDPATH
     read(5,*)  PPFDFILE
-    
+
+    !// Initialize dry deposition parameters
+    if (LDDEPmOSaic) then
+       IFNR = get_free_fileid()
+       open(IFNR,file=fileDDEPpar,Status='OLD',action='read',IOSTAT=IOS)
+       if (IOS .eq. 0) then
+          write(6,'(a)') '** Reading dry deposition parameters from '//trim(fileDDEPpar)
+       else
+          write(6,'(a)') f90file//':'//subr//': File not found: '//trim(fileDDEPpar)
+          stop
+       end if
+       ! Read the table header
+       read(IFNR, *) 
+       ! Read the whole table as ascii (none floating point value in column one)
+       read(IFNR, *) tmpDDEP_PAR
+       ! Split the temporary table and save the data
+       read(tmpDDEP_PAR(2:,:),'(f10.0)') DDEP_PAR
+       write(6,*) tmpDDEP_PAR
+       close(unit=ifnr)
+    end if
+
     !// Growing season
     read(5,*)
     read(5,'(l5)') LGSMAP ! Switch between preprocessed GDAY/GLEN and fixed latitude based callculation

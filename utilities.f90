@@ -29,11 +29,15 @@ module utilities
   !//   subroutine get_dinm
   !//   subroutine check_btt
   !//   subroutine adjust_moments
+  !//   real(r8) function moninobukhov_length 
   !//
+  !// Stefanie Falk, May 2019
   !// Amund Sovde Haslerud, August 2017
   !//   Split CALENDR into calendar and get_soldecdis.
   !// Ole Amund Sovde, March 2015
   !//   To f90 based on p-utils.f.
+  !// ----------------------------------------------------------------------
+  use cmn_precision, only: r8
   !//-----------------------------------------------------------------------
   implicit none
   !// ----------------------------------------------------------------------
@@ -1056,7 +1060,46 @@ contains
     !// --------------------------------------------------------------------
   end subroutine adjust_moments
   !// ----------------------------------------------------------------------
-
+!// ----------------------------------------------------------------------
+  real(r8) function moninobukhov_length(SFCD,SFCT,USTAR,SFCS)
+    !// --------------------------------------------------------------------
+    !// Description: 
+    !//  Calculate the Monin-Obukhov length which is used pbl-mixing.f90, 
+    !//  seasalt.f90, fallingaerosols.f90, drydeposition.f90.
+    !//  
+    !//  It is directly taken from pbl-mixing.f90 (e.g. Garratt, 1992)
+    !//
+    !// History: 
+    !//  Stefanie Falk, Mai 2019
+    !// --------------------------------------------------------------------
+    use cmn_parameters, only: G0, cp_air, VONKARMAN
+    !// --------------------------------------------------------------------
+    implicit none
+    !// --------------------------------------------------------------------
+    !// Input
+    real(r8), intent(in)  :: &
+         SFCD,SFCT,USTAR,SFCS
+    !// Local variables
+    !// --------------------------------------------------------------------
+    character(len=*), parameter :: subr = 'moninobukhov_length'
+    real(r8), parameter :: cp_k_g = cp_air/(VONKARMAN*G0)
+    !// Formerly cp_k_g = 256._r8 had been used
+    !// --------------------------------------------------------------------
+    moninobukhov_length = (-1._r8)*cp_k_g*SFCD*SFCT*(USTAR**3)/SFCS 
+    !// Make sure we get physical values
+    if (moninobukhov_length .eq. 0._r8) then
+       write(6,'(a,2i5,4es16.6)') f90file//':'//subr//': MO_LEN is 0! -> 0.001: '// &
+            'SFCD,SFCT,USTAR,SFCS',SFCD,SFCT,USTAR,SFCS
+       moninobukhov_length = 1.e-3_r8
+    end if
+    if (moninobukhov_length .ne. moninobukhov_length) then
+       write(6,'(a,2i5,4es16.6)') f90file//':'//subr//': MO_LEN is 0! -> 1000: '// &
+            'SFCD,SFCT,USTAR,SFCS',SFCD,SFCT,USTAR,SFCS
+       moninobukhov_length = 1.e3_r8
+    end if
+    return
+  end function moninobukhov_length
+  !// ----------------------------------------------------------------------
 
 
   !//-----------------------------------------------------------------------

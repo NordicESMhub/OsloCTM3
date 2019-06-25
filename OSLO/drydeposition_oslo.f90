@@ -47,8 +47,7 @@ module drydeposition_oslo
        VNOXDDEP, VSO2DDEP, VSO4DDEP, VMSADDEP, VNH3DDEP
   !// Stomatal conductance and mean photolytic active radiation
   real(r8), dimension(IPAR,JPAR,12) :: STC, PARMEAN
-  ! Parameters and land use type from Simpson et al. (2012)
-  real(r8), dimension(28,16) :: DDEP_PAR
+  
   !// Defines which VDEP to scale according to stability (i.e. only
   !// old CTM2 calculations)
   integer :: SCALESTABILITY(NPAR)
@@ -79,8 +78,7 @@ contains
     !//
     !// Amund Sovde, October 2008
     !// --------------------------------------------------------------------
-    use cmn_sfc, only: VDEP, VGSTO3, LDDEPmOSaic, fileDDEPpar
-    use utilities, only: get_free_fileid
+    use cmn_sfc, only: VDEP, VGSTO3, VGNSO3, VRAO3, VRBO3, VRCO3
     !// --------------------------------------------------------------------
     implicit none
     !// --------------------------------------------------------------------
@@ -96,94 +94,78 @@ contains
     !// Initialize dry deposition
     write(6,'(a)') f90file//':'//subr//': initializing VDEP' 
     VDEP(:,:,:) = 0._r8
-    !// Initialize stomata deposition
-    write(6,'(a)') f90file//':'//subr//': initializing VGSTO3' 
-    VGSTO3(:,:) = 0._r8
-    !// Get a free file id
-    IFNR = get_free_fileid()
-    !// Switch between default scheme and mOSaic scheme
-    if (LDDEPmOSaic) then
-       open(IFNR,file=fileDDEPpar,Status='OLD',action='read',IOSTAT=IOS)
-       if (IOS .eq. 0) then
-          write(6,'(a)') '** Reading dry deposition parameters from '//trim(fileDDEPpar)
-       else
-          write(6,'(a)') f90file//':'//subr//': File not found: '//trim(fileDDEPpar)
-          stop
-       end if
-       ! Read the table header
-       read(IFNR, *) 
-       ! Read the whole table as ascii (none floating point value in column one)
-       read(IFNR, *) temp
-       ! Split the temporary table and save the data
-       read(temp(2:,:),'(f10.0)') DDEP_PAR
-       write(6,*) temp
-       close(unit=ifnr)
+
+    !// Initialize output variables
+    write(6,'(a)') f90file//':'//subr//': initializing VGSTO3, VGNSO3, ' // &
+         'VRAO3, VRBO3, VRCO3' 
+    VGSTO3(:,:,:) = 0._r8
+    VGNSO3(:,:,:) = 0._r8
+    VRAO3(:,:,:) = 0._r8
+    VRBO3(:,:,:) = 0._r8
+    VRCO3(:,:,:) = 0._r8
+    !// read in Deposition velocities
+    FILE_NAME='./Indata_CTM3/drydep.ctm'
+    open(1,file=FILE_NAME,Status='OLD',Form='FORMATTED',IOSTAT=IOS)
+    if (IOS .eq. 0) then
+       write(6,'(a)') '** Reading dry deposition data from '//trim(FILE_NAME)
     else
-       
-       !// Old scheme
-       !// Read in Deposition velocities from file for old CTM2 scheme
-       open(IFNR,file=fileDDEPpar,Status='OLD',Form='FORMATTED',IOSTAT=IOS)
-       if (IOS .eq. 0) then
-          write(6,'(a)') '** Reading dry deposition data from '//trim(fileDDEPpar)
-       else
-          write(6,'(a)') f90file//':'//subr//': File not found: '//trim(fileDDEPpar)
-          stop
-       end if
+       write(6,'(a)') f90file//':'//subr//': File not found: '//trim(FILE_NAME)
+       stop
+    end if
 
-       do I = 1,4
-          read(IFNR,*)
-       end do
+    do I = 1,4
        read(IFNR,*)
-       do I = 1,5
-          read(IFNR,1200) (VO3DDEP(I,J),J=1,6)
-       end do
-       read(IFNR,*)
-       do I = 1,5
-          read(IFNR,1200) (VHNO3DDEP(I,J),J=1,6)
-       end do
-       read(IFNR,*)
-       do I = 1,5
-          read(IFNR,1200) (VPANDDEP(I,J),J=1,6)
-       end do
-       read(IFNR,*)
-       do I = 1,5
-          read(IFNR,1200) (VCODDEP(I,J),J=1,6)
-       end do
-       read(IFNR,*)
-       do I = 1,5
-          read(IFNR,1200) (VH2O2DDEP(I,J),J=1,6)
-       end do
-       read(IFNR,*)
-       do I = 1,5
-          read(IFNR,1200) (VNOxDDEP(I,J),J=1,6)
-       end do
+    end do
+    read(IFNR,*)
+    do I = 1,5
+       read(IFNR,1200) (VO3DDEP(I,J),J=1,6)
+    end do
+    read(IFNR,*)
+    do I = 1,5
+       read(IFNR,1200) (VHNO3DDEP(I,J),J=1,6)
+    end do
+    read(IFNR,*)
+    do I = 1,5
+       read(IFNR,1200) (VPANDDEP(I,J),J=1,6)
+    end do
+    read(IFNR,*)
+    do I = 1,5
+       read(IFNR,1200) (VCODDEP(I,J),J=1,6)
+    end do
+    read(IFNR,*)
+    do I = 1,5
+       read(IFNR,1200) (VH2O2DDEP(I,J),J=1,6)
+    end do
+    read(IFNR,*)
+    do I = 1,5
+       read(IFNR,1200) (VNOxDDEP(I,J),J=1,6)
+    end do
 
-       !// Read in dry deposition values for sulphur 
-       read(IFNR,*)
-       do I = 1,5
-          read(IFNR,1200) (VSO2DDEP(I,J),J=1,6)
-       end do
-       read(IFNR,*)
-       do I = 1,5
-          read(IFNR,1200) (VSO4DDEP(I,J),J=1,6)
-       end do
-       read(IFNR,*)
-       do I = 1,5
-          read(IFNR,1200) (VMSADDEP(I,J),J=1,6)
-       end do
-       !// Nitrate
-       read(IFNR,*)
-       do I = 1,5
-          read(IFNR,1200) (VNH3DDEP(I,J),J=1,6)
-       end do
+    !// Read in dry deposition values for sulphur 
+    read(IFNR,*)
+    do I = 1,5
+       read(IFNR,1200) (VSO2DDEP(I,J),J=1,6)
+    end do
+    read(IFNR,*)
+    do I = 1,5
+       read(IFNR,1200) (VSO4DDEP(I,J),J=1,6)
+    end do
+    read(IFNR,*)
+    do I = 1,5
+       read(IFNR,1200) (VMSADDEP(I,J),J=1,6)
+    end do
+    !// Nitrate
+    read(IFNR,*)
+    do I = 1,5
+       read(IFNR,1200) (VNH3DDEP(I,J),J=1,6)
+    end do
        
-       close (IFNR)
+    close (IFNR)
 !// Jump label - used in reading the file format!
 1200   Format(6(1x,f5.2))
-    end if
+    
     !// Initialize STC (will be read from file later)
     STC(:,:,:) = 0._r8
-
     PARMEAN(:,:,:) = 0._r8
 
     !// Initialise scaling flags
@@ -258,7 +240,8 @@ contains
     use cmn_fjx, only: SZAMAX
     use cmn_met, only: CI, SD, PBL_KEDDY, ZOFLE, SFT
     use cmn_parameters, only: M_AIR, AVOGNR, R_AIR, G0, LDEBUG, VONKARMAN
-    use cmn_sfc, only: landSurfTypeFrac, LANDUSE_IDX, VDEP, VGSTO3, LDDEPmOSaic
+    use cmn_sfc, only: landSurfTypeFrac, LANDUSE_IDX, LDDEPmOSaic, NLCAT, &
+         VDEP, VGSTO3, VGNSO3, VRAO3, VRBO3, VRCO3
     use cmn_oslo, only: chem_idx, trsp_idx
     use bcoc_oslo, only: bcoc_setdrydep, bcoc_vdep2
     use soa_oslo, only: soa_setdrydep
@@ -280,8 +263,9 @@ contains
     real(r8),dimension(IDBLK,JDBLK) :: DZ, &
          VNO2, VO3, VHNO3, VPAN, VCO, VH2O2, &
          VSO2, VSO4, VMSA, VNH3, &
-         VNO,  VHCHO, VCH3CHO, &
-         VSto
+         VNO,  VHCHO, VCH3CHO
+    !// Local variable to output GSTO3/GNSO3, and Ra, Rb, Rc
+    real(r8),dimension(IDBLK,JDBLK,NLCAT) :: VSto, VNSto, VRa, VRb, VRc
 
     integer :: MDAY(IDBLK,JDBLK)    !// 1=day, 2=night
     integer :: MSEASON(IDBLK,JDBLK) !// 0=summer, 3=winter
@@ -296,7 +280,12 @@ contains
     !// --------------------------------------------------------------------
     character(len=*), parameter :: subr = 'setdrydep'
     !// --------------------------------------------------------------------
-
+    !// Initialization
+    VRa(:,:,:) = 0._r8 
+    VRb(:,:,:) = 0._r8 
+    VRc(:,:,:) = 0._r8
+    VSto(:,:,:) = 0._r8 
+    VNSto(:,:,:) = 0._r8
 
     !// Find day/night and vegetation fractions
     !// --------------------------------------------------------------------
@@ -497,14 +486,11 @@ contains
             VO3,VHNO3,VPAN,VCO,VH2O2,VNO2, VSO2,VSO4,VMSA, VNH3)
 
        if (LDDEPmOSaic) then
-          !// New dry deposition scheme (ala mOSaic)
-          
-          !// Not to be standard yet...
-          !// When it is, remember dtmax=300 in oc_tropchem
-
+          !// New dry deposition scheme (aka mOSaic)
           !// Get new dry deposition values [m/s]
           call get_vdep2(UTTAU, BTT, AIRB, BTEM, MP, &
-               VO3,VHNO3,VPAN,VH2O2,VNO2, VSO2,VNH3, VNO,VHCHO,VCH3CHO, VSto)
+               VO3,VHNO3,VPAN,VH2O2,VNO2, VSO2,VNH3, VNO,VHCHO,VCH3CHO, &
+               VSto, VNSto, VRa, VRb, VRc)
 
           !// CTM2 drydep is crude and needs to be adjusted to stability
           !// parameters. This is not the case for VDEP2 treatment, which
@@ -540,7 +526,11 @@ contains
           VNO(:,:)     = 0._r8
           VHCHO(:,:)   = 0._r8
           VCH3CHO(:,:) = 0._r8
-          VSto(:,:)    = 0._r8
+          VSto(:,:,:)  = 0._r8
+          VNSto(:,:,:)  = 0._r8
+          VRa(:,:,:)  = 0._r8
+          VRb(:,:,:)  = 0._r8
+          VRc(:,:,:)  = 0._r8
 
           !// All are scaled by stability
           SCALESTABILITY(:) = 1
@@ -559,7 +549,11 @@ contains
        VNO(:,:)     = 0._r8
        VHCHO(:,:)   = 0._r8
        VCH3CHO(:,:) = 0._r8
-       VSto(:,:)    = 0._r8
+       VSto(:,:,:)  = 0._r8
+       VNSto(:,:,:)  = 0._r8
+       VRa(:,:,:)  = 0._r8
+       VRb(:,:,:)  = 0._r8
+       VRc(:,:,:)  = 0._r8
 
     end if !// if (LOSLOCTROP) then
 
@@ -573,7 +567,12 @@ contains
       !// Loop over longitude (I is global, II is block)
       do I = MPBLKIB(MP),MPBLKIE(MP)
         II    = I - MPBLKIB(MP) + 1
-        VGSTO3(I,J) = VStO(II, JJ)                   !// Stomata deposition
+        VGSTO3(I,J,:) = VSto(II, JJ, :)              !// Stomatal drydeposition velocity
+        VGNSO3(I,J,:) = VNSto(II, JJ, :)
+        VRAO3(I,J,:) = VRa(II, JJ, :)
+        VRBO3(I,J,:) = VRb(II, JJ, :)
+        VRCO3(I,J,:) = VRc(II, JJ, :)
+                
         do N = 1,NTM
 
           if (chem_idx(N) .eq. 1) then               !// Standard tropchem ---v
@@ -613,20 +612,27 @@ contains
         end do !// do N=1,NTM
       end do !// do I = MPBLKIB(MP),MPBLKIE(MP)
     end do !// do J = MPBLKJB(MP),MPBLKJE(MP)
-    
+
+    !// The following functions lack documentation and have not been tested.
+    !// Therefore they shall be disabled! 
+    !// To enable: uncomment all simple '!'
+    !// and remove the 'end if' 10 lines below.
     if (LDDEPmOSaic) then
+       write(6,'(a)') f90file//':'//subr// &
+            ': mOSaic implementation of BCOC and SOA dry deposition is disabled. Old scheme is used instead.'
        !// Simpson et al. (2012)
        !// Set dry deposition for BCOC (m/s)
-       if (LBCOC) call bcoc_vdep2(VDEP,SCALESTABILITY,MP)
+       !if (LBCOC) call bcoc_vdep2(VDEP,SCALESTABILITY,MP)
        !// Set dry deposition for SOA, sulphur and nitrate (m/s)
-       if (LSULPHUR .or. LNITRATE .or. LSOA) &
-            call aer_vdep2(VDEP,SCALESTABILITY,MP)
-    else
+       !if (LSULPHUR .or. LNITRATE .or. LSOA) &
+            !call aer_vdep2(VDEP,SCALESTABILITY,MP)
+    end if
+    !else
        !// Old treatment
        if (LBCOC) call bcoc_setdrydep(VDEP,RFR,MP)
        !// Set dry deposition for SOA (m/s)
        if (LSOA) call soa_setdrydep(VDEP,MP)
-    end if
+    !end if
 
     !// Set dry deposition for CH4 (m/s)
     call ch4drydep_bousquet(VDEP, BTT, DZ, MP)
@@ -652,6 +658,7 @@ contains
       end do !// do I = MPBLKIB(MP),MPBLKIE(MP)
     end do !// do J = MPBLKJB(MP),MPBLKJE(MP)
 
+    
 
     !// --------------------------------------------------------------------
   end subroutine setdrydep
@@ -792,7 +799,8 @@ contains
 
   !// ----------------------------------------------------------------------
   subroutine get_vdep2(UTTAU,BTT,AIRB,BTEM, MP, &
-         VO3,VHNO3,VPAN,VH2O2,VNO2, VSO2,VNH3, VNO,VHCHO,VCH3CHO, VSto)
+         VO3,VHNO3,VPAN,VH2O2,VNO2, VSO2,VNH3, VNO,VHCHO,VCH3CHO, &
+         VSto, VNSto, VRa, VRb, VRc)
     !// --------------------------------------------------------------------
     !// Calculate drydep of gases as in EMEP model, Simpson et al. (2012),
     !// ACP, doi:10.5194/acp-12-7825-2012, refered to as EMEP in
@@ -816,12 +824,13 @@ contains
     !// --------------------------------------------------------------------
     use cmn_size, only: LPAR, IDBLK, JDBLK, LSULPHUR, LNITRATE
     use cmn_ctm, only: XGRD, YGRD, XDGRD, YDGRD, MPBLKJB, MPBLKJE, &
-         MPBLKIB, MPBLKIE, IDAY, JMON, JDAY, PLAND, NRMETD, NROPSM
-    use cmn_met, only: PRANDTLL1, P, SD, CI, USTR, ZOFLE, PRECLS, PRECCNV, &
-         CLDFR, PPFD, UMS, VMS, SFT, SWVL3
+         MPBLKIB, MPBLKIE, IDAY, JMON, JDAY, PLAND, NRMETD, NROPSM, &
+         ETAA, ETAB
+    use cmn_met, only: PRANDTLL1, P, T, SD, CI, USTR, ZOFLE, PRECLS, PRECCNV, &
+         CLDFR, PPFD, UMS, VMS, SFT, SWVL3, MO_LENGTH, SHF
     use cmn_parameters, only: R_AIR, R_UNIV, VONKARMAN
-    use cmn_sfc, only: LAI, ZOI, landSurfTypeFrac, LANDUSE_IDX, StomRes, NVGPAR, &
-         DDEP_PAR, LGSMAP
+    use cmn_sfc, only: LAI, ZOI, landSurfTypeFrac, LANDUSE_IDX, NVGPAR, &
+         LGSMAP, NLCAT, DDEP_PAR
     use cmn_oslo, only: trsp_idx
     use utilities_oslo, only: landfrac2mosaic, set_vegetation_height, &
          GROWSEASON, MAPPED_GROWSEASON
@@ -835,39 +844,43 @@ contains
     integer, intent(in) :: MP
     !// Output
     real(r8),dimension(IDBLK,JDBLK), intent(out) :: &
-         VO3,VHNO3,VPAN,VH2O2,VNO2, VSO2,VNH3, VNO,VHCHO,VCH3CHO, VSto
+         VO3,VHNO3,VPAN,VH2O2,VNO2, VSO2,VNH3, VNO,VHCHO,VCH3CHO
+    real(r8),dimension(IDBLK,JDBLK,NLCAT), intent(out) :: &
+         VSto, VNSto, VRa, VRb, VRc
 
     !// Locals
     integer :: I,J,II,JJ, NN, KK, NTOTAL
     real(r8) :: LAI_IJ, RTOTAL, PAR_IJ, SWVL3_IJ
-    real(r8) :: tempVEGH
     integer :: GDAY, GLEN                   !// Growing season from megan
 
-    !// Variables to be set for each EMEP category (10 is treated separately)
-    integer, parameter :: NLCAT=10
     real(r8), dimension(NLCAT) :: SAI, SAI0,  FL, gsto, &
-          Rinc, GO3, GSO2, fLight, fsnowC, fstcT2, fphen, fD, fSW
+          Rinc, depl_height, z0
     !// Parameters from EMEP.par
     real(r8), dimension(NLCAT) :: gmax, fmin, Dmin, Dmax,   &
+         fLight, fsnowC, fstcT2, fphen, fD, fSW, fLightAlpha, &
          phia, phib, phic, phid, phie, phif, phiAS, phiAE,  &
          RgsO3, RgsSO2, VEGH, topt, tmin, tmax, dSGS, dEGS, &
-         fLightAlpha, ddSGS, ddEGS
+         ddSGS, ddEGS, tmpVEGH
     !// Resistances and deposition velocities
     integer, parameter :: NDDEP = 14
-    real(r8)                   :: Ra, Tot_res
-    real(r8), dimension(NDDEP) :: Rb, Rc, VD
+    real(r8), dimension(NLCAT) :: Ra, Tot_res
+    real(r8), dimension(NDDEP,NLCAT) :: Rb, Rc
+    real(r8), dimension(NDDEP) ::  VD
 
     !// Meteorological variables
-    real(r8) :: z0, z0w, zref, zthick, RAIN, T2M, PrL, USR, SFNU, PSFC, &
-         WINDL1, snowD
+    real(r8) :: RAIN, T2M, PrL, USR, SFNU, WINDL1, SNOWD, MOL
+    !// Pressure variables
+    real(r8) :: PSFC, P1, P2
+    !// To calculate Ra
+    real(r8) :: ZREF, WIND_ZREF, RHO_ZREF, T_ZREF, P_ZREF, SHF_IJ
+         
     !// To calculate Rb
     real(r8) :: d_i, RbL, RbO
     !// To calculate Rc
-    real(r8) :: RsnowO3, RsnowSO2, GnsO3, GcO3, GstO3, d, gext, &
+    real(r8) :: RsnowO3, RsnowSO2, gext, &
          Rgs, FT, VPD, &
-         T2Mcel, ee, RH, M_SO2, M_NH3, Asn, Asn24, &
-         GnsSO2, GSO2_dry, GSO2_wet, &
-         Gstc_avg 
+         T2Mcel, ee, RH, M_SO2, M_NH3, Asn, Asn24
+    real(r8), dimension(NLCAT) :: GstO3, GnsO3, GcO3, GnsSO2
     
     !// Uptake parameters taken from Wesley (Atm.Env., 1989,
     !// doi:10.1016/0004-6981(89)90153-4)
@@ -902,18 +915,16 @@ contains
          RHlim  = 75._r8, &
          Rd     = 180._r8, &
          Rw     = 100._r8
-        
+
     !// --------------------------------------------------------------------
     character(len=*), parameter :: subr = 'get_vdep2'
     !// --------------------------------------------------------------------
       
-    !// Check for correct land use fractions
-!    if (LANDUSE_IDX .ne. 2) then
-!       write(6,'(a)') f90file//':'//subr// &
-!            ': not programmed LANDUSE_IDX /= 2 yet'
-!       stop
-!    end if
-
+    !// Initialization
+    Ra = 0._r8 
+    Rb(:,:) = 0._r8 
+    Rc(:,:) = 0._r8
+    
     !// Set parameters to be used for the 8 LPJ land use categories
     !// RgsO3:  Ground surface resistance
     !// RgsSO2: Ground surface resistance
@@ -931,288 +942,63 @@ contains
     !//  8. Water
     !//  9. Urban
     !// 10. Ice+snow (strictly, EMEP has this as category 9 and urban as 10)
-    !// Maximal stomatal conductance
-    !// gmax = DDEP_PAR(1,:) !// mmmole O3 m-2 s-1
-    !// fmin = DDEP_PAR(2,:)
-    !// Phenomenology fphen (Table S17)
-    !// phia = DDEP_PAR(3,:)
-    !// phib = DDEP_PAR(4,:)
-    !// phic = DDEP_PAR(5,:)
-    !// phid = DDEP_PAR(6,:)
-    !// phie = DDEP_PAR(7,:)
-    !// phif = DDEP_PAR(8,:)
-    !// phiAS = DDEP_PAR(9,:)
-    !// phiAE = DDEP_PAR(10,:)
-    !// Light dependent scaling
-    !// flightalpha = DDEP_PAR(11,:)
-    !// Temperature scaling fT (Supplement Eq. (17))
-    !// tmin = DDEP_PAR(12,:)
-    !// topt = DDEP_PAR(13,:)
-    !// tmax = DDEP_PAR(14,:)
-    !// Humidity dependent scaling fD (Supplement Eq. (18))
-    !// Dmax = DDEP_PAR(15,:)
-    !// Dmin = DDEP_PAR(16,:)
-    !// Surface resistance
-    !// RgsSO2 = DDEP_PAR(18,:)
-    !// RgsO3  = DDEP_PAR(19,:)
-    !// Vegetation height
-    !// VEGH   = DDEP_PAR(20,:)
-    !// Growing season
-    !// dSGS = DDEP_PAR(21,:)   !// Start
-    !// dEGS = DDEP_PAR(22,:)   !// End
-    !// ddSGS = DDEP_PAR(23,:)  !// Latitude dependent change of start (rate)
-    !// ddEGS = DDEP_PAR(24,:)  !// Latitude dependent change of end (rate)
-
-    !//  1. Forests, Mediterranean scrub
-    gmax(1)        = (sum(DDEP_PAR(1,1:4))+DDEP_PAR(1,10))/5._r8 
-    fmin(1)        = (sum(DDEP_PAR(2,1:4))+DDEP_PAR(2,10))/5._r8
-    phia(1)        = (sum(DDEP_PAR(3,1:4))+DDEP_PAR(3,10))/5._r8
-    phib(1)        = (sum(DDEP_PAR(4,1:4))+DDEP_PAR(4,10))/5._r8
-    phic(1)        = (sum(DDEP_PAR(5,1:4))+DDEP_PAR(5,10))/5._r8
-    phid(1)        = (sum(DDEP_PAR(6,1:4))+DDEP_PAR(6,10))/5._r8
-    phie(1)        = (sum(DDEP_PAR(7,1:4))+DDEP_PAR(7,10))/5._r8
-    phif(1)        = (sum(DDEP_PAR(8,1:4))+DDEP_PAR(8,10))/5._r8
-    phiAS(1)       = (sum(DDEP_PAR(9,1:4))+DDEP_PAR(9,10))/5._r8
-    phiAE(1)       = (sum(DDEP_PAR(10,1:4))+DDEP_PAR(10,10))/5._r8
-    flightalpha(1) = (sum(DDEP_PAR(11,1:4))+DDEP_PAR(11,10))/5._r8
-    tmin(1)        = (sum(DDEP_PAR(12,1:4))+DDEP_PAR(12,10))/5._r8
-    topt(1)        = (sum(DDEP_PAR(13,1:4))+DDEP_PAR(13,10))/5._r8
-    tmax(1)        = (sum(DDEP_PAR(14,1:4))+DDEP_PAR(14,10))/5._r8
-    Dmax(1)        = (sum(DDEP_PAR(15,1:4))+DDEP_PAR(15,10))/5._r8
-    Dmin(1)        = (sum(DDEP_PAR(16,1:4))+DDEP_PAR(16,10))/5._r8
-    RgsSO2(1)      = (sum(DDEP_PAR(18,1:4))+DDEP_PAR(18,10))/5._r8 
-    RgsO3(1)       = (sum(DDEP_PAR(19,1:4))+DDEP_PAR(19,10))/5._r8
-    VEGH(1)        = 0._r8 !// Will be modified
-    tempVEGH       = (sum(DDEP_PAR(20,1:4))+DDEP_PAR(20,10))/5._r8 
-    dSGS(1)        = (sum(DDEP_PAR(21,1:4))+DDEP_PAR(21,10))/5._r8  !// Start
-    dEGS(1)        = (sum(DDEP_PAR(22,1:4))+DDEP_PAR(22,10))/5._r8  !// End
-    ddSGS(1)       = (sum(DDEP_PAR(23,1:4))+DDEP_PAR(23,10))/5._r8  !// Latitude dependent change of start (rate)
-    ddEGS(1)       = (sum(DDEP_PAR(24,1:4))+DDEP_PAR(24,10))/5._r8
-    !//  2. Crops
-    gmax(2)        = sum(DDEP_PAR(1,5:7))/3._r8
-    fmin(2)        = sum(DDEP_PAR(2,5:7))/3._r8
-    phia(2)        = sum(DDEP_PAR(3,5:7))/3._r8
-    phib(2)        = sum(DDEP_PAR(4,5:7))/3._r8
-    phic(2)        = sum(DDEP_PAR(5,5:7))/3._r8
-    phid(2)        = sum(DDEP_PAR(6,5:7))/3._r8
-    phie(2)        = sum(DDEP_PAR(7,5:7))/3._r8
-    phif(2)        = sum(DDEP_PAR(8,5:7))/3._r8
-    phiAS(2)       = sum(DDEP_PAR(9,5:7))/3._r8
-    phiAE(2)       = sum(DDEP_PAR(10,5:7))/3._r8
-    flightalpha(2) = sum(DDEP_PAR(11,5:7))/3._r8
-    tmin(2)        = sum(DDEP_PAR(12,5:7))/3._r8
-    topt(2)        = sum(DDEP_PAR(13,5:7))/3._r8
-    tmax(2)        = sum(DDEP_PAR(14,5:7))/3._r8
-    Dmax(2)        = sum(DDEP_PAR(15,5:7))/3._r8
-    Dmin(2)        = sum(DDEP_PAR(16,5:7))/3._r8
-    RgsSO2(2)      = sum(DDEP_PAR(18,5:7))/3._r8  !// Will be modified below (in-canopy ok, needs EMEP2012)
-    RgsO3(2)       = sum(DDEP_PAR(19,5:7))/3._r8
-    VEGH(2)        = sum(DDEP_PAR(20,5:7))/3._r8
-    dSGS(2)        = sum(DDEP_PAR(21,5:7))/3._r8  !// Start
-    dEGS(2)        = sum(DDEP_PAR(22,5:7))/3._r8  !// End
-    ddSGS(2)       = sum(DDEP_PAR(23,5:7))/3._r8  !// Latitude dependent change of start (rate)
-    ddEGS(2)       = sum(DDEP_PAR(24,5:7))/3._r8 
-    !//  3. Moorland (savanna++)
-    gmax(3)        = DDEP_PAR(1,8)
-    fmin(3)        = DDEP_PAR(2,8)
-    phia(3)        = DDEP_PAR(3,8)
-    phib(3)        = DDEP_PAR(4,8)
-    phic(3)        = DDEP_PAR(5,8)
-    phid(3)        = DDEP_PAR(6,8)
-    phie(3)        = DDEP_PAR(7,8)
-    phif(3)        = DDEP_PAR(8,8)
-    phiAS(3)       = DDEP_PAR(9,8)
-    phiAE(3)       = DDEP_PAR(10,8)
-    flightalpha(3) = DDEP_PAR(11,8)
-    tmin(3)        = DDEP_PAR(12,8)
-    topt(3)        = DDEP_PAR(13,8)
-    tmax(3)        = DDEP_PAR(14,8)
-    Dmax(3)        = DDEP_PAR(15,8)
-    Dmin(3)        = DDEP_PAR(16,8)
-    RgsSO2(3)      = DDEP_PAR(18,8) !// Will be modified below (in-canopy ok, needs EMEP2012)
-    RgsO3(3)       = DDEP_PAR(19,8)
-    VEGH(3)        = DDEP_PAR(20,8)
-    dSGS(3)        = DDEP_PAR(21,8)  !// Start
-    dEGS(3)        = DDEP_PAR(22,8)  !// End
-    ddSGS(3)       = DDEP_PAR(23,8)  !// Latitude dependent change of start (rate)
-    ddEGS(3)       = DDEP_PAR(24,8) 
-    !//  4. Grassland
-    gmax(4)        = DDEP_PAR(1,9)
-    fmin(4)        = DDEP_PAR(2,9)
-    phia(4)        = DDEP_PAR(3,9)
-    phib(4)        = DDEP_PAR(4,9)
-    phic(4)        = DDEP_PAR(5,9)
-    phid(4)        = DDEP_PAR(6,9)
-    phie(4)        = DDEP_PAR(7,9)
-    phif(4)        = DDEP_PAR(8,9)
-    phiAS(4)       = DDEP_PAR(9,9)
-    phiAE(4)       = DDEP_PAR(10,9)
-    flightalpha(4) = DDEP_PAR(11,9)
-    tmin(4)        = DDEP_PAR(12,9)
-    topt(4)        = DDEP_PAR(13,9)
-    tmax(4)        = DDEP_PAR(14,9)
-    Dmax(4)        = DDEP_PAR(15,9)
-    Dmin(4)        = DDEP_PAR(16,9)
-    RgsSO2(4)      = DDEP_PAR(18,9) !// Will be modified below (in-canopy ok, needs EMEP2012)
-    RgsO3(4)       = DDEP_PAR(19,9)
-    VEGH(4)        = DDEP_PAR(20,9)
-    dSGS(4)        = DDEP_PAR(21,9)  !// Start
-    dEGS(4)        = DDEP_PAR(22,9)  !// End
-    ddSGS(4)       = DDEP_PAR(23,9)  !// Latitude dependent change of start (rate)
-    ddEGS(4)       = DDEP_PAR(24,9) 
-    !//  5. Wetlands
-    gmax(5)        = DDEP_PAR(1,11)
-    fmin(5)        = DDEP_PAR(2,11)
-    phia(5)        = DDEP_PAR(3,11)
-    phib(5)        = DDEP_PAR(4,11)
-    phic(5)        = DDEP_PAR(5,11)
-    phid(5)        = DDEP_PAR(6,11)
-    phie(5)        = DDEP_PAR(7,11)
-    phif(5)        = DDEP_PAR(8,11)
-    phiAS(5)       = DDEP_PAR(9,11)
-    phiAE(5)       = DDEP_PAR(10,11)
-    flightalpha(5) = DDEP_PAR(11,11)
-    tmin(5)        = DDEP_PAR(12,11)
-    topt(5)        = DDEP_PAR(13,11)
-    tmax(5)        = DDEP_PAR(14,11)
-    Dmax(5)        = DDEP_PAR(15,11)
-    Dmin(5)        = DDEP_PAR(16,11)
-    RgsSO2(5)      = DDEP_PAR(18,11) !// Will be modified below (in-canopy ok, needs EMEP2012)
-    RgsO3(5)       = DDEP_PAR(19,11)
-    VEGH(5)        = DDEP_PAR(20,11)
-    dSGS(5)        = DDEP_PAR(21,11)  !// Start
-    dEGS(5)        = DDEP_PAR(22,11)  !// End
-    ddSGS(5)       = DDEP_PAR(23,11)  !// Latitude dependent change of start (rate)
-    ddEGS(5)       = DDEP_PAR(24,11) 
-    !//  6. Tundra
-    gmax(6)        = DDEP_PAR(1,12)
-    fmin(6)        = DDEP_PAR(2,12)
-    phia(6)        = DDEP_PAR(3,12)
-    phib(6)        = DDEP_PAR(4,12)
-    phic(6)        = DDEP_PAR(5,12)
-    phid(6)        = DDEP_PAR(6,12)
-    phie(6)        = DDEP_PAR(7,12)
-    phif(6)        = DDEP_PAR(8,12)
-    phiAS(6)       = DDEP_PAR(9,12)
-    phiAE(6)       = DDEP_PAR(10,12)
-    flightalpha(6) = DDEP_PAR(11,12)
-    tmin(6)        = DDEP_PAR(12,12)
-    topt(6)        = DDEP_PAR(13,12)
-    tmax(6)        = DDEP_PAR(14,12)
-    Dmax(6)        = DDEP_PAR(15,12)
-    Dmin(6)        = DDEP_PAR(16,12)
-    RgsSO2(6)      = DDEP_PAR(18,12) !// Will be modified below (in-canopy ok, needs EMEP2012)
-    RgsO3(6)       = DDEP_PAR(19,12)
-    VEGH(6)        = DDEP_PAR(20,12)
-    dSGS(6)        = DDEP_PAR(21,12)  !// Start
-    dEGS(6)        = DDEP_PAR(22,12)  !// End
-    ddSGS(6)       = DDEP_PAR(23,12)  !// Latitude dependent change of start (rate)
-    ddEGS(6)       = DDEP_PAR(24,12) 
-    !//  7. Desert
-    gmax(7)        = DDEP_PAR(1,13)
-    fmin(7)        = DDEP_PAR(2,13)
-    phia(7)        = DDEP_PAR(3,13)
-    phib(7)        = DDEP_PAR(4,13)
-    phic(7)        = DDEP_PAR(5,13)
-    phid(7)        = DDEP_PAR(6,13)
-    phie(7)        = DDEP_PAR(7,13)
-    phif(7)        = DDEP_PAR(8,13)
-    phiAS(7)       = DDEP_PAR(9,13)
-    phiAE(7)       = DDEP_PAR(10,13)
-    flightalpha(7) = DDEP_PAR(11,13)
-    tmin(7)        = DDEP_PAR(12,13)
-    topt(7)        = DDEP_PAR(13,13)
-    tmax(7)        = DDEP_PAR(14,13)
-    Dmax(7)        = DDEP_PAR(15,13)
-    Dmin(7)        = DDEP_PAR(16,13)
-    RgsSO2(7)      = DDEP_PAR(18,13) !// Will be modified below (in-canopy ok, needs EMEP2012)
-    RgsO3(7)       = DDEP_PAR(19,13)
-    VEGH(7)        = DDEP_PAR(20,13)
-    dSGS(7)        = DDEP_PAR(21,13)  !// Start
-    dEGS(7)        = DDEP_PAR(22,13)  !// End
-    ddSGS(7)       = DDEP_PAR(23,13)  !// Latitude dependent change of start (rate)
-    ddEGS(7)       = DDEP_PAR(24,13) 
-    !//  8. Water
-    gmax(8)        = DDEP_PAR(1,14)
-    fmin(8)        = DDEP_PAR(2,14)
-    phia(8)        = DDEP_PAR(3,14)
-    phib(8)        = DDEP_PAR(4,14)
-    phic(8)        = DDEP_PAR(5,14)
-    phid(8)        = DDEP_PAR(6,14)
-    phie(8)        = DDEP_PAR(7,14)
-    phif(8)        = DDEP_PAR(8,14)
-    phiAS(8)       = DDEP_PAR(9,14)
-    phiAE(8)       = DDEP_PAR(10,14)
-    flightalpha(8) = DDEP_PAR(11,14)
-    tmin(8)        = DDEP_PAR(12,14)
-    topt(8)        = DDEP_PAR(13,14)
-    tmax(8)        = DDEP_PAR(14,14)
-    Dmax(8)        = DDEP_PAR(15,14)
-    Dmin(8)        = DDEP_PAR(16,14)
-    RgsSO2(8)      = DDEP_PAR(18,14) !// Will be modified below (in-canopy ok, needs EMEP2012)
-    RgsO3(8)       = DDEP_PAR(19,14)
-    VEGH(8)        = DDEP_PAR(20,14)
-    dSGS(8)        = DDEP_PAR(21,14)  !// Start
-    dEGS(8)        = DDEP_PAR(22,14)  !// End
-    ddSGS(8)       = DDEP_PAR(23,14)  !// Latitude dependent change of start (rate)
-    ddEGS(8)       = DDEP_PAR(24,14)
-    !//  9. Urban
-    gmax(9)        = DDEP_PAR(1,16)
-    fmin(9)        = DDEP_PAR(2,16)
-    phia(9)        = DDEP_PAR(3,16)
-    phib(9)        = DDEP_PAR(4,16)
-    phic(9)        = DDEP_PAR(5,16)
-    phid(9)        = DDEP_PAR(6,16)
-    phie(9)        = DDEP_PAR(7,16)
-    phif(9)        = DDEP_PAR(8,16)
-    phiAS(9)       = DDEP_PAR(9,16)
-    phiAE(9)       = DDEP_PAR(10,16)
-    flightalpha(9) = DDEP_PAR(11,16)
-    tmin(9)        = DDEP_PAR(12,16)
-    topt(9)        = DDEP_PAR(13,16)
-    tmax(9)        = DDEP_PAR(14,16)
-    Dmax(9)        = DDEP_PAR(15,16)
-    Dmin(9)        = DDEP_PAR(16,16)
-    RgsSO2(9)      = DDEP_PAR(18,16) !// Will be modified below (in-canopy ok, needs EMEP2012)
-    RgsO3(9)       = DDEP_PAR(19,16)
-    VEGH(9)        = DDEP_PAR(20,16)
-    dSGS(9)        = DDEP_PAR(21,16)  !// Start
-    dEGS(9)        = DDEP_PAR(22,16)  !// End
-    ddSGS(9)       = DDEP_PAR(23,16)  !// Latitude dependent change of start (rate)
-    ddEGS(9)       = DDEP_PAR(24,16)
-    !// 10. Ice+snow treated separately; not used)
-    gmax(10)        = DDEP_PAR(1,15)
-    fmin(10)        = DDEP_PAR(2,15)
-    phia(10)        = DDEP_PAR(3,15)
-    phib(10)        = DDEP_PAR(4,15)
-    phic(10)        = DDEP_PAR(5,15)
-    phid(10)        = DDEP_PAR(6,15)
-    phie(10)        = DDEP_PAR(7,15)
-    phif(10)        = DDEP_PAR(8,15)
-    phiAS(10)       = DDEP_PAR(9,15)
-    phiAE(10)       = DDEP_PAR(10,15)
-    flightalpha(10) = DDEP_PAR(11,15)
-    tmin(10)        = DDEP_PAR(12,15)
-    topt(10)        = DDEP_PAR(13,15)
-    tmax(10)        = DDEP_PAR(14,15)
-    Dmax(10)        = DDEP_PAR(15,15)
-    Dmin(10)        = DDEP_PAR(16,15)
-    RgsSO2(10)      = DDEP_PAR(18,15) !// Will be modified below (in-canopy ok, needs EMEP2012)
-    RgsO3(10)       = DDEP_PAR(19,15)
-    VEGH(10)        = DDEP_PAR(20,15)
-    dSGS(10)        = DDEP_PAR(21,15)  !// Start
-    dEGS(10)        = DDEP_PAR(22,15)  !// End
-    ddSGS(10)       = DDEP_PAR(23,15)  !// Latitude dependent change of start (rate)
-    ddEGS(10)       = DDEP_PAR(24,15)
+    !// mOSaic categories (reduced from Simpson et al., 2012)
+    !//  1. Needleleaftree (temperated/boreal)
+    !//  2. Deciduoustree (temperated/boral)
+    !//  3. Needleleaftree (mediterranean)
+    !//  4. Broadleaftree (mediterranean)
+    !//  5. Crops <a,b,c>
+    !//  6. Moorland (savanna++)
+    !//  7. Grassland
+    !//  8. Scrubs (med.)
+    !//  9. Wetlands
+    !//  10. Tundra
+    !//  11. Desert
+    !//  12. Water
+    !//  13. Urban
+    !//  14. Ice/Snow - is treated seperately
     
+    !// Maximal stomatal conductance
+    gmax = DDEP_PAR(1,:) !// mmmole O3 m-2 s-1
+    fmin = DDEP_PAR(2,:)
+    !// Phenomenology fphen (Table S17)
+    phia = DDEP_PAR(3,:)
+    phib = DDEP_PAR(4,:)
+    phic = DDEP_PAR(5,:)
+    phid = DDEP_PAR(6,:)
+    phie = DDEP_PAR(7,:)
+    phif = DDEP_PAR(8,:)
+    phiAS = DDEP_PAR(9,:)
+    phiAE = DDEP_PAR(10,:)
+    !// Light dependent scaling
+    flightalpha = DDEP_PAR(11,:)
+    !// Temperature scaling fT (Supplement Eq. (17))
+    tmin = DDEP_PAR(12,:)
+    topt = DDEP_PAR(13,:)
+    tmax = DDEP_PAR(14,:)
+    !// Humidity dependent scaling fD (Supplement Eq. (18))
+    Dmax = DDEP_PAR(15,:)
+    Dmin = DDEP_PAR(16,:)
+    !// Surface resistance
+    RgsSO2 = DDEP_PAR(18,:)
+    RgsO3  = DDEP_PAR(19,:)
+    !// Vegetation height
+    VEGH   = DDEP_PAR(20,:) !// Will be modified latitude dependently
+    tmpVEGH = DDEP_PAR(20,:)!// Temporare vegetation height
+    !// Growing season
+    dSGS = DDEP_PAR(21,:)   !// Start
+    dEGS = DDEP_PAR(22,:)   !// End
+    ddSGS = DDEP_PAR(23,:)  !// Latitude dependent change of start (rate)
+    ddEGS = DDEP_PAR(24,:)  !// Latitude dependent change of end (rate)
+   
     !// Initialize SAI0 for all categories
     !// Surface area index is zero for non-vegetated surfaces
     !// Spezial treatment for crops below
     SAI0    = 0._r8
-    !// Forests and scrubs
-    SAI0(1) = 1._r8
-    !// Wetlands
-    SAI0(5) = 1._r8
+    !// Forests
+    SAI0(1:4) = 1._r8
+    !// Scrubs and wetlands
+    SAI0(8:9) = 1._r8
 
     !// Total NOPS steps used for ASN24H average
     NTOTAL = NRMETD * NROPSM
@@ -1223,10 +1009,32 @@ contains
     do J = MPBLKJB(MP),MPBLKJE(MP)
       JJ    = J - MPBLKJB(MP) + 1
       
-      !// Set latitude dependent vegetation height for forests
-      !// The function is based on the latitude based modification 
-      !// north of 60deg in Simpson et al. (2012)
-      call set_vegetation_height(tempVEGH,YDGRD(J),VEGH(1))
+      !// Set latitude dependent vegetation height
+      !// The function is based on the latitude dependent description in Simpson et al. (2012) 
+      !// and modified towards tropics (see utilities_oslo.f90).
+      !// -------------------
+      !// Test (Stefanie Falk, Juni 2019)
+      !// Impact of the vegetation height on ozone concentration.
+      !// Date in experiment: 01-01-2005
+      !// Case 1: Forest, crops, grass, and scrubs vary height
+      !// Case 2: Forest, crops, and scrubs vary height
+      !// Case 3: Forest, and scrubs vary height (default)
+      !// Case1-Case2 => [O_3] = [-1.6-8.1]x10-6 g/m3, positive values in arid regions 
+      !/                                             (e.g. Australia, US Westcoast)
+      !// Case2-Case3 => [O_3] = [-6.6-2.4]x10-6 g/m3, negative in arid regions, positive in
+      !//                                            humid-tropical regions
+      !// Case1-Case3 => [O_3] = [-1.6-4.6]x10-6 g/m3, positive values in arid regions
+      !//
+      !// => [O_3] can be reduced by switching on variation of height for more vegetation types!
+      !// -------------------
+      !// Forests [and crops]
+      do NN = 1, 4 ![5]
+         call set_vegetation_height(tmpVEGH(NN),YDGRD(J),VEGH(NN))
+      end do
+      !// [Grass and] scrubs
+      ! do NN = 7, 8
+      call set_vegetation_height(tmpVEGH(8),YDGRD(J),VEGH(8))
+      ! end do
       
       !// Loop over longitude (I is global, II is block)
       !// ------------------------------------------------------------------
@@ -1249,41 +1057,63 @@ contains
            !// NH dSGS=90, Ls=140, dEGS=270
            if (JDAY .gt. 90 .and. JDAY.le.140) then
               !// Growth season dSGS to dSGS+Ls
-              SAI(2) = 5._r8/3.5_r8 * LAI_IJ
+              SAI(5) = 5._r8/3.5_r8 * LAI_IJ
            else if (JDAY .gt. 140 .and. JDAY.le.270) then
               !// Growth season dSGS+Ls to dEGS
-              SAI(2) = 1.5_r8 + LAI_IJ
+              SAI(5) = 1.5_r8 + LAI_IJ
            else
-              SAI(2) = 0._r8
+              SAI(5) = 0._r8
            end if
         else
            !// SH dSGS=182+90, Ls=182+140, dEGS=182+270
            if (JDAY .gt. 272 .and. JDAY.le.322) then
-              SAI(2) = 5._r8/3.5_r8 * LAI_IJ
+              SAI(5) = 5._r8/3.5_r8 * LAI_IJ
            else if (JDAY .gt. 322 .and. JDAY.le.366) then
               !// Growth season dSGS+Ls to dEGS - part 1
-              SAI(2) = 1.5_r8 + LAI_IJ
+              SAI(5) = 1.5_r8 + LAI_IJ
            else if (JDAY .gt. 0 .and. JDAY.le.87) then
               !// Growth season dSGS+Ls to dEGS - part 2
-              SAI(2) = 1.5_r8 + LAI_IJ
+              SAI(5) = 1.5_r8 + LAI_IJ
            else
-              SAI(2) = 0._r8
+              SAI(5) = 0._r8
            end if
         end if
 
         !// Meteorolgical variables (from metdata or pbl-routine)
         PrL    = PRANDTLL1(II,JJ,MP) !// Prandtl number
-        !//MOL    = MO_LENGTH(II,JJ,MP) !// Obukhov lenght
+        MOL    = MO_LENGTH(II,JJ,MP) !// Obukhov lenght
         USR    = USTR(I,J)           !// Friction velocity
         if (USR .le. 0._r8) USR = 5.e-3_r8 !// USR should not be <=0
         T2M    = SFT(I,J)            !// Surface temperature (2m) [K]
         T2Mcel = T2M - 273.15_r8     !// Surface temperature (2m) [Celcius]
         PSFC   = P(I,J)              !// Surface pressure [hPa]
         PAR_IJ = PPFD(I,J)           !// Photosynthetic active radiation [W/m2]
-        SWVL3_IJ = SWVL3(I,J)        !// Soil water content in level 1 [0-1]
+        SWVL3_IJ = SWVL3(I,J)        !// Soil water content in level 3 (28-100)cm
 
         !// Wind at L1 center
         WINDL1  = sqrt(UMS(1,I,J)*UMS(1,I,J) + VMS(1,I,J)*VMS(1,I,J))
+
+        !// Set land fractions
+        call landfrac2mosaic(FL,NLCAT,landSurfTypeFrac(:,I,J), &
+             NVGPAR, YDGRD(J), LANDUSE_IDX)
+
+        
+        
+        !// ----------------------------------------------------------------
+        !// Surface (or canopy) resistance (Rc)
+        !// ----------------------------------------------------------------
+        !// Rc is in general calculated as in EMEP2012.
+        !//
+        !// The general formula for canopy conductances is
+        !//   Gc = LAI * gsto + Gns
+        !// where LAI is one-sided leaf-area index and gsto is the stomatal
+        !// conductance. Gns is the non-stomatal conductance.
+        !// These are calculated separately, and Gns is calculated separately
+        !// for each land-use type.
+
+        !// ----------------------------------------------------------------
+        !// Stomatal conductance
+        !// ----------------------------------------------------------------
 
         !// Temperature scaling factor for STC
         where (T2Mcel .le. tmin .or. T2Mcel .ge. tmax)
@@ -1321,10 +1151,9 @@ contains
         else
            call GROWSEASON(JDAY, YDGRD(J), GDAY, GLEN)
         end if
-        if (GDAY .eq. 0) then
-           fphen = 0._r8
-        elseif (GLEN .ge. 365) then
-           ! Exclude tropics!
+
+        fPhen = 0._r8  !// Initilize
+        if ((YDGRD(J) .ge. -23._r8) .and. (YDGRD(J) .le. 23._r8)) then
            fPhen = 1._r8
         else
            !fPhen = max(phia, phic)
@@ -1340,27 +1169,25 @@ contains
               fPhen = phid
            end where
         end if
-        !// fSW based on soil moisture in the top soil layer (0-7 cm)
+       
+        !// fSW based on soil moisture in third soil layer
         if (SWVL3_IJ .ge. 0.5) then
            fSW = 1._r8
         else
            fSW = 2*SWVL3_IJ
         end if
+    
+        !// Computation of leaf-level stomatal contuctance gsto
+        gsto = 0._r8 ! initialisation
+        gsto = gmax*fPhen*fLight*max(fmin, fstcT2*fD*fSW)
 
-        !// Stomatal conductance
-             
         !// Unit conversion of [mmol s-1 m-2] to [m s-1]:
         !// Ideal gas law Vm = V/n = R * T/P
         !// Factor 1.d-5 derived from unit conversation:
         !// mmol => 1.d-3 mol and 1/hPa => 1.d-2/Pa
         !// Simpson et al. has gmax = gmaxm/41000
         !// This can be off by +/-25%
-        gsto = gmax*fPhen*fLight*max(fmin, fstcT2*fD*fSW)
         gsto = gsto*1.d-5*R_UNIV*T2M/PSFC
-        
-        !// Fraction of water/ocean in gridbox
-        !// Not used, will be set below.
-        !focean = max(0._r8, 1._r8 - PLAND(I,J))
 
         !// Acidity ratio to be used for SO2 and NH3
         !// ----------------------------------------
@@ -1398,11 +1225,6 @@ contains
                 'Remove stop in source code if you want to use Asn=1'
            stop
         end if
-
-
-        !// Set land fractions
-        call landfrac2mosaic(FL,NLCAT,landSurfTypeFrac(:,I,J), &
-             NVGPAR, YDGRD(J), LANDUSE_IDX)
         
         !// LAI:    Leaf area index (monthly means)
         !// STC:    Stomatal conductance (monthly means)
@@ -1411,13 +1233,7 @@ contains
         !// RgsO3:  Ground surface resistance O3
         !// RgsSO2: Ground surface resistance SO2
         !// VEG_H:  Vegetation height (needed to get Rinc)
-
-
-        !// Compute the grid-cell-average stomatal conductance
-        !// Devide by sum(FL) to be sure that it is normalized!
-        !// Skip barren land (same as gmax=0 in EMEP.par)
-        Gstc_avg = sum(FL*gsto)/sum(FL)
-                        
+             
         !// Rinc = In-canopy resistance = (SAI * VEGH) *  14/Ustar
         do NN = 1, NLCAT-1
            Rinc(NN) = SAI(NN) * VEGH(NN) * 14._r8 / USR
@@ -1436,7 +1252,7 @@ contains
               !// Assume snow depth covers only land
               snowD = SD(I,J) / PLAND(I,J) * 10._r8
            else
-              if (CI(I,J) .ge. FL(8)) then
+              if (CI(I,J) .ge. FL(12)) then
                  !// More sea ice than water; should not occur, but we accept
                  !// it for now and assume ocean to be fully covered by ice.
                  snowD = SD(I,J) * 10._r8
@@ -1444,7 +1260,7 @@ contains
                  !// Part of water is ice covered. The part of the gridbox
                  !// which is NOT covered by snow is (focean - CI(I,J)),
                  !// so we adjust snow depth for the covered part.
-                 snowD = SD(I,J) / (1._r8 - (FL(8) - CI(I,J))) * 10._r8
+                 snowD = SD(I,J) / (1._r8 - (FL(12) - CI(I,J))) * 10._r8
               end if
            end if
         else
@@ -1472,134 +1288,14 @@ contains
            end if
         end do
         !// Adjust ocean
-        if (FL(8) .gt. 0._r8) fsnowC(8) = min(1._r8, CI(I,J) / FL(8))
+        if (FL(12) .gt. 0._r8) fsnowC(12) = min(1._r8, CI(I,J) / FL(12))
         !// Snow land is of course snow covered
-        fsnowC(10)= 1._r8
+        fsnowC(NLCAT)= 1._r8
 
-        !// No need to make a gridbox average fsnow
-
-        !// Aerodynamic resistance (Ra)
+       
         !// ----------------------------------------------------------------
-        !// Ra can be defined for heat or moisture.
-        !//   RaH = rho * Cp * (Tsfc - T(z)) / SHF
-        !// where rho=air density, Cp=specific heat of air at constant pressure
-        !// Tsfc=temperature at surface, T(z)=temp at hight z,
-        !// SHF=sensible heat flux.
-        !// This can be rewritten (e.g. Monteith, 1973) to
-        !//   RaH = U(Zref)/(Ustar*Ustar)
-        !// where U(Zref) is the wind at reference height Zref.
-
-        !// Define reference height as layer 1 midpoint
-        Zthick = ZOFLE(2,I,J) - ZOFLE(1,I,J)  !// L1 thickness
-        Zref   = 0.5_r8 * Zthick              !// L1 center height
-        d = 0.7_r8 !// a constant displacement height
-
-        if (zref .lt. d) then
-           write(6,'(a)') f90file//':'//subr//': zref < d: This is WRONG!'
-           print*,'zref,d',zref,d
-           stop
-        end if
-
-        !// Roughness length (z0) will only be used for water surfaces, and
-        !// ZOI is zero for these. That said, z0 over water is generally small.
-        !// Will distinguish between z0 and z0w anyway.
-        !// Do not allow z0 > (zref-d)
-        z0   = min(ZOI(I,J,JMON), (Zref - d) * 0.999_r8)
-
-        !// Water roughness lenght
-        !// Calm sea: 0.11 * nu / USR, nu=eta/rho=kin.visc. of air (Hinze,1975)
-        !//                            here we use 0.135 instead of 0.11.
-        !// Rough sea: a * USR^2 / g, where a=0.016 (Charnock, 1955) here 0.018
-        !//                           here a=0.018 (Garratt 1992)
-        !// Will use wind of 3m/s to separate these.
-        !// SFNU = kinematic visc(nu) = mu/density  (m*m/s), found as in PBL:
-        !//   SFCD = SFCP/(SFCT*287._r8) ! density (kg/m^3)
-        !//   SFMU = 6.2d-8*SFCT    ! abs.visc. 6.2d-8*T (lin fit:-30C to +40C)
-        !//   SFNU = SFMU / SFCD    ! kinematic visc(nu) = mu/density  (m*m/s)
-        !// or SFNU = 6.2d-8*T2M*T2M*287._r8/(100._r8*PSFC)
-        ! Sutherland's law should be used throughout the code instead
-        !SFNU  = ( 1.458e-6_r8*T2M**(3/2._r8)/(T2M+110.4_r8)* T2M * R_AIR) / (100._r8 * PSFC)
-        SFNU  = (6.2e-8_r8 * T2M * T2M * R_AIR) / (100._r8 * PSFC)
-        !z0w = min(0.135_r8*SFNU/USR + 1.83e-3_r8*USR**2, 2.e-3_r8)
-        !// Maximum limit of 2mm surface roughness.
-        if (WINDL1 .lt. 3._r8) then
-           z0w = min(0.135_r8*SFNU/USR, 2.e-3_r8)
-        else
-           ! So g is 9.836 ms-2
-           z0w = min(1.83d-3*USR**2, 2.e-3_r8)
-        end if
-        !// Wu (J. Phys. Oceanogr., vol.10, 727-740,1980) suggest a correction
-        !// to the Charnock relation, but we skip this here.
-
-        !// Set minimum value to avoid division by zero later (Berge, 1990,
-        !/  Tellus B, 42, 389407, doi:10.1034/j.1600-0889.1990.t01-3-00001.x)
-        if (z0w .le. 0._r8) z0w = 1.5e-5_r8
-        if (z0 .le. 0._r8) z0 = 1.5e-5_r8
-
-        !// Calculation of Ra
-        !// Because we already have L and Ustar, we instead assume Ra=RaH
-        !// from Monteith (1973):
-        Ra = WINDL1 / (USR * USR)
-
-        !// Ra in EMEP2012
-        !// Simpson etal (2012) calculate L and Ustar, but do not describe Ra.
-        !// Their Ustar (Eqn.52) is an expression similar to an equation for
-        !// Ra in EMEP2003 (Eqn.4 in Simpson et al, Characteristics
-        !// of an ozone deposition module II: Sensitivity analysis,
-        !// Water, Air and Soil Pollution, vol. 143, pp 123-137,
-        !// doi: 10.1023/A:1022890603066, 2003).
-        !// These calculations are based upon three variables
-        !//   e1 = (Zref - d) / z0
-        !//   e2 = (Zref - d) / MOL
-        !//   e3 = z0 / MOL
-        !// and Ra is found by
-        !//   Ra = (log(e1) - PHIH(e2) + PHIH(e3)) / (USR * VONKARMAN)
-        !// This is problematic: When MOL>>z0, the equation would yield
-        !// (-PHIH(e2)+PHIH(e3)) < 0, possibly giving Ra<0.
-        !// The same applies to EMEP2012 Ustar, so we cannot use that either.
-
-
-
-        !// Quasi-laminar resistance (Rb)
-        !// ------------------------------------------------------------------
-        do KK = 1, NDDEP
-
-           !// Rb is calculated differently for land and ocean, respectively
-           !// using Eqn.53 and Eqn.54 in EMEP2012.
-
-           !// Land (cannot be zero due to USR having lower limit)
-           rbL = 2._r8 / (VONKARMAN * USR) * (Sc_H20 * D_gas(KK) / PrL )**(2._r8/3._r8)
-
-           !// Ocean (use z0w, not z0)
-           D_i = D_H2O / D_gas(KK) !// molecular diffusivity of the gas
-           rbO = log(z0w * VONKARMAN * USR / D_i) / (USR * VONKARMAN)
-           !// IMPORTANT
-           !// RbO can be very large or even negative from this
-           !// formula. Negative rbO can come from z0 being very small,
-           !// as is often the case over water.
-           !// We impose limits:
-           rbO = min( 1000._r8, rbO ) !// i.g. min velocity 0.001 m/s
-           rbO = max(   10._r8, rbO ) !// i.e. max velocity 0.10 m/s
-
-           !// Make a weighted mean using land fraction (weighting conductances)
-           Rb(KK) = 1._r8 / (PLAND(I,J) / rbL  +  (1._r8 - PLAND(I,J)) / rbO)
-
-        end do !// do N = 1, nddep
-
-        !// Surface (or canopy) resistance (Rc)
-        !// ----------------------------------------------------------------
-        !// Rc is in general calculated as in EMEP2012.
-        !//
-        !// The general formula for canopy conductances is
-        !//   Gc = LAI * gsto + Gns
-        !// where LAI is one-sided leaf-area index and gsto is the stomatal
-        !// conductance. Gns is the non-stomatal conductance.
-        !// These are calculated separately, and Gns is calculated separately
-        !// for each land-use type.
-
-
         !// Non stomatal conductance Gns - Ozone
-        !// ------------------------------------
+        !// ----------------------------------------------------------------
         !// In EMEP2012, the Gns for O3 is found from
         !//   GnsO3 = SAI/(rext*FT) + 1/(Rinc + RgsO3)
         !// where FT is temperature correction, and we define
@@ -1640,7 +1336,7 @@ contains
         !// SO2 has a smaller resistance which is temperature dependent.
         !// Both are according to EMEP2012.
         !// Rsnow will only be used if snow cover fsnowC(NN)>0
-        RsnowO3 = RgsO3(10)
+        RsnowO3 = RgsO3(NLCAT)
         if (T2Mcel .ge. 1._r8) then
            RsnowSO2 = 70._r8
         else if (T2Mcel .ge. -1._r8) then
@@ -1650,11 +1346,11 @@ contains
         end if
 
 
-        !// To calculate GnsO3, we calculate it for each land-type as GO3(NN).
-        !// Then we correct GO3(NN) for snow cover, and finally find
-        !// the gridbox mean GnsO3 from FL and GO3.
+        !// To calculate GnsO3, we calculate it for each land-type as GnsO3(NN).
+        !// Then we correct GnsO3(NN) for snow cover.
 
-        GnsO3 = 0._r8 !// Grid-average GnsO3
+        GnsO3 = 0._r8 ! initialisation
+
         do NN = 1, NLCAT-1
 
            Rgs = RgsO3(NN) !// Land-type resistance from tabulated values
@@ -1693,16 +1389,13 @@ contains
 
            !// GnsO3 for this land type
            !// (GnsO3 = SAI/(rext*FT) + 1/(Rinc + RgsO3)
-           GO3(NN) = SAI(NN) * gext
-           if (Rgs .gt. 0._r8) GO3(NN) = GO3(NN) + 1._r8 / Rgs
-
-           !// Grid-average GnsO3
-           GnsO3 = GnsO3 + FL(NN) * GO3(NN)
+           GnsO3(NN) = SAI(NN) * gext
+           if (Rgs .gt. 0._r8) GnsO3(NN) = GnsO3(NN) + 1._r8 / Rgs
 
         end do
 
-        !// Finally include FL(10) as snow
-        if (FL(10) .gt. 0._r8) GnsO3 = GnsO3 + FL(10)/RsnowO3
+        !// Finally include FL(NLCAT) as snow
+        GnsO3(NLCAT) = 1._r8/RsnowO3
 
         !// Zhang etal (2003, ACP, doi:10.5194/acp-3-2067-2003) suggest
         !// night-time value of R=400s/m for non-stomatal conductance,
@@ -1719,33 +1412,35 @@ contains
         !// conductance from leaf stomatal contuctance, where gsto is the
         !// latter.
 
-        !// gsto is estimated in EMEP parameterization, for each vegetation type, and
-        !// above the average conductance Gstc_avg was calculated from this.
-        !// The estimated canopy stomatal conductance is then:
-        !//GstO3 = LAI_IJ * Gstc_avg <- THIS IS WRONG AND NEEDS TO BE CORRECTED!!!
-        !// where the vegetation fractions are taken into account.
-        !//
-        GstO3 = LAI_IJ*Gstc_avg
-        !//
+        !// The estimated canopy stomatal conductance:
+        GstO3 = LAI_IJ*gsto
+
         !// Total canopy conductance for O3
         GcO3 = GstO3 + GnsO3
-        !// Total canopy resistance for O3
-        if (GcO3 .gt. 0._r8) then
-           Rc(1) = 1._r8 / GcO3
-        else
-           !// This should never happen because RgsO3 was defined for all
-           !// land-use types. But I include it anyway.
-           write(6,'(a)') f90file//':'//subr//': VERY WRONG: GnsO3 ZERO/NEGATIVE!!!'
-           print*,GstO3,GnsO3,PAR_IJ,PARMEAN(I,J,JMON),fstcT2
-           do NN = 1, NLCAT
-              write(6,'(i2,3es12.3)') NN,GO3(NN),FL(NN),fsnowC(NN)
-           end do
+
+        
+        if (SUM(GcO3) .le. 0._r8) then
+           !// This should never happen because RgsO3 was defined for all land-use types.
+           write(6,'(a)') f90file//':'//subr//': VERY WRONG: GcO3 ZERO/NEGATIVE!!!'
+           write(6,'(a)') 'GcO3, GstO3, GnsO3, FL'
+           write(6,*) GcO3
+           write(6,*) GstO3
+           write(6,*) GnsO3
+           write(6,*) FL
+           !write(6,*) PAR_IJ,PARMEAN(I,J,JMON),fstcT2
+           !write(6,'(i2,3es12.3)') NN,GnsO3(NN),FL(NN),fsnowC(NN)
            stop
         end if
-        
 
-
-
+        !// Total canopy resistance for O3
+        do NN = 1, NLCAT
+           if (GcO3(NN) .gt. 0._r8) then
+              Rc(1,NN) = 1._r8 / GcO3(NN)
+           else
+              !// That category is apparently empty.
+              Rc(1,NN) = 0._r8
+           end if
+        end do
 
         !// Non-stomatal conductance Gns - SO2
         !// ----------------------------------
@@ -1769,11 +1464,11 @@ contains
         !// Non-vegetated surfaces are done with standard table values
         !// for RgsSO2.
 
+        GnsSO2 = 0._r8  ! initiaisation
 
         !// Only loop through vegetative categories
-        do NN = 1, 4
+        do NN = 1, 8
 
-           !// EMEP2012 --->
            if (RH .eq. 0._r8) then
               Rgs = 1000._r8 !// To avoid infinity
            else
@@ -1798,18 +1493,19 @@ contains
               else
                  Rgs = RsnowSO2 / fsnowC(NN)
               end if
-           else
-              !// Skip FT for SO2 when using EMEP2012 vegetated surfaces
-              Rgs = Rgs
            end if
-           GSO2(NN) = 1._r8 / Rgs
-           RgsSO2(NN) = Rgs !// Not necessary (not used further down)
-           !// EMEP2012 <---
+           if (Rgs .gt. 0._r8) then
+              GnsSO2(NN) = 1._r8 / Rgs
+           else
+              ! Apparently this category is not set.
+              GnsSO2(NN) = 0._r8
+           end if
+           
         end do
 
 
         !// Only loop through non-vegetative categories
-        do NN = 5, NLCAT-1
+        do NN = 9, NLCAT-1
 
            Rgs = RgsSO2(NN) !// Land-type resistance
 
@@ -1826,39 +1522,38 @@ contains
               Rgs = FT * Rgs
            end if
 
-           !// Do *NOT* update RgsSO2 here, only GSO2 for this land type
+           !// Do *NOT* update RgsSO2 here, only GnsSO2 for this land type
            if (Rgs .gt. 0._r8) then
-              GSO2(NN) =  1._r8 / Rgs
+              GnsSO2(NN) =  1._r8 / Rgs
            else
-              GSO2(NN) = 0._r8
+              GnsSO2(NN) = 0._r8
            end if
 
         end do
 
-        !// Gridbox average GnsSO2 (all categories)
-        GnsSO2 = 0._r8
-        do NN = 1, NLCAT-1
-           GnsSO2 = GnsSO2 + FL(NN) * GSO2(NN)
-        end do
-        !// Include FL(10) as snow
-        if (FL(10) .gt. 0._r8) GnsSO2 = GnsSO2 + FL(10)/RsnowSO2
+        !// Include snow
+        GnsSO2(NLCAT) = 1._r8/RsnowSO2
 
-
-        !// Now we have Rc for SO2
-        if (GnsSO2 .gt. 0._r8) then
-           Rc(2) = 1._r8 / GnsSO2
-        else
-           !// This should not happen, I think GSO2 has values for all
-           !// land-use types. But I include it anyway.
+        if (SUM(GnsSO2) .le. 0._r8) then
+           !// This should never happen because RgsO3 was defined for all land-use types.
            write(6,'(a)') f90file//':'//subr// &
                 ': VERY WRONG: GnsSO2 ZERO/NEGATIVE!!!'
-           print*,GSO2
-           print*,fsnowC
+           write(6,'(a)') 'GnsSO2, fsnowC, FL'
+           write(6,*) GnsSO2
+           write(6,*) fsnowC
+           write(6,*) FL
            stop
         end if
 
-
-
+        do NN = 1, NLCAT
+           !// Now we have Rc for SO2
+           if (GnsSO2(NN) .gt. 0._r8) then
+              Rc(2,NN) = 1._r8 / GnsSO2(NN)
+           else
+              !// That category is apparently empty.
+              Rc(2,NN) = 0._r8              
+           end if
+        end do
 
         !// Non-stomatal conductance Gns - Other gases
         !// ------------------------------------------
@@ -1870,11 +1565,19 @@ contains
         !// NH3 (KK=ndep) will be done separately below.
         !// HNO3 (KK=4) will be reset below.
         do KK = 3, nddep-1
-
+           
            !// Use total GnsSO2 and GcO3 in interpolation to other gases.
            !// Another possibility is to do this for each vegetation
            !// category, but there should be no need to do that yet.
-           Rc(KK) = 1._r8 / (1.e-5_r8 * Hstar(KK) * GnsSO2 + f0(KK) * GcO3)
+           do NN = 1, NLCAT
+              if ( ( GnsSO2(NN) .gt. 0._r8 ) .and. ( GcO3(NN) .gt. 0._r8 ) ) then
+                 Rc(KK,NN) = 1._r8 / (1.e-5_r8 * Hstar(KK) * GnsSO2(NN) + f0(KK) * GcO3(NN))
+              else
+                 ! That category is apparently not set.
+                 ! Can happen if there is no snow/ice cover!
+                 Rc(KK,NN) = 0._r8
+              end if
+           end do
 
         end do
 
@@ -1888,7 +1591,7 @@ contains
         !// EMEP2012 use a different RclowHNO3, namely 10s/m.
         !// They also use Ts, surface temperature, but I understand that as
         !// 2m temperature.
-        Rc(4) = max(1._r8, -2._r8*T2Mcel)
+        Rc(4,:) = max(1._r8, -2._r8*T2Mcel)
 
 
 
@@ -1907,45 +1610,196 @@ contains
            !// from 1000/200 to 500/100 compared to EMEP2003, so we use these
            if (T2M .le. 268._r8) then
               !// Cold temperatures (T<-5C)
-              Rc(14) = 500._r8
+              Rc(NDDEP,:) = 500._r8
            else if  (T2M .gt. 268._r8 .and. T2M .le. 273._r8 ) then   
               !// Just below 0C (-5C<T<0C)
-              Rc(14) = 100._r8
+              Rc(NDDEP,:) = 100._r8
            else
               !// Above 0C.
               !// Equation uses temperature in C, not K.
-              Rc(14) = 0.0455_r8 * 10._r8 * log10(T2Mcel + 2._r8) &
+              Rc(NDDEP,:) = 0.0455_r8 * 10._r8 * log10(T2Mcel + 2._r8) &
                        * exp((100._r8 - RH)/7._r8) &
                        * 10._r8**(-1.1099_r8 * Asn + 1.6769_r8)
               !// Impose some limits on Rc (EMEP2012)
-              Rc(14) = min( 200.0,Rc(14))
-              Rc(14) = max(  10.0,Rc(14))
+              Rc(NDDEP,:) = min( 200.0,Rc(NDDEP,:))
+              Rc(NDDEP,:) = max(  10.0,Rc(NDDEP,:))
            end if
         end if
 
+        !// Save canopy resistance for output
+        WHERE(Rc(1,:) .gt. 0._r8)
+           VRc(II,JJ,:) = 1._r8/Rc(1,:)*FL
+        ELSEWHERE
+           VRc(II,JJ,:) = 0._r8
+        end WHERE
 
-        !// Calculate deposition velocity
         !// ----------------------------------------------------------------
-        do KK = 1, nddep
-           Tot_res = Ra + Rb(KK) + Rc(KK)
-           if (Tot_res .ne. Tot_res) then
-              write(6,'(a,i3,3es9.3)') f90file//':'//subr// &
-                   ': Total resistance is NAN!', KK,Ra,Rb(KK),Rc(KK)
+        !// Aerodynamic resistance (Ra)
+        !// ----------------------------------------------------------------
+
+        !// Define reference height as level 4 center (<45 m>)
+        ZREF   = ( ZOFLE(5,I,J) + ZOFLE(4,I,J) ) * 0.5_r8
+       
+        !// Interpolate meteorology at ZREF 
+        !// May need to check if values are defined for center or not.
+        WIND_ZREF = sqrt(UMS(4,I,J)*UMS(4,I,J) + VMS(4,I,J)*VMS(4,I,J))
+        T_ZREF    = T(I,J,4)
+        SHF_IJ    = SHF(I,J)                      !// Surface heat flux
+        !// Get pressure from sigma levels
+        P2        = ETAA(5) + ETAB(5) * PSFC
+        P1        = ETAA(4) + ETAB(4) * PSFC
+        P_ZREF    = (P1 + P2) * 0.5_r8
+        !// Density
+        RHO_ZREF  = P_ZREF/(T_ZREF * R_AIR)
+        !// Displacement height
+        depl_height      = 0.7_r8 * VEGH         !// other vegetation
+        depl_height(1:4) = 0.78_r8 * VEGH(1:4)   !// forests
+        !// Roughness length
+        z0      = 0.1_r8                         !// other vegetation
+        z0(1:4) = 0.07_r8 * VEGH(1:4)            !// forests
+        z0(1:4) = MIN(z0(1:4),1._r8)             !// upper limit following Simpson et al. (2012)
+        do NN = 1, NLCAT
+           if (ZREF .lt. depl_height(NN)) then
+              write(6,'(a)') f90file//':'//subr//': ZREF < deplacement height: This is WRONG!'
+              write(6,*) 'NN,ZREF, d, ZOFLE',NN,ZREF,depl_height(NN), ZOFLE(:,I,J)
               stop
            end if
- 
-           !// Unit is m/s
-           if (Tot_res .gt. 0._r8) then
-              VD(KK) = 1._r8 / Tot_res
-           else
-              !// Fail-safe check
-              write(6,'(a,i3,4es9.3)') f90file//':'//subr// &
-                   ': Tot_res is zero/negative/nan!',&
-                      KK, Tot_res, Ra, Rb(KK), Rc(KK)
+        end do
+        
+        
+        !// Roughness length (z0) for water surfaces.
+        !// ZOI is zero for these. z0 over water is generally small.
+        !// Will distinguish between z0 and z0(12).
+        !// Do not allow z0 > (ZREF-d)
+        z0(12)   = min(ZOI(I,J,JMON), (ZREF - depl_height(12)) * 0.999_r8)
+
+        !// Water roughness lenghth
+        !// Calm sea: 0.11 * nu / USR, nu=eta/rho=kin.visc. of air (Hinze,1975)
+        !//                            here we use 0.135 instead of 0.11.
+        !// Rough sea: a * USR^2 / g, where a=0.016 (Charnock, 1955) here 0.018
+        !//                           here a=0.018 (Garratt 1992)
+        !// Will use wind of 3m/s to separate these.
+        !// SFNU = kinematic visc(nu) = mu/density  (m*m/s), found as in PBL:
+        !//   SFCD = SFCP/(SFCT*287._r8) ! density (kg/m^3)
+        !//   SFMU = 6.2d-8*SFCT    ! abs.visc. 6.2d-8*T (lin fit:-30C to +40C)
+        !//   SFNU = SFMU / SFCD    ! kinematic visc(nu) = mu/density  (m*m/s)
+        !// or SFNU = 6.2d-8*T2M*T2M*287._r8/(100._r8*PSFC)
+        ! Sutherland's law should be used throughout the code instead
+        !SFNU  = ( 1.458e-6_r8*T2M**(3/2._r8)/(T2M+110.4_r8)* T2M * R_AIR) / (100._r8 * PSFC)
+        SFNU  = (6.2e-8_r8 * T2M * T2M * R_AIR) / (100._r8 * PSFC)
+        !z0(12) = min(0.135_r8*SFNU/USR + 1.83e-3_r8*USR**2, 2.e-3_r8)
+        !// Maximum limit of 2mm surface roughness.
+        if (WINDL1 .lt. 3._r8) then
+           z0(12) = min(0.135_r8*SFNU/USR, 2.e-3_r8)
+        else
+           ! g is 9.836 ms-2
+           z0(12) = min(1.83d-3*USR**2, 2.e-3_r8)
+        end if
+        !// Wu (J. Phys. Oceanogr., vol.10, 727-740,1980) suggest a correction
+        !// to the Charnock relation, but we skip this here.
+
+        !// Set minimum value to avoid division by zero later (Berge, 1990,
+        !/  Tellus B, 42, 389407, doi:10.1034/j.1600-0889.1990.t01-3-00001.x)
+        if (z0(12) .le. 0._r8) z0(12) = 1.5e-5_r8
+        
+        !// Calculation of Ra from Simpson etal (2012)
+        do NN = 1, NLCAT
+           call aerodyn_res(z0(NN), depl_height(NN), ZREF, WIND_ZREF, RHO_ZREF, T_ZREF, SHF_IJ, MOL, Ra(NN))
+           !// This should never happen include it anyway.
+           if (Ra(NN) .lt. 0._r8) then
+              write(6,'(a)') f90file//':'//subr//': VERY WRONG: Ra ZERO/NEGATIVE!!!'
+              write(6,*) z0(NN), depl_height(NN), ZREF, WIND_ZREF, RHO_ZREF, T_ZREF, SHF_IJ, MOL, Ra(NN)
               stop
            end if
         end do
 
+        
+        !// Save aerodynamical reistance for output
+        WHERE (Ra .gt. 0._r8)
+           VRa(II,JJ,:) = 1._r8/Ra*FL
+        ELSEWHERE
+           VRa(II,JJ,:) = 0._r8
+        end WHERE
+
+        !// Test for NaN
+        if (ANY(VRa .ne. VRa)) then
+           write(6,'(a)') f90file//':'//subr//': VERY WRONG: VRa is NaN!!!'
+           write(6,'(a)') 'VRa, Ra, I, II, J, JJ'
+           write(6,*), VRa, Ra, I, II, J, JJ
+           stop
+        end if
+
+        !// ------------------------------------------------------------------
+        !// Quasi-laminar resistance (Rb)
+        !// ------------------------------------------------------------------
+        do KK = 1, NDDEP
+
+           !// Rb is calculated differently for land and ocean, respectively
+           !// using Eqn.53 and Eqn.54 in EMEP2012.
+
+           !// Land (cannot be zero due to USR having lower limit)
+           rbL = 2._r8 / (VONKARMAN * USR) * (Sc_H20 * D_gas(KK) / PrL )**(2._r8/3._r8)
+
+           !// Ocean (use z0(12), not z0)
+           D_i = D_H2O / D_gas(KK) !// molecular diffusivity of the gas
+           rbO = log(z0(12) * VONKARMAN * USR / D_i) / (USR * VONKARMAN)
+           !// IMPORTANT
+           !// RbO can be very large or even negative from this
+           !// formula. Negative rbO can come from z0 being very small,
+           !// as is often the case over water.
+           !// We impose limits:
+           rbO = min( 1000._r8, rbO ) !// i.g. min velocity 0.001 m/s
+           rbO = max(   10._r8, rbO ) !// i.e. max velocity 0.10 m/s
+
+           do NN = 1, 11
+              Rb(KK,NN) = rbL
+           end do
+           do NN = 13, NLCAT
+              Rb(KK,NN) = rbL
+           end do
+           Rb(KK,12) = rbO
+        end do !// do N = 1, nddep
+
+        !// Save quasi-laminar resistance for output
+        WHERE (Rb(1,:) .gt. 0._r8)
+           VRb(II,JJ,:) = 1._r8/Rb(1,:) * FL
+        ELSEWHERE
+           VRb(II,JJ,:) = 0._r8
+        end WHERE
+
+        !// Test for NaN
+        if (ANY(VRb .ne. VRb)) then
+           write(6,'(a)') f90file//':'//subr//': VERY WRONG: VRb is NaN!!!'
+           write(6,'(a)') 'VRb, Rb, I, II, J, JJ'
+           write(6,*), VRa, Rb, I, II, J, JJ
+           stop
+        end if
+        
+        !// Calculate deposition velocity
+        !// ----------------------------------------------------------------
+        do KK = 1, NDDEP
+           Tot_res = Ra + Rb(KK,:) + Rc(KK,:)
+           do NN = 1, NLCAT
+              if (Tot_res(NN) .ne. Tot_res(NN)) then
+                 write(6,'(a,i3,3es9.3)') f90file//':'//subr// &
+                      ': Total resistance is NAN!', NN,KK,Ra(NN),Rb(KK,NN),Rc(KK,NN)
+                 stop
+              end if
+           end do
+ 
+           !// Unit is m/s
+           do NN = 1, NLCAT
+              if (Tot_res(NN) .le. 0._r8) then
+                 !// Fail-safe check
+                 write(6,'(a,i3,4es9.3)') f90file//':'//subr// &
+                      ': Tot_res is zero/negative/nan!',&
+                      NN, KK, Tot_res(NN), Ra(NN), Rb(KK,NN), Rc(KK,NN)
+                 stop
+              end if
+           end do
+           !// Compute weighted mean
+           VD(KK) = SUM( 1._r8 / Tot_res * FL ) / SUM(FL)
+        end do
 
         !// Assign to IJ-block values [m/s]
         VO3(II,JJ)     = VD(1)
@@ -1953,7 +1807,7 @@ contains
         VNO(II,JJ)     = VD(3)
         VHNO3(II,JJ)   = VD(4)
         VH2O2(II,JJ)   = VD(5)
-        VCH3CHO(II,JJ) = VD(6)
+        VCH3CHO(II,JJ) = VD(6) !// Aceta
         VHCHO(II,JJ)   = VD(7)
         VPAN(II,JJ)    = VD(8)
         VNO2(II,JJ)    = VD(9)
@@ -1963,7 +1817,10 @@ contains
         !//should be used here (Emberson et al. 2000).
         !//Multiply with ozone concentration yields stomatal flux.
         !//unit [mmol m-2s-1]
-        VSto(II,JJ)    = Gstc_avg/(1.d-5*R_UNIV*T2M/PSFC)
+        VSto(II,JJ,:)    = FL*gsto/(1.d-5*R_UNIV*T2M/PSFC)
+
+        !// Save non-stomatal conductance for output
+        VNSto(II,JJ,:)   = FL * GnsO3
      end do !// do I = MPBLKIB(MP),MPBLKIE(MP)
     end do !// do J = MPBLKJB(MP),MPBLKJE(MP)
 
@@ -2422,7 +2279,8 @@ contains
          YDGRD, PLAND
     use cmn_met, only: PRECLS, PRECCNV, MO_LENGTH, USTR, SFT, CI, SD, &
          CLDFR
-    use cmn_sfc, only: landSurfTypeFrac, LANDUSE_IDX, NVGPAR, LAI
+    use cmn_sfc, only: landSurfTypeFrac, LANDUSE_IDX, NVGPAR, LAI, NLCAT, &
+         DDEP_PAR
     use cmn_oslo, only: trsp_idx
     use soa_oslo, only: ndep_soa, soa_deps
     use utilities_oslo, only: landfrac2mosaic, set_vegetation_height
@@ -2439,9 +2297,7 @@ contains
     integer :: I,II,J,JJ,N, K, NN
     real(r8) :: SAI1, MOL, USR, RAIN, T2M, &
          a1L, a1W, a1I, a1Lfor, amol, amolN, Vtot, WETFRAC, fice, snowD
-    real(r8) :: tempVEGH
-    integer, parameter :: NLCAT=10
-    real(r8),dimension(NLCAT) :: FL, VD, VEGH, fsnowC
+    real(r8),dimension(NLCAT) :: FL, VDLCAT, VEGH, fsnowC, tmpVEGH
 
     !// Ustar mean for year 2006 0.293m = 29.3cm
     !real(r8), parameter :: ZmeanUSR = 1._r8/29.3_r8
@@ -2453,36 +2309,41 @@ contains
     !// for now)
     if (.not.(LSULPHUR .or. LNITRATE .or. LSOA)) return
 
-    !// EMEP categories
-    !//  1. Forrests, Mediterranean scrub
-    !//  2. Crops
-    !//  3. Moorland (savanna++)
-    !//  4. Grassland
-    !//  5. Wetlands
-    !//  6. Tundra
-    !//  7. Desert
-    !//  8. Water
-    !//  9. Urban
-    !// 10. Ice+snow (strictly, EMEP has this as category 9 and urban as 10)
-    !// Vegetation heights
-    VEGH(1)  = 0._r8  !// Will be modified below 
-    tempVEGH = (sum(DDEP_PAR(20,1:4))+DDEP_PAR(20,10))/5._r8 
-    VEGH(2)  = sum(DDEP_PAR(20,5:7))/3._r8
-    VEGH(3)  = DDEP_PAR(20,8)
-    VEGH(4)  = DDEP_PAR(20,9)
-    VEGH(5)  = DDEP_PAR(20,11)
-    VEGH(6)  = DDEP_PAR(20,12)
-    VEGH(7)  = DDEP_PAR(20,13)
-    VEGH(8)  = DDEP_PAR(20,14)
-    VEGH(9)  = DDEP_PAR(20,16)
-    VEGH(10) = 0._r8
+    !// mOSaic categories (reduced from Simpson et al., 2012)
+    !//  1. Needleleaftree (temperated/boreal)
+    !//  2. Deciduoustree (temperated/boral)
+    !//  3. Needleleaftree (mediterranean)
+    !//  4. Broadleaftree (mediterranean)
+    !//  5. Crops <a,b,c>
+    !//  6. Moorland (savanna++)
+    !//  7. Grassland
+    !//  8. Scrubs (med.)
+    !//  9. Wetlands
+    !//  10. Tundra
+    !//  11. Desert
+    !//  12. Water
+    !//  13. Urban
+    !//  14. Ice/Snow - is treated seperately
+
+    !// Vegetation height
+    VEGH   = DDEP_PAR(20,:) !// Will be modified latitude dependently
+    tmpVEGH = DDEP_PAR(20,:)!// Temporare vegetation height
 
     !// Loop over latitude (J is global, JJ is block)
     do J = MPBLKJB(MP),MPBLKJE(MP)
       JJ    = J - MPBLKJB(MP) + 1
       
-      !// Set latitude dependent vegetation height for forests
-      call set_vegetation_height(tempVEGH,YDGRD(J),VEGH(1))
+      !// Set latitude dependent vegetation height
+      !// The function is based on the latitude dependent description in Simpson et al. (2012) 
+      !// and modified towards tropics (see utilities_oslo.f90).
+      !// Forests [and crops]
+      do NN=1, 4 ![5]
+         call set_vegetation_height(tmpVEGH(NN),YDGRD(J),VEGH(NN))
+      end do
+      !// [Grass and] scrubs
+      ! do NN=7, 8
+      call set_vegetation_height(tmpVEGH(8),YDGRD(J),VEGH(8))
+      ! end do
       
       !// Loop over longitude (I is global, II is block)
       do I = MPBLKIB(MP),MPBLKIE(MP)
@@ -2536,7 +2397,7 @@ contains
               !// Assume snow depth covers only land
               snowD = SD(I,J) / PLAND(I,J) * 10._r8
            else
-              if (CI(I,J) .ge. FL(8)) then
+              if (CI(I,J) .ge. FL(12)) then
                  !// More sea ice than water; should not occur, but we accept
                  !// it for now and assume ocean to be fully covered by ice.
                  snowD = SD(I,J) * 10._r8
@@ -2544,7 +2405,7 @@ contains
                  !// Part of water is ice covered. The part of the gridbox
                  !// which is NOT covered by snow is (focean - CI(I,J)),
                  !// so we adjust snow depth for the covered part.
-                 snowD = SD(I,J) / (1._r8 - (FL(8) - CI(I,J))) * 10._r8
+                 snowD = SD(I,J) / (1._r8 - (FL(12) - CI(I,J))) * 10._r8
               end if
            end if
         else
@@ -2573,7 +2434,7 @@ contains
         end do
         !// Ocean snow cover is done below where fice is calculated.
         !// Snow land is of course snow covered
-        fsnowC(10)= 1._r8
+        fsnowC(NLCAT)= 1._r8
 
 
         !// Sea ice - check if we need to reduce fraction of ocean
@@ -2582,13 +2443,13 @@ contains
         else
            !// Cannot have more sea ice than sea, so the fraction of sea
            !// covered by ice is
-           if (FL(8) .gt. 0._r8) then
-              fice = min(CI(I,J)/FL(8), 1._r8)
+           if (FL(12) .gt. 0._r8) then
+              fice = min(CI(I,J)/FL(12), 1._r8)
            else
               fice = 0._r8
            end if
         end if
-        fsnowC(8) = fice
+        fsnowC(12) = fice
 
         !// Taking snow cover and sea ice into account.
         !// Above 0C, snow should be treated as a wet surface.
@@ -2598,26 +2459,26 @@ contains
         !// Change snow covered land fractions to snow/ice when T<0C
         if (T2M.le.273.15_r8) then
            !// Check for snow cover at cold temperatures
-           do NN = 1, 9
+           do NN = 1, NLCAT-1
               if (fsnowC(NN).gt.0._r8) then
-                 !// Move the snow covered fraction of each land type to FL(10)
-                 FL(10) = FL(10) + FL(NN)*fsnowC(NN)
+                 !// Move the snow covered fraction of each land type to ice/snow (FL(NLCAT))
+                 FL(NLCAT) = FL(NLCAT) + FL(NN)*fsnowC(NN)
                  FL(NN) = FL(NN) * (1._r8 - fsnowC(NN))
               end if
            end do
         else
            !// Snow cover for T>0C should be treated as wet surface.
-           !// To simplify, we put all wet surfaces into FL(8).
-           do NN = 1, 7
+           !// To simplify, we put all wet surfaces into FL(12).
+           do NN = 1, 11
               if (fsnowC(NN).gt.0._r8) then
-                 !// Move the snow covered fraction of each land type to FL(8)
-                 FL(8) = FL(8) + FL(NN)*fsnowC(NN)
+                 !// Move the snow covered fraction of each land type to water (FL(12))
+                 FL(12) = FL(12) + FL(NN)*fsnowC(NN)
                  FL(NN) = FL(NN) * (1._r8 - fsnowC(NN))
               end if
            end do
-           do NN = 9, 10
+           do NN = NLCAT-1, NLCAT
               if (fsnowC(NN).gt.0._r8) then
-                 FL(8) = FL(8) + FL(NN)*fsnowC(NN)
+                 FL(12) = FL(12) + FL(NN)*fsnowC(NN)
                  FL(NN) = FL(NN) * (1._r8 - fsnowC(NN))
               end if
            end do
@@ -2625,9 +2486,9 @@ contains
 
 
         !// Final check: wetland is wet when T>0C, but assume ice when T<0C
-        if (T2M .lt. 273.15_r8 .and. FL(5).gt.0._r8) then
-           FL(10) = FL(10) + FL(5)
-           FL(5) = 0._r8
+        if (T2M .lt. 273.15_r8 .and. FL(9).gt.0._r8) then
+           FL(NLCAT) = FL(NLCAT) + FL(9)
+           FL(9) = 0._r8
         end if
 
 
@@ -2654,32 +2515,38 @@ contains
         !// Forest; limit forest to our land value
         a1Lfor = max(0.008_r8 * SAI1*0.1_r8, a1L)
 
-        !// All VDs must be multiplied with amol or amolN.
+        !// All VDLCATs must be multiplied with amol or amolN.
         !// This is done at the end as separate factors
 
-        !// If rain, perhaps wet forest should increase? Try increasing
-        !// 1.5 times.
-        VD(1) = (a1Lfor * (1._r8 - WETFRAC) &
-                  + 1.5_r8 * a1Lfor * WETFRAC) * USR
+        !// If rain, perhaps wet forest/shrubs should increase?
+        !// Try increasing 1.5 times.
+        VDLCAT(1:4) = (a1Lfor * (1._r8 - WETFRAC) &
+             + 1.5_r8 * a1Lfor * WETFRAC) * USR * amol
+        VDLCAT(8)   = (a1Lfor * (1._r8 - WETFRAC) &
+             + 1.5_r8 * a1Lfor * WETFRAC) * USR * amol
+        
+        
         !// Assume wetland is wet. Have already checked it for temperature,
         !// assuming T<0C is to treated as snow/ice.
-        VD(5) = a1W * USR
+        !// Also multiply with amol
+        VDLCAT(9)  = a1W * USR * amol
         !// Ocean is wet
-        VD(8) = a1W * USR
+        VDLCAT(12) = a1W * USR * amol
+        
         !// Non-wet surfaces - weight with WETFRAC
-        VD(2) = (a1L * (1._r8 - WETFRAC) + a1W * WETFRAC) * USR
-        VD(3) = (a1L * (1._r8 - WETFRAC) + a1W * WETFRAC) * USR
-        VD(4) = (a1L * (1._r8 - WETFRAC) + a1W * WETFRAC) * USR
-        VD(6) = (a1L * (1._r8 - WETFRAC) + a1W * WETFRAC) * USR
-        VD(7) = (a1L * (1._r8 - WETFRAC) + a1W * WETFRAC) * USR
-        VD(9) = (a1L * (1._r8 - WETFRAC) + a1W * WETFRAC) * USR
+        !// Also multiply with amol
+        VDLCAT(5:7)   = (a1L * (1._r8 - WETFRAC) + a1W * WETFRAC) * USR * amol
+        VDLCAT(10:11) = (a1L * (1._r8 - WETFRAC) + a1W * WETFRAC) * USR * amol
+        VDLCAT(13)    = (a1L * (1._r8 - WETFRAC) + a1W * WETFRAC) * USR * amol
+        
         !// Ice - weight with WETFRAC
-        VD(10) = (a1I * (1._r8 - WETFRAC) + a1W * WETFRAC) * USR
-
+        VDLCAT(NLCAT)    = (a1I * (1._r8 - WETFRAC) + a1W * WETFRAC) * USR * amol
+        
+        
         !// Make average velocity
         Vtot = 0._r8
-        do NN=1,10
-           Vtot = Vtot + VD(NN) * FL(NN)
+        do NN = 1, NLCAT
+           Vtot = Vtot + VDLCAT(NN) * FL(NN)
         end do
 
         !// Sulphur
@@ -2731,6 +2598,41 @@ contains
     !// ------------------------------------------------------------------
   end subroutine aer_vdep2
   !// ------------------------------------------------------------------
+
+  !// ----------------------------------------------------------------------
+  subroutine aerodyn_res(z0, d, ZREF, WIND_ZREF, RHO_ZREF, T_ZREF, SHF, MOL, Ra)
+    !// ----------------------------------------------------------------------
+    !// Description: 
+    !//  Compute the aerodynamical resistance following Simpson et al. (2012).
+    !//  Windspeed at the center of level 2 (~ ZREF = 45 m) is used here.
+    !//  We iterativelty calculate local values of turbulence paramters (USTR, MOL).
+    !//  Roughness length (z0 = 0.07*VEGH - forests; 0.1*VEGH - other veg.) 
+    !//  and deplacement height(d = 0.78*VEGH - forests; 0.7 - other veg.)
+    !//  
+    !// History:
+    !//  Stefanie Falk, May 2019
+    !// ----------------------------------------------------------------------
+    use cmn_parameters, only: VONKARMAN, cp_air, G0
+    !// ----------------------------------------------------------------------
+    implicit none
+    !// --------------------------------------------------------------------
+    !// Input
+    real(r8), intent(in) :: z0, d, ZREF, WIND_ZREF, RHO_ZREF, T_ZREF, SHF, MOL
+    !// Output
+    real(r8), intent(out) :: Ra
+    !// Local variables
+    real(r8) :: USTR_LOC, MOL_LOC
+    !// --------------------------------------------------------------------
+
+    USTR_LOC = WIND_ZREF * VONKARMAN / (LOG((ZREF-d)/z0) - PSIM((ZREF-d)/MOL) + PSIM(z0/MOL))
+
+    MOL_LOC = -1._r8 * (RHO_ZREF * cp_air * T_ZREF * USTR_LOC**3) / (VONKARMAN * G0 * SHF)
+
+    Ra = 1._r8/(VONKARMAN * USTR_LOC) * (LOG((ZREF-d)/z0) - PSIH((ZREF-d)/MOL) + PSIH(z0/MOL))
+    !// ----------------------------------------------------------------------
+  end subroutine aerodyn_res
+  !// ----------------------------------------------------------------------
+
   !// ----------------------------------------------------------------------
   real(r8) function PSIM(CETA)
     !// --------------------------------------------------------------------
@@ -2740,7 +2642,7 @@ contains
     !//  in the mosaic approach to dry deposition.
     !//
     !// History: 
-    !//  Stefanie Falk, Mai 2019
+    !//  Stefanie Falk, May 2019
     !// --------------------------------------------------------------------
     use cmn_parameters, only: CSIM_BETA, CSIM_GAMMA, CPI
     !// --------------------------------------------------------------------

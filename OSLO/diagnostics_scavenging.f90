@@ -34,8 +34,9 @@ module diagnostics_scavenging
   use cmn_precision, only: r8
   use cmn_size, only: IPAR, JPAR, LPAR, NPAR, MPBLK, IDBLK, JDBLK
   use cmn_oslo, only: SCAV_LS, SCAV_CN, SCAV_DD, SCAV_BRD, SCAV_DIAG, &
-       SCAV_MAP_WLS, SCAV_MAP_WCN, SCAV_MAP_DRY, GSTO3_AVG, FSTO3_AVG
-  use cmn_sfc, only: VGSTO3
+       SCAV_MAP_WLS, SCAV_MAP_WCN, SCAV_MAP_DRY, &
+       GSTO3_AVG, FSTO3_AVG, VRAO3_AVG, VRBO3_AVG, VRCO3_AVG
+  use cmn_sfc, only: VGSTO3, NLCAT
   !// ----------------------------------------------------------------------
   implicit none
   !// ----------------------------------------------------------------------
@@ -46,7 +47,8 @@ module diagnostics_scavenging
   public scav_diag_init, scav_diag_put_ddep, scav_diag_brd, scav_diag_ls, &
        scav_diag_cn, scav_diag_collect_daily, &
        scav_diag_2fileA, scav_diag_2fileB, &
-       scav_diag_put_gsto, scav_diag_put_fsto, scav_diag_nmet_output_nc
+       scav_diag_put_gsto, scav_diag_put_drydepvelo, &
+       scav_diag_put_fsto, scav_diag_nmet_output_nc
   !// ----------------------------------------------------------------------
 
 contains
@@ -73,9 +75,14 @@ contains
     SCAV_MAP_WLS(:,:,:,:) = 0._r8
     SCAV_MAP_WCN(:,:,:,:) = 0._r8
     SCAV_MAP_DRY(:,:,:,:) = 0._r8
-    !// Stomatal uptake
-    GSTO3_AVG(:,:) = 0._r8
-    FSTO3_AVG(:,:) = 0._r8
+    !// Dry deposition velocities
+    GSTO3_AVG(:,:,:) = 0._r8
+    VRAO3_AVG(:,:,:) = 0._r8
+    VRBO3_AVG(:,:,:) = 0._r8
+    VRCO3_AVG(:,:,:) = 0._r8
+    !// Leaf levelStomatal flux
+    FSTO3_AVG(:,:,:) = 0._r8
+
     !// --------------------------------------------------------------------
   end subroutine scav_diag_init
   !// ----------------------------------------------------------------------
@@ -335,7 +342,10 @@ contains
     else
        TD = KDAY
     end if
-
+    !// Daily average of dry deposition velocites -> devide by (NROPSM*NRMETD)
+    VRAO3_AVG = VRAO3_AVG / (NROPSM*NRMETD)
+    VRBO3_AVG = VRBO3_AVG / (NROPSM*NRMETD)
+    VRCO3_AVG = VRCO3_AVG / (NROPSM*NRMETD)
     !// Daily average of stomatal conductance -> devide by (NROPSM*NRMETD)
     GSTO3_AVG = GSTO3_AVG / (NROPSM*NRMETD)
     !// Daily average of stomatal flux -> devide by (NROPSM*NRMETD)
@@ -388,7 +398,32 @@ contains
     !// --------------------------------------------------------------------
   end subroutine scav_diag_collect_daily
   !// ----------------------------------------------------------------------
-
+ !// ----------------------------------------------------------------------
+  subroutine scav_diag_put_drydepvelo(NMET,VRAO3,VRBO3,VRCO3)
+    !// --------------------------------------------------------------------
+    !// Compute the daily average dry deposition velocitites.
+    !//
+    !// VRaO3, VRbO3, and VRcO3 arein units of ms-1.
+    !//
+    !// Stefanie Falk, July 2018
+    !// --------------------------------------------------------------------
+    
+    !// --------------------------------------------------------------------
+    implicit none
+    !// --------------------------------------------------------------------
+    !// Input
+    real(r8), dimension(IPAR,JPAR,NLCAT), intent(in) :: VRAO3,VRBO3,VRCO3
+    integer,intent(in) :: NMET
+    
+    !// --------------------------------------------------------------------
+    !// Collect totals
+    !// average will be calculated in scav_diag_collect_daily
+    VRAO3_AVG = VRAO3_AVG + VRAO3
+    VRBO3_AVG = VRBO3_AVG + VRBO3
+    VRCO3_AVG = VRCO3_AVG + VRCO3
+    !// --------------------------------------------------------------------
+  end subroutine scav_diag_put_drydepvelo
+  !// ----------------------------------------------------------------------
   !// ----------------------------------------------------------------------
   subroutine scav_diag_put_gsto(NMET,VGSTO3)
     !// --------------------------------------------------------------------
@@ -403,7 +438,7 @@ contains
     implicit none
     !// --------------------------------------------------------------------
     !// Input
-    real(r8), dimension(IPAR,JPAR), intent(in) :: VGSTO3
+    real(r8), dimension(IPAR,JPAR,NLCAT), intent(in) :: VGSTO3
     integer,intent(in) :: NMET
     
     !// --------------------------------------------------------------------
@@ -433,18 +468,18 @@ contains
     implicit none
     !// --------------------------------------------------------------------
     !// Input
-    real(r8), dimension(IPAR,JPAR), intent(in) :: VGSTO3
+    real(r8), dimension(IPAR,JPAR,NLCAT), intent(in) :: VGSTO3
     integer,  intent(in) :: NMET, MP
     real(r8), intent(in)  :: BTT(LPAR,NPAR,IDBLK,JDBLK)
     !// For looping
     integer :: I, J, II, JJ
     real(r8) :: RDUM, VMR_O3
     !// Local
-    real(r8), dimension(IPAR,JPAR) :: fsto3_tmp
+    real(r8), dimension(IPAR,JPAR,NLCAT) :: fsto3_tmp
     !// --------------------------------------------------------------------
     
     !// Initialize fsto3_tmp
-    fsto3_tmp(:,:) = 0._r8 
+    fsto3_tmp(:,:,:) = 0._r8 
     !// Loop over latitude (J is global, JJ is block)
     do J = MPBLKJB(MP), MPBLKJE(MP)
        JJ    = J - MPBLKJB(MP) + 1
@@ -455,7 +490,7 @@ contains
           !// DV_IJ and AIRMOLEC_IJ are zero during the first call(?)
           !// Prevent NAN-spread
           if ( DV_IJ(1,II,JJ,MP) .eq. 0._r8 .or. AIRMOLEC_IJ(1,II,JJ,MP).eq. 0._r8 ) then
-             fsto3_tmp(I,J) = 0._r8
+             fsto3_tmp(I,J,:) = 0._r8
           else
              !// Convert O3 [kg/gridbox] to [molec/cm3]
              RDUM =  1.e-3_r8 * AVOGNR / TMASS(1) / DV_IJ(1,II,JJ,MP)
@@ -463,7 +498,7 @@ contains
              !// VMR_O3 at ground level
              VMR_O3 = (BTT(1,1,II,JJ)*RDUM)/AIRMOLEC_IJ(1,II,JJ,MP)
              !// fsto3_tmp(I,J) units [mmol m-2 s-1]
-             fsto3_tmp(I,J) = VGSTO3(I,J)*VMR_O3
+             fsto3_tmp(I,J,:) = VGSTO3(I,J,:)*VMR_O3
           end if
        end do !// do I = MPBLKIB(MP), MPBLKIE(MP)
     end do !// do J = MPBLKJB(MP), MPBLKJE(MP)
@@ -503,35 +538,41 @@ contains
     integer, intent(in) :: JYEAR, JMONTH, JDATE, NDAY, NMET, NOPS
     !// Locals
     character(len=80) :: filename
-    character(len=3)  :: cday          !Name of start day in character
-    character(len=2)  :: cmonth        !Name of start month in character
-    character(len=4)  :: cyear         !Name of start year in character
+    character(len=3)  :: cday           !Name of start day in character
+    character(len=2)  :: cmonth         !Name of start month in character
+    character(len=4)  :: cyear          !Name of start year in character
     !// Dimensions ID and counters
-    integer :: lat_dim_id              !Dimension ID for latitude
-    integer :: lon_dim_id              !Dimension ID for longitude
-    integer :: time_dim_id             !Dimension ID for time
-    integer :: lat_id                  !Variable ID for latitude
-    integer :: lon_id                  !Variable ID for longitude
-    integer :: time_id                 !Variable ID for time
-    integer :: dim_lon_lat_time(3)     !Dimension ID for processes
-    integer :: srt_lon_lat_time(3)     !Start array for lon/lat/time
-    integer :: cnt_lon_lat_time(3)     !Counting array for lon/lat/time
-    integer :: srt_time(1)             !starting point for time array
-    integer :: gsto3_inst_id           !Variable ID for stomatal conductance
-    integer :: fsto3_inst_id           !Variable ID for stomatal flux
+    integer :: lat_dim_id               !Dimension ID for latitude
+    integer :: lon_dim_id               !Dimension ID for longitude
+    integer :: nlcat_dim_id             !Dimension ID for NLCAT
+    integer :: time_dim_id              !Dimension ID for time
+    integer :: lat_id                   !Variable ID for latitude
+    integer :: lon_id                   !Variable ID for longitude
+    integer :: nlcat_id                 !Variable ID for NLCAT
+    integer :: time_id                  !Variable ID for time
+    integer :: dim_lon_lat_nlcat_time(4)!Dimension ID for processes
+    integer :: srt_lon_lat_nlcat_time(4)!Start array for lon/lat/nlcat/time
+    integer :: cnt_lon_lat_nlcat_time(4)!Counting array for lon/lat/nlcat/time
+    integer :: srt_time(1)              !starting point for time array
+    integer :: gsto3_inst_id            !Variable ID for stomatal conductance
+    integer :: fsto3_inst_id            !Variable ID for stomatal flux
   
     !// Other locals
-    integer :: ncid                    !File ID for nc file
-    integer :: status                  !Error status for nc file
-    integer :: nlons                   !Number of longitudes found in file
-    integer :: nlats                   !Number of latitudes found in file
-    integer :: nsteps                  !Number of steps found in file 
-    character(len=80) :: time_label    !Label for variable "time"
-    real(r8)  :: time                  !Time in this timestep
-    integer :: nbr_steps               !Step number
+    integer :: ncid                     !File ID for nc file
+    integer :: status                   !Error status for nc file
+    integer :: nlons                    !Number of longitudes found in file
+    integer :: nlats                    !Number of latitudes found in file
+    integer :: nsteps                   !Number of steps found in file 
+    character(len=80) :: time_label     !Label for variable "time"
+    real(r8):: time                     !Time in this timestep
+    integer :: nbr_steps                !Step number
+    integer :: ncats                    !Numer of land use categories found in file
+    integer :: K
+    integer, dimension(NLCAT) :: LCAT =  &   !Landuse category numbering
+         (/(K, K=1,NLCAT, 1)/)         
 
-    real(r8), save, dimension(IPAR,JPAR) :: GSTO3_priv=0._r8, FSTO3_priv=0._r8
-    real(r8), dimension(IPAR,JPAR,1) :: GSTO3_inst, FSTO3_inst
+    real(r8), save, dimension(IPAR,JPAR,NLCAT) :: GSTO3_priv=0._r8, FSTO3_priv=0._r8
+    real(r8), dimension(IPAR,JPAR,NLCAT,1) :: GSTO3_inst, FSTO3_inst
     
     !// --------------------------------------------------------------------
     integer, parameter :: nc4deflate = nc4deflate_global
@@ -556,8 +597,8 @@ contains
     !// Deaccumulate GSTO3_AVG and FSTO_AVG
     write(6,'(a)') f90file//':'//subr// ': Deaccumulating stomatal fields'
   
-    GSTO3_inst(:,:,1) = GSTO3_AVG-GSTO3_priv
-    FSTO3_inst(:,:,1) = FSTO3_AVG-FSTO3_priv
+    GSTO3_inst(:,:,:,1) = GSTO3_AVG-GSTO3_priv
+    FSTO3_inst(:,:,:,1) = FSTO3_AVG-FSTO3_priv
     !// Save previous step
     GSTO3_priv = GSTO3_AVG
     FSTO3_priv = FSTO3_AVG
@@ -596,22 +637,28 @@ contains
        if (status/=nf90_noerr) call handle_error(status,f90file//':'//subr//': contactinfo')
 
        !// Define sizes
-       !// Define dimensions (JM, IM, time)
+       !// Define dimensions (JM, IM, NLCAT, time)
        status = nf90_def_dim(ncid,"lat",JPAR,lat_dim_id)
        if (status .ne. nf90_noerr) call handle_error(status, &
             f90file//':'//subr//': define lat dim')
        status = nf90_def_dim(ncid,"lon",IPAR,lon_dim_id)
        if (status .ne. nf90_noerr) call handle_error(status, &
             f90file//':'//subr//': define lon dim')
+       !// Defining nlcat dimension
+       status = nf90_def_dim(ncid,"NLCAT",NLCAT,nlcat_dim_id)
+       if (status .ne. nf90_noerr) call handle_error(status, &
+            f90file//':'//subr//': define NLCAT dim')
        !// Defining dimension time of length unlimited
        status = nf90_def_dim(ncid,"time",nf90_unlimited,time_dim_id)
        if (status/=nf90_noerr) call handle_error(status, &
             f90file//':'//subr//': define time dim')
+      
 
-       !// Defining the combined id for a field (lon /lat /time)
-       dim_lon_lat_time(1)=lon_dim_id
-       dim_lon_lat_time(2)=lat_dim_id
-       dim_lon_lat_time(3)=time_dim_id
+       !// Defining the combined id for a field (lon /lat/ nlcat /time)
+       dim_lon_lat_nlcat_time(1)=lon_dim_id
+       dim_lon_lat_nlcat_time(2)=lat_dim_id
+       dim_lon_lat_nlcat_time(3)=nlcat_dim_id
+       dim_lon_lat_nlcat_time(4)=time_dim_id
 
        !// Defining the lon/lat/time-variable
        status = nf90_def_var(ncid,"lon",nf90_float,lon_dim_id,lon_id)
@@ -623,6 +670,11 @@ contains
        status = nf90_def_var(ncid,"time",nf90_float,time_dim_id,time_id)
        if (status/=nf90_noerr) call handle_error(status, &
             f90file//':'//subr//': define time variable')
+       !// Defining the nlcat-variable
+       status = nf90_def_var(ncid,"NLCAT",nf90_int,nlcat_dim_id,nlcat_id)
+       if (status .ne. nf90_noerr) call handle_error(status, &
+            f90file//':'//subr//': define nlcat variable')
+       
 
        !// Putting attributes to /lon/lat variables
        status = nf90_put_att(ncid,lon_id,'units','degree_east')
@@ -631,6 +683,26 @@ contains
        status = nf90_put_att(ncid,lat_id,'units','degree_north')
        if (status/=nf90_noerr) call handle_error(status, &
             f90file//':'//subr//': attribute units lat')
+
+       !// Putting attributes to nlcat variable
+       status = nf90_put_att(ncid,nlcat_id,'description', &
+            'Landuse categories used in Oslo CTM3.' // char(10) // &
+            '01 - Needleleaftree temp./bor.(CF)' // char(10) // &
+            '02 - Deciduoustree temp./bor. (DF)' // char(10) // &
+            '03 - Needleleaftree med. (NF)' // char(10) // &
+            '04 - Broadleaftree (BF)' // char(10) // &
+            '05 - Crops (TC)' // char(10) // &
+            '06 - Moorland (SNL)' // char(10) // &
+            '07 - Grassland (GR)' // char(10) // &
+            '08 - Scrubs med. (MS)' // char(10) // &
+            '09 - Wetlands (WE)' // char(10) // &
+            '10 - Tundra (TU)' // char(10) // &
+            '11 - Desert (DE)' // char(10) // &
+            '12 - Water (W)' // char(10) // &
+            '13 - Urban (U)' // char(10) // &
+            '14 - Ice/Snow (ICE)') 
+       if (status .ne. nf90_noerr) call handle_error(status, &
+            f90file//':'//subr//': attribute description nlcat')  
       
        !// Putting attributes to time variable
        time_label='hours since yyyy-mm-dd 00:00:00'
@@ -642,7 +714,7 @@ contains
 
        !// Daily average of stomatal conductance
        status = nf90_def_var(ncid,'GstO3_inst', &
-            nf90_double, dim_lon_lat_time, gsto3_inst_id)
+            nf90_double, dim_lon_lat_nlcat_time, gsto3_inst_id)
        if (status .ne. nf90_noerr) call handle_error(status, &
             f90file//':'//subr//': define variable GstO3_inst ')
        status = nf90_def_var_deflate(ncid, gsto3_inst_id, &
@@ -655,7 +727,7 @@ contains
 
        !// Daily average of stomatal flux
        status = nf90_def_var(ncid,'FstO3_inst', &
-            nf90_double, dim_lon_lat_time, fsto3_inst_id)
+            nf90_double, dim_lon_lat_nlcat_time, fsto3_inst_id)
        if (status .ne. nf90_noerr) call handle_error(status, &
             f90file//':'//subr//': define variable FstO3_inst ')
        status = nf90_def_var_deflate(ncid, fsto3_inst_id, &
@@ -672,13 +744,17 @@ contains
        if (status .ne. nf90_noerr) call handle_error(status, &
             f90file//':'//subr//': end defmode')
        !//---------------------------------------------------------------------
-       !// Putting the lon/lat variables
+       !// Putting the lon/lat/nlcat variables
        status = nf90_put_var(ncid,lon_id,XDGRD)
        if (status/=nf90_noerr) call handle_error(status, &
             f90file//':'//subr//': putting lon')
        status = nf90_put_var(ncid,lat_id,YDGRD)
        if (status/=nf90_noerr) call handle_error(status, &
             f90file//':'//subr//': putting lat')
+       !// Putting the NLCAT variables
+       status = nf90_put_var(ncid,nlcat_id,LCAT)
+       if (status .ne. nf90_noerr) call handle_error(status, &
+            f90file//':'//subr//': putting nlcat')
        
     else                                      !// THE FILE HAS BEEN USED BEFORE
        !// Open the existing file
@@ -693,6 +769,9 @@ contains
        status = nf90_inq_dimid(ncid,"lon",lon_dim_id)
        if (status/=nf90_noerr) call handle_error(status, &
             f90file//':'//subr//': getting lon')
+       status = nf90_inq_dimid(ncid,"NLCAT",nlcat_dim_id)
+       if (status/=nf90_noerr) call handle_error(status, &
+            f90file//':'//subr//': getting NLCAT')
        status = nf90_inq_dimid(ncid,"time",time_dim_id)
        if (status/=nf90_noerr) call handle_error(status, &
             f90file//':'//subr//': getting time')
@@ -710,6 +789,13 @@ contains
             f90file//':'//subr//': inq lon dim')
        if (nlons/=IPAR) then
           write(6,*) f90file//':'//subr//': reports IM = ',nlons,IPAR
+          stop
+       end if
+       status = nf90_Inquire_Dimension(ncid,nlcat_dim_id,len=ncats)
+       if (status/=nf90_noerr) call handle_error(status, &
+            f90file//':'//subr//': inq NLCAT dim')
+       if (ncats/=NLCAT) then
+          write(6,*) f90file//':'//subr//': reports NLCAT = ',ncats, NLCAT
           stop
        end if
        status = nf90_Inquire_Dimension(ncid,time_dim_id,len=nsteps)
@@ -739,9 +825,9 @@ contains
 
     !// For the tracer fields:
     !// Defining how far to count for each time a data set is added
-    cnt_lon_lat_time = (/IPAR , JPAR , 1/)
+    cnt_lon_lat_nlcat_time = (/IPAR , JPAR , NLCAT, 1/)
     !// Defining where to start adding the new time step
-    srt_lon_lat_time = (/1, 1, nbr_steps/)
+    srt_lon_lat_nlcat_time = (/1, 1, 1, nbr_steps/)
 
     !// Start value for new time step
     srt_time(1) = nbr_steps
@@ -755,15 +841,15 @@ contains
     status = nf90_put_var(ncid, &               !File id
          gsto3_inst_id, &                       !field_id for netCDF file (should match id set in def_var) 
          gsto3_inst, &                          !Tracer field (REAL4)
-         start=srt_lon_lat_time, &              !starting point for writing
-         count=cnt_lon_lat_time )               !Counts how many bytes written
+         start=srt_lon_lat_nlcat_time, &        !starting point for writing
+         count=cnt_lon_lat_nlcat_time )         !Counts how many bytes written
     if (status/=nf90_noerr) call handle_error(status, &
             f90file//':'//subr//': putting GstO3_inst data')
     status = nf90_put_var(ncid, &               !File id
          fsto3_inst_id, &                       !field_id for netCDF file (should match id set in def_var) 
          fsto3_inst, &                          !Tracer field (REAL4)
-         start=srt_lon_lat_time, &              !starting point for writing
-         count=cnt_lon_lat_time )               !Counts how many bytes written
+         start=srt_lon_lat_nlcat_time, &        !starting point for writing
+         count=cnt_lon_lat_nlcat_time )         !Counts how many bytes written
     if (status/=nf90_noerr) call handle_error(status, &
          f90file//':'//subr//': putting FstO3_inst data')
 
@@ -825,10 +911,12 @@ contains
          status, &                 !Status for netcdf file 0=OK
          ncid, &                   !file id for output netcdf file
          ncomps_dim_id, &          !Dimension id for NPAR
+         nlcat_dim_id, &           !Dimension id for NLCAT
          days_dim_id, &            !Dimension id for days
          days_id, &                !Dimension id for days of year (1:366)
          tracer_name_len_dim_id, & !Dimension id for tname charater length
          tracer_idx_id, &          !ID for all tracer number
+         nlcat_id, &               !ID for land use categories
          dim_ncomps_days_id(2), &
          version_id, &             !ID for file version number
          tracer_molw_id, &         !ID for all tracer molecular weights
@@ -951,15 +1039,6 @@ contains
     status = nf90_def_dim(ncid,"NCOMPS",NPAR,ncomps_dim_id)
     if (status .ne. nf90_noerr) call handle_error(status, &
          f90file//':'//subr//': define NCOMPS dim')
-    status = nf90_def_dim(ncid,"DAYS",366,days_dim_id)
-    if (status .ne. nf90_noerr) call handle_error(status, &
-         f90file//':'//subr//': define DAYS dim')
-
-    !// Define length of tracer name string (use TNAME for this)
-    status = nf90_def_dim(ncid,"tracer_name_len",TNAMELEN,tracer_name_len_dim_id)
-    if (status .ne. nf90_noerr) call handle_error(status, &
-         f90file//':'//subr//': define tracer_name_len dim')
-
     !// All the component IDs
     status = nf90_def_var(ncid,"tracer_idx",nf90_int,ncomps_dim_id,tracer_idx_id)
     if (status .ne. nf90_noerr) call handle_error(status, &
@@ -969,7 +1048,15 @@ contains
     if (status .ne. nf90_noerr) call handle_error(status, &
          f90file//':'//subr//': attribute description tracer_idx')
 
-    !// Defining the DAYS variable
+    !// Define length of tracer name string (use TNAME for this)
+    status = nf90_def_dim(ncid,"tracer_name_len",TNAMELEN,tracer_name_len_dim_id)
+    if (status .ne. nf90_noerr) call handle_error(status, &
+         f90file//':'//subr//': define tracer_name_len dim')
+
+        !// Defining the DAYS variable
+    status = nf90_def_dim(ncid,"DAYS",366,days_dim_id)
+    if (status .ne. nf90_noerr) call handle_error(status, &
+         f90file//':'//subr//': define DAYS dim')
     status = nf90_def_var(ncid,"DAYS",nf90_int,days_dim_id,days_id)
     if (status .ne. nf90_noerr) call handle_error(status, &
          f90file//':'//subr//': define DAYS variable')
@@ -1277,7 +1364,7 @@ contains
     character(len=80) :: filename
     character(len=4) :: CYEAR, CDATE
     real(r8) :: RDUM(IPAR,JPAR,NPAR)
-    integer :: I,J,II,JJ,N,MP
+    integer :: I,J,II,JJ,N,MP,K
     !// --------------------------------------------------------------------
     integer, parameter :: version = 3
     !//---------------------------------------------------------------------
@@ -1288,13 +1375,16 @@ contains
     integer :: ilon_dim_id            !Dimension ID for longitude interstices
     integer :: ilat_dim_id            !Dimension ID for latitude interstices
     integer :: ncomps_dim_id          !Dimension ID for NPAR
+    integer :: nlcat_dim_id           !Dimension ID for NLCAT
     integer :: tracer_name_len_dim_id !Dimension ID for tname charater length
     integer :: lon_id                 !Variable ID for longitude
     integer :: lat_id                 !Variable ID for latitude
     integer :: ilon_id                !Variable ID for longitude interstices
     integer :: ilat_id                !Variable ID for latitude interstices
+    integer :: nlcat_id               !Variable ID for nlcat
     integer :: tracer_idx_id          !ID for all tracer number
-    integer :: dim_lon_lat_id(2)
+    integer :: dim_lon_lat_id(2)      !IF for lon/lat
+    integer :: dim_lon_lat_nlcat_id(3)!ID for lon/lat/nlcat
     integer :: version_id             !ID for file version number
     integer :: tracer_molw_id         !ID for all tracer molecular weights
     integer :: tracer_name_id         !ID for all tracer names
@@ -1311,12 +1401,18 @@ contains
     integer :: scav_ls_id(NPAR), &
          scav_cnv_id(NPAR), &
          scav_dry_id(NPAR)
-    integer :: gsto3_avg_id, &
+    integer :: &
+         gsto3_avg_id, &
+         vrao3_avg_id, &
+         vrbo3_avg_id, &
+         vrco3_avg_id, &
          fsto3_avg_id
 
     !// Other locals
     integer :: status                 !Status for netcdf file 0=OK
     integer :: ncid                   !file id for output netcdf file
+    integer, dimension(NLCAT) :: LCAT =  &   !Landuse category numbering
+         (/(K, K=1,NLCAT, 1)/) 
 
     character(len=TNAMELEN), dimension(NPAR) :: tracer_name
     real(r8), dimension(NPAR) :: tracer_molw
@@ -1372,10 +1468,16 @@ contains
     status = nf90_def_dim(ncid,"lat",JPAR,lat_dim_id)
     if (status .ne. nf90_noerr) call handle_error(status, &
          f90file//':'//subr//': define lat dim')
+
     status = nf90_def_dim(ncid,"lon",IPAR,lon_dim_id)
     if (status .ne. nf90_noerr) call handle_error(status, &
          f90file//':'//subr//': define lon dim')
 
+    !// Defining nlcat
+    status = nf90_def_dim(ncid,"NLCAT",NLCAT,nlcat_dim_id)
+    if (status .ne. nf90_noerr) call handle_error(status, &
+         f90file//':'//subr//': define NLCAT dim')
+    
     !// Define NCOMPS = NPAR
     status = nf90_def_dim(ncid,"NCOMPS",NPAR,ncomps_dim_id)
     if (status .ne. nf90_noerr) call handle_error(status, &
@@ -1514,7 +1616,11 @@ contains
     !// Defining the combined id for a 2d field (lon,lat)
     dim_lon_lat_id(1) = lon_dim_id
     dim_lon_lat_id(2) = lat_dim_id
-
+    !// Defining the combined id for a 3d field (lon,lat,nlcat)
+    dim_lon_lat_nlcat_id(1) = lon_dim_id
+    dim_lon_lat_nlcat_id(2) = lat_dim_id
+    dim_lon_lat_nlcat_id(3) = nlcat_dim_id
+   
 
     !// Defining the lon variable
     status = nf90_def_var(ncid,"lon",nf90_double,lon_dim_id,lon_id)
@@ -1564,6 +1670,28 @@ contains
     if (status .ne. nf90_noerr) call handle_error(status, &
          f90file//':'//subr//': attribute description ilat')
 
+    !// Defining the nlcat-variable
+    status = nf90_def_var(ncid,"NLCAT",nf90_int,nlcat_dim_id,nlcat_id)
+    if (status .ne. nf90_noerr) call handle_error(status, &
+         f90file//':'//subr//': define nlcat variable')
+    status = nf90_put_att(ncid,nlcat_id,'description', &
+         'Landuse categories used in Oslo CTM3.' // char(10) // &
+            '01 - Needleleaftree temp./bor.(CF)' // char(10) // &
+            '02 - Deciduoustree temp./bor. (DF)' // char(10) // &
+            '03 - Needleleaftree med. (NF)' // char(10) // &
+            '04 - Broadleaftree (BF)' // char(10) // &
+            '05 - Crops (TC)' // char(10) // &
+            '06 - Moorland (SNL)' // char(10) // &
+            '07 - Grassland (GR)' // char(10) // &
+            '08 - Scrubs med. (MS)' // char(10) // &
+            '09 - Wetlands (WE)' // char(10) // &
+            '10 - Tundra (TU)' // char(10) // &
+            '11 - Desert (DE)' // char(10) // &
+            '12 - Water (W)' // char(10) // &
+            '13 - Urban (U)' // char(10) // &
+            '14 - Ice/Snow (ICE)')
+    if (status .ne. nf90_noerr) call handle_error(status, &
+         f90file//':'//subr//': attribute description nlcat')       
 
     !// Grid area (r8), deflate netcdf4
     status = nf90_def_var(ncid,"gridarea",nf90_double,dim_lon_lat_id,areaxy_id)
@@ -1631,10 +1759,10 @@ contains
        end do
     end if
 
-    !// Daily average of stomatal conductance
     if(LDDEPmOSaic .and. LDLYSCAV(7)) then
+       !// Daily average of stomatal conductance
        status = nf90_def_var(ncid,'GstO3_avg', &
-            nf90_double, dim_lon_lat_id, gsto3_avg_id)
+            nf90_double, dim_lon_lat_nlcat_id, gsto3_avg_id)
        if (status .ne. nf90_noerr) call handle_error(status, &
             f90file//':'//subr//': define variable GstO3_avg ')
        status = nf90_def_var_deflate(ncid, gsto3_avg_id, &
@@ -1644,9 +1772,49 @@ contains
        status = nf90_put_att(ncid, gsto3_avg_id,'unit','mmol m-2 s-1')
        if (status .ne. nf90_noerr) call handle_error(status, &
             f90file//':'//subr//': attribute unit GstO3_avg ')
+
+       !// Daily average of aerodynamical dry deposition velocity
+       status = nf90_def_var(ncid,'VRaO3_avg', &
+            nf90_double, dim_lon_lat_nlcat_id, vrao3_avg_id)
+       if (status .ne. nf90_noerr) call handle_error(status, &
+            f90file//':'//subr//': define variable VRaO3_avg ')
+       status = nf90_def_var_deflate(ncid, vrao3_avg_id, &
+            nc4shuffle, 1, nc4deflate)
+       if (status .ne. nf90_noerr) call handle_error(status, &
+            f90file//':'//subr//': define deflate variable VRaO3_avg ')
+       status = nf90_put_att(ncid, vrao3_avg_id,'unit','m s-1')
+       if (status .ne. nf90_noerr) call handle_error(status, &
+            f90file//':'//subr//': attribute unit VRaO3_avg ')
+
+       !// Daily average of quasi-laminar dry deposition velocity
+       status = nf90_def_var(ncid,'VRbO3_avg', &
+            nf90_double, dim_lon_lat_nlcat_id, vrbo3_avg_id)
+       if (status .ne. nf90_noerr) call handle_error(status, &
+            f90file//':'//subr//': define variable VRbO3_avg ')
+       status = nf90_def_var_deflate(ncid, vrbo3_avg_id, &
+            nc4shuffle, 1, nc4deflate)
+       if (status .ne. nf90_noerr) call handle_error(status, &
+            f90file//':'//subr//': define deflate variable VRbO3_avg ')
+       status = nf90_put_att(ncid, vrbo3_avg_id,'unit','m s-1')
+       if (status .ne. nf90_noerr) call handle_error(status, &
+            f90file//':'//subr//': attribute unit VRbO3_avg ')
+
+       !// Daily average of canopy dry deposition velocity
+       status = nf90_def_var(ncid,'VRcO3_avg', &
+            nf90_double, dim_lon_lat_nlcat_id, vrco3_avg_id)
+       if (status .ne. nf90_noerr) call handle_error(status, &
+            f90file//':'//subr//': define variable VRcO3_avg ')
+       status = nf90_def_var_deflate(ncid, vrco3_avg_id, &
+            nc4shuffle, 1, nc4deflate)
+       if (status .ne. nf90_noerr) call handle_error(status, &
+            f90file//':'//subr//': define deflate variable VRcO3_avg ')
+       status = nf90_put_att(ncid, vrco3_avg_id,'unit','m s-1')
+       if (status .ne. nf90_noerr) call handle_error(status, &
+            f90file//':'//subr//': attribute unit VRcO3_avg ')
+
        !// Daily average of stomatal flux
        status = nf90_def_var(ncid,'FstO3_avg', &
-            nf90_double, dim_lon_lat_id, fsto3_avg_id)
+            nf90_double, dim_lon_lat_nlcat_id, fsto3_avg_id)
        if (status .ne. nf90_noerr) call handle_error(status, &
             f90file//':'//subr//': define variable FstO3_avg ')
        status = nf90_def_var_deflate(ncid, fsto3_avg_id, &
@@ -1678,6 +1846,11 @@ contains
     status = nf90_put_var(ncid,ilat_id,YDEDG)
     if (status .ne. nf90_noerr) call handle_error(status, &
          f90file//':'//subr//': putting ilat')
+
+    !// Putting the NLCAT variables
+    status = nf90_put_var(ncid,nlcat_id,LCAT)
+    if (status .ne. nf90_noerr) call handle_error(status, &
+         f90file//':'//subr//': putting nlcat')
 
     !// Info about date
     status = nf90_put_var(ncid,date_year_id,YEAR)
@@ -1721,6 +1894,11 @@ contains
     status = nf90_put_var(ncid,tracer_idx_id,chem_idx)
     if (status .ne. nf90_noerr) call handle_error(status, &
          f90file//':'//subr//':putting tracer_idx')
+
+    !// The land use categories
+    status = nf90_put_var(ncid,nlcat_id,LCAT)
+    if (status .ne. nf90_noerr) call handle_error(status, &
+         f90file//':'//subr//':putting nlcat_id')
 
     !// Molecular masses of transported components (r8)
     status = nf90_put_var(ncid,tracer_molw_id,TMASS)
@@ -1800,15 +1978,24 @@ contains
        end do
     end if
 
-    !// Stomatal conductance
+    !// Dry deposition velocities
     if(LDDEPmOSaic .and. LDLYSCAV(7)) then
        status = nf90_put_var(ncid,gsto3_avg_id,GSTO3_AVG)
        if (status .ne. nf90_noerr) call handle_error(status, &
             f90file//':'//subr//': putting GstO3_avg')
+       status = nf90_put_var(ncid,vrao3_avg_id,VRAO3_AVG)
+       if (status .ne. nf90_noerr) call handle_error(status, &
+            f90file//':'//subr//': putting VRaO3_avg')
+       status = nf90_put_var(ncid,vrbo3_avg_id,VRBO3_AVG)
+       if (status .ne. nf90_noerr) call handle_error(status, &
+            f90file//':'//subr//': putting VRbO3_avg')
+       status = nf90_put_var(ncid,vrco3_avg_id,VRCO3_AVG)
+       if (status .ne. nf90_noerr) call handle_error(status, &
+            f90file//':'//subr//': putting VRcO3_avg')
        !// [mmol m-2 s-1] -> [nmol m-2 s-1]
        status = nf90_put_var(ncid,fsto3_avg_id,FSTO3_AVG*1.e6_r8)
        if (status .ne. nf90_noerr) call handle_error(status, &
-            f90file//':'//subr//': putting Fsto3_avg')
+            f90file//':'//subr//': putting FstO3_avg')
     end if
     !//---------------------------------------------------------------------
     !// close netcdf file
@@ -1822,8 +2009,11 @@ contains
     SCAV_MAP_WLS(:,:,:,:) = 0._r8
     SCAV_MAP_WCN(:,:,:,:) = 0._r8
     SCAV_MAP_DRY(:,:,:,:) = 0._r8
-    GSTO3_AVG(:,:) = 0._r8
-    FSTO3_AVG(:,:) = 0._r8
+    GSTO3_AVG(:,:,:) = 0._r8
+    VRAO3_AVG(:,:,:) = 0._r8
+    VRBO3_AVG(:,:,:) = 0._r8
+    VRCO3_AVG(:,:,:) = 0._r8
+    FSTO3_AVG(:,:,:) = 0._r8
     !// --------------------------------------------------------------------
   end subroutine scav_diag_2fileB
   !// ----------------------------------------------------------------------
