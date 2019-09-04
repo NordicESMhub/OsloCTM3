@@ -84,7 +84,7 @@ export DUSTFILE=OSLO/DEAD_COLUMN/dustinput/dst_T159.nc
 
 # Load a restart file 
 # ! In default.inp: LNCR T: use restart file in netCDF, F: old .sav format
-export RESTARTFILE=$CTM3_USR_INPUT/restart.sav
+export RESTARTFILE=$CTM3_USR_INPUT/restart/restart.sav
 
 # --------------------------------------------------------------------------
 # Initialize the model run
