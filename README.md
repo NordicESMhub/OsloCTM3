@@ -14,11 +14,24 @@ Or can be found on git-hub.
 Quick start
 +++++++++++
 
-If you are not planning to change code, aka development, clone the master branch on git-hub:
+1. If you are NOT planning to change code, aka development, "fork" from master on git-hub and clone your fork from git-hub:
 
-> git clone git@github.com:NordicESMhub/OsloCTM3.git
+> git clone git@github.com:<github_username>/OsloCTM3.git
 
-Otherwise create your own development branch (fork) from master (on git-hub) and give it a descriptive (not too long) name. Clone that branch (fork).
+2. Otherwise create your own development branch from master (on git-hub) and give it a descriptive (not too long) name. Clone that branch.
+
+This can also be done in a terminal. Log-in to HPC machine
+Clone master from git-hub:
+
+> git clone github.com:NordicESMhub/OsloCTM3.git
+
+Make your local branch and give it a descriptive name, e.g. username and project abbreviation:
+
+> git branch <branch_name>
+
+Push your branch to remote (git-hub):
+
+> git push -u origin <branch_name>
 
 +++
 Before compiling
@@ -133,3 +146,57 @@ or panoply (https://www.giss.nasa.gov/tools/panoply/download/).
 
 Have fun!
 
+
++++
+HOW TO git
++++
+
+1. Fork
+Sometimes it will be necessary to "sync" your fork to the original master.
+Details about that process can be found in github help (https://help.github.com/en/articles/syncing-a-fork).
+Here we briefly summarize the steps:
+
+Change into the working directory of your OsloCTM3
+
+> cd $CTM3_DIR
+
+Fetch changes from the "original" master:
+
+> git fetch upstream
+
+Switch to your "local" master:
+
+> git checkout master
+
+Merge the "original" master into your "local" master:
+
+> git merge upstream/master
+
+2. Branch
+Sometimes it will be necessary to "merge" changes in the master branch beck into your own branch. Here we will give a brief summary of the steps:
+
+Change into the working directory of your OsloCTM3
+
+> cd $CTM3_DIR
+
+Change to "master" branch:
+
+> git checkout master
+
+Get the changes from remote:
+
+> git pull
+
+Change back into your own branch:
+
+> git checkout <branch_name>
+
+Merge the changes into your branch:
+
+> git merge master
+
+*Unfortunately, the automatic merging may cause "conflicts" in case your own changes clash with the changes in master. Which means you have to go through the files that cause this manually to "resolve" the "conflicts".*
+
+After merging is done you can push the updated branch to remote:
+
+> git push
