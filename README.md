@@ -221,6 +221,7 @@ module load netcdf.intel/4.3.3.1
 ~~~~~~~~~~~~~
 
 Don't forget to change the names in <>!
+Save the file (CTRL-x-s).
 
 ## git
 
