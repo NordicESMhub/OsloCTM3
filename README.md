@@ -203,7 +203,7 @@ Create a new file:
 emacs setpaths &
 
 Add the lines:
-
+~~~~~~~~~~~~~
 #! /bin/bash
 echo "To set work environment do set_up <opt>"
 # Export the current project number
@@ -224,7 +224,7 @@ export CTM3_INPUT=${CICERO}/Indata_CTM3
 export CTM3_USR_INPUT=$ASTRA/input_data/ctm_input/
 export CTM3_ROOT=${HOME}/OsloCTM3/<username_project>
 module load netcdf.intel/4.3.3.1
-
+~~~~~~~~~~~~~
 
 Don't forget to change the names in <>!
 
