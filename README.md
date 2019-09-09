@@ -19,159 +19,157 @@ Log in to abel and create a directory:
 ~~~
 You are going to clone the Oslo CTM3 into that directory.
 Change into the directory:
-
+~~~
 > cd OsloCTM3
-
+~~~
 
 ### 1. Fork
 
 If you are NOT planning to change code, aka development, 
 "fork" from master on git-hub (online in your browser). 
 Clone your fork:
-
+~~~
 > git clone git@github.com:<github_username>/OsloCTM3.git
-
+~~~
 Configure the remote repository for your fork.
 List the current configured remote repository:
-
+~~~
 > git remote -v
-
+~~~
 It will be most likely empty.
 Specify a new remote upstream repository that will be synced with the fork:
-
+~~~
 > git remote add upstream https://github.com/NordicESMhub/OsloCTM3.git
-
+~~~
 Check configuration again:
-
+~~~
 > git remote -v
-
+~~~
 ### 2. Branch
 
 Otherwise create your own development branch from master (on git-hub) and give it a descriptive (not too long) name, e.g. use your git-hub username and an abbreviation for your project. Clone that branch:
-
+~~~
 > git clone github.com:NordicESMhub/<username_project>.git
-
+~~~
 Branching can also be done in terminal. Log-in to HPC machine (abel).
 Clone master from git-hub:
-
+~~~
 > git clone github.com:NordicESMhub/OsloCTM3.git
-
+~~~
 Make your local branch and give it a descriptive name, e.g. username and project abbreviation:
-
+~~~
 > git branch <username_project>
-
+~~~
 Push your branch to remote (git-hub):
-
+~~~
 > git push -u origin <username_project>
-
+~~~
 ## Before compiling
 
 You have to set up your environment. 
 You should always unload all automatically loaded modules first:
-
+~~~
 > module purge
-
+~~~
 This will load all necessary dependencies:
-
+~~~
 > module load netcdf.intel/4.3.3.1
-
+~~~
 Export the path of your Oslo CTM3 working directory <username_project>:
-
+~~~
 > export CTM3_ROOT=${HOME}/OsloCTM3/<username_project>
-
+~~~
 and do the same with your work directory:
-
+~~~
 > export WORK=/work/users/<your_username> 
-
+~~~
 Export your notur project number:
-
+~~~
 > export PROJECT=nnXXXXk
-
+~~~
 Set an alias for the job queue on abel:
-
+~~~
 > alias squeue='squeue -lA ${PROJECT}'
+~~~
 
-~~~
-Tip: 
-Since these steps have to be repeated every time you log in,
-it is wise to put the commands into a bash script (e.g. setpaths) 
-that you can "source" after each log-in (example further below).
-~~~
+> Tip: 
+> Since these steps have to be repeated every time you log in,
+> it is wise to put the commands into a bash script (e.g. setpaths) 
+> that you can "source" after each log-in (example further below).
 
 ## Compile
 
 Change to the working director of your Oslo CTM3:
-
+~~~
 > cd $CTM3_ROOT
-
+~~~
 Compile the model (in parallel, using all available resources):
-
+~~~
 > make -j
-
+~~~
 In case the compilation was successful, you will find the Oslo CTM3 executable
 "osloctm3" in your $CTM3_ROOT.
 
 ## Before running
 
 Make sure you are member of the group "cic-hpc" and have access to
-
+~~~
 > ls /work/projects/cicero/ctm_input/
-
+~~~
 Then export the path to forcing etc.:
-
+~~~
 > export CTM3_INPUT=/work/projects/cicero/ctm_input/Indata_CTM3
-
+~~~
 Make sure you are member of the group "gf-ozone" and have access to
-
+~~~
 > ls /projects/researchers/researchers01/sfalk/input/ctm_input/
-
+~~~
 Then export the path:
-
+~~~
 > export CTM_USR_INPUT=/projects/researchers/researchers01/sfalk/input/ctm_input/
-
+~~~
 ## Run the example ("c3run_example.job") in c3run
 
 Change to the run script directory:
-
+~~~
 > cd $CTM3_ROOT/c3run
-
+~~~
 Open c3run_example.job in an editor of your choice (e.g., emacs, vi, gedit)
 and get familiar with it. 
 You do not have to change much to run the example.
 In line 8 ("#SBATCH --account=$PROJECT"), replace $PROJECT with your project number. 
 You can also execute:
-
+~~~
 > sed -i 's^$PROJECT^'$PROJECT'^g' c3run_example.job
-
+~~~
 Now change to your work directory:
-
+~~~
 > cd $WORK
-
+~~~
 Create a new directory - it should always have the same name as is given in line 5 of c3run_example.job - and change to it:
-
+~~~
 > mkdir C3RUN_example
-
 > cd C3RUN_example
-
+~~~
 Finally send the model run to the batch system of abel:
-
+~~~
 > sbatch $CTM3_ROOT/c3run/c3run_example.job
-
+~~~
 Wait for about 15-30 min.
 
 ## During the run
 
 You can check the progress with:
-
+~~~
 > squeue
-
+~~~
 ## After the run
 
 Look at the results.
 For a quick few on results, you can use ncview on abel
-
+~~~
 > module load ncview
-
+~~~
 or panoply (https://www.giss.nasa.gov/tools/panoply/download/).
 
 ~~~~~~~~~~~~~
@@ -185,17 +183,17 @@ Have fun!
 
 As mentioned above, you do not want to execute all export commands by hand every time you log in to abel. We therefore create a bash script which will do the job.
 Create a directory in your home directory on abel:
-
+~~~
 > mkdir ${HOME}/bin
-
+~~~
 Change into the directory:
-
+~~~
 > cd ${HOME}/bin
-
+~~~
 Create a new file:
-
+~~~
 > emacs setpaths &
-
+~~~
 Add the lines:
 ~~~~~~~~~~~~~
 #! /bin/bash
@@ -233,49 +231,52 @@ Details about that process can be found in git-hub help
 Here we briefly summarize the steps:
 
 Change into the working directory of your OsloCTM3:
-
+~~~
 > cd $CTM3_ROOT
-
+~~~
 Fetch changes from the "original" master:
-
+~~~
 > git fetch upstream
-
+~~~
 Switch to your "local" master:
-
+~~~
 > git checkout master
-
+~~~
 Merge the "original" master into your "local" master:
-
+~~~
 > git merge upstream/master
-
+~~~
 ## 2. Branch
 
 Sometimes it will be necessary to "merge" changes in the master branch beck into your own branch. Here we will give a brief summary of the steps:
 
 Change into the working directory of your OsloCTM3
-
+~~~
 > cd $CTM3_ROOT
-
+~~~
 Change to "master" branch:
-
+~~~
 > git checkout master
-
+~~~
 Get the changes from remote:
-
+~~~
 > git pull
-
+~~~
 Change back into your own branch:
-
+~~~
 > git checkout <branch_name>
-
+~~~
 Merge the changes into your branch:
-
+~~~
 > git merge master
+~~~
 
-~~~
-Remark: The automatic merging may cause "conflicts" in case your own changes clash with the changes in master. Which means you have to go through the files that cause this manually to "resolve" the "conflicts".
-~~~
+> Remark: 
+> The automatic merging may cause "conflicts" in case your own changes clash 
+> with the changes in master. Which means you have to go through the files 
+> that cause this manually to "resolve" the "conflicts".
 
 After merging is done you can push the updated branch to remote:
-
+~~~
 > git push
+~~~
