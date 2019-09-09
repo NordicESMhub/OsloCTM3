@@ -226,7 +226,8 @@ Don't forget to change the names in <>!
 # HOW TO git
 
 ---
-1. Fork
+## 1. Fork
+
 Sometimes it will be necessary to "sync" your fork to the original master.
 Details about that process can be found in git-hub help 
 (https://help.github.com/en/articles/syncing-a-fork).
@@ -249,7 +250,8 @@ Merge the "original" master into your "local" master:
 > git merge upstream/master
 
 ---
-2. Branch
+## 2. Branch
+
 Sometimes it will be necessary to "merge" changes in the master branch beck into your own branch. Here we will give a brief summary of the steps:
 
 Change into the working directory of your OsloCTM3
