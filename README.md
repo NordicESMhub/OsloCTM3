@@ -1,17 +1,17 @@
 # Oslo CTM3
 A global chemical transport model developed at MetOs
 
-~~~~~~~~~~~~~
+~~~
 version: See MODEL_VERSION in cmn_size.F90
 When referring to Oslo CTM3, use "Oslo CTM3 vX.Y".
-~~~~~~~~~~~~~
+~~~
 
-User manual
+## User manual
 The user manual is located in the file manual_osloctm3.pdf.
 Or can be found on git-hub.
 
 ---
-# Quick start
+## Quick start
 
 Log in to abel and create a directory:
 
@@ -22,8 +22,10 @@ Change into the directory:
 
 > cd OsloCTM3
 
----
-1. If you are NOT planning to change code, aka development, 
+
+### 1. Fork
+
+If you are NOT planning to change code, aka development, 
 "fork" from master on git-hub (online in your browser). 
 Clone your fork:
 
@@ -43,8 +45,9 @@ Check configuration again:
 
 > git remote -v
 
----
-2. Otherwise create your own development branch from master (on git-hub) and give it a descriptive (not too long) name, e.g. use your git-hub username and an abbreviation for your project. Clone that branch:
+### 2. Branch
+
+Otherwise create your own development branch from master (on git-hub) and give it a descriptive (not too long) name, e.g. use your git-hub username and an abbreviation for your project. Clone that branch:
 
 > git clone github.com:NordicESMhub/<username_project>.git
 
@@ -61,8 +64,7 @@ Push your branch to remote (git-hub):
 
 > git push -u origin <username_project>
 
----
-# Before compiling
+## Before compiling
 
 You have to set up your environment. 
 You should always unload all automatically loaded modules first:
@@ -96,8 +98,7 @@ it is wise to put the commands into a bash script (e.g. setpaths)
 that you can "source" after each log-in (example further below).
 ~~~
 
----
-# Compile
+## Compile
 
 Change to the working director of your Oslo CTM3:
 
@@ -110,8 +111,7 @@ Compile the model (in parallel, using all available resources):
 In case the compilation was successful, you will find the Oslo CTM3 executable
 "osloctm3" in your $CTM3_ROOT.
 
----
-# Before running
+## Before running
 
 Make sure you are member of the group "cic-hpc" and have access to
 
@@ -129,8 +129,7 @@ Then export the path:
 
 > export CTM_USR_INPUT=/projects/researchers/researchers01/sfalk/input/ctm_input/
 
----
-# To run the example ("c3run_example.job") in c3run
+## Run the example ("c3run_example.job") in c3run
 
 Change to the run script directory:
 
@@ -160,15 +159,13 @@ Finally send the model run to the batch system of abel:
 
 Wait for about 15-30 min.
 
----
-# During the run
+## During the run
 
 You can check the progress with:
 
 > squeue
 
----
-# After the run
+## After the run
 
 Look at the results.
 For a quick few on results, you can use ncview on abel
@@ -180,8 +177,11 @@ or panoply (https://www.giss.nasa.gov/tools/panoply/download/).
 ~~~~~~~~~~~~~
 Have fun!
 ~~~~~~~~~~~~~
+
 ---
-# HOW TO bash
+# HOW TO 
+
+## bash
 
 As mentioned above, you do not want to execute all export commands by hand every time you log in to abel. We therefore create a bash script which will do the job.
 Create a directory in your home directory on abel:
@@ -222,11 +222,9 @@ module load netcdf.intel/4.3.3.1
 
 Don't forget to change the names in <>!
 
----
-# HOW TO git
+## git
 
----
-## 1. Fork
+### 1. Fork
 
 Sometimes it will be necessary to "sync" your fork to the original master.
 Details about that process can be found in git-hub help 
@@ -249,7 +247,6 @@ Merge the "original" master into your "local" master:
 
 > git merge upstream/master
 
----
 ## 2. Branch
 
 Sometimes it will be necessary to "merge" changes in the master branch beck into your own branch. Here we will give a brief summary of the steps:
@@ -274,7 +271,9 @@ Merge the changes into your branch:
 
 > git merge master
 
-*Unfortunately, the automatic merging may cause "conflicts" in case your own changes clash with the changes in master. Which means you have to go through the files that cause this manually to "resolve" the "conflicts".*
+~~~
+Remark: The automatic merging may cause "conflicts" in case your own changes clash with the changes in master. Which means you have to go through the files that cause this manually to "resolve" the "conflicts".
+~~~
 
 After merging is done you can push the updated branch to remote:
 
