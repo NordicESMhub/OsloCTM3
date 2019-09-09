@@ -14,9 +14,9 @@ Or can be found on git-hub.
 ## Quick start
 
 Log in to abel and create a directory:
-
+~~~
 > mkdir OsloCTM3
-
+~~~
 You are going to clone the Oslo CTM3 into that directory.
 Change into the directory:
 
