@@ -14,46 +14,74 @@ Or can be found on git-hub.
 Quick start
 +++++++++++
 
-1. If you are NOT planning to change code, aka development, "fork" from master on git-hub and clone your fork from git-hub:
+Log in to abel and create a directory:
+
+> mkdir OsloCTM3
+
+You are going to clone the Oslo CTM3 into that directory.
+Change into the directory:
+
+> cd OsloCTM3
+
+---
+1. If you are NOT planning to change code, aka development, 
+"fork" from master on git-hub (online in your browser). 
+Clone your fork:
 
 > git clone git@github.com:<github_username>/OsloCTM3.git
 
-2. Otherwise create your own development branch from master (on git-hub) and give it a descriptive (not too long) name. Clone that branch.
+Configure the remote repository for your fork.
+List the current configured remote repository:
 
-This can also be done in a terminal. Log-in to HPC machine
+> git remote -v
+
+It will be most likely empty.
+Specify a new remote upstream repository that will be synced with the fork:
+
+> git remote add upstream https://github.com/NordicESMhub/OsloCTM3.git
+
+Check configuration again:
+
+> git remote -v
+
+---
+2. Otherwise create your own development branch from master (on git-hub) and give it a descriptive (not too long) name, e.g. use your git-hub username and an abbreviation for your project. Clone that branch:
+
+> git clone github.com:NordicESMhub/<username_project>.git
+
+Branching can also be done in terminal. Log-in to HPC machine (abel).
 Clone master from git-hub:
 
 > git clone github.com:NordicESMhub/OsloCTM3.git
 
 Make your local branch and give it a descriptive name, e.g. username and project abbreviation:
 
-> git branch <branch_name>
+> git branch <username_project>
 
 Push your branch to remote (git-hub):
 
-> git push -u origin <branch_name>
+> git push -u origin <username_project>
 
 +++
 Before compiling
 +++
 
-If you are running on abel, you should do
+You have to set up your environment. 
+You should always unload all automatically loaded modules first:
 
 > module purge
 
-to unload all automatically load modules and do
+This will load all necessary dependencies:
 
 > module load netcdf.intel/4.3.3.1
 
-This will load all necessary dependencies.
+Export the path of your Oslo CTM3 working directory <username_project>:
 
-Export the path of the working copy of YOUR Oslo CTM3:
-
-> export CTM3_DIR=$HOME/OsloCTM3
+> export CTM3_ROOT=${HOME}/OsloCTM3/<username_project>
 
 and do the same with your work directory:
 
-> export WORK=/work/users/<YOUR_USER_NAME>
+> export WORK=/work/users/<username>
 
 Export your notur project number:
 
@@ -66,15 +94,22 @@ Set an alias for the job queue on abel:
 Tip: 
 Since these steps have to be repeated every time you log in,
 it is wise to put the commands into a bash script (e.g. setpaths) 
-that you can "source" after each log-in.
+that you can "source" after each log-in (example further below).
 
 +++
 Compile
 +++
 
-> cd $CTM3_DIR
+Change to the working director of your Oslo CTM3:
+
+> cd $CTM3_ROOT
+
+Compile the model (in parallel, using all available resources):
 
 > make -j
+
+In case the compilation was successful, you will find the Oslo CTM3 executable
+"osloctm3" in your $CTM3_ROOT.
 
 +++
 Before running
@@ -100,27 +135,31 @@ Then export the path:
 To run the example ("c3run_example.job") in c3run
 +++
 
+Change to the run script  directory:
+
+> cd $CTM3_ROOT/c3run
+
 Open c3run_example.job in an editor of your choice (e.g., emacs, vi, gedit)
 and get familiar with it. 
 You do not have to change much to run the example.
-In line 8, replace $PROJECT with your project number:
+In line 8 ("#SBATCH --account=$PROJECT"), replace $PROJECT with your project number. 
+You can also execute:
 
-> #SBATCH --account=$PROJECT
+> sed -i 's^$PROJECT^'$PROJECT'^g' c3run_example.job
 
-Save this change but remember do not commit it to git-hub!
 Now change to your work directory:
 
 > cd $WORK
 
-Create a new directory - it should have the same name as is given in line 5 of c3run_example.job - and change to it:
+Create a new directory - it should always have the same name as is given in line 5 of c3run_example.job - and change to it:
 
 > mkdir C3RUN_example
 
 > cd C3RUN_example
 
-Finally send the model to the batch system of abel:
+Finally send the model run to the batch system of abel:
 
-> sbatch $CTM3_DIR/c3run/c3run_example.job
+> sbatch $CTM3_ROOT/c3run/c3run_example.job
 
 Wait for about 15-30 min.
 
@@ -143,9 +182,51 @@ For a quick few on results, you can use ncview on abel
 
 or panoply (https://www.giss.nasa.gov/tools/panoply/download/).
 
+~~~~~~~~~~~~~
+~ Have fun! ~
+~~~~~~~~~~~~~
++++
+HOW TO bash
++++
 
-Have fun!
+As mentioned above, you do not want to execute all export commands by hand every time you log in to abel. We therefore create a bash script which will do the job.
+Create a directory in your home directory on abel:
 
+> mkdir ${HOME}/bin
+
+Change into the directory:
+
+> cd ${HOME}/bin
+
+Create a new file:
+
+emacs setpaths &
+
+Add the lines:
+
+#! /bin/bash
+echo "To set work environment do set_up <opt>"
+# Export the current project number
+export PROJECT=<nnXXXXk>
+# alias for squeue
+alias squeue='squeue -lA ${PROJECT}'
+# Export the work directory
+export WORK=/work/users/$USER
+# Export data storage on abel
+export ASTRA=/projects/researchers/researchers01/sfalk
+# Export CICERO directory
+export CICERO=/work/projects/cicero/ctm_input
+
+# Load modules and setup
+module purge
+echo "Settings for OsloCTM3git"
+export CTM3_INPUT=${CICERO}/Indata_CTM3
+export CTM3_USR_INPUT=$ASTRA/input_data/ctm_input/
+export CTM3_ROOT=${HOME}/OsloCTM3/<username_project>
+module load netcdf.intel/4.3.3.1
+
+
+Don't forget to change the names in <>!
 
 +++
 HOW TO git
@@ -153,12 +234,13 @@ HOW TO git
 
 1. Fork
 Sometimes it will be necessary to "sync" your fork to the original master.
-Details about that process can be found in github help (https://help.github.com/en/articles/syncing-a-fork).
+Details about that process can be found in git-hub help 
+(https://help.github.com/en/articles/syncing-a-fork).
 Here we briefly summarize the steps:
 
-Change into the working directory of your OsloCTM3
+Change into the working directory of your OsloCTM3:
 
-> cd $CTM3_DIR
+> cd $CTM3_ROOT
 
 Fetch changes from the "original" master:
 
@@ -177,7 +259,7 @@ Sometimes it will be necessary to "merge" changes in the master branch beck into
 
 Change into the working directory of your OsloCTM3
 
-> cd $CTM3_DIR
+> cd $CTM3_ROOT
 
 Change to "master" branch:
 
