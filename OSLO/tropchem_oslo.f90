@@ -134,7 +134,7 @@ contains
           r_pan_m, &       !PAN (i.e. CH3C(O)O2NO2) + M --> CH3X + NO2 + M
           r_no_ho2_b, &    !NO + HO2 --> HNO3
           r_op_no_m, &     !OP + NO + M --> NO2
-          r_op_no2_m)      !OP + NO2 + M --> NO3
+          r_op_no2_m       !OP + NO2 + M --> NO3
           !// Marit, Bromine chemistry 26.09.19
           !// NOT PART OF OCEAN EMISSIONS!
           !r_brono2_h2o_a, & !BrONO2 + H2O -->(aerosol) HOBr + HNO3
