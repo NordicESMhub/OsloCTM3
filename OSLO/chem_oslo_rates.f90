@@ -143,7 +143,9 @@ module chem_oslo_rates
        r_br_o3, r_br_h2o2, r_br_ch2o, r_br_ho2, &
        r_clo_co, r_bro_ho2,  &
        r_bro_clo_a, r_bro_clo_b, r_bro_clo_c, &
-       r_bro_bro_a, r_bro_bro_b
+       r_bro_bro_a, r_bro_bro_b, &
+       !// Marit, oceanic emissions, 26.09.19
+       r_oh_chbr3
 
 
 
@@ -967,6 +969,14 @@ contains
        !// JPL number: G8 (JPL06, 20080617)
        r_oh_ch3br(I) = 2.35e-12_r8 * exp(-1300._r8 * ZTEM)
 
+!============================================================
+!                Marit 26.09.19
+!============================================================
+       !// CHBr3 + OH -> 3Br + products
+       r_oh_chbr3(I) = 1.35e-12_r8 * exp(-600._r8 * ZTEM)
+
+
+!============================================================
 
 
 
@@ -1203,6 +1213,9 @@ contains
        r_oh_c2h4_m, r_oh_c3h6_m, r_ch3_o2_m, &
        r_oh_hcohco_m_a, r_oh_hcohco_m_b, r_no2_ch3x_m, r_pan_m, &
        r_no_ho2_b, r_op_no_m, r_op_no2_m)
+       !// Marit, Bromine chemistry, 26.09.19
+       !// NOT PART OF OCEAN EMISSIONS!
+       !r_brono2_h2o_a, r_hobr_hcl_a, r_hobr_hbr_a, ZC_LOCAL, TRACER_ID_MAX)
     !// --------------------------------------------------------------------
     !// Find reaction rates, dependent upon pressure and temperature.
     !// Slightly modified TCRATE_TP, where J,L has been removed and
