@@ -50,7 +50,9 @@ contains
        LSULPHUR, LNITRATE, LSOA, LM7, &
        DDDIAG,nchemdiag,CHEMLOSS,CHEMPROD, &
        OxCHEMLOSS, OxCHEMPROD, &
-       COUNTnegO3)
+       COUNTnegO3, &
+       !// Marit, ocean emissions, 26.09.19
+       POLL_CHBr3)
     !// --------------------------------------------------------------------
     !//
     !// Column driver for integrating Oslo Chemistry in the troposphere using
@@ -107,6 +109,8 @@ contains
          r_o3_soaC7, r_oh_soaC7, r_no3_soaC7, &
          r_o3_soaC8, r_oh_soaC8, r_no3_soaC8, &
          r_oh_benzene, &
+         !// Marit, ocean emissions, 26.09.19
+         r_oh_chbr3, &
          !// Branching ratios
          fa_no_ch3o2, fa_no_c2h5o2, fa_no_c3h7o2, fa_no_c4h9o2, &
          fa_no_c6h13o2, fa_no_ch3cob, fa_no_ch3cod, fa_no_isor1, &
@@ -142,6 +146,8 @@ contains
     !// Tracer info
     integer, intent(in) :: NPAR, trsp_idx(TRACER_ID_MAX)
     real(r8), intent(in)  :: TMASS(NPAR)
+    !// Marit, ocean emissions (CHBr3 and CH2Br2) 26.09.19
+    real(r8), intent(in) :: POLL_CHBr3
     !// QSSA parameters
     real(r8), intent(in) :: &
          DTCH1, ST1, QLIN1, QTEST1, &!// Regular chemistry
@@ -199,6 +205,8 @@ contains
          M_Trpolene, M_Trpinene, M_TrpAlc, M_Sestrp, M_Trp_Ket, M_Tolmatic, &
          M_Benzene, M_C6HXR_SOA, &
          M_H2, &
+         !// Marit, emissions from ocean, 26.09.19
+         M_CH3Br, sea_multi, &
          AIRMOLEC, &
          !// Short-lived, steady state, not transported
          M_CH3, M_CH3O, M_CHO, M_O3NO, &
@@ -234,7 +242,9 @@ contains
          k_no3_dms, k_no3_ch3cho, k_no2_no3_b, &
          k_ho2_ch3o2, k_ho2_ch3x, k_ho2_radical, &
          k_ch3o2_ch3o2, k_ch3o2_ch3x_a, k_ch3o2_ch3x_b, k_ch3x_ch3x, &
-         k_ch3o_o2
+         k_ch3o_o2, &
+         !// Marit, emissions from sea, 26.09.19
+         k_oh_chbr3
 
     real(r8) :: &
          !// SOA Rates for hydrocarbon oxidation
@@ -273,11 +283,17 @@ contains
          DBCH2O, DCH3CHO,DCH3COX,DHO2NO2,DCH2O, DCH3O2H, &
          DCH3COY,DRCOHCO,DHCOHCO,DNO3,   DN2O5, &
          DACETON_A,      DACETON_B,      DPAN,   DOCS, &
+         !// Marit, emissions from sea (J-value), 26.09.19
+         DCH3Br, &
          !// production and loss rates
          PROD,PROD_2,LOSS,LOSS_2,LOSS_3, &
          PROD_NO,LOSS_NO, PROD_OH,LOSS_OH, PROD_HO2,LOSS_HO2, &
          LOSS_O3,LOSS_NO2,TMP_PL,TMP_PL2, &
          LOSS_C1,LOSS_C2,LOSS_C3,LOSS_C4,LOSS_C5, &
+         !// Marit, Bromine chemistry, 26.09.19
+         PROD_Bry, PBr, &
+         !// Marit, emissions from sea (first layer of atm.), 26.09.19
+         POLL_CHBr3_L1, &
          !// balancing Nitrogen components
          XJNO,XJNO2, RELATN,EKSTRSN, O3TEST, &
          !// help variables
@@ -351,7 +367,21 @@ contains
     do L = 1, LMTROP !// Integrate up to LMTROP
       !// ------------------------------------------------------------------
 
-        
+
+!//=========================================================================
+!//           Marit 26.09.19
+!//=========================================================================
+
+      !// Adding a bromine (CHBr3 and CH3Br2) source to the first level
+      !// of the atmosphere
+      sea_multi = 1._r8
+
+      if (L .eq. 1) then
+         POLL_CHBr3_L1 = POLL_CHBr3 * sea_multi
+      else
+         POLL_CHBr3_L1 = 0._r8
+
+!===========================================================================        
       !// Assign chemical reaction rates
       !// 1. Constant reaction rates: given as arguments for the subroutine
       !// 2. Dependent on T only
@@ -415,6 +445,8 @@ contains
       k_ch3o2_ch3x_b = r_ch3o2_ch3x_b(JTEMP)
       k_ch3x_ch3x = r_ch3x_ch3x(JTEMP)
       k_ch3o_o2 = r_ch3o_o2(JTEMP)
+      !// Marit, emissions from the ocean, 26.09.19
+      k_oh_chbr3 = r_oh_chbr3(JTEMP)
 
       !// SOA JTEMP reactions
       k_o3_soaC1 = r_o3_soaC1(JTEMP)
@@ -544,6 +576,10 @@ contains
                                  !//               -O2-> CH3CO + C2H5O2
       DCH3COY= JV(20,L)          !// CH3COCOCH3 + hv -> 2 CH3CO
                                  !// Uses J-value from CH3COCHO
+
+      !// Marit, emissions from sea, 26.09.19
+      DCH3Br = JV(42, L)
+
       if (LOSLOCSTRAT) then
          DO2    = JV(21,L)    !// O2 + hv  -> O3P + O3P
       else
@@ -643,7 +679,9 @@ contains
 
 
         !// Stratospheric components included in troposphere
-        M_H2   = ZC(113,L)
+        M_H2    = ZC(113,L)
+        !// Marit, emissions from sea, 26.09.19
+        M_CH3Br = ZC(116, L)
 
         !// SOA chemistry: set concentrations
         if (LSOA) then
@@ -745,7 +783,46 @@ contains
         !// of two numerical schemes for oxidant prediction.
         !// Int. J. chem. Kinet., 10, 971-994.
         !// ----------------------------------------------------------------
+!===========================================================================
+!            Marit 26.09.19
+!===========================================================================
+        !//..CHBr3 (CH2Br2 is also included in CHBr3)
 
+        PROD_Bry = 0._r8         !For the Bry family futher down
+
+         !//CHBr3
+         PROD = POLL_CHBr3_L1         !Emission from the sea
+
+         ! From Loss = (k_oh_chbr3 * 3._r8 * M_OH) to (1._r8 *M_OH)
+
+         LOSS =  1._r8 * M_OH   &!CHBr3 + OH -> 3Br + prod.
+              + DCH3Br * M_CH3Br * 3._r8     !CHBr3 + hv -> 3Br + prod.
+
+         !From (PROD_Bry + LOSS * M_CH3Br) to:
+         PROD_Bry =  PROD_Bry + (k_oh_chbr3 * 2._r8 &
+              * M_OH + DCH3Br * 2._r8) * M_CH3Br
+
+         call QSSA(79,'CHBr3',DTCH,QLIN,ST,PROD,LOSS,M_CH3Br)
+
+
+        !//..Bry
+
+        PROD_Bry = PROD_Bry
+
+        LOSS = 0._r8
+        call QSSA(68, 'Bry', DTCH, QLIN, ST; PROD_Bry, LOSS, M_Bry)
+
+
+        !//..Bromine (Only with CHBr3)
+        
+!        PBr = k_oh_chbr3 * 3._r8 * M_CH3Br * M_OH & !CHBr3 + OH -> 3Br + prod.
+!             + DCH3Br * MCH3Br * 3._r8              !CHBr3 + hv -> 3Br + prod.
+
+        !+++++++++++++++++++++++++++++++++++++
+        ZC(116, L) = M_CH3Br
+        ZC(119, L) = M_Bry
+        !+++++++++++++++++++++++++++++++++++++
+!==========================================================================
 
         !//..NOZ (NO3+N2O5)-------------------------------------------------
         PROD = &
@@ -1111,7 +1188,9 @@ contains
                + k_oh_h2 * M_H2      &!OH + H2 -> H2O + H    c121205
                + 2._r8 * k_oh_oh_m * M_OH &!OH + OH + M -> H2O2 + M
                !// Extra terms for stability: Must be added to production below
-               + k_no_ho2 * M_NO       !HO2 + NO -> OH + NO2 FOR STABILITY!
+               + k_no_ho2 * M_NO, &       !HO2 + NO -> OH + NO2 FOR STABILITY!
+               !// Marit, emissions from sea, 26.09.19
+               + k_oh_chbr3 * M_CH3Br    !CHBr3 + OH -> 3Br + products
 
           !// Sulphur reactions
           if (LSULPHUR) LOSS_OH = LOSS_OH &
