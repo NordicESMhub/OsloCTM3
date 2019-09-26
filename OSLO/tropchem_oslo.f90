@@ -134,11 +134,12 @@ contains
           r_pan_m, &       !PAN (i.e. CH3C(O)O2NO2) + M --> CH3X + NO2 + M
           r_no_ho2_b, &    !NO + HO2 --> HNO3
           r_op_no_m, &     !OP + NO + M --> NO2
-          r_op_no2_m, &    !OP + NO2 + M --> NO3
+          r_op_no2_m)      !OP + NO2 + M --> NO3
           !// Marit, Bromine chemistry 26.09.19
-          r_brono2_h2o_a, & !BrONO2 + H2O -->(aerosol) HOBr + HNO3
-          r_hobr_hcl_a, &   !HOBr + HCl -->(aerosol) BrCl + H2O
-          r_hobr_hbr_a      !HOBr + HBr -->(aerosol) Br2 + H2O
+          !// NOT PART OF OCEAN EMISSIONS!
+          !r_brono2_h2o_a, & !BrONO2 + H2O -->(aerosol) HOBr + HNO3
+          !r_hobr_hcl_a, &   !HOBr + HCl -->(aerosol) BrCl + H2O
+          !r_hobr_hbr_a      !HOBr + HBr -->(aerosol) Br2 + H2O
 
     !// Sulfur T,p reaction rates
     real(r8), dimension(LPAR) :: &
@@ -383,10 +384,11 @@ contains
              r_n2o5_m, r_ho2_no2_m, r_ho2no2_m, r_oh_hno3, &
              r_oh_co_a, r_oh_co_b, r_oh_c2h4_m, r_oh_c3h6_m, r_ch3_o2_m, &
              r_oh_hcohco_m_a, r_oh_hcohco_m_b, r_no2_ch3x_m, r_pan_m, &
-             r_no_ho2_b, r_op_no_m, r_op_no2_m, &
+             r_no_ho2_b, r_op_no_m, r_op_no2_m)
              !// Marit, bromine chemistry 26.09.19
-             r_brono2_h2o_a, r_hobr_hcl_a, r_hobr_hbr_a, ZC_LOCAL, &
-             TRACER_ID_MAX)
+             !// NOT PART OF OCEAN EMISSIONS!
+             !r_brono2_h2o_a, r_hobr_hcl_a, r_hobr_hbr_a, ZC_LOCAL, &
+             !TRACER_ID_MAX)
 
         !// Initialize/set sulphur reaction rates dependent on T & p
         !// and on dissolved fractions.
@@ -424,7 +426,9 @@ contains
              OxCHEMLOSS, OxCHEMPROD, &
              COUNTnegO3, &
              !// Marit, Bromine chemistry, 26.09.19
-             POLL_CHBr3, r_brono2_h2o_a, r_hobr_hcl_a, r_hobr_hbr_a)
+             POLL_CHBr)
+             !//NOT PART OF OCEAN EMISSIONS!
+             !, r_brono2_h2o_a, r_hobr_hcl_a, r_hobr_hbr_a)
 
         !// Save negative O3 for this MP. This is reported after
         !// chemistry in diagnostic subroutine OC_REPORTS.
