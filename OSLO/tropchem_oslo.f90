@@ -134,7 +134,11 @@ contains
           r_pan_m, &       !PAN (i.e. CH3C(O)O2NO2) + M --> CH3X + NO2 + M
           r_no_ho2_b, &    !NO + HO2 --> HNO3
           r_op_no_m, &     !OP + NO + M --> NO2
-          r_op_no2_m       !OP + NO2 + M --> NO3
+          r_op_no2_m, &    !OP + NO2 + M --> NO3
+          !// Marit, Bromine chemistry 26.09.19
+          r_brono2_h2o_a, & !BrONO2 + H2O -->(aerosol) HOBr + HNO3
+          r_hobr_hcl_a, &   !HOBr + HCl -->(aerosol) BrCl + H2O
+          r_hobr_hbr_a      !HOBr + HBr -->(aerosol) Br2 + H2O
 
     !// Sulfur T,p reaction rates
     real(r8), dimension(LPAR) :: &
@@ -175,6 +179,10 @@ contains
 
     !// Height level of the tropopause and levels of cloud parameters
     integer :: LMTP, LCLD
+
+    !// Marit, Bromine chemistry, 26.09.19
+    real(r8) :: Mol_CHBr3
+    real(r8) :: POLL_CHBr3
     !// --------------------------------------------------------------------
 
     !// Find number of loops in chemistry to match the global
@@ -269,6 +277,69 @@ contains
            CIWC(L)= 0._r8
          end do
 
+!//==========================================================================
+!//                      Marit 26.09.19
+!//==========================================================================
+
+!// Adding CHBr3 (and CH2Br2 as emissions from the ocean for the Br-chemistry
+!// Emissions of CHBr3 are based on Liang et. al. 2010 and the addition
+!// factor of 1.4*(2/3) is based on Susannes work
+
+         POLL_CHBr3 = 0._r8
+
+         if (YDGRD(J) .LE. 15._r8) then      !//Latitude bands, 90S - 50S
+            if (PLAND(I,J) .eq. 0._r8) then   !//Open ocean (PLAND=0)
+               POLL_CHBr3 = 0.05e-13_r8 * 1.14*(2._r8/3._r8)
+            elseif (PLAND(I,J) .gt. 0._r8 .and. PLAND(I,J) .lt. 1._r8) then
+               !//coast/islands
+                 POLL_CHBr3 = 0.3e-13_r8 * 1.14*(2._r8/3._r8)
+            end if
+
+         elseif (YDGRD(J) .LE. 29._r8 .AND. YDGRD(J) .GT. 15._r8 ) then !//Latitude bands, 50S - 10S
+            if (PLAND(I,J) .eq. 0._r8) then   !//Open ocean (PLAND=0)
+               POLL_CHBr3 = 0.15e-13_r8 * 1.14*(2._r8/3._r8)
+            elseif (PLAND(I,J) .gt. 0._r8 .and. PLAND(I,J) .lt. 1._r8) then
+               !//coast/islands
+               POLL_CHBr3 = 0.9e-13_r8 * 1.14*(2._r8/3._r8)
+            end if
+
+         elseif (YDGRD(J) .LE. 36._r8 .AND. YDGRD(J) .GT. 29._r8) then  !//Latitude bands, 10S - 10N
+            if (PLAND(I,J) .eq. 0._r8) then   !//Open ocean (PLAND=0)
+               POLL_CHBr3 = 0.7e-13_r8 * 1.14*(2._r8/3._r8)
+            elseif (PLAND(I,J) .gt. 0._r8 .and. PLAND(I,J) .lt. 1._r8) then
+               !//coast/islands
+               POLL_CHBr3 = 0.9e-13_r8 * 1.14*(2._r8/3._r8)
+            end if
+
+         elseif (YDGRD(J) .LE. 50._r8 .AND. YDGRD(J) .GT. 36._r8) then  !//Latitude bands, 10N - 50N
+            if (PLAND(I,J) .eq. 0._r8) then   !//Open ocean (PLAND=0)
+               POLL_CHBr3 = 0.15e-13_r8 * 1.14*(2._r8/3._r8)
+            elseif (PLAND(I,J) .gt. 0._r8 .and. PLAND(I,J) .lt. 1._r8) then
+               !//coast/islands
+               POLL_CHBr3 = 0.9e-13_r8 * 1.14*(2._r8/3._r8)
+            end if
+
+        elseif (YDGRD(J) .GT. 50._r8) then      !//Latitude bands, 50N - 90N
+            if (PLAND(I,J) .eq. 0._r8) then   !//Open ocean (PLAND=0)
+               POLL_CHBr3 = 0.05e-13_r8 * 1.14*(2._r8/3._r8)
+            elseif (PLAND(I,J) .gt. 0._r8 .and. PLAND(I,J) .lt. 1._r8) then
+               !//coast/islands
+               POLL_CHBr3 = 0.3e-13_r8 * 1.14*(2._r8/3._r8)
+            end if
+        end if !//(J .LE. 15) then      !//Latitude bands, 90S - 50S
+
+
+
+           !//Converting from [kg/(m2*s)] to [molecules/(cm3*s)]
+
+            Mol_CHBr3 = 45.45164   !Molar mass of CHBr3, [g/mol]
+
+            POLL_CHBr3 = (POLL_CHBr3 * 1e-1_r8 * AVOGNR) &
+                 / ( Mol_CHBr3 * 100  &
+                       * ( DV(1) / AREAXY(I,J) ) )
+ 
+!//==========================================================================
+
          !// Treat emissions/deposition as production/loss terms in chemistry?
          if (LEMISDEP_INCHEM) then
            !// Get emissions (incl. all emis.; surface, lightning, etc.)
@@ -312,7 +383,10 @@ contains
              r_n2o5_m, r_ho2_no2_m, r_ho2no2_m, r_oh_hno3, &
              r_oh_co_a, r_oh_co_b, r_oh_c2h4_m, r_oh_c3h6_m, r_ch3_o2_m, &
              r_oh_hcohco_m_a, r_oh_hcohco_m_b, r_no2_ch3x_m, r_pan_m, &
-             r_no_ho2_b, r_op_no_m, r_op_no2_m)
+             r_no_ho2_b, r_op_no_m, r_op_no2_m, &
+             !// Marit, bromine chemistry 26.09.19
+             r_brono2_h2o_a, r_hobr_hcl_a, r_hobr_hbr_a, ZC_LOCAL, &
+             TRACER_ID_MAX)
 
         !// Initialize/set sulphur reaction rates dependent on T & p
         !// and on dissolved fractions.
@@ -348,7 +422,9 @@ contains
              LSULPHUR, LNITRATE, LSOA, LM7, &
              drydepDIAG, nchemdiag, CHEMLOSS, CHEMPROD, &
              OxCHEMLOSS, OxCHEMPROD, &
-             COUNTnegO3 )
+             COUNTnegO3, &
+             !// Marit, Bromine chemistry, 26.09.19
+             POLL_CHBr3, r_brono2_h2o_a, r_hobr_hcl_a, r_hobr_hbr_a)
 
         !// Save negative O3 for this MP. This is reported after
         !// chemistry in diagnostic subroutine OC_REPORTS.
