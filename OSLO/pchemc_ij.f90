@@ -810,7 +810,7 @@ contains
         PROD_Bry = PROD_Bry
 
         LOSS = 0._r8
-        call QSSA(68, 'Bry', DTCH, QLIN, ST; PROD_Bry, LOSS, M_Bry)
+        call QSSA(68, 'Bry', DTCH, QLIN, ST, PROD_Bry, LOSS, M_Bry)
 
 
         !//..Bromine (Only with CHBr3)
