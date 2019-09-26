@@ -426,7 +426,7 @@ contains
              OxCHEMLOSS, OxCHEMPROD, &
              COUNTnegO3, &
              !// Marit, Bromine chemistry, 26.09.19
-             POLL_CHBr)
+             POLL_CHBr3)
              !//NOT PART OF OCEAN EMISSIONS!
              !, r_brono2_h2o_a, r_hobr_hcl_a, r_hobr_hbr_a)
 
