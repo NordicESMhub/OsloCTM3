@@ -206,7 +206,7 @@ contains
          M_Benzene, M_C6HXR_SOA, &
          M_H2, &
          !// Marit, emissions from ocean, 26.09.19
-         M_CH3Br, sea_multi, &
+         M_CH3Br, M_Bry, sea_multi, &
          AIRMOLEC, &
          !// Short-lived, steady state, not transported
          M_CH3, M_CH3O, M_CHO, M_O3NO, &
@@ -681,7 +681,8 @@ contains
         !// Stratospheric components included in troposphere
         M_H2    = ZC(113,L)
         !// Marit, emissions from sea, 26.09.19
-        M_CH3Br = ZC(116, L)
+        M_Bry   = ZC(119,L)
+        M_CH3Br = ZC(116,L)
 
         !// SOA chemistry: set concentrations
         if (LSOA) then
