@@ -1190,7 +1190,7 @@ contains
                + k_oh_h2 * M_H2      &!OH + H2 -> H2O + H    c121205
                + 2._r8 * k_oh_oh_m * M_OH &!OH + OH + M -> H2O2 + M
                !// Extra terms for stability: Must be added to production below
-               + k_no_ho2 * M_NO, &       !HO2 + NO -> OH + NO2 FOR STABILITY!
+               + k_no_ho2 * M_NO &       !HO2 + NO -> OH + NO2 FOR STABILITY!
                !// Marit, emissions from sea, 26.09.19
                + k_oh_chbr3 * M_CH3Br    !CHBr3 + OH -> 3Br + products
 
