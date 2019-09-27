@@ -1,8 +1,8 @@
 === Oslo CTM3 v1.0 w/Oslo chemistry and EC met fields ===
 --------------------------------------------------------------------------------
  2005  IYEAR = reference year to which NDAI/NDAYE are offset
-  130  NDAYI = day of year to begin CTM run at 0000 hhmm UT (can be >365)
-  131  NDAYE = day at end of CTM run, finishes at end of day=NDAYE-1
+  120  NDAYI = day of year to begin CTM run at 0000 hhmm UT (can be >365)
+  121  NDAYE = day at end of CTM run, finishes at end of day=NDAYE-1
 --------------------------------------------------------------------------------
     F  LCLDQMD  = Mid point of quadrature cloud cover ICAs                     
     F  LCLDQMN  = Mean quadrature cloud cover ICAs                             
@@ -124,7 +124,7 @@ PFZON  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1
 ---- DIAGNOSTICS ---------------------------------------------------------------
 LDUMP3HRS - T: Write diagnostic 3 hourly output and monthly means of defined tracers; F: Do not
    all air trp sul slt min nit bio moa ffc bfc soa
-    T  T  T  T  F  T  F  T  T  T  T  T
+    T  T  T  F  F  T  T  F  F  F  T  F
 LSTOM1HRS - T: Write diagnostic 1 hourly output of GstO3 and FstO3; F: Do not
     T  
 LDLYSCAV - T: Write daily total and 2d scavenging; F: Do not
