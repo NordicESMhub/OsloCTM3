@@ -5,10 +5,10 @@
 #SBATCH --job-name=C3RUN_ocean_emissions
 #
 # Project (enter your noturn project number):
-#SBATCH --account=nn1000k
+#SBATCH --account=geofag
 #
 # Wall clock limit (setting for one year 96:0:0):
-#SBATCH --time=0:50:0
+#SBATCH --time=0:30:0
 #
 # Does your job exceed one week, use "--partition=long":
 # ####SBATCH --partition=long
@@ -77,7 +77,7 @@ export INPUTFILE=ocean_emissions.inp
 export PROGFILE=osloctm3
 
 # Job file (this file)
-export JOBFILENAME=c3run_default.job
+export JOBFILENAME=c3run_ocean_emissions.job
 
 # The dust file
 export DUSTFILE=OSLO/DEAD_COLUMN/dustinput/dst_T159.nc
