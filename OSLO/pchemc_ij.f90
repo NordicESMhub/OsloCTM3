@@ -806,7 +806,7 @@ contains
          PROD_Bry =  PROD_Bry + (k_oh_chbr3 * 3._r8 &
               * M_OH + DCH3Br * 3._r8) * M_CH3Br
 
-         call QSSA(79,'CHBr3',DTCH,QLIN,ST,PROD,LOSS,M_CH3Br)
+         call QSSA(79,'CH3Br',DTCH,QLIN,ST,PROD,LOSS,M_CH3Br)
 
 
         !//..Bry
