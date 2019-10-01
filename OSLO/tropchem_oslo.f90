@@ -291,9 +291,9 @@ contains
          if (YDGRD(J) .LE. 15._r8) then      !//Latitude bands, 90S - 50S
             if (PLAND(I,J) .eq. 0._r8) then   !//Open ocean (PLAND=0)
                POLL_CHBr3 = 0.05e-13_r8 * 1.14*(2._r8/3._r8)
-               write(6,'(a)') '- - - - - - - - - - - - - - - - - - - - - - - -'
-               write(6,'(a)') '    CHECK IF THIS IS REALLY OCEAN              '
-               write(6,'(a,i3)') 'PLAND:    ', PLAND(I,J)
+               write(6,'(*)') '- - - - - - - - - - - - - - - - - - - - - - - -'
+               write(6,'(*)') ' tropchem_oslo   CHECK IF THIS IS REALLY OCEAN              '
+               write(6,'(*)') PLAND(I,J)
             elseif (PLAND(I,J) .gt. 0._r8 .and. PLAND(I,J) .lt. 1._r8) then
                !//coast/islands
                  POLL_CHBr3 = 0.3e-13_r8 * 1.14*(2._r8/3._r8)
