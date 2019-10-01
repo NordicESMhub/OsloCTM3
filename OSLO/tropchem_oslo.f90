@@ -45,7 +45,7 @@ contains
          LWEPAR, NPAR, NOTRPAR, TRACER_ID_MAX, &
          LOSLOCSTRAT, LSULPHUR, LNITRATE, LSOA, LEMISDEP_INCHEM
     use cmn_ctm, only: MPBLKJB, MPBLKJE, MPBLKIB, MPBLKIE, AREAXY, &
-         ETAA, ETAB, YDGRD, PLAND
+         ETAA, ETAB, YDGRD, PLAND, XDGRD
     use cmn_chem, only: TMASS
     use cmn_fjx, only: JVN_
     use cmn_met, only: P, Q, CLDFR, CLDLWC, CLDIWC, PRECLS
