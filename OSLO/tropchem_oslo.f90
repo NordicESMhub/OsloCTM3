@@ -346,6 +346,8 @@ contains
               write(6,*) YDGRD(J)
               write(6,*) ' Longidute'
               write(6,*) XDGRD(I)
+              write(6,*) 'What is PLAND here?'
+              write(6,*) PLAND(I,J)
            end if
         end if
 
