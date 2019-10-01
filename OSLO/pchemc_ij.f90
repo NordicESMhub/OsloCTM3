@@ -372,7 +372,7 @@ contains
       !//           Marit 26.09.19
       !//==================================================================
 
-      !// Adding a bromine (CHBr3 and CH3Br2) source to the first level
+      !// Adding a bromine (CHBr3 and CH2Br2) source to the first level
       !// of the atmosphere
       sea_multi = 1._r8
 
@@ -788,21 +788,23 @@ contains
 !===========================================================================
 !            Marit 26.09.19
 !===========================================================================
-        !//..CHBr3 (CH2Br2 is also included in CHBr3)
+         !//..CHBr3 (CH2Br2 is also included in CHBr3)
 
-        PROD_Bry = 0._r8         !For the Bry family futher down
+         PROD_Bry = 0._r8         !For the Bry family futher down
 
          !//CHBr3
          PROD = POLL_CHBr3_L1         !Emission from the sea
 
          ! From Loss = (k_oh_chbr3 * 3._r8 * M_OH) to (1._r8 *M_OH)
 
-         LOSS =  1._r8 * M_OH   &!CHBr3 + OH -> 3Br + prod.
-              + DCH3Br * M_CH3Br * 3._r8     !CHBr3 + hv -> 3Br + prod.
+         LOSS =  k_oh_chbr3 * M_OH   &!CHBr3 + OH -> 3Br + prod.
+              + DCH3Br      !CHBr3 + hv -> 3Br + prod.
+!         LOSS =  1._r8 * M_OH   &!CHBr3 + OH -> 3Br + prod.
+!              + DCH3Br * M_CH3Br * 3._r8     !CHBr3 + hv -> 3Br + prod.
 
          !From (PROD_Bry + LOSS * M_CH3Br) to:
-         PROD_Bry =  PROD_Bry + (k_oh_chbr3 * 2._r8 &
-              * M_OH + DCH3Br * 2._r8) * M_CH3Br
+         PROD_Bry =  PROD_Bry + (k_oh_chbr3 * 3._r8 &
+              * M_OH + DCH3Br * 3._r8) * M_CH3Br
 
          call QSSA(79,'CHBr3',DTCH,QLIN,ST,PROD,LOSS,M_CH3Br)
 

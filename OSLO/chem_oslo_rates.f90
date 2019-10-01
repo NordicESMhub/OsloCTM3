@@ -973,6 +973,7 @@ contains
 !                Marit 26.09.19
 !============================================================
        !// CHBr3 + OH -> 3Br + products
+       !// From Parella et. al. 2012
        r_oh_chbr3(I) = 1.35e-12_r8 * exp(-600._r8 * ZTEM)
 
 
