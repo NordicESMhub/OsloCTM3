@@ -291,7 +291,7 @@ contains
          if (YDGRD(J) .LE. 15._r8) then      !//Latitude bands, 90S - 50S
             if (PLAND(I,J) .eq. 0._r8) then   !//Open ocean (PLAND=0)
                POLL_CHBr3 = 0.05e-13_r8 * 1.14*(2._r8/3._r8)
-            elseif (PLAND(I,J) .gt. 0._r8 .and. PLAND(I,J) .lt. 0.99_r8) then
+            elseif (PLAND(I,J) .gt. 0._r8 .and. PLAND(I,J) .lt. 0.9_r8) then
                !//coast/islands
                  POLL_CHBr3 = 0.3e-13_r8 * 1.14*(2._r8/3._r8)
             end if
@@ -299,7 +299,7 @@ contains
          elseif (YDGRD(J) .LE. 29._r8 .AND. YDGRD(J) .GT. 15._r8 ) then !//Latitude bands, 50S - 10S
             if (PLAND(I,J) .eq. 0._r8) then   !//Open ocean (PLAND=0)
                POLL_CHBr3 = 0.15e-13_r8 * 1.14*(2._r8/3._r8)
-            elseif (PLAND(I,J) .gt. 0._r8 .and. PLAND(I,J) .lt. 0.99_r8) then
+            elseif (PLAND(I,J) .gt. 0._r8 .and. PLAND(I,J) .lt. 0.9_r8) then
                !//coast/islands
                POLL_CHBr3 = 0.9e-13_r8 * 1.14*(2._r8/3._r8)
             end if
@@ -307,7 +307,7 @@ contains
          elseif (YDGRD(J) .LE. 36._r8 .AND. YDGRD(J) .GT. 29._r8) then  !//Latitude bands, 10S - 10N
             if (PLAND(I,J) .eq. 0._r8) then   !//Open ocean (PLAND=0)
                POLL_CHBr3 = 0.7e-13_r8 * 1.14*(2._r8/3._r8)
-            elseif (PLAND(I,J) .gt. 0._r8 .and. PLAND(I,J) .lt. 0.99_r8) then
+            elseif (PLAND(I,J) .gt. 0._r8 .and. PLAND(I,J) .lt. 0.9_r8) then
                !//coast/islands
                POLL_CHBr3 = 0.9e-13_r8 * 1.14*(2._r8/3._r8)
             end if
@@ -315,7 +315,7 @@ contains
          elseif (YDGRD(J) .LE. 50._r8 .AND. YDGRD(J) .GT. 36._r8) then  !//Latitude bands, 10N - 50N
             if (PLAND(I,J) .eq. 0._r8) then   !//Open ocean (PLAND=0)
                POLL_CHBr3 = 0.15e-13_r8 * 1.14*(2._r8/3._r8)
-            elseif (PLAND(I,J) .gt. 0._r8 .and. PLAND(I,J) .lt. 0.99_r8) then
+            elseif (PLAND(I,J) .gt. 0._r8 .and. PLAND(I,J) .lt. 0.9_r8) then
                !//coast/islands
                POLL_CHBr3 = 0.9e-13_r8 * 1.14*(2._r8/3._r8)
             end if
@@ -331,7 +331,7 @@ contains
 !               write(6,*) YDGRD(J)
 !               write(6,*) ' Longidute'
 !               write(6,*) XDGRD(I)
-            elseif (PLAND(I,J) .gt. 0._r8 .and. PLAND(I,J) .lt. 0.99_r8) then
+            elseif (PLAND(I,J) .gt. 0._r8 .and. PLAND(I,J) .lt. 0.9_r8) then
                !//coast/islands
                POLL_CHBr3 = 0.3e-13_r8 * 1.14*(2._r8/3._r8)
             end if
