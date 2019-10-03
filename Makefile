@@ -30,13 +30,13 @@ COMPDIR  = $(shell pwd)
 #Compiler options O=Optimize, D=Debug, A=Agressive optimization
 OPTS :=A
 #Native (metdata) horizontal resolution (HNATIVET42 / HNATIVET159 / ...)
-HNATIVE :=HNATIVET42
+HNATIVE :=HNATIVET159
 #Native (metdata) vertical resolution (L40 / L60)
 VNATIVE :=VNATIVEL60
 #
 #CTM run resolution (degrade horizontal, collapse vertical)
 #Horizontal resolution (HORIGINAL/HTWO/HFOUR)
-HWINDOW :=HORIGINAL
+HWINDOW :=HFOUR
 #Collapse layer 1:3 and 4:5?
 COLLAPSE :=N
 #-----------------------------------------------------------------
