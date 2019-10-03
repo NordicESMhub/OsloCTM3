@@ -1,8 +1,8 @@
 === Oslo CTM3 v1.0 w/Oslo chemistry and EC met fields ===
 --------------------------------------------------------------------------------
  2005  IYEAR = reference year to which NDAI/NDAYE are offset
-  120  NDAYI = day of year to begin CTM run at 0000 hhmm UT (can be >365)
-  121  NDAYE = day at end of CTM run, finishes at end of day=NDAYE-1
+  110  NDAYI = day of year to begin CTM run at 0000 hhmm UT (can be >365)
+  141  NDAYE = day at end of CTM run, finishes at end of day=NDAYE-1
 --------------------------------------------------------------------------------
     F  LCLDQMD  = Mid point of quadrature cloud cover ICAs                     
     F  LCLDQMN  = Mean quadrature cloud cover ICAs                             

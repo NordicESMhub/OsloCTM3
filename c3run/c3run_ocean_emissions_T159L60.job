@@ -8,7 +8,7 @@
 #SBATCH --account=geofag
 #
 # Wall clock limit (setting for one year 96:0:0):
-#SBATCH --time=0:30:0
+#SBATCH --time=3:0:0
 #
 # Does your job exceed one week, use "--partition=long":
 # ####SBATCH --partition=long
