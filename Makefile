@@ -45,21 +45,21 @@ OSLOCHEM :=Y
 #Compile with Oslo tropospheric chemistry
 TROPCHEM :=Y
 #Compile with Oslo stratospheric chemistry
-STRATCHEM :=Y
+STRATCHEM :=N
 #Sulfur scheme
 SULPHUR :=Y
 #BC/OC
 BCOC :=N
 #Nitrate (requires SALT and SULPHUR)
-NITRATE :=Y
+NITRATE :=N
 #Sea salt
-SEASALT :=Y
+SEASALT :=N
 #Dust
 DUST :=N
 #Secondary organic aerosols
 SOA :=N
 #E90 (MUST be Y to calculate STE fluxes!)
-E90 :=Y
+E90 :=N
 #LINOZ (NOT set up to replace stratospheric chemistry, only included
 #       to calculate STE flux as UCI does it.
 LINOZ :=N
