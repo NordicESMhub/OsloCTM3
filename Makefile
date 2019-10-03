@@ -51,9 +51,9 @@ SULPHUR :=Y
 #BC/OC
 BCOC :=N
 #Nitrate (requires SALT and SULPHUR)
-NITRATE :=N
+NITRATE :=Y
 #Sea salt
-SEASALT :=N
+SEASALT :=Y
 #Dust
 DUST :=N
 #Secondary organic aerosols
