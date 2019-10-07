@@ -86,6 +86,8 @@ contains
          r_ch3o2_c6h13o2, r_ch3o2_ch3cob, r_ch3o2_ch3cod, r_ch3o2_ch3xx, &
          r_ch3o2_isor1, r_ch3o2_isor2, r_oh_ar2, &
          r_no_c3h7o2, &
+         !// Marit, HOBr deposition, 7.10.19
+         r_hobr_dep, &
          !// Temperature dependent rates
          r_od_m, r_od_h2o, r_op_no2, &
          r_o3_no, r_o3_no2, r_o3_oh, r_o3_ho2, r_o3_c2h4, r_o3_c3h6, &
@@ -225,7 +227,9 @@ contains
          k_ch3o2_ch3cob, k_ch3o2_ch3cod, k_ch3o2_isor1,  k_ch3o2_isor2, &
          k_ch3o2_ch3xx, &
          k_oh_ar2, &
-         k_no_c3h7o2
+         k_no_c3h7o2, &
+         !// Marit, HOBr deposition, 7.10.19
+         k_hobr_dep
 
     real(r8) :: &
          !// Temperature dependent rates
@@ -530,6 +534,8 @@ contains
       k_ch3o2_isor2   = r_ch3o2_isor2
       k_oh_ar2    = r_oh_ar2
       k_no_c3h7o2 = r_no_c3h7o2
+      !// Marit, HOBr deposition, 7.10.19
+      k_hobr_dep = r_hobr_dep
 
       !// Emissions
       do N = 1,TRACER_ID_MAX
@@ -790,7 +796,7 @@ contains
 !===========================================================================
          !//..CHBr3 (CH2Br2 is also included in CHBr3)
 
-         PROD_Bry = 0._r8         !For the Bry family futher down
+         
 
          !//CHBr3
          PROD = POLL_CHBr3_L1         !Emission from the sea
@@ -802,16 +808,17 @@ contains
 !         LOSS =  1._r8 * M_OH   &!CHBr3 + OH -> 3Br + prod.
 !              + DCH3Br * M_CH3Br * 3._r8     !CHBr3 + hv -> 3Br + prod.
 
-         !From (PROD_Bry + LOSS * M_CH3Br) to:
-         PROD_Bry =  PROD_Bry + (k_oh_chbr3 * 3._r8 &
-              * M_OH + DCH3Br * 3._r8) * M_CH3Br
 
          call QSSA(79,'CH3Br',DTCH,QLIN,ST,PROD,LOSS,M_CH3Br)
 
 
         !//..Bry
 
-        PROD_Bry = PROD_Bry
+        PROD_Bry = 0._r8  
+
+        !From (PROD_Bry + LOSS * M_CH3Br) to:
+        PROD_Bry =  PROD_Bry + (k_oh_chbr3 * 3._r8 &
+              * M_OH + DCH3Br * 3._r8) * M_CH3Br
 
         LOSS = 0._r8
         call QSSA(68, 'Bry', DTCH, QLIN, ST, PROD_Bry, LOSS, M_Bry)
