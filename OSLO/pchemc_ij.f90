@@ -207,6 +207,8 @@ contains
          M_Trpolene, M_Trpinene, M_TrpAlc, M_Sestrp, M_Trp_Ket, M_Tolmatic, &
          M_Benzene, M_C6HXR_SOA, &
          M_H2, &
+         !// Marit, HOBr deposition, 7.10.19
+         M_HOBr, &
          !// Marit, emissions from ocean, 26.09.19
          M_CH3Br, M_Bry, sea_multi, &
          AIRMOLEC, &
@@ -690,6 +692,8 @@ contains
         !// Marit, emissions from sea, 26.09.19
         M_Bry   = ZC(119,L)
         M_CH3Br = ZC(116,L)
+        !// Marit, HOBr deposition, 7.10.19
+        M_HOBr  = ZC(142,L)
 
         !// SOA chemistry: set concentrations
         if (LSOA) then
@@ -817,8 +821,9 @@ contains
         PROD_Bry = 0._r8  
 
         !From (PROD_Bry + LOSS * M_CH3Br) to:
-        PROD_Bry =  PROD_Bry + (k_oh_chbr3 * 3._r8 &
-              * M_OH + DCH3Br * 3._r8) * M_CH3Br
+        PROD_Bry =  PROD_Bry + &
+             (k_oh_chbr3 * 3._r8 * M_OH + DCH3Br * 3._r8) * M_CH3Br &!CHBr3 + OH -> 3Br + prod.
+             + 0.5_r8 * k_hobr_dep * M_HOBr !HOBr + H+ + Br-(snow) -> Br2 + H2O
 
         LOSS = 0._r8
         call QSSA(68, 'Bry', DTCH, QLIN, ST, PROD_Bry, LOSS, M_Bry)
