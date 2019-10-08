@@ -15,12 +15,12 @@ Or can be found on git-hub.
 
 Log in to abel and create a directory:
 ~~~
-> mkdir OsloCTM3
+> mkdir models
 ~~~
 You are going to clone the Oslo CTM3 into that directory.
 Change into the directory:
 ~~~
-> cd OsloCTM3
+> cd models
 ~~~
 
 ### 1. Fork
