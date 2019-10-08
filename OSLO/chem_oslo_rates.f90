@@ -55,7 +55,9 @@ module chem_oslo_rates
        r_h2o_clono2, r_hcl_clono2, &
        r_oh_bro_a, &
        !// Marit, HOBr depostition, 7.10.19
-       r_hobr_dep, vd, Lmix, beta
+       r_hobr_dep, vd, Lmix, beta, &
+       !// Marit, BrO + NO2 -> BrONO2, 8.10.19
+       r_no2_bro_m
 
 
 
@@ -335,7 +337,7 @@ contains
      r_hobr_dep = ( vd / Lmix ) * beta ![1/s]
 
     !// Reaction: BrO + NO2 (+M) -> BrONO2 (+M)
-!     r_no2_bro_m = 3.89e-12_r8   ![molecules/cm3*s]
+     r_no2_bro_m = 3.89e-12_r8   ![molecules/cm3*s]
 !//================================================================
 
 
