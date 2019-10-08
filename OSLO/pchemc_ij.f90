@@ -88,6 +88,8 @@ contains
          r_no_c3h7o2, &
          !// Marit, HOBr deposition, 7.10.19
          r_hobr_dep, &
+         !// Marit, BrO + NO2 -> BrONO2, 8.10.19
+         r_no2_bro_m, &
          !// Temperature dependent rates
          r_od_m, r_od_h2o, r_op_no2, &
          r_o3_no, r_o3_no2, r_o3_oh, r_o3_ho2, r_o3_c2h4, r_o3_c3h6, &
@@ -271,7 +273,9 @@ contains
          k_oh_co_a, k_oh_co_b, k_oh_c2h4_m, k_oh_c3h6_m, k_ch3_o2_m, &
          k_oh_hcohco_m_a, k_oh_hcohco_m_b, k_oh_hcohco_m_c, &
          k_no2_ch3x_m, k_pan_m, &
-         k_no_ho2_b, k_op_no_m, k_op_no2_m 
+         k_no_ho2_b, k_op_no_m, k_op_no2_m, &
+         !// Marit, BrO + NO2 -> BrONO2, 8.10.19
+         k_no2_bro_m
 
     real(r8) :: &
          !// Aerosol uptake/conversion rates
@@ -538,6 +542,8 @@ contains
       k_no_c3h7o2 = r_no_c3h7o2
       !// Marit, HOBr deposition, 7.10.19
       k_hobr_dep = r_hobr_dep
+      !// Marit, BrO + NO2 -> BrONO2, 8.10.19
+      k_no2_bro_m = r_no2_bro_m
 
       !// Emissions
       do N = 1,TRACER_ID_MAX
