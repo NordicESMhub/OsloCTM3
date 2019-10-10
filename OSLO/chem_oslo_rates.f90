@@ -1289,7 +1289,7 @@ contains
 
     !// Marit, Local variables, 10.10.19
     real(r8) :: &
-         alpha, H_star, Dliq, a, Mol_HOBr, Dg, alpha_eff, &
+         alpha, H_star, R, Dliq, a, Mol_HOBr, Dg, alpha_eff, &
          v_HOBr, &
          H_star_HBr, k1_HBr, k2_HBr, P_HBr, q_HBr, f_q_HBr, &
          HBr_del, gamma_HBr, &
