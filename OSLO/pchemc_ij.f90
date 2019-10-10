@@ -52,7 +52,9 @@ contains
        OxCHEMLOSS, OxCHEMPROD, &
        COUNTnegO3, &
        !// Marit, ocean emissions, 26.09.19
-       POLL_CHBr3)
+       POLL_CHBr3, &
+       !// Marit, heterogeneous halogen reactions, 10.10.19
+       r_brono2_h2o_a, r_hobr_hcl_a, r_hobr_hbr_a)
     !// --------------------------------------------------------------------
     !//
     !// Column driver for integrating Oslo Chemistry in the troposphere using
@@ -145,6 +147,8 @@ contains
          r_oh_co_a, r_oh_co_b, r_oh_c2h4_m, r_oh_c3h6_m, r_ch3_o2_m, &
          r_oh_hcohco_m_a, r_oh_hcohco_m_b, r_no2_ch3x_m, r_pan_m, &
          r_no_ho2_b, r_op_no_m, r_op_no2_m, &
+         !// Marit, heterogenous halogen reactions, 10.10.19
+         r_brono2_h2o_a, r_hobr_hcl_a, r_hobr_hbr_a, &
          RAQ0172, RAQ1572,  RAQ1772, &
          R4071b,  RTOT4072, RCATSO2
     !// Tracer info
@@ -209,6 +213,8 @@ contains
          M_Trpolene, M_Trpinene, M_TrpAlc, M_Sestrp, M_Trp_Ket, M_Tolmatic, &
          M_Benzene, M_C6HXR_SOA, &
          M_H2, &
+         !// Marit, heterogenour halogen reactions, 10.10.19
+         M_BrONO2, M_HCl,M_HBr, & 
          !// Marit, HOBr deposition, 7.10.19
          M_HOBr, &
          !// Marit, emissions from ocean, 26.09.19
@@ -275,7 +281,9 @@ contains
          k_no2_ch3x_m, k_pan_m, &
          k_no_ho2_b, k_op_no_m, k_op_no2_m, &
          !// Marit, BrO + NO2 -> BrONO2, 8.10.19
-         k_no2_bro_m
+         k_no2_bro_m, &
+         !// Marit, heterogenous halogen reactions, 10.10.19
+         k_brono2_h2o_a, k_hobr_hcl_a, k_hobr_hbr_a
 
     real(r8) :: &
          !// Aerosol uptake/conversion rates
@@ -507,6 +515,10 @@ contains
       k_no_ho2_b = r_no_ho2_b(L)
       k_op_no_m = r_op_no_m(L)
       k_op_no2_m = r_op_no2_m(L)
+      !// Marit, heterogenous halogen reactions, 10.10.19
+      k_hobr_hcl_a = r_hobr_hcl_a(L)
+      k_hobr_hbr_a = r_hobr_hbr_a(L)
+      k_brono2_h2o_a = r_brono2_h2o_a(L) 
 
       C4071b  = R4071b(L)
       CTOT4072= RTOT4072(L)
@@ -700,6 +712,10 @@ contains
         M_CH3Br = ZC(116,L)
         !// Marit, HOBr deposition, 7.10.19
         M_HOBr  = ZC(142,L)
+        !// Marit, heterogenous halogen chemistry, 10.10.19
+        M_HCl   = ZC(111, L)
+        M_HBr   = ZC(140, L)
+        M_BrONO2= ZC(141, L)
 
         !// SOA chemistry: set concentrations
         if (LSOA) then

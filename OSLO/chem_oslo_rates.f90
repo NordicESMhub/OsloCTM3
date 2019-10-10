@@ -1241,10 +1241,9 @@ contains
        r_n2o5_m, r_ho2_no2_m, r_ho2no2_m, r_oh_hno3, r_oh_co_a, r_oh_co_b, &
        r_oh_c2h4_m, r_oh_c3h6_m, r_ch3_o2_m, &
        r_oh_hcohco_m_a, r_oh_hcohco_m_b, r_no2_ch3x_m, r_pan_m, &
-       r_no_ho2_b, r_op_no_m, r_op_no2_m)
-       !// Marit, Bromine chemistry, 26.09.19
-       !// NOT PART OF OCEAN EMISSIONS!
-       !r_brono2_h2o_a, r_hobr_hcl_a, r_hobr_hbr_a, ZC_LOCAL, TRACER_ID_MAX)
+       r_no_ho2_b, r_op_no_m, r_op_no2_m, &
+       !// Marit, multiphase halogen reactions, 10.10.19
+       r_brono2_h2o_a, r_hobr_hcl_a, r_hobr_hbr_a, ZC_LOCAL, TRACER_ID_MAX)
     !// --------------------------------------------------------------------
     !// Find reaction rates, dependent upon pressure and temperature.
     !// Slightly modified TCRATE_TP, where J,L has been removed and
@@ -1253,6 +1252,8 @@ contains
     !// Ole Amund Sovde, October 2008
     !// --------------------------------------------------------------------
     use utilities_oslo, only: RATE3B
+    !// Marit, heterogenous halogen reactions, 10.10.19
+    use cmn_parameters, only: AVOGNR, R_ATM, CPI
     !// --------------------------------------------------------------------
     implicit none
     !// --------------------------------------------------------------------
@@ -1277,6 +1278,28 @@ contains
          TZ300, ZTEM, TEM, &
          R0, R2, R3M, O2CONC
     integer :: L
+
+    !// Marit, multiphase halogen reactions, 10.10.19
+    real(r8), dimension(LM), intent(out) :: &
+         r_brono2_h2o_a(LM), r_hobr_hcl_a(LM), r_hobr_hbr_a(LM)
+
+    integer, intent(in) :: TRACER_ID_MAX !// 300 - in cmn_size
+    real(r8), intent(in)  :: &
+         ZC_LOCAL(TRACER_ID_MAX,LM) !// Tracer densities (utilities_oslo)
+
+    !// Marit, Local variables, 10.10.19
+    real(r8) :: &
+         alpha, H_star, Dliq, a, Mol_HOBr, Dg, alpha_eff, &
+         v_HOBr, &
+         H_star_HBr, k1_HBr, k2_HBr, P_HBr, q_HBr, f_q_HBr, &
+         HBr_del, gamma_HBr, &
+         H_star_HCl, k1_HCl, k2_HCl, P_HCl, q_HCl, f_q_HCl, &
+         HCl_del, gamma_HCl, &
+         gamma_BrONO2, THE, &
+         M_HBr, M_HCl    ! HBr concentration
+
+
+
     !// --------------------------------------------------------------------
 
     !// Initialize
@@ -1303,6 +1326,11 @@ contains
        r_oh_hcohco_m_a(:) = 0._r8
        r_oh_hcohco_m_b(:) = 0._r8
        r_no_ho2_b(:)      = 0._r8
+       
+       !// Marit, heterogenour halogen reactions, 10.10.19
+       r_brono2_h2o_a(:)= 0._r8
+       r_hobr_hcl_a(:)  = 0._r8
+       r_hobr_hbr_a(:)  = 0._r8
     end if
 
     !// 3-body (T,p-dependent) calculations
@@ -1568,6 +1596,131 @@ contains
     !//   R0841(I,J,L) = 5.7e-12_r8*Exp(-4426._r8*ZTEM)
     !// NO + CH2O2OH --> NO2 + HO2 + ?   NASA/JPL (1990) (assumed equal to R4322)
     !//   R4326(I,J,L) = 4.2e-12_r8*Exp(180._r8*ZTEM)
+
+
+!//-------------------------------------------------------------------------
+!//                 Marit, 10.10.19
+!//-------------------------------------------------------------------------
+    !// Calculating the rates for aerosol-reaction:
+    ! HOBr + HCl   -> BrCl + H2O
+    ! HOBr + HBr   -> Br2 + H2O
+    ! BrONO2 + H2O -> HOBr + HNO3
+!//Used in the halogen chemistry in the boundary layer (BL) in the troposphere
+
+!//All constants taken from Cao et al., 2014, Numerical analysis of the
+!//chemical kinetic mechanisms of ozone depletion and halogen release in the
+!// polar troposphere. DOI: 10.5194/acp-14-3771-2014
+
+    !//Initialize rate constants
+!       r_hobr_hcl_a(:) = 0._r8
+!       r_hobr_hbr_a(:) = 0._r8
+!       r_brono2_h2o_a(:) = 0._r8
+
+          !//General constants
+          alpha = 1.0            !Accommodation coef., dimensionless
+          H_star = 1.7e4_r8      !Effective Henry cont. HOBr, [mol/L*atm]
+          R = R_ATM * 1000       !Universal gas constant, [L*atm/K*mol] (converted from m3*atm/K*mol)
+!          Av = 6.023e23_r8       !Avogadro's number, [molecules/mol] AVOGNR
+          Dliq = 5.0e-6_r8       !Liq. HOBr diffusion coef., [cm2/s]
+          a = 0.45e-4_r8         !Typical aerosol radius, [cm]
+          Mol_HOBr = 96.91e-3_r8 !Molar mass of HOBr, [kg/mol]
+          Dg = 0.2               !Molecular diffusivity, [cm2/s]
+          alpha_eff = 1.0e-6_r8  !Surface to volume coef., [1/cm]
+
+
+          !//For HBr calculations
+          H_star_HBr = 3.0e8_r8 !Effective Henry cont. HBr, [mol/L*atm]
+          k2_HBr = 5.0e4_r8     !2nd order reaction rate cont. HBr, [L/mol*s]
+
+          !//For HCl calculations
+          H_star_HCl = 3.0e6_r8 !Effective Henry cont. HCl, [mol/L*atm]
+          k2_HCl = 1.0e5_r8   !2nd order reaction rate cont.(rrc) HCl, [L/mol*s]
+
+          !//For BrONO2 calculations
+          gamma_BrONO2 = 0.06 !HOBr uptake coef. dimensionless
+          !// neglectible: 0.0001, dominant: 0.06, critical: 0.0004
+
+
+    do L = 1, LMTROP
+       !// from ground to top of trop.
+
+          M_HCl = ZC_LOCAL(111,L) ! HCl [molec/cm3]
+          M_HBr = ZC_LOCAL(140,L) ! HBr [molec/cm3]
+
+       !// Only calculate when aerosols are present
+!       if (PARTAREA(L).gt.0._r8) then
+
+          !//Temperature
+          THE = TEMP(L)
+
+          !Mean molecular speed of HOBr, [cm/s]
+          v_HOBr = 1000 * sqrt( (8 * R * THE) / ( CPI * Mol_HOBr) )
+
+          !//HBr calculations
+          P_HBr = (M_HBr * 1.0e3_r8 * R * THE) / AVOGNR  !Partial p., HBr(g),[atm}
+          k1_HBr = k2_HBr * H_star_HBr * P_HBr     !1st order liq. rrc, [1/s]
+          q_HBr = a * sqrt(k1_HBr /Dliq)      !Function for HBr, dimensionless
+
+          !// No uptake if no HBr is present
+          if (q_HBr .lt. 1.e-20_r8) then
+             f_q_HBr = 0._r8
+             HBr_del = 0._r8
+          else
+             f_q_HBr = (1./tanh( q_HBr )) - (1.0 / q_HBr ) !f(q) for HBr, dimensionless
+             HBr_del = ( v_HOBr / &
+                  ( 4 * H_star * R * THE * f_q_HBr &
+                  * sqrt (k1_HBr * Dliq) ) ) !Dimensionless
+          endif
+
+          gamma_HBr = 1.0 / ((1 / alpha) + HBr_del)
+          !HOBr uptake coef., diemensionless
+
+          !//Reaction rate constant for HOBr + HBr (aerosol)-> Br2 + H2O
+          !// [1/s]
+          r_hobr_hbr_a(L) = ( 1.0 / ( (a / Dg) &
+                     + ( 4.0 / ( v_HOBr * gamma_HBr)) ) ) &
+                     * alpha_eff
+
+
+          !//HCl calculations
+          P_HCl = (M_HCl * 1.0e3_r8 * R * THE) / AVOGNR  !Partial p., HCl(g),[atm}
+          k1_HCl = k2_HCl * H_star_HCl * P_HCl     !1st order liq. rrc, [1/s]
+          q_HCl = a * sqrt(k1_HCl /Dliq)     !Function for HCl, dimensionless
+
+          !//No uptake if no HCl present
+          if (q_HCl .lt. 1.e-20_r8) then
+             f_q_HCl = 0._r8
+             HCl_del = 0._r8
+          else
+             f_q_HCl = (1./tanh( q_HCl )) - (1.0 / q_HCl ) !f(q) for HCl, dimensionless
+
+             HCl_del = ( v_HOBr / &
+                  ( 4 * H_star * R * THE * f_q_HCl &
+                  * sqrt (k1_HCl * Dliq) ) ) !Dimensionless
+          endif
+
+          gamma_HCl = 1.0 / ((1 / alpha) + HCl_del)
+          !HOBr uptake coef., diemensionless
+
+          !//Reaction rate constant for HOBr + HCl (aerosol)-> BrCl + H2O
+          !// [1/molecules * s]
+          r_hobr_hcl_a(L) = ( 1.0 / ( (a / Dg) &
+                     + ( 4.0 / ( v_HOBr * gamma_HCl)) ) ) &
+                     * alpha_eff
+
+          !//BrONO2 calculations
+          !//Reaction rate constant for BrONO2 + H2O (aerosol)-> HOBr + HNO3
+          !// [1/s]
+          r_brono2_h2o_a(L) = ( 1.0 / ((a / Dg) &
+                       + ( 4.0 / (100 * v_HOBr * gamma_BrONO2)) ) ) &
+                       * alpha_eff
+
+!       end if !//(PARTAREA(L).gt.0._r8) then
+    end do !///L = 1, LMTROP
+
+
+!---------------------------------------------------------------------------
+
 
     !// --------------------------------------------------------------------
   end subroutine TCRATE_TP_IJ_TRP
