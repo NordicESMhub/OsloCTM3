@@ -161,6 +161,12 @@ contains
          DTCH1, ST1, QLIN1, QTEST1, &!// Regular chemistry
          DTCH2, ST2, QLIN2, QTEST2  !// OH/HO2 chemistry
 
+    !// Marit, parameters used in scaling halogens, 13.10.19
+    real(r8)  :: yCly, yBrx, xBrx, yClx, xClx, xCly, XCl, XCLO, FACN
+    real(r8)  :: BrClx, BrZx, BrNO3X, OHBrx, HBrX, BrX, BrOX
+    integer   :: ISCALE, scalemod
+    real(R8)  :: SCAL
+
     !// Meteorological variables
     real(r8), dimension(LM), intent(in) :: TEMP  !// Temperature
 
@@ -213,7 +219,10 @@ contains
          M_Trpolene, M_Trpinene, M_TrpAlc, M_Sestrp, M_Trp_Ket, M_Tolmatic, &
          M_Benzene, M_C6HXR_SOA, &
          M_H2, &
-         !// Marit, heterogenour halogen reactions, 10.10.19
+         !// Marit, scaling halogens, 13.10.19
+         M_Br, M_BrO, M_Br2, M_BrCl, &
+         M_Cl, M_ClO, M_Clx, M_Cly, & 
+         !// Marit, heterogenous halogen reactions, 10.10.19
          M_BrONO2, M_HCl,M_HBr, & 
          !// Marit, HOBr deposition, 7.10.19
          M_HOBr, &
@@ -846,6 +855,59 @@ contains
         PROD_Bry =  PROD_Bry + &
              (k_oh_chbr3 * 3._r8 * M_OH + DCH3Br * 3._r8) * M_CH3Br &!CHBr3 + OH -> 3Br + prod.
              + 0.5_r8 * k_hobr_dep * M_HOBr !HOBr + H+ + Br-(snow) -> Br2 + H2O
+
+
+        !// Marit, halogen scaling, 13.10.19
+         !// Scale if this is the first loop with the latest J-values
+
+        !// Bry = Br + BrO + BrONO2 + OHBr + HBr + 2*Br2 + BrCl (same as strat.)
+        !// Clx = Cl + ClO + BrCl (not the same as strat.)
+        !// Cly = Clx + HCl
+
+        if (NST .eq. 1) then
+           !// Do an iterative scaling, i.e. go through it three times
+           do ISCALE = 1,3
+              !// Brx:
+              xBrx = M_Bry
+              yBrx = M_Br + M_BrO + M_BrONO2 + M_HOBr + M_HBr &
+                     + 2._r8*M_Br2 + M_BrCl
+
+              FACN = xBrx/yBrx
+
+              M_Br     = M_Br * FACN
+              M_BrO    = M_BrO * FACN
+              M_HBr    = M_HBr * FACN
+              M_BrONO2 = M_BrONO2 * FACN
+              M_HOBr   = M_HOBr * FACN
+              M_Br2    = M_Br2 * FACN
+              M_BrCl   = M_BrCl * FACN
+
+              !// Clx will have a different scaling than strat.
+              !// Clx:
+              xClx = M_Clx
+              yClx = M_Cl + M_ClO + M_BrCl
+
+              FACN = xClx/yClx
+
+              M_Cl  = M_Cl * FACN
+              M_ClO = M_ClO * FACN
+
+           end do !// do ISCALE = 1,3
+
+           !// Families which do not need iteration:
+           !// Cly:
+           xCly = M_Cly
+           yCly = M_Clx + M_HCl !// Do not calculate solid HCl
+
+           FACN = xCly/yCly
+
+           M_Clx = M_Clx * FACN
+           M_HCl = M_HCl * FACN
+        end if !// if (NST .eq. 1) then
+
+       
+
+
 
         LOSS = 0._r8
         call QSSA(68, 'Bry', DTCH, QLIN, ST, PROD_Bry, LOSS, M_Bry)
