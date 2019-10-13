@@ -1,0 +1,271 @@
+=== Oslo CTM3 v1.0 w/Oslo chemistry and EC met fields ===
+--------------------------------------------------------------------------------
+ 2005  IYEAR = reference year to which NDAI/NDAYE are offset
+  120  NDAYI = day of year to begin CTM run at 0000 hhmm UT (can be >365)
+  125  NDAYE = day at end of CTM run, finishes at end of day=NDAYE-1
+--------------------------------------------------------------------------------
+    F  LCLDQMD  = Mid point of quadrature cloud cover ICAs                     
+    F  LCLDQMN  = Mean quadrature cloud cover ICAs                             
+    T  LCLDRANA = Random selected from all cloud cover ICAs                    
+    F  LCLDRANQ = Random selected from 4 Mean quadrature cloud cover ICAs      
+   66  RANSEED
+    3    1  NROPSM=#op split, NRCH=#chem sub-steps (NRMETD=#met fields/day are fixed)
+    F  LJCCYC = F if J-values only the first NRCHEM (once every NOPS)
+    2  LMTSOM =1,2,3= SOM limiter:  2=monotonic, 3=min/max
+0.950  CFLLIM = max amount taken from box w/global CFL limit (divergence only!)
+----Meteorological data: File name will be built from following info------------
+ECMWF_oIFSnc4       met data type (ECMWF_oIFSnc4/ECMWF_oIFS/ECMWF_IFS)
+   38    1       met data cycle & revision number
+'/work/projects/cicero/ctm_input/metdataOpenIFS/'                 met data root
+    F  LLPYR = allow for leap year (if true, looks for day=901 for Feb 29)
+    T  LFIXMET = annually recycle met field (do not allow leap year)           
+    0  JMPOLR (if .not.LGAUGRD) =0 =>polar box same delta-lat as others, =1=>halfsize
+  1.5  GM0000 = I-coord of Greenwich M: 1.5=>mid-[1] on GM, 65.0=>left[1] at dateline
+----Vertical ETAA & ETAB levels w/possible collapsing of layers-----------------
+    L  LMMAP      eta-A            eta-B
+    1    1      0.000000000000   1.000000000000
+    2    2      0.000000000000   0.997630120000
+    3    3      7.367743000000   0.994019450000
+    4    4     65.889244000000   0.988270100000
+    5    5    210.393890000000   0.979662720000
+    6    6    467.333588000000   0.967645230000
+    7    7    855.361755000000   0.951821510000
+    8    8   1385.912598000000   0.931940320000
+    9    9   2063.779785000000   0.907883880000
+   10   10   2887.696533000000   0.879656910000
+   11   11   3850.913330000000   0.847374920000
+   12   12   4941.778320000000   0.811253430000
+   13   13   6144.314941000000   0.771596610000
+   14   14   7438.803223000000   0.728785810000
+   15   15   8802.356444999999   0.683268610000
+   16   16  10209.500977000000   0.635547460000
+   17   17  11632.758789000000   0.586168410000
+   18   18  13043.218750000000   0.535709920000
+   19   19  14411.124023000000   0.484771580000
+   20   20  15706.447265999999   0.433962940000
+   21   21  16899.468750000000   0.383892150000
+   22   22  17961.357422000001   0.335154890000
+   23   23  18864.750000000000   0.288322960000
+   24   24  19584.330077999999   0.243933140000
+   25   25  20097.402343999998   0.202475940000
+   26   26  20384.480468999998   0.164384320000
+   27   27  20429.863281000002   0.130022510000
+   28   28  20222.205077999999   0.099674690000
+   29   29  19755.109375000000   0.073533830000
+   30   30  19027.695313000000   0.051690410000
+   31   31  18045.183593999998   0.034121160000
+   32   32  16819.474609000001   0.020677880000
+   33   33  15379.805664000000   0.011142910000
+   34   34  13775.325194999999   0.005081120000
+   35   35  12077.446289000000   0.001815160000
+   36   36  10376.126953000001   0.000461390000
+   37   37   8765.053711000000   0.000075820000
+   38   38   7306.631348000000   0.000000000000
+   39   39   6018.019531000000   0.000000000000
+   40   40   4906.708496000000   0.000000000000
+   41   41   3960.291504000000   0.000000000000
+   42   42   3196.421631000000   0.000000000000
+   43   43   2579.888672000000   0.000000000000
+   44   44   2082.273926000000   0.000000000000
+   45   45   1680.640259000000   0.000000000000
+   46   46   1356.474609000000   0.000000000000
+   47   47   1094.834717000000   0.000000000000
+   48   48    883.660522000000   0.000000000000
+   49   49    713.218079000000   0.000000000000
+   50   50    575.651001000000   0.000000000000
+   51   51    464.618134000000   0.000000000000
+   52   52    373.971924000000   0.000000000000
+   53   53    298.495789000000   0.000000000000
+   54   54    234.779053000000   0.000000000000
+   55   55    180.584351000000   0.000000000000
+   56   56    134.483307000000   0.000000000000
+   57   57     95.636963000000   0.000000000000
+   58   58     63.647804000000   0.000000000000
+   59   59     38.425343000000   0.000000000000
+   60   60     20.000000000000   0.000000000000
+   61   61      2.000000000000   0.000000000000
+PFZON  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1
+    5  NBLX =1,2,3,4,5= (Prather, H&R, Louis, M-Y2.5, Holtz) !! now only = 1 !!
+    0  NDPX dry deposition scheme, now only simple version = 0
+    1  NSCX scavenging scheme: 0 = tables, 1 = new washout/rainout (Neu)
+----file names for further data-------------------------------------------------
+'tables/P_meanT319_IFScy36r1_2005.nc'    FILE annual mean pressure field
+--- Land surface type fractions (landSurfTypeFrac) and land fraction (PLAND) ---
+    3  LANDUSE_IDX  Index for land use / PFT files. 2 = MODIS, 3 = CLM4
+ 9999  LANDUSE_YEAR Year of the land use dataset (9999=meteorological year)
+'Indata_CTM3/surface/pftlandusedyn.0.5x0.5.gcp2015.simyr1860-2015.c160715.nc'
+--- Roughness length (ZOI) ---
+ 0000  ZOI_YEAR Year of the Z0 (9999=meteorological year, 0000: climatology 1982-1998)
+'Indata_CTM3/surface/rough_islscp2_fasir_0.25x0.25_1982_1998.nc'
+--- Leaf area index ---
+ 0000  LAI_YEAR Year of the LAI (9999=meteorological year, 0000: climatology 1982-1998)
+'Indata_CTM3/surface/lai_islscp2_fasir_0.25x0.25_1982_1998.nc'
+--- Dry deposition scheme and parameterlist ---
+    F  LDDEPmOSaic / T = mosaic dry dep scheme based on Simpson et al. (2012), F = old scheme
+'tables/mOSaic.par'
+--- PPFD directory and dummy filename ---
+'/projects/researchers/researchers01/sfalk/input_data/ctm_input/PPFD/'
+'ECopenIFSc38r1_yYYYYmMMdDDhHH_T159N80L60'
+--- Growing Season ---
+    F  LGSMAP Growing season (GDAY/GLEN) / T = Use preprocessed  maps, F = use fixed latitudinal bands
+'/projects/researchers/researchers01/sfalk/input_data/ctm_input/GROWING_SEASON/GROWING_SEASON_2005.nc'
+--- tracer specific section ---
+ T  1  LCONT T: start from restart file, F: set START_AVG: 0: start from STT=0, 1: CTM3 average, 2: CTM2 average
+    T  LNCR T: use restart file in netCDF, F: old .sav format
+--- species information / tracer list --- read from the following file
+'tables/tracer_list_no_stratosphere.d'
+--- General multi-species wet scavenging data set:  call WETSET_CTM3
+'tables/scavenging_wet.inp'            WET deposition data set
+--- General multi-species dry scavenging data set:  call DRYSET_CTM3
+'tables/scavenging_dry.inp'            DRY deposition data set
+--- Emission list ---
+'tables/Ltracer_emis_ceds17_2005_megan_gfed4blhdaily.inp'    See ./tables/ for more
+--------------------------------------------------------------------------------
+---- DIAGNOSTICS ---------------------------------------------------------------
+LDUMP3HRS - T: Write diagnostic 3 hourly output and monthly means of defined tracers; F: Do not
+   all air trp sul slt min nit bio moa ffc bfc soa
+    T  T  T  F  F  T  T  F  F  F  T  F
+LSTOM1HRS - T: Write diagnostic 1 hourly output of GstO3 and FstO3; F: Do not
+    T  
+LDLYSCAV - T: Write daily total and 2d scavenging; F: Do not
+   TOT 2D brd ls cnv dry sto 
+    T  T  T  T  T  T  T
+--------------------------------------------------------------------------------
+===== CONT = write restart (Continuation) file (unformatted)
+     123456789.123456789.123456789.1              JDO_C
+JAN _1000000000000000000000000000000  001 - 031
+FEB _00000000000000000000000000000    032 - 060
+MAR _0000000000000000000000000000000  061 - 091
+APR _000000000000000000000000000000   092 - 121
+MAY _0000000000000000000000000000000  122 - 152
+JUN _000000000000000000000000000000   153 - 182
+JUL _0000000000000000000000000000000  183 - 213
+AUG _0000000000000000000000000000000  214 - 244
+SEP _000000000000000000000000000000   245 - 274
+OCT _0000000000000000000000000000000  275 - 305
+NOV _000000000000000000000000000000   306 - 335
+DEC _0000000000000000000000000000000  336 - 366
+--------------------------------------------------------------------------------
+===== BUDGET tendencies calendar (unf + some form output)
+     123456789.123456789.123456789.1              JDO_T
+JAN _1000000000000000000000000000000  001 - 031
+FEB _10000000000000000000000000000    032 - 060
+MAR _1000000000000000000000000000000  061 - 091
+APR _100000000000000000000000000000   092 - 121
+MAY _1000000000000000000000000000000  122 - 152
+JUN _100000000000000000000000000000   153 - 182
+JUL _1000000000000000000000000000000  183 - 213
+AUG _1000000000000000000000000000000  214 - 244
+SEP _100000000000000000000000000000   245 - 274
+OCT _1000000000000000000000000000000  275 - 305
+NOV _100000000000000000000000000000   306 - 335
+DEC _1000000000000000000000000000000  336 - 366
+    8 # CATEGORIES for tendency budgets
+    1 = SOURCE
+    2 = BNDLYR
+    3 = DRYDEP
+    4 = UV_ADV
+    5 = W_ADV_
+    6 = LSSCAV
+    7 = CHEMIS
+    8 = CNSCAV
+Tendency Budgets air N=1:10    11:20      21:30      31:40      41:50      51:60      61:70      71:80      81:90      91:100
+1-D tend bdgts:   F TFFTFFFFFF FFFFFFFFFF FFFFFFFFFF FFFFFFFFFF FFFFFFFFFF FFFFFFFFFF FFFFFFFFFF FFFFFFFFFF FFFFFFFFFF FFFFFFFFFF FFFFFFFFFF FFFFFFFFFF
+2-D tend bdgts:   F TFFTFFFFFF FFFFFFFFFF FFFFFFFFFF FFFFFFFFFF FFFFFFFFFF FFFFFFFFFF FFFFFFFFFF FFFFFFFFFF FFFFFFFFFF FFFFFFFFFF FFFFFFFFFF FFFFFFFFFF
+NBOXD 12  3D blk title   longitude--range latitude--range Lbeg-Lend
+box    1  S.Hem./Strat       0.00   -2.00  -90.00  -28.00   25   37
+box    2  Tropic/Strat       0.00   -2.00  -27.50   27.50   25   37
+box    3  N.Hem./Strat       0.00   -2.00   28.00   90.00   25   37
+box    4  S.Hem./Global      0.00   -2.00  -90.00    0.00    1   37
+box    5  N.Hem./Global      0.00   -2.00    0.50   90.00    1   37
+box    6  China /B.Layer   100.00  127.00   22.50   42.00    1   12
+box    7  China /Mid.Trp   100.00  127.00   22.50   42.00   13   21
+box    8  China /Upp.Trp   100.00  127.00   22.50   42.00   22   29
+box    9  U.S.A./B.Layer  -125.00  -70.00   28.00   48.00    1   12
+box   10  U.S.A./Mid.Trp  -125.00  -70.00   28.00   48.00   13   21
+box   11  U.S.A./Upp.Trp  -125.00  -70.00   28.00   48.00   22   29
+box   12  ATLAT /Global    -75.00   15.00  -75.00   75.00    1   37
+--------------------------------------------------------------------------------
+===== AVERAGES 3-D tracer mass fraction(all tracers, unf), if 2(stdout 1-D prof)
+     123456789.123456789.123456789.1             JDO_A
+JAN _2000000000000000000000000000000  001 - 031
+FEB _20000000000000000000000000000    032 - 060
+MAR _2000000000000000000000000000000  061 - 091
+APR _200000000000000000000000000000   092 - 121
+MAY _2000000000000000000000000000000  122 - 152
+JUN _200000000000000000000000000000   153 - 182
+JUL _2000000000000000000000000000000  183 - 213
+AUG _2000000000000000000000000000000  214 - 244
+SEP _200000000000000000000000000000   245 - 274
+OCT _2000000000000000000000000000000  275 - 305
+NOV _200000000000000000000000000000   306 - 335
+DEC _2000000000000000000000000000000  336 - 366
+--------------------------------------------------------------------------------
+===== STE-flux output                            JDO_X
+     123456789.123456789.123456789.1
+JAN _1000000000000000000000000000000  001 - 031
+FEB _10000000000000000000000000000    032 - 060
+MAR _1000000000000000000000000000000  061 - 091
+APR _100000000000000000000000000000   092 - 121
+MAY _1000000000000000000000000000000  122 - 152
+JUN _100000000000000000000000000000   153 - 182
+JUL _1000000000000000000000000000000  183 - 213
+AUG _1000000000000000000000000000000  214 - 244
+SEP _100000000000000000000000000000   245 - 274
+OCT _1000000000000000000000000000000  275 - 305
+NOV _100000000000000000000000000000   306 - 335
+DEC _1000000000000000000000000000000  336 - 366
+--------------------------------------------------------------------------------
+      tracers for stdout of 1-D average profiles for the tendency boxes(NBOXD)
+1-D avg profiles:   TFFTFFFFFF FFFFFFFFFF FFFFFFFFFF FFFFFFFFFF FFFFFFFFFF FFFFFFFFFF FFFFFFFFFF FFFFFFFFFF FFFFFFFFFF FFFFFFFFFF FFFFFFFFFF FFFFFFFFFF
+--------------------------------------------------------------------------------
+==========time series (at 24/(NRMETD*NROPSM)) at stations for all L----
+     123456789.123456789.123456789.1
+JAN _1000000000000000000000000000000  001 - 031
+FEB _10000000000000000000000000000    032 - 060
+MAR _1000000000000000000000000000000  061 - 091
+APR _100000000000000000000000000000   092 - 121
+MAY _1000000000000000000000000000000  122 - 152
+JUN _100000000000000000000000000000   153 - 182
+JUL _1000000000000000000000000000000  183 - 213
+AUG _1000000000000000000000000000000  214 - 244
+SEP _100000000000000000000000000000   245 - 274
+OCT _1000000000000000000000000000000  275 - 305
+NOV _100000000000000000000000000000   306 - 335
+DEC _1000000000000000000000000000000  336 - 366
+   30 stations L(N)=TFFTFFFFFF FFFFFFFFFF FFFFFFFFFF FFFFFFFFFF FFFFFFFFFF FFFFFFFFFF FFFFFFFFFF FFFFFFFFFF FFFFFFFFFF FFFFFFFFFF FFFFFFFFFF FFFFFFFFFF
+statn  1  Alert          82.45   -1.20   LAT/LNG
+statn  2  Pt. Barrow     71.32 -156.61
+statn  3  Rorvik         57.00   12.00
+statn  4  Mace Head      53.32   -9.88
+statn  5  Hohenpssnb     47.48   11.01
+statn  6  Payerne        46.82    6.95
+statn  7  Harvard Fo     43.00  -79.00
+statn  8  Niwot Ridg     40.04 -105.58
+statn  9  Azores         38.75   27.08
+statn 10  Wallops Is     37.90  -75.50
+statn 11  Bermuda        32.00  -64.00
+statn 12  Mauna Loa      19.54 -155.58
+statn 13  Cp. Kumaka     19.54 -155.58
+statn 14  Barbados       13.17  -59.43
+statn 15  Natal          -5.92  -35.17
+statn 16  Ascension      -7.98  -14.42
+statn 17  Amazon        -10.00  -50.00
+statn 18  Am. Samoa     -14.23  170.56
+statn 19  Cuiaba        -15.60  -56.10
+statn 20  Cape Grim     -40.41  144.69
+statn 21  Neumayer      -70.00   -8.00
+statn 22  South Pole    -90.00     .00
+statn 23  Taibei         25.03  121.52
+statn 24  Tokyo          35.68  139.77
+statn 25  Guam           13.22  145.33
+statn 26  Shemya         52.92  174.06
+statn 27  Mauna Loa      19.53 -155.58
+statn 28  Anchorage      61.17 -150.02
+statn 29  San Frans      37.62 -122.38
+statn 30  Quito           0.22  -78.53
+-------Stations local time diags------------------------------------------------
+    0 stations for local time diag. LT may be adjusted to fit at least one pnt
+-------Tracers for local time diags at stations---------------------------------
+    0     # of tracer global local time diag. LT may be adjusted
+--------------------------------------------------------------------------------
