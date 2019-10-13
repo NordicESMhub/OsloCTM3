@@ -117,6 +117,8 @@ contains
          r_oh_benzene, &
          !// Marit, ocean emissions, 26.09.19
          r_oh_chbr3, &
+         !// Marit, HCl, 13.10.19
+         r_oh_clo_a, r_oh_clo_b, &
          !// Branching ratios
          fa_no_ch3o2, fa_no_c2h5o2, fa_no_c3h7o2, fa_no_c4h9o2, &
          fa_no_c6h13o2, fa_no_ch3cob, fa_no_ch3cod, fa_no_isor1, &
@@ -267,7 +269,9 @@ contains
          k_ch3o2_ch3o2, k_ch3o2_ch3x_a, k_ch3o2_ch3x_b, k_ch3x_ch3x, &
          k_ch3o_o2, &
          !// Marit, emissions from sea, 26.09.19
-         k_oh_chbr3
+         k_oh_chbr3, &
+         !// Marit, HCl, 13.10.19
+         k_oh_clo_a, k_oh_clo_b
 
     real(r8) :: &
          !// SOA Rates for hydrocarbon oxidation
@@ -475,6 +479,9 @@ contains
       k_ch3o_o2 = r_ch3o_o2(JTEMP)
       !// Marit, emissions from the ocean, 26.09.19
       k_oh_chbr3 = r_oh_chbr3(JTEMP)
+      !// Marit, HCl, 13.10.19
+      k_oh_clo_a = r_oh_clo_a(JTEMP) !ClO + OH -> Cl + HO2
+      k_oh_clo_b = r_oh_clo_b(JTEMP) !OH + ClO -> HCl + O2
 
       !// SOA JTEMP reactions
       k_o3_soaC1 = r_o3_soaC1(JTEMP)
@@ -725,6 +732,15 @@ contains
         M_HCl   = ZC(111, L)
         M_HBr   = ZC(140, L)
         M_BrONO2= ZC(141, L)
+        !// Marit, the rest of them, 13.10.19
+        M_Clx    = ZC(108,L)
+        M_Cly    = ZC(112,L)
+        M_Cl     = ZC(132,L)
+        M_ClO    = ZC(133,L)
+        M_Br     = ZC(138,L)
+        M_BrO    = ZC(139,L)
+        M_Br2    = ZC(143,L)
+        M_BrCl   = ZC(146,L)
 
         !// SOA chemistry: set concentrations
         if (LSOA) then
@@ -829,22 +845,19 @@ contains
 !===========================================================================
 !            Marit 26.09.19
 !===========================================================================
-         !//..CHBr3 (CH2Br2 is also included in CHBr3)
+        !//..CHBr3 (CH2Br2 is also included in CHBr3)-----------------------
 
-         
+        PROD = POLL_CHBr3_L1         !Emission from the sea
 
-         !//CHBr3
-         PROD = POLL_CHBr3_L1         !Emission from the sea
+        ! From Loss = (k_oh_chbr3 * 3._r8 * M_OH) to (1._r8 *M_OH)
 
-         ! From Loss = (k_oh_chbr3 * 3._r8 * M_OH) to (1._r8 *M_OH)
-
-         LOSS =  k_oh_chbr3 * M_OH   &!CHBr3 + OH -> 3Br + prod.
+        LOSS =  k_oh_chbr3 * M_OH   &!CHBr3 + OH -> 3Br + prod.
               + DCH3Br      !CHBr3 + hv -> 3Br + prod.
 !         LOSS =  1._r8 * M_OH   &!CHBr3 + OH -> 3Br + prod.
 !              + DCH3Br * M_CH3Br * 3._r8     !CHBr3 + hv -> 3Br + prod.
 
 
-         call QSSA(79,'CH3Br',DTCH,QLIN,ST,PROD,LOSS,M_CH3Br)
+        call QSSA(79,'CH3Br',DTCH,QLIN,ST,PROD,LOSS,M_CH3Br)
 
 
         !//..Bry
@@ -853,7 +866,7 @@ contains
 
         !From (PROD_Bry + LOSS * M_CH3Br) to:
         PROD_Bry =  PROD_Bry + &
-             (k_oh_chbr3 * 3._r8 * M_OH + DCH3Br * 3._r8) * M_CH3Br &!CHBr3 + OH -> 3Br + prod.
+             (k_oh_chbr3 * 3._r8 * M_OH + DCH3Br * 3._r8) * M_CH3Br &!CHBr3 + OH -> 3Br + prod and CHBr3 + hv -> 3Br + prod.
              + 0.5_r8 * k_hobr_dep * M_HOBr !HOBr + H+ + Br-(snow) -> Br2 + H2O
 
 
@@ -905,9 +918,15 @@ contains
            M_HCl = M_HCl * FACN
         end if !// if (NST .eq. 1) then
 
-       
+        !//..HCl------------------------------------------------------------
+        
+        PROD = k_oh_clo_b * M_OH * M_ClO !OH + ClO -> HCl + O2
+        
+        LOSS = k_hobr_hcl_a * M_HOBr !HOBr + HCl ->(aerosol) BrCl + H2O
+        
+        call QSSA(66, 'HCl', DTCH, QLIN, ST, PROD, LOSS, M_HCl)
 
-
+        !//..Bry ( Br + BrO + BrONO2 + OHBr + HBr + 2*Br2 + BrCl)-----------
 
         LOSS = 0._r8
         call QSSA(68, 'Bry', DTCH, QLIN, ST, PROD_Bry, LOSS, M_Bry)
