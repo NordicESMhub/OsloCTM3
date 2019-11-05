@@ -119,6 +119,9 @@ contains
          r_oh_chbr3, &
          !// Marit, HCl, 13.10.19
          r_oh_clo_a, r_oh_clo_b, &
+         !// Marit, ozone etc., 05.11.19
+         r_br_o3, r_bro_bro_a, r_no_bro, &
+         r_br_ho2, r_bro_ho2, r_o3_cl, &
          !// Branching ratios
          fa_no_ch3o2, fa_no_c2h5o2, fa_no_c3h7o2, fa_no_c4h9o2, &
          fa_no_c6h13o2, fa_no_ch3cob, fa_no_ch3cod, fa_no_isor1, &
@@ -225,7 +228,7 @@ contains
          M_Br, M_BrO, M_Br2, M_BrCl, &
          M_Cl, M_ClO, M_Clx, M_Cly, & 
          !// Marit, heterogenous halogen reactions, 10.10.19
-         M_BrONO2, M_HCl,M_HBr, & 
+         M_BrONO2, M_HCl, M_HBr, & 
          !// Marit, HOBr deposition, 7.10.19
          M_HOBr, &
          !// Marit, emissions from ocean, 26.09.19
@@ -271,7 +274,10 @@ contains
          !// Marit, emissions from sea, 26.09.19
          k_oh_chbr3, &
          !// Marit, HCl, 13.10.19
-         k_oh_clo_a, k_oh_clo_b
+         k_oh_clo_a, k_oh_clo_b, &
+         !// Marit, ozone etc., 05.11.19
+         k_br_o3, k_bro_bro_a, k_no_bro, &
+         k_br_ho2, k_bro_ho2, k_o3_cl
 
     real(r8) :: &
          !// SOA Rates for hydrocarbon oxidation
@@ -316,6 +322,8 @@ contains
          DACETON_A,      DACETON_B,      DPAN,   DOCS, &
          !// Marit, emissions from sea (J-value), 26.09.19
          DCH3Br, &
+         !// Marit, ozone etc., 05.11.19
+         DHOBr, DBr2, DBrO, DBrCl, &
          !// production and loss rates
          PROD,PROD_2,LOSS,LOSS_2,LOSS_3, &
          PROD_NO,LOSS_NO, PROD_OH,LOSS_OH, PROD_HO2,LOSS_HO2, &
@@ -325,6 +333,12 @@ contains
          PROD_Bry, PBr, &
          !// Marit, emissions from sea (first layer of atm.), 26.09.19
          POLL_CHBr3_L1, &
+         !// Marit, ozone etc., 05.11.19
+         PROD_Clx, PROD_Cly, PHBr, &
+         QHBr, PBrZ, QBr, PBrO, &
+         QBrO, PBr2, QBr2, POHBr, &
+         QOHBr, PBrNO3, QBrNO3, &
+         BrZ, QBrZ, Br2X, BrTOT, BrTST, &
          !// balancing Nitrogen components
          XJNO,XJNO2, RELATN,EKSTRSN, O3TEST, &
          !// help variables
@@ -482,6 +496,13 @@ contains
       !// Marit, HCl, 13.10.19
       k_oh_clo_a = r_oh_clo_a(JTEMP) !ClO + OH -> Cl + HO2
       k_oh_clo_b = r_oh_clo_b(JTEMP) !OH + ClO -> HCl + O2
+      !// Marit, ozone etc., 05.11.19
+      k_br_o3 = r_br_o3(JTEMP)
+      k_bro_bro_a = r_bro_bro_a(JTEMP)
+      k_no_bro = r_no_bro(JTEMP)
+      k_bro_ho2 = r_bro_ho2(JTEMP)
+      k_br_ho2 = r_br_ho2(JTEMP)
+      k_o3_cl = r_o3_cl(JTEMP)
 
       !// SOA JTEMP reactions
       k_o3_soaC1 = r_o3_soaC1(JTEMP)
@@ -622,6 +643,20 @@ contains
 
       !// Marit, emissions from sea, 26.09.19
       DCH3Br = JV(42, L)
+
+      
+      !// Marit, ozone etc., 05.11.19
+      !// ##########SJEKK DENNE NÆRMERE######################
+      !// BrCl + hv -> Br + Cl not included in the pchem_str_ij.f90 before if.
+      !// When daylight --> J_BrCl = 0.1, else: J_BrCl = 0
+      if (DO3 .gt. 0._r8) then
+         DBrCl = 0.1_r8
+         DBr2  = 0.1_r8
+      else
+         DBrCl = 0._r8
+         DBr2  = 0._r8
+      end if
+
 
       if (LOSLOCSTRAT) then
          DO2    = JV(21,L)    !// O2 + hv  -> O3P + O3P
@@ -907,7 +942,8 @@ contains
 
            end do !// do ISCALE = 1,3
 
-           !// Families which do not need iteration:
+           !// Families which doesn't  need iteration:
+
            !// Cly:
            xCly = M_Cly
            yCly = M_Clx + M_HCl !// Do not calculate solid HCl
@@ -925,10 +961,46 @@ contains
         LOSS = k_hobr_hcl_a * M_HOBr !HOBr + HCl ->(aerosol) BrCl + H2O
         
         call QSSA(66, 'HCl', DTCH, QLIN, ST, PROD, LOSS, M_HCl)
+        
+        !// Marit, ozone etc., 05.11.19
+        
+        !// Integrate Clx:
+        !// Loss of the is what is produced of HCl
+        !// Testing value of M_Clx
+        !// Cly is from the CFC-gas section, not really nessecary here
+        PROD_Cly = 0._r8
+        PROD_Clx = PROD_Cly + LOSS*M_HCl
+
+        if (M_Clx .gt. 1.e-21_r8) then
+           LOSS = PROD / M_Clx
+        else
+           LOSS = 0._r8
+        end if
+
+        call QSSA(67,'Clx',DTCH,QLIN,ST,PROD_Clx,LOSS,M_Clx)
+
+        !// Scaling of Clx and HCl with Cly:
+        xCly = M_Clx + M_HCl
+        M_Clx = M_Clx * M_Cly / xCly
+        M_HCl = M_HCl * M_Cly / xCly
 
         !//..Bry ( Br + BrO + BrONO2 + OHBr + HBr + 2*Br2 + BrCl)-----------
 
-        LOSS = 0._r8
+        !// Define first the prod/loss rates and do the integrations
+        !// after Bry has been handled too, compared to Clx a bit earlier
+        !// in the code
+
+        !// saturday 05.08.17
+        !// Setting 0.50_r8 to 1.0_r8, all dependence on Bry
+        PROD_Bry = &
+             + 0.50_r8 * k_hobr_dep * M_HOBr &!HOBr + H+ + Br-(snow)-> Br2 + H20
+             + PROD_Bry                   !Sources from CHBr3
+            ! + 0.5 * k_hobr_dep * M_HOBr !HOBr + H+ + Cl- (snow) -> BrCl + H2O
+
+        !// No loss in the strat, but there is loss in trop.
+        LOSS = 0._r8 !Not inclued washout, as it returns Br2 and BrCl
+              !k_hobr_dep * M_HOBr  !Deposition of HOBr
+
         call QSSA(68, 'Bry', DTCH, QLIN, ST, PROD_Bry, LOSS, M_Bry)
 
 
@@ -937,9 +1009,348 @@ contains
 !        PBr = k_oh_chbr3 * 3._r8 * M_CH3Br * M_OH & !CHBr3 + OH -> 3Br + prod.
 !             + DCH3Br * MCH3Br * 3._r8              !CHBr3 + hv -> 3Br + prod.
 
+!//..Chlorine --------------------------------------------------------
+        !// Integrate Cl
+
+        PROD = DBrCl * M_BrCl            &!BrCl + hv -> Br + Cl
+             + k_oh_clo_a * M_ClO * M_OH  !ClO + OH -> Cl + HO2
+
+        LOSS = k_o3_cl * M_O3             !O3 + Cl -> ClO + O2
+
+!// In strat they assume steady state, not the case in the trop.
+        XCl = M_Cl
+
+        call QSSA(69, 'XCl',DTCH,QLIN,ST,PROD,LOSS,XCl)
+
+        !// Integrate ClO
+
+        PROD = k_o3_cl * M_O3             !O3 + Cl -> ClO + O2
+
+        LOSS = k_oh_clo_b * M_ClO * M_OH &!ClO + OH -> HCl + O2
+             + k_oh_clo_a * M_ClO * M_OH  !ClO + OH -> Cl + HO2
+
+        XCLO = M_ClO
+        call QSSA(70,'XClO',DTCH,QLIN,ST,PROD,LOSS,XCLO)
+
+        !// Integrate BrCl
+
+        PROD = k_hobr_hcl_a * M_HOBr    &!HOBr + HCl (aerosol) -> BrCl + H2O
+             + 0.50_r8 * k_hobr_dep * M_HOBr !HOBr + H+ + Cl-(snow)-> BrCl + H2O
+
+        LOSS = DBrCl * M_BrCl            !BrCl + hv -> Br + Cl
+
+        BrClx = M_BrCl
+        call QSSA(71,'BrClx',DTCH,QLIN,ST,PROD,LOSS,BrClx)
+!// a little unsure about this BrCl handeling, see questionare
+        !//..Bromine ---------------------------------------------------------
+        !// Except BrCl, which was already done with chlorine(from strat)
+        !// Included here
+        !// Br2, HOBr (written sometimes as OHBr), BrNO3, HBr, Brz, Br, BrO
+        !// Q[--] is not mulitiplied with [--], because of d[x]/dt = P - Q[x]
+
+        PBr2 = k_hobr_hbr_a * M_HOBr      &!HOBr + HBr (aerosol) -> Br2 + H2O
+               + 0.50_r8 * k_hobr_dep * M_HOBr !HOBr + h+ +Br-(snow)-> Br2 + H2O
+
+        QBr2 = DBr2                        !Br2 + hv -> 2Br
+
+        POHBr = k_brono2_h2o_a * M_BrONO2 &!BrONO2 + H2O(aerosol) -> HOBr + HNO3
+              + k_bro_ho2 * M_BrO * M_HO2  !BrO + HO2 -> HOBr + O2
+
+        QOHBr = DHOBr                    &!HOBr + hv -> Br + OH
+              + k_hobr_hcl_a             &!HOBr + HCl (aerosol) -> BrCl + H2O
+              + k_hobr_hbr_a             &!HOBr + HBr (aerosol) -> Br2 + H2O
+              + k_hobr_dep                !Deposition of HOBr onto the snow
+
+        !// Written as PBrNO3 in the strat. part (line 2624), but as BrONO2
+        !// in the comment
+        PBrNO3 = k_no2_bro_m * M_NO2     &!BrO + NO2 + M -> BrONO2 + M
+               * ( M_BrO + M_BrONO2 )
+
+        QBrNO3 = k_no2_bro_m * M_NO2      !BrO + NO2 + M -> BrONO2 + M
+
+        PHBr = k_br_ho2 * M_HO2 * M_Br    !Br + HO2 -> HBr + O2
+
+        QHBr = k_hobr_hbr_a               !HOBr + HBr (aerosol) -> Br2 + H2O
+
+        !// Model the sum of Br and BrO
+        BrZ = M_Br + M_BrO
+
+        PBrZ = DHOBr * M_HOBr            &!HOBr + hv -> Br + OH
+             + k_hobr_hbr_a * M_HOBr      &!HOBr + HBr (aerosol) -> Br2 + H2O
+             + 0.50_r8 * k_hobr_dep * M_HOBr &!HOBr + h+ + Br-(snow)-> Br2 + H2O
+             + 2._r8 * DBr2 * M_Br2      &!Br2 + hv -> 2Br
+             + DBrCl * M_BrCl            &!BrCl + hv -> Br + Cl
+!             + k_oh_ch3br * M_CH3Br * M_OH         &!CH3Br + OH -> Br + prod.
+!             + k_oh_ch2br2 * 2._r8 * M_CH2Br2 * M_OH &!CH2Br2 + OH ->2Br + prod.
+             + k_oh_chbr3 * 3._r8 * M_CH3Br * M_OH   &!CHBr3 + OH -> 3Br + prod.
+             + DCH3Br * M_CH3Br * 3._r8             !CHBr3 + hv -> 3Br + prod.
+
+        QBrZ = (k_brono2_h2o_a * M_BrONO2 &!BrONO2 + H2O(aerosol) -> HOBr + HNO3
+              + k_bro_ho2 * M_HO2        &!BrO + HO2 -> HOBr + O2
+              + k_no2_bro_m * M_NO2      &!BrO + NO2 (M) -> BrONO2 (+M)
+              ) * M_BrO/BrZ              &
+              + ( k_br_ho2 * M_HO2       &!Br + HO2 -> HBr + O2
+              ) * M_Br / BrZ
+
+
+        PBr = DHOBr * M_HOBr                      &!HOBr + hv -> Br + OH
+            + DBr2 * M_Br2                        &!Br2 + hv -> 2Br
+            + 2._r8 * k_bro_bro_a * M_BrO * M_BrO &!BrO + BrO -> 2Br + O2
+            + DBrO * M_BrO                        &!BrO + hv -> Br + O
+            + k_no_bro* M_BrO * M_NO              &!BrO + NO -> Br + NO2
+            + DBrCl * M_BrCl                      &!BrCl + hv -> Br + Cl
+!            + k_oh_ch3br * M_CH3Br * M_OH         &!CH3Br + OH -> Br + prod.
+!            + k_oh_ch2br2 * 2._r8 * M_CH2Br2 * M_OH &!CH2Br2 + OH ->2Br + prod.
+            + k_oh_chbr3 * 3._r8 * M_CH3Br * M_OH   &!CHBr3 + OH -> 3Br + prod.
+            + DCH3Br * M_CH3Br * 3._r8             !CHBr3 + hv -> 3Br + prod.
+
+        QBr = k_br_o3 * M_O3             &!Br + O3 -> BrO + O2
+            + k_br_ho2 * M_HO2            !Br + HO2 -> HBr + O2
+
+        PBrO = k_br_o3 * M_O3 * M_Br      !Br + O3 -> BrO + O2
+
+        QBrO = 2._r8 * k_bro_bro_a * M_BrO &!BrO + BrO -> 2Br + O2
+             + DBrO                        &!BrO + hv -> Br + O
+             + k_no2_bro_m * M_NO2         &!BrO + NO2 M -> BrONO2 +M
+             + k_no_bro * M_NO             &!BrO + NO -> Br + NO2
+             + k_bro_ho2 * M_HO2            !BrO + HO2 -> HOBr + O2
+
+        !// Integrations. Integrate HOBr, BrONO2, HBr, Br, BrO and
+        !// BrZ into preliminary "X-species".
+        !// Br2 is put directly in in the strat. file, as it didn't have
+        !// any more code. Unsure if that applies anymore.
+        !// Will do the same for Br2 as in strat (no preliminary specie)
+
+        call QSSA(72,'Br2',DTCH,QLIN,ST,PBr2,QBr2,M_Br2)
+        Br2X = M_Br2
+
+        OHBrX = M_HOBr
+        call QSSA(73,'HOBrx',DTCH,QLIN,ST,POHBr,QOHBr,OHBrx)
+
+        BrNO3X = M_BrONO2
+        call QSSA(74,'BrNO3x',DTCH,QLIN,ST,PBrNO3,QBrNO3,BrNO3x)
+
+        HBrX = M_HBr
+        call QSSA(75,'HBrx',DTCH,QLIN,ST,PHBr,QHBr,HBrx)
+
+        BrzX = Brz
+        call QSSA(76,'Brzx',DTCH,QLIN,ST,PBrz,QBrz,Brzx)
+
+        BrX = M_Br
+        call QSSA(77,'Brx',DTCH,QLIN,ST,PBr,QBr,Brx)
+
+        BrOX = M_BrO
+        call QSSA(78,'BrOx',DTCH,QLIN,ST,pBrO,qBrO,BrOx)
+
+ !-----------------------------------------------------------------------
+        !// Copied directly from the stratosphere model, unsure if needed
+
+        !// Set the largest of BrZ (Br+BrO), BrONO2, HBr, OHBr with the
+        !// intgrated family amount and the others to their individually
+        !// integrated values. As BrCl has a comparable conc. (?) to
+        !// HBr and OHBr (at least under some conditions, it is thus
+        !// included herein. Br2 seems to be excluded. MtR, 960507.
+        !// Note that only one of the species underneath can become reset with
+        !// Bry and BrTOT.
+        BrTOT = BrZX + BrNO3X + 2._r8*Br2X + HBrX + OHBrX + M_BrCl
+
+        if (BrZX .gt. M_BrCl .and. BrZX .gt. BrNO3X .and. &
+             BrZX .gt. HBrX .and. BrZX .gt. OHBrX) then
+           BrZ = BrZX + M_Bry - BrTOT
+        else
+           BrZ = BrZX
+        end if
+
+        if (BrNO3X .gt. M_BrCl .and. BrNO3X .gt. BrZX .and. &
+             BrNO3X .gt. HBrX .and. BrNO3X .gt. OHBrX) then
+           M_BrONO2 = BrNO3X + M_Bry - BrTOT
+        else
+           M_BrONO2 = BrNO3X
+        end if
+
+        if (HBrX .gt. M_BrCl .and. HBrX .gt. BrZX .and. &
+             HBrX .gt. BrNO3X .and. HBrX .gt. OHBrX) then
+           M_HBr = HBrX + M_Bry - BrTOT
+        else
+           M_HBr = HBrX
+        end if
+
+        if (OHBrX .gt. M_BrCl .and. OHBrX .gt. BrZX .and. &
+             OHBrX .gt. BrNO3X .and. OHBrX .gt. HBrX) then
+           M_HOBr = OHBrX + M_Bry - BrTOT
+        else
+           M_HOBr = OHBrX
+        end if
+
+        if (M_BrCl .gt. BrZX .and. M_BrCl .gt. BrNO3X .and. &
+             M_BrCl .gt. HBrX .and. M_BrCl .gt. OHBrX) then
+           M_BrCl = M_BrCl + M_Bry - BrTOT
+           !// No need for else-statement
+        end if
+
+        !// If any of the Bry-members set in the routine above became
+        !// negative, scale the individually integrated values with the
+        !// integrated family. Br2 is again excluded from this.
+
+        SCAL = ( M_Bry - 2._r8 * Br2x ) &
+               / ( BrZX + BrNO3X + HBrX + OHBrx + BrClx )
+
+
+        if ( M_BrONO2 .lt. 0._r8 .or. M_HBr .lt. 0._r8 .or. &
+             BrZ .lt. 0._r8 .or. &
+             M_HOBr .lt. 0._r8 .or. M_BrCl .lt. 0._r8) then
+           if (LDEBUG) then
+              if (SCAL .lt. 0._r8) then
+                 print*,'OSLO_CHEM: Br SCAL',ICOL,JCOL,l,SCAL
+                 print*,"M_NO:",M_NO
+                 print*,'M_Bry',M_Bry
+                 print*,'Br2X',Br2x
+                 print*,'M_Br2',M_Br2
+                 print*,'BrTOT',BrTOT
+                 print*,'OHBrX',OHBrX
+                 print*,'BrClX',BrClx
+                 print*,'BrNO3X',BrNO3X
+                 print*,'BrZX',BrZX
+                 print*,'DTCH,QLIN,ST,PBr2,QBr2',DTCH,QLIN,ST,PBr2,QBr2
+                 print*,'PBr2/QBr2',PBr2/QBr2
+                 print*,"k_hobr_hbr_a, k_hobr_hcl_a",k_hobr_hbr_a,k_hobr_hcl_a
+                 print*,"DBr2",DBr2
+                 print*,"DBrCl",DBrCl
+                 print*,"BrZX",BrZX
+                 print*,"BrNO3X",BrNO3X
+                 print*,"HBrX",HBrX
+                 print*,"M_Br",M_Br
+                 print*,"M_HOBr",M_HOBr
+                 print*,"k_brono2_h2o_a",k_brono2_h2o_a
+                 print*,"M_BrO",M_BrO
+                 print*,"M_BrONO2",M_BrONO2
+                 stop
+              end if
+           end if
+           M_BrONO2 = BrNO3X*SCAL
+           M_HBr = HBrX*SCAL
+           BrZ = BrZX*SCAL
+           M_HOBr = OHBrX*SCAL
+           M_BrCl = BrClx*SCAL
+           !// No need for else
+        end if
+
+        !// Largest Brz species is set with the
+        !// integrated and checked sum of Br and BrO.
+        !// The other of the two is set to its individually integrated value.
+        if (BrX .gt. BrOX) then
+           M_BrO = BrOX
+           M_Br  = BrZ - BrOX
+        else
+           M_BrO = BrZ - BrX
+           M_Br  = BrX
+        end if
+
+        !// Check that setting the largest BrZ-species did not
+        !// produce negative values.
+        BrTST = min(M_Br,M_BrO)
+        if (BrTST .lt. 0._r8) then
+           M_BrO = BrZ * BrOX / (BrOX + BrX)
+           M_Br  = BrZ * BrX / (BrOX + BrX)
+           !// No need for else
+        end if
+
+
+        !// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+        !// Calculation of changes in the concentrations
+        !// of short lived species, end
+        !// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+        !// ***************************************************************
+        !//Scale the members in the chemical families
+        !//
+        !// Scale again over the families, if this is the last round of
+        !// chemistry for now and we go back to transport.
+        !//
+        !// Bry=Br+BrO+BrONO2+OHBr+HBr+2.*Br2+BrCl
+        !// Clx=Cl+ClO+BrCl
+        !// ****************************************************************
+      !// Define how often to do scaling
+      !// Scaling is done for first NST step and then at the end
+      !// according to scalemod. Should be similar to CTM2.
+       if (NCHEM_ITER .eq. 12) then
+         !// 1-hour time step, scale every 20 min, as in old code
+         scalemod = 3
+       else if (NCHEM_ITER .eq. 6) then
+         !// 30-min time step, scale every 15 min
+         scalemod = 2
+       else if (NCHEM_ITER .le. 4) then
+         !// 15-min time step or less, scale once
+         scalemod = 1
+       else
+         print*, 'Weird scaling in tropchem'
+         print*, 'DT',DTCH
+         print*, 'NCHEM_ITER',NCHEM_ITER
+         stop
+       end if
+
+        !// Iterative scaling (three rounds):
+        if (mod(NST,scalemod) .eq. 0) then
+           !// For NCHEM_ITER=12, scales at NST=3,6,9,12
+           do ISCALE = 1, 3
+
+              !// Brx:
+              XBrx = M_Bry
+              YBrx = M_Br + M_BrO + M_BrONO2 + M_HOBr &
+                     + M_HBr + 2._r8*M_Br2 + M_BrCL
+
+              FACN = XBrx / YBrx
+
+              M_Br   = M_Br * FACN
+              M_BrO  = M_BrO * FACN
+              M_HBr  = M_HBr * FACN
+              M_BrONO2 = M_BrONO2 * FACN
+              M_HOBr = M_HOBr * FACN
+              M_Br2  = M_Br2 * FACN
+              M_BrCl = M_BrCl * FACN
+
+              !// Clx:
+              XClx = M_Clx
+              YClx = M_Cl + M_ClO + M_BrCL
+
+              FACN = XClx / YClx
+
+              M_Cl   = M_Cl * FACN
+              M_ClO  = M_ClO * FACN
+              M_BrCl = M_BrCl * FACN
+
+           end do !// do ISCALE = 1, 3
+
+           xCly = M_Cly
+           yCly = M_ClX + M_HCl
+
+           FACN = xCly / yCly
+
+           M_Clx = M_Clx * FACN
+           M_HCl = M_HCl * FACN
+
+        end if !// if mod(NST,scalemod) .eq. 0)
+
+
+
         !+++++++++++++++++++++++++++++++++++++
         ZC(116, L) = M_CH3Br
         ZC(119, L) = M_Bry
+        !// Marit, ozone etc., 05.11.19
+        ZC(108,L) = M_Clx
+        ZC(111,L) = M_HCl
+        ZC(112,L) = M_Cly
+        ZC(132,L) = M_Cl
+        ZC(133,L) = M_ClO
+        ZC(138,L) = M_Br
+        ZC(139,L) = M_BrO
+        ZC(140,L) = M_HBr
+        ZC(141,L) = M_BrONO2
+        ZC(142,L) = M_HOBr
+        ZC(143,L) = M_Br2
+        ZC(146,L) = M_BrCl
+        !// 113 is declared already <-- SJEKK UT DETTE
         !+++++++++++++++++++++++++++++++++++++
 !==========================================================================
 
@@ -1056,7 +1467,8 @@ contains
                 + k_no_isor2 * M_ISOR2 * 1.5_r8 &
                 + k_no_ho2_b * M_HO2    &!NO + HO2 -> HNO3
                 + VDEP_L(43)        &!drydep
-                + k_op_no_m * M_O3P !O3P + NO + M -> NO2
+                + k_op_no_m * M_O3P &!O3P + NO + M -> NO2
+                + k_no_bro * M_BrO    !BrO + NO -> Br + NO2
 
            !//..NO2---------------------------------------------------------
            LOSS_NO2 = &
@@ -1090,7 +1502,9 @@ contains
                 + k_no_c2h5o2 * M_C2H5O2 * fa_no_c2h5o2 &
                 + k_no_c3h7o2 * M_C3H7O2 * fa_no_c3h7o2 &
                 + k_no_c4h9o2 * M_C4H9O2 * fa_no_c4h9o2 &
-                + k_no_c6h13o2 * M_C6H13O2 * fa_no_c6h13o2
+                + k_no_c6h13o2 * M_C6H13O2 * fa_no_c6h13o2&
+                !// Marit, ozone etc., 05.11.19
+                + k_no_bro * M_BrO  !BrO + NO -> Br + NO2
 
 
            !// Similarly, there are two other scalings
@@ -1180,7 +1594,11 @@ contains
                   ) / M_O3 &
                 + k_o3_c3h6 * M_C3H6 &
                 + k_o3_oh * M_OH &
-                + VDEP_L(1)
+                + VDEP_L(1)&
+                !// Marit, ozone etc., 05.11.19
+                + k_br_o3 * M_Br &!Br + O3 -> BrO + O2
+                + k_o3_cl * M_Cl  !Cl + O3 -> ClO + O2
+
            if (LSULPHUR) LOSS = LOSS + CAQ0172 * M_SO2
            !// SOA Secondary organic aerosols
            if (LSOA) LOSS = LOSS &
@@ -1271,7 +1689,10 @@ contains
                2._r8 * (DH2O2 * M_H2O2               &!H2O2 + hv -> 2OH
                         + k_od_h2o * M_O1D * M_H2O)  &!H2O + O1D -> 2OH
                + 0.15_r8 * k_o3_c3h6 * M_O3 * M_C3H6 &!C3H6 + O3 -> 0.15*OH
-               + DCH3O2H * M_CH3O2H                !CH3O2H + hv -> OH + CH3O
+               + DCH3O2H * M_CH3O2H                  &!CH3O2H + hv -> OH + CH3O
+               !// Marit, ozone etc., 05.11.19
+               + DHOBr * M_HOBr                       !HOBr + hv -> Br + OH
+               !(moved up from 5 lines down, DHOBr)
           if (.not. LOLD_H2OTREATMENT) PROD_OH = PROD_OH &
                + k_od_ch4_a * M_O1D * M_CH4        &!O(1D) + CH4 -> OH + CH3
                + k_od_h2 * M_O1D * M_H2             !O(1D) + H2  -> OH + H
@@ -1309,7 +1730,10 @@ contains
                !// Extra terms for stability: Must be added to production below
                + k_no_ho2 * M_NO &       !HO2 + NO -> OH + NO2 FOR STABILITY!
                !// Marit, emissions from sea, 26.09.19
-               + k_oh_chbr3 * M_CH3Br    !CHBr3 + OH -> 3Br + products
+               + k_oh_chbr3 * M_CH3Br    &!CHBr3 + OH -> 3Br + products
+               !// Marit, ozone etc., 05.11.19
+               + k_oh_clo_a * M_ClO     &!ClO + OH -> Cl + HO2
+               + k_oh_clo_b * M_ClO      !OH + ClO -> HCl + O2
 
           !// Sulphur reactions
           if (LSULPHUR) LOSS_OH = LOSS_OH &
@@ -1369,7 +1793,10 @@ contains
                + k_no_ho2_b * M_NO    &!NO + HO2 -> HNO3
                !// Extra terms for stability: Must be added to production below
                + k_ho2no2_m             &!HO2NO2 -M-> HO2 + NO2
-               + DHO2NO2           !HO2NO2 + hv -> HO2 + NO2
+               + DHO2NO2          &!HO2NO2 + hv -> HO2 + NO2
+               !// Marit, ozone etc., 05.11.19
+               + k_bro_ho2 * M_BrO &!BrO + HO2 -> HOBr + O2
+               + k_br_ho2 * M_Br    !Br + HO2 -> HBr + O2
 
 
 
@@ -1389,7 +1816,9 @@ contains
                + k_o3_oh * M_O3      &!OH + O3   -> HO2 + O2
                + k_oh_hcohco_m_c * M_HCOHCO &!OH + HCOHCO -O2-> 2CO + HO2
                + k_oh_ho2no2 * M_HO2NO2  &!HO2NO2 + OH -> NO2 + H2O + O2
-               + k_oh_h2 * M_H2       !OH + H2 -> H2O + H    c121205
+               + k_oh_h2 * M_H2       &!OH + H2 -> H2O + H    c121205
+               !// Marit, ozone etc., 05.11.19
+               + k_oh_clo_a * M_ClO   !OH + ClO -> Cl + HO2
 
           !// Set separate OH and HO2 for iteration
           OH_NEW = M_OH
@@ -1843,7 +2272,9 @@ contains
                + DHO2NO2 * (M_HO2 + M_HO2NO2) &
                + k_oh_hcohco_m_c * M_OH * M_HCOHCO &
                + k_oh_ho2no2 * M_OH * M_HO2NO2 &
-               + k_oh_h2 * M_H2 * M_OH !OH+H2
+               + k_oh_h2 * M_H2 * M_OH &!OH+H2
+               !// Marit, ozone etc., 05.11.19
+               + k_oh_clo_a * M_OH * M_ClO !OH + ClO -> Cl + HO2
 
           LOSS = &
                k_no_ho2 * M_NO &
@@ -1856,7 +2287,10 @@ contains
                + k_ho2no2_m &
                + DHO2NO2 &
                + RR_HO2_AER(L) &!QAER(L)
-               + k_no_ho2_b * M_NO  !NO + HO2 -> HNO3
+               + k_no_ho2_b * M_NO  &!NO + HO2 -> HNO3
+               !// Marit, ozone etc., 05.11.19
+               + k_bro_ho2 * M_BrO  &!BrO + HO2 -> HOBr + O2
+               + k_br_ho2 * M_Br     !Br + HO2 -> HBr + O2
 
           call QSSA(21,'HO2',DTCH,QLIN,ST,PROD,LOSS,ZC(21,L))
 
@@ -2814,7 +3248,11 @@ contains
              + k_no3_dms * M_DMS * M_NO3 &
              + POLLX(4) &
              + 2._r8 * k_n2o5_h2o_aer * M_N2O5 &
-             + k_no_ho2_b * M_NO * M_HO2     !NO + HO2 -> HNO3
+             + k_no_ho2_b * M_NO * M_HO2    &!NO + HO2 -> HNO3
+             !// Marit, ozone etc., 05.11.19
+             + k_brono2_h2o_a * M_BrONO2  !BrONO2 + H2O(aerosol) -> HOBr + HNO3
+
+
         !// Sulphur reactions
         if (LSULPHUR) PROD = PROD &
              + CAQ1772 * M_HO2NO2 * M_SO2 !HO2NO2 + HSO3 -> HNO3 + SO4
