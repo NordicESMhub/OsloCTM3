@@ -154,6 +154,8 @@ contains
          r_oh_co_a, r_oh_co_b, r_oh_c2h4_m, r_oh_c3h6_m, r_ch3_o2_m, &
          r_oh_hcohco_m_a, r_oh_hcohco_m_b, r_no2_ch3x_m, r_pan_m, &
          r_no_ho2_b, r_op_no_m, r_op_no2_m, &
+         !// Marit, sea ice implementation attempt, 14.11.19
+         r_hobr_dep, &
          !// Marit, heterogenous halogen reactions, 10.10.19
          r_brono2_h2o_a, r_hobr_hcl_a, r_hobr_hbr_a, &
          RAQ0172, RAQ1572,  RAQ1772, &
