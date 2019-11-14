@@ -64,6 +64,8 @@ contains
          soa_diag_separate, soa_diag_soagas
     use diagnostics_general, only: nchemdiag, save_chemPL, save_chemOxPL
     use diagnostics_scavenging, only: scav_diag_put_ddep
+    !// Marit, sea ice implementation attempt, 14.11.19
+    use bromine_explosion, only: be_getspringsummer
     !// --------------------------------------------------------------------
     implicit none
     !// --------------------------------------------------------------------

@@ -884,12 +884,8 @@ contains
 
         PROD = POLL_CHBr3_L1         !Emission from the sea
 
-        ! From Loss = (k_oh_chbr3 * 3._r8 * M_OH) to (1._r8 *M_OH)
-
         LOSS =  k_oh_chbr3 * M_OH   &!CHBr3 + OH -> 3Br + prod.
               + DCH3Br      !CHBr3 + hv -> 3Br + prod.
-!         LOSS =  1._r8 * M_OH   &!CHBr3 + OH -> 3Br + prod.
-!              + DCH3Br * M_CH3Br * 3._r8     !CHBr3 + hv -> 3Br + prod.
 
 
         call QSSA(79,'CH3Br',DTCH,QLIN,ST,PROD,LOSS,M_CH3Br)
