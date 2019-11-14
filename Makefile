@@ -348,7 +348,8 @@ OSLO_SRC := \
 	utilities_oslo.f90 \
 	verticalprofiles_stations2.f90 \
 	aerosols2fastjx.f90 \
-	hippo.f90
+	hippo.f90 \
+	bromine_explosion.f90
 
 # Add packages / dummies ----------------------------
 
@@ -919,7 +920,8 @@ $(filter %pmain.o, $(ALL_OBJ)): \
 	$(filter %soa_oslo.o, $(ALL_OBJ)) \
 	$(filter %stratchem_oslo.o, $(ALL_OBJ)) \
 	$(filter %strat_h2o.o, $(ALL_OBJ)) \
-	$(filter %utilities_oslo.o, $(ALL_OBJ))
+	$(filter %utilities_oslo.o, $(ALL_OBJ)) \
+	$(filter %bromine_explosion.o, $(ALL_OBJ))
 
 
 
@@ -1015,7 +1017,9 @@ $(filter %chem_oslo_rates.o, $(ALL_OBJ)): \
 	$(filter %psc_microphysics.o, $(ALL_OBJ)) \
 	$(filter %seasalt.o, $(ALL_OBJ)) \
 	$(filter %utilities_troe.o, $(ALL_OBJ))
-
+# bromine_explosion.o dependencies
+$(filter %bromine_explosion.o, $(ALL_OBJ)): \
+	$(filter %cmn_precision.o, $(ALL_OBJ))
 # cnv_oslo.o dependencies
 $(filter %cnv_oslo.o, $(ALL_OBJ)): \
 	$(filter %cmn_precision.o, $(ALL_OBJ)) \
