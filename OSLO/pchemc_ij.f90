@@ -163,6 +163,8 @@ contains
     real(r8), intent(in)  :: TMASS(NPAR)
     !// Marit, ocean emissions (CHBr3 and CH2Br2) 26.09.19
     real(r8), intent(in) :: POLL_CHBr3
+    !// Marit, sea ice implementation attempt, 14.11.19
+    real(r8), intent(in) :: r_hobr_dep
     !// QSSA parameters
     real(r8), intent(in) :: &
          DTCH1, ST1, QLIN1, QTEST1, &!// Regular chemistry
