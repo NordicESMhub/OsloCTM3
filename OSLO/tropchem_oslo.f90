@@ -70,7 +70,7 @@ contains
     use diagnostics_scavenging, only: scav_diag_put_ddep
     !// Marit, sea ice implementation attempt, 14.11.19
     use bromine_explosion, only: be_getspringsummer, seafraclim
-    use bcoc_oslo, only: LSNW_IJ
+    !use bcoc_oslo, only: LSNW_IJ
     !// --------------------------------------------------------------------
     implicit none
     !// --------------------------------------------------------------------
