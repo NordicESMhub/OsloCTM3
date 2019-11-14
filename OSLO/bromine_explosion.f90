@@ -27,14 +27,14 @@ module bromine_explosion
 contains
 
   !//-----------------------------------------------------------------------
-  subroutine be_init(startday)
+  !subroutine be_init(startday)
 
-    use cmn_size, only: MPBLK
-    use cmn_ctm, only: XDGRD, YDGRD, LCONT, &
-         MPBLKIB, MPBLKIE, MPBLKJB, MPBLKJE
-    implicit none
+  !  use cmn_size, only: MPBLK
+  !  use cmn_ctm, only: XDGRD, YDGRD, LCONT, &
+  !       MPBLKIB, MPBLKIE, MPBLKJB, MPBLKJE
+  !  implicit none
 
-    integer, intent(in) :: startday
+  !  integer, intent(in) :: startday
 
 
   !// ----------------------------------------------------------------------
