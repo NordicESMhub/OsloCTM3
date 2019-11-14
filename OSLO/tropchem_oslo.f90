@@ -145,9 +145,8 @@ contains
           !// Marit, heterogeous halogen reactions, 10.10.19
           r_brono2_h2o_a, & !BrONO2 + H2O -->(aerosol) HOBr + HNO3
           r_hobr_hcl_a, &   !HOBr + HCl -->(aerosol) BrCl + H2O
-          r_hobr_hbr_a,&    !HOBr + HBr -->(aerosol) Br2 + H2O
-          !// Marit, sea ice implementation attempt, 14.11.19
-          r_hobr_dep
+          r_hobr_hbr_a      !HOBr + HBr -->(aerosol) Br2 + H2O
+ 
 
     !// Sulfur T,p reaction rates
     real(r8), dimension(LPAR) :: &
@@ -192,6 +191,9 @@ contains
     !// Marit, Bromine chemistry, 26.09.19
     real(r8) :: Mol_CHBr3
     real(r8) :: POLL_CHBr3
+    !// Marit, sea ice implementation attempt, 14.11.19
+    real(r8) :: r_hobr_dep
+
     !// Marit, sea ice implementation attempt, 14.11.19
     real(r8) :: vd, Lmix, beta
     integer :: springday, springend, summermid, summerend, KDAY
