@@ -51,6 +51,8 @@ contains
        DDDIAG,nchemdiag,CHEMLOSS,CHEMPROD, &
        OxCHEMLOSS, OxCHEMPROD, &
        COUNTnegO3, &
+       !// Marit, sea ice implementation attempt, 14.11.19
+       r_hobr_dep, &
        !// Marit, ocean emissions, 26.09.19
        POLL_CHBr3, &
        !// Marit, heterogeneous halogen reactions, 10.10.19
@@ -89,7 +91,7 @@ contains
          r_ch3o2_isor1, r_ch3o2_isor2, r_oh_ar2, &
          r_no_c3h7o2, &
          !// Marit, HOBr deposition, 7.10.19
-         r_hobr_dep, &
+         !r_hobr_dep, &
          !// Marit, BrO + NO2 -> BrONO2, 8.10.19
          r_no2_bro_m, &
          !// Temperature dependent rates

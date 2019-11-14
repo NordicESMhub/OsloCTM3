@@ -45,10 +45,14 @@ contains
          LWEPAR, NPAR, NOTRPAR, TRACER_ID_MAX, &
          LOSLOCSTRAT, LSULPHUR, LNITRATE, LSOA, LEMISDEP_INCHEM
     use cmn_ctm, only: MPBLKJB, MPBLKJE, MPBLKIB, MPBLKIE, AREAXY, &
-         ETAA, ETAB, YDGRD, PLAND, XDGRD
+         ETAA, ETAB, YDGRD, PLAND, XDGRD, &
+         !// Marit, sea ice implementation attempt, 14.11.19
+         JDAY, NRMETD, NROPSM
     use cmn_chem, only: TMASS
     use cmn_fjx, only: JVN_
-    use cmn_met, only: P, Q, CLDFR, CLDLWC, CLDIWC, PRECLS
+    use cmn_met, only: P, Q, CLDFR, CLDLWC, CLDIWC, PRECLS, &
+         !// Marit, sea ice implementation attempt, 14.11.19
+         CI, SD
     use cmn_sfc, only: VDEP
     use cmn_oslo, only: LMTROP, PR42HET, trsp_idx, chem_idx, &
          Xtrsp_idx, Xchem_idx, XTMASS, XSTT, &
@@ -65,7 +69,8 @@ contains
     use diagnostics_general, only: nchemdiag, save_chemPL, save_chemOxPL
     use diagnostics_scavenging, only: scav_diag_put_ddep
     !// Marit, sea ice implementation attempt, 14.11.19
-    use bromine_explosion, only: be_getspringsummer
+    use bromine_explosion, only: be_getspringsummer, seafraclim
+    use bcoc_oslo, only: LSNW_IJ
     !// --------------------------------------------------------------------
     implicit none
     !// --------------------------------------------------------------------
@@ -140,7 +145,9 @@ contains
           !// Marit, heterogeous halogen reactions, 10.10.19
           r_brono2_h2o_a, & !BrONO2 + H2O -->(aerosol) HOBr + HNO3
           r_hobr_hcl_a, &   !HOBr + HCl -->(aerosol) BrCl + H2O
-          r_hobr_hbr_a      !HOBr + HBr -->(aerosol) Br2 + H2O
+          r_hobr_hbr_a,&    !HOBr + HBr -->(aerosol) Br2 + H2O
+          !// Marit, sea ice implementation attempt, 14.11.19
+          r_hobr_dep
 
     !// Sulfur T,p reaction rates
     real(r8), dimension(LPAR) :: &
@@ -185,6 +192,10 @@ contains
     !// Marit, Bromine chemistry, 26.09.19
     real(r8) :: Mol_CHBr3
     real(r8) :: POLL_CHBr3
+    !// Marit, sea ice implementation attempt, 14.11.19
+    real(r8) :: vd, Lmix, beta
+    integer :: springday, springend, summermid, summerend, KDAY
+    logical :: LSEA_BOX
     !// --------------------------------------------------------------------
 
     !// Find number of loops in chemistry to match the global
@@ -364,7 +375,37 @@ contains
                  / ( Mol_CHBr3 * 100  &
                  * ( DV(1) / AREAXY(I,J) ) )
  
-!//==========================================================================
+!//=========================================================================
+
+!//=========================================================================
+!//              Marit, sea ice implementation attempt, 14.11.19
+!//=========================================================================
+
+!// inspired by Amunds bcsnow_seaice_ij
+
+          r_hobr_dep = 0._r8
+          beta = 1.4             !Ratio (surface offered / flat area)(1 or bigger)
+          Lmix = 200             !Height of stable BL, standard is 200 [m]
+    !Lmix=1000 -> vd=0.00491
+          vd = 0.00605           !Deposition velocity for Lmix=200 -> vd = 0.00605, [m/s]
+          !// separate treatement for NH and SH; get day and info about
+          !// spring and summer
+          call be_getspringsummer(YDGRD(J), JDAY, &
+               springday, springend, summermid, summerend, KDAY)
+
+
+          if (CI(I,J) .lt. 0.7_r8) then
+             r_hobr_dep = 0._r8
+          elseif (CI(I,J) .gt. 0.7_r8) then
+             r_hobr_dep = ( vd / Lmix ) * beta
+          end if
+          !// Assume sea if PLAND < seafraclim
+          !LSEA_BOX = PLAND(I,J) .lt. seafraclim
+
+          
+          
+
+!//=========================================================================
 
          !// Treat emissions/deposition as production/loss terms in chemistry?
          if (LEMISDEP_INCHEM) then
@@ -449,6 +490,8 @@ contains
              drydepDIAG, nchemdiag, CHEMLOSS, CHEMPROD, &
              OxCHEMLOSS, OxCHEMPROD, &
              COUNTnegO3, &
+             !// Marit, sea ice implementation attemtpt, 14.11.19
+             r_hobr_dep, &
              !// Marit, Bromine chemistry, 26.09.19
              POLL_CHBr3, &
              !// Marit, heterogenous halogen reactions, 10.10.19

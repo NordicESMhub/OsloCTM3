@@ -11,13 +11,30 @@ module bromine_explosion
   !// DESCRIPTION: Routines for the Arctic/Antarctic bromine explosion events.
 
   use cmn_precision, only: r8
-  
+  use cmn_size, only: IPAR, JPAR, LPAR, NPAR, IDBLK, JDBLK, MPBLK, &
+       TRACER_ID_MAX
+  !//-----------------------------------------------------------------------
   implicit none
+  !//-----------------------------------------------------------------------
+
+
+  !// Number of snow layers
+  !integer, dimension(IDBLK,JDBLK,MPBLK) :: LSNW_IJ
+
+  !// Limit of PLANT for sea grid box
+  real(r8), parameter :: seafraclim = 0.25_r8
 
 contains
 
   !//-----------------------------------------------------------------------
-  !subroutine be_snow_seaice_ij
+  subroutine be_init(startday)
+
+    use cmn_size, only: MPBLK
+    use cmn_ctm, only: XDGRD, YDGRD, LCONT, &
+         MPBLKIB, MPBLKIE, MPBLKJB, MPBLKJE
+    implicit none
+
+    integer, intent(in) :: startday
 
 
   !// ----------------------------------------------------------------------

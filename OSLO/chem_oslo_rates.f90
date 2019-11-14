@@ -55,7 +55,7 @@ module chem_oslo_rates
        r_h2o_clono2, r_hcl_clono2, &
        r_oh_bro_a, &
        !// Marit, HOBr depostition, 7.10.19
-       r_hobr_dep, vd, Lmix, beta, &
+       !r_hobr_dep, vd, Lmix, beta, &
        !// Marit, BrO + NO2 -> BrONO2, 8.10.19
        r_no2_bro_m
 
@@ -325,16 +325,16 @@ contains
 !// All numbers are taken from (CAO et. al, 2014) doi:10.5194/acp-14-3771-2014
 
     !//Deposition of HOBr
-    r_hobr_dep = 0._r8
+    !r_hobr_dep = 0._r8
 
     !Setting beta to 1.0 as standard, and 1.4 for simulation of frost flowers
-    beta = 1.4             !Ratio (surface offered / flat area)(1 or bigger)
-    Lmix = 200             !Height of stable BL, standard is 200 [m]
+    !beta = 1.4             !Ratio (surface offered / flat area)(1 or bigger)
+    !Lmix = 200             !Height of stable BL, standard is 200 [m]
     !Lmix=1000 -> vd=0.00491
-    vd = 0.00605           !Deposition velocity for Lmix=200 -> vd = 0.00605, [m/s]
+    !vd = 0.00605           !Deposition velocity for Lmix=200 -> vd = 0.00605, [m/s]
 
     !//Deposition rate of HOBr onto the ground
-     r_hobr_dep = ( vd / Lmix ) * beta ![1/s]
+    ! r_hobr_dep = ( vd / Lmix ) * beta ![1/s]
 
     !// Reaction: BrO + NO2 (+M) -> BrONO2 (+M)
      r_no2_bro_m = 3.89e-12_r8   ![molecules/cm3*s]
