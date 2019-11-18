@@ -123,7 +123,7 @@ PFZON  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1
 --- Radiation (FASTJX) ---
 'tables/FJX_spec.dat'                   spectral data
 'tables/FJX_scat.dat'                   mie scattering data
-'tables/FJX_UMaer.dat'                  aerosol optical data
+'tables/FJX_UMaer.dat'                  UMich aerosol optical data
 'tables/ratj_oc.d'                      FASTJ->Oslo CTM3 species mapping
 'tables/ratO1D.d'                       FASTJ->Oslo CTM3 species mapping O1D
 'tables/atmos_std.dat'                  T and O3 climatology
@@ -133,6 +133,8 @@ PFZON  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1
 'tables/r42het_T159.dat'
 --- MEGAN tables ---
 'tables/megan_tables.dat'
+--- Lightning distribution ---
+'tables/light_dist.ott2010.dat'         Ott et al [JGR, 2010]
 --------------------------------------------------------------------------------
 ---- DIAGNOSTICS ---------------------------------------------------------------
 LDUMP3HRS - T: Write diagnostic 3 hourly output and monthly means of defined tracers; F: Do not

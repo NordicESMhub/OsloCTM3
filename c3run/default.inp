@@ -133,6 +133,8 @@ PFZON  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1
 'tables/r42het_T159.dat'
 --- MEGAN tables ---
 'tables/megan_tables.dat'
+--- Lightning distribution ---
+'tables/light_dist.ott2010.dat'         Ott et al [JGR, 2010]
 --------------------------------------------------------------------------------
 ---- DIAGNOSTICS ---------------------------------------------------------------
 LDUMP3HRS - T: Write diagnostic 3 hourly output and monthly means of defined tracers; F: Do not

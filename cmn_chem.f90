@@ -26,7 +26,7 @@ module CMN_CHEM
   !// Tracer specific input files
   character(len=80) :: INFILE_T, INFILE_WET, INFILE_DRY
   character(len=80) :: INFILE_EMIS, INFILE_POLAR_O3LOSS
-  character(len=80) :: INFILE_RES, INFILE_MEGAN
+  character(len=80) :: INFILE_RES, INFILE_MEGAN, INFILE_LIGHTNING
 
   !// Basic chemistry & init info:
   logical, dimension(NPAR) ::  LZONE        ! for init, scaling of tracer

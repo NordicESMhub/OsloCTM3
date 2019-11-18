@@ -35,14 +35,12 @@ module lightning
   !// ----------------------------------------------------------------------
   use cmn_precision, only: r8, r4
   use cmn_parameters, only: secYear
+  use cmn_chem, only: INFILE_LIGHTNING !// Ott etal data
   !// ----------------------------------------------------------------------
   implicit none
   !// ----------------------------------------------------------------------
 
-  !// Ott etal data
-  character(len=50), parameter :: &
-       FILENAME = 'tables/light_dist.ott2010.dat'
-  integer, parameter :: NNLIGHT=3200
+   integer, parameter :: NNLIGHT=3200
   integer, parameter :: NLTYPE=4
   real(r8), dimension(NNLIGHT,NLTYPE) :: LITPROFILE
 
@@ -446,13 +444,13 @@ contains
        accDT     = 0._r8
 
        !// Echo info
-       write(*,*) '   - INIT_LIGHTNING: Reading '//TRIM( FILENAME )
+       write(*,*) '   - INIT_LIGHTNING: Reading '//TRIM( INFILE_LIGHTNING )
 
        !// Get unused file ID
        IFNR = get_free_fileid()
 
        !// Open file containing lightning PDF data
-       open( IFNR, file=trim( filename ), status='OLD', iostat=IOS)
+       open( IFNR, file=trim( INFILE_LIGHTNING ), status='OLD', iostat=IOS)
        if ( IOS /= 0 ) stop f90file//':'//subr//': lightdist not read:1'
          
        !// Read 12 header lines
@@ -1094,13 +1092,13 @@ contains
        JPN = JPAR+1 - JPS
 
        !// Echo info
-       write(*,*) '   - INIT_LIGHTNING: Reading '//TRIM( FILENAME )
+       write(*,*) '   - INIT_LIGHTNING: Reading '//TRIM( INFILE_LIGHTNING )
 
        !// Get unused file ID
        IFNR = get_free_fileid()
 
        !// Open file containing lightning PDF data
-       open( IFNR, FILE=trim( FILENAME ), STATUS='OLD', IOSTAT=IOS)
+       open( IFNR, FILE=trim( INFILE_LIGHTNING ), STATUS='OLD', IOSTAT=IOS)
        if ( IOS /= 0 ) stop f90file//':'//subr//': lightdist not read:1'
          
        !// Read 12 header lines
@@ -1584,13 +1582,13 @@ contains
        accDT     = 0._r8
 
        !// Echo info
-       write(*,*) '   - INIT_LIGHTNING: Reading '//TRIM( FILENAME )
+       write(*,*) '   - INIT_LIGHTNING: Reading '//TRIM( INFILE_LIGHTNING )
 
        !// Get unused file ID
        IFNR = get_free_fileid()
 
        ! Open file containing lightning PDF data
-       open( IFNR, file=trim( filename ), status='OLD', iostat=IOS)
+       open( IFNR, file=trim( INFILE_LIGHTNING ), status='OLD', iostat=IOS)
        if ( IOS /= 0 ) stop f90file//':'//subr//': lightdist not read:1'
          
        ! Read 12 header lines
@@ -2409,13 +2407,13 @@ contains
        accDT     = 0._r8
 
        !// Echo info
-       write(*,*) '   - INIT_LIGHTNING: Reading '//TRIM( FILENAME )
+       write(*,*) '   - INIT_LIGHTNING: Reading '//TRIM( INFILE_LIGHTNING )
 
        !// Get unused file ID
        IFNR = get_free_fileid()
 
        ! Open file containing lightning PDF data
-       OPEN( IFNR, FILE=TRIM( FILENAME ), STATUS='OLD', IOSTAT=IOS)
+       OPEN( IFNR, FILE=TRIM( INFILE_LIGHTNING ), STATUS='OLD', IOSTAT=IOS)
        if ( IOS /= 0 ) stop f90file//':'//subr//': lightdist not read:1'
          
        ! Read 12 header lines

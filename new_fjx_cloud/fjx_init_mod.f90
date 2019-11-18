@@ -20,6 +20,9 @@
 
       USE CMN_FJX_MOD
 
+      use cmn_fjx, only: INFILE_FJX_SPEC, INFILE_FJX_SCAT, INFILE_FJX_AERO, &
+           INFILE_FJX_CLIM
+
       IMPLICIT NONE
       PRIVATE
 
@@ -57,19 +60,19 @@
       JXUNIT  = 8
 
 ! Read in fast-J X-sections (spectral data)
-      call RD_XXX(JXUNIT,'tables/FJX_spec.dat')
+      call RD_XXX(JXUNIT,INFILE_FJX_SPEC)
 
 ! Read in cloud scattering data
       call RD_CLD(JXUNIT,'tables/FJX_scat-cld.dat')
 
 ! Read in aerosols scattering data
-      call RD_MIE(JXUNIT,'tables/FJX_scat-aer.dat')
+      call RD_MIE(JXUNIT,INFILE_FJX_SCAT)
 
 ! Read in UMich aerosol scattering data
-      call RD_UM (JXUNIT,'tables/FJX_scat-UMa.dat')
+      call RD_UM (JXUNIT,INFILE_FJX_AERO)
 
 ! Read in T & O3 climatology used to fill e.g. upper layers or if O3 not calc.
-      call RD_PROF(JXUNIT,'tables/atmos_std.dat')
+      call RD_PROF(JXUNIT,INFILE_FJX_CLIM)
 
         NJXX = NJX
       do J = 1,NJX

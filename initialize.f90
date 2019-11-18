@@ -40,7 +40,7 @@ contains
          JDBLK, MPBLK, MPIPAR, MPJPAR, LOSLOCSTRAT, LE90, IMDIV, &
          NTDPAR, NTBPAR, NSBPAR, NSTPAR, NPAR, NRMETD
     use cmn_chem, only: INFILE_T, INFILE_WET, INFILE_DRY, INFILE_EMIS, &
-         INFILE_POLAR_O3LOSS, INFILE_RES, INFILE_MEGAN
+         INFILE_POLAR_O3LOSS, INFILE_RES, INFILE_MEGAN, INFILE_LIGHTNING
     use cmn_ctm, only: MPBLKIB, MPBLKIE, MPBLKJB, MPBLKJE, &
          AIR, STT, SUT, SVT, SWT, SUU, SVV, SWW, SUV, SUW, SVW, &
          IYEAR, JDAY, JYEAR, JMON, JDATE, GMTAU, TMON, TMET, &
@@ -579,8 +579,13 @@ contains
 
     !// Read MEGAN tables
     read (5,*)
-    read(5,*)  INFILE_MEGAN  ! chemical rates in given resolution
+    read(5,*)  INFILE_MEGAN  ! MEGAN input tables
     write(6,'(a)') 'MEGAN tables: '//trim(INFILE_MEGAN)
+
+    !// Read Lightning distributions
+    read (5,*)
+    read(5,*)  INFILE_LIGHTNING  ! lightning distributions
+    write(6,'(a)') 'Lightning distributions: '//trim(INFILE_LIGHTNING)
 
     read (5,*)
     !// DIAGNOSTICS
