@@ -16,7 +16,7 @@
 ----Meteorological data: File name will be built from following info------------
 ECMWF_oIFSnc4       met data type (ECMWF_oIFSnc4/ECMWF_oIFS/ECMWF_IFS)
    38    1       met data cycle & revision number
-'/work/projects/cicero/ctm_input/metdataOpenIFS/'                 met data root
+'$CICERO/metdataOpenIFS/'                 met data root
     F  LLPYR = allow for leap year (if true, looks for day=901 for Feb 29)
     T  LFIXMET = annually recycle met field (do not allow leap year)           
     0  JMPOLR (if .not.LGAUGRD) =0 =>polar box same delta-lat as others, =1=>halfsize
@@ -104,11 +104,11 @@ PFZON  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1
     T  LDDEPmOSaic / T = mosaic dry dep scheme based on Simpson et al. (2012), F = old scheme
 'tables/mOSaic.par'
 --- PPFD directory and dummy filename ---
-'/projects/researchers/researchers01/sfalk/input_data/ctm_input/PPFD/'
+'$CTM3_USR_INPUT/PPFD/'
 'ECopenIFSc38r1_yYYYYmMMdDDhHH_T159N80L60'
 --- Growing Season ---
     T  LGSMAP Growing season (GDAY/GLEN) / T = Use preprocessed  maps, F = use fixed latitudinal bands
-'/projects/researchers/researchers01/sfalk/input_data/ctm_input/GROWING_SEASON/GROWING_SEASON_2005.nc'
+'$CTM3_USR_INPUT/GROWING_SEASON/GROWING_SEASON_2005.nc'
 --- tracer specific section ---
  T  1  LCONT T: start from restart file, F: set START_AVG: 0: start from STT=0, 1: CTM3 average, 2: CTM2 average
     F  LNCR T: use restart file in netCDF, F: old .sav format

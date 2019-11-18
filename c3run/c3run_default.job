@@ -94,7 +94,7 @@ if [ ! -d $SCRATCH ]; then mkdir $SCRATCH; fi
 
 # Move the program and the necessary files to $SCRATCH
 cp $MODELDIR/$PROGFILE                  $SCRATCH/osloctm3
-cp $MODELDIR/$SCENDIR/$INPUTFILE        $SCRATCH/
+sed 's^$CTM3_USR_INPUT^'$CTM3_USR_INPUT'^g' $MODELDIR/$SCENDIR/$INPUTFILE > $SCRATCH/$INPUTFILE
 cp -r $MODELDIR/tables                  $SCRATCH/
 ln -fs $INPUT_DATA                      $SCRATCH/
 cp $MODELDIR/$DUSTFILE                  $SCRATCH/

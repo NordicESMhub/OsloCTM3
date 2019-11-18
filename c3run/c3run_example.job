@@ -23,8 +23,11 @@
 #SBATCH --nodes=1
 #
 #
-## Set up job environment
-source /cluster/bin/jobsetup
+## Set up job environment:
+set -o errexit  # Exit the script on any error
+set -o nounset  # Treat any unset variables as an error
+source ~/bin/setpaths
+set_up OsloCTM3git
 # --------------------------------------------------------------------------
 # No need to change this section
 #---------------------------------------------------------------------------
@@ -41,7 +44,7 @@ export THREAD_STACKSIZE=300m
 export KMP_STACKSIZE=$THREAD_STACKSIZE
 
 # number of OpenMP threads - i.e. number of CPUs requested
-export OMP_NUM_THREADS=$SLURM_NTASKS_PER_NODE
+#export OMP_NUM_THREADS=$SLURM_NTASKS_PER_NODE
 
 # the PID number is first the date then an uniqe shell pid
 export PID=`date +"%d%m%y".$$`
@@ -94,8 +97,19 @@ if [ ! -d $SCRATCH ]; then mkdir $SCRATCH; fi
 
 # Move the program and the necessary files to $SCRATCH
 cp $MODELDIR/$PROGFILE                  $SCRATCH/osloctm3
-cp $MODELDIR/$SCENDIR/$INPUTFILE        $SCRATCH/
-cp -r $MODELDIR/tables                  $SCRATCH/
+# Replace env variables while moving the files
+sed 's^$CTM3_USR_INPUT^'$CTM3_USR_INPUT'^g; s^$CICERO^'$CICERO'^g' $MODELDIR/$SCENDIR/$INPUTFILE > $SCRATCH/$INPUTFILE
+# Copy the necessary tables and files  
+#cp -r $MODELDIR/tables                  $SCRATCH/
+mkdir $SCRATCH/tables
+for each in `grep -rh "'tables/*" $MODELDIR/$SCENDIR/$INPUTFILE`; do 
+    if [[ $each =~ "'tables" ]]; then 
+        FILE=`echo $each | tr -d "'"`
+        echo "Copying $FILE"
+        cp $MODELDIR/$FILE              $SCRATCH/tables
+    fi 
+done
+# Link the input data
 ln -fs $INPUT_DATA                      $SCRATCH/
 cp $MODELDIR/$DUSTFILE                  $SCRATCH/
  
