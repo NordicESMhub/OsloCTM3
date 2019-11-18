@@ -23,7 +23,7 @@ Change into the directory:
 > cd models
 ~~~
 
-> WARNING: The code changes and configuration for SAGA will be merged into the master after December 1
+> WARNING: The code changes and configuration for SAGA will only be merged into the master after December 1!!
 
 ### 1. Fork
 
@@ -73,23 +73,35 @@ You should always unload all automatically loaded modules first:
 ~~~
 > module purge
 ~~~
-This will load all necessary dependencies:
-~~~
-> ABEL: module load netcdf.intel/4.3.3.1
-~~~
-~~~
-> SAGA: module load netCDF-Fortran/4.4.4-intel-2018b
-~~~
 Export the path of your Oslo CTM3 working directory <username_project>:
 ~~~
 > export CTM3_ROOT=${HOME}/OsloCTM3/<username_project>
 ~~~
-and do the same with your work directory:
-ABEL: 
+Export your notur project number:
+~~~
+> export PROJECT=nnXXXXk
+~~~
+Set an alias for the job queue on abel:
+~~~
+> alias squeue='squeue -lA ${PROJECT}'
+~~~
+
+### 1. ABEL:
+Load all necessary dependencies:
+~~~
+> module load netcdf.intel/4.3.3.1
+~~~
+Export your work directory:
 ~~~
 > export WORK=/work/users/${USER}
 ~~~
-SAGA: 
+
+### 2. SAGA:
+Load all necessary dependencies:
+~~~
+> module load netCDF-Fortran/4.4.4-intel-2018b
+~~~
+Export your work directory:
 ~~~
 > export WORK=/cluster/work/users/${USER}
 ~~~
@@ -100,14 +112,6 @@ Export the input directory:
 You have to set:
 ~~~
 > export NETCDF_ROOT=$EBROOTNETCDFMINFORTRAN
-~~~
-Export your notur project number:
-~~~
-> export PROJECT=nnXXXXk
-~~~
-Set an alias for the job queue on abel:
-~~~
-> alias squeue='squeue -lA ${PROJECT}'
 ~~~
 
 > Tip: 
@@ -130,7 +134,8 @@ In case the compilation was successful, you will find the Oslo CTM3 executable
 
 ## Before running
 
-ABEL: Make sure you are member of the group "cic-hpc" and have access to
+### 1. ABEL
+Make sure you are member of the group "cic-hpc" and have access to
 ~~~
 > ls /work/projects/cicero/ctm_input/
 ~~~
@@ -147,7 +152,8 @@ Then export the path:
 > export CTM_USR_INPUT=/projects/researchers/researchers01/sfalk/input/ctm_input/
 ~~~
 
-SAGA: Make sure you are member of the group "nn9188k" and have access to
+### 2. SAGA
+Make sure you are member of the group "nn9188k" and have access to
 ~~~
 ls $CICERO
 ~~~
