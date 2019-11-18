@@ -86,7 +86,7 @@ Set an alias for the job queue on abel:
 > alias squeue='squeue -lA ${PROJECT}'
 ~~~
 
-### 1. ABEL:
+### 1. ABEL
 Load all necessary dependencies:
 ~~~
 > module load netcdf.intel/4.3.3.1
@@ -96,7 +96,7 @@ Export your work directory:
 > export WORK=/work/users/${USER}
 ~~~
 
-### 2. SAGA:
+### 2. SAGA
 Load all necessary dependencies:
 ~~~
 > module load netCDF-Fortran/4.4.4-intel-2018b
@@ -232,7 +232,9 @@ Create a new file:
 ~~~
 > emacs setpaths &
 ~~~
-Add the lines:
+Add the lines and don't forget to change the names in <>!
+Save the file (EMACS: CTRL-x-s).
+### 1. ABEL
 ~~~~~~~~~~~~~
 #! /bin/bash
 echo "To set work environment do set_up <opt>"
@@ -256,8 +258,28 @@ export CTM3_ROOT=${HOME}/OsloCTM3/<username_project>
 module load netcdf.intel/4.3.3.1
 ~~~~~~~~~~~~~
 
-Don't forget to change the names in <>!
-Save the file (CTRL-x-s).
+### 2. SAGA
+~~~~~~~~~~~~~
+#! /bin/bash
+echo "To set work environment do set_up <opt>"
+# Export the current project number
+export PROJECT=<nnXXXXk>
+# alias for squeue
+alias squeue='squeue -lA ${PROJECT}'
+# Export the work directory
+export WORK=/cluster/work/users/${USER}
+# Export CICERO directory
+export CICERO=/cluster/projects/nn9188k/OsloCTM3
+
+# Load modules and setup
+module purge
+echo "Settings for OsloCTM3git"
+module load netCDF-Fortran/4.4.4-intel-2018b
+export CTM3_INPUT=${CICERO}/Indata_CTM3
+export CTM3_USR_INPUT=<your_forcing_files>
+export CTM3_ROOT=${WORKSPACE}/OsloCTM3
+export NETCDF_ROOT=$EBROOTNETCDFMINFORTRAN
+~~~~~~~~~~~~~
 
 ## git
 
@@ -284,7 +306,7 @@ Merge the "original" master into your "local" master:
 ~~~
 > git merge upstream/master
 ~~~
-## 2. Branch
+### 2. Branch
 
 Sometimes it will be necessary to "merge" changes in the master branch beck into your own branch. Here we will give a brief summary of the steps:
 
