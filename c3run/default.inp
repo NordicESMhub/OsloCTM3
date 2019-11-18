@@ -120,6 +120,19 @@ PFZON  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1
 'tables/scavenging_dry.inp'            DRY deposition data set
 --- Emission list ---
 'tables/Ltracer_emis_ceds17_2005_megan_gfed4blhdaily.inp'    See ./tables/ for more
+--- Radiation (FASTJX) ---
+'tables/FJX_spec.dat'                   spectral data
+'tables/FJX_scat.dat'                   mie scattering data
+'tables/FJX_UMaer.dat'                  aerosol optical data
+'tables/ratj_oc.d'                      FASTJ->Oslo CTM3 species mapping
+'tables/ratO1D.d'                       FASTJ->Oslo CTM3 species mapping O1D
+'tables/atmos_std.dat'                  T and O3 climatology
+--- Polar Ozone Loss ---
+'tables/polar_o3loss.dat'
+--- Chemical rates ---
+'tables/r42het_T159.dat'
+--- MEGAN tables ---
+'tables/megan_tables.dat'
 --------------------------------------------------------------------------------
 ---- DIAGNOSTICS ---------------------------------------------------------------
 LDUMP3HRS - T: Write diagnostic 3 hourly output and monthly means of defined tracers; F: Do not

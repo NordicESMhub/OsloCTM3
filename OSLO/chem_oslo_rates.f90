@@ -1015,6 +1015,7 @@ contains
     use cmn_size, only: JPAR, LPAR, LPARW, NDGRD
     use cmn_ctm, only: LMMAP, XLMMAP, YDEDG
     use cmn_met, only: HnativeRES
+    use cmn_chem, only: INFILE_RES
     use cmn_parameters, only: ZPI180, A0, CPI180
     use grid, only: GAUSST2
     use regridding, only: E_GRID_Y
@@ -1030,7 +1031,7 @@ contains
     real(r8) :: P42H(LPARW)
     real(r8) :: WG(J159),WGT(J159), WY(J159+1),YBEDG(J159+1)
     real(r8) :: aw(J159), delta
-    integer :: J,J2,L,LL,ierr
+    integer :: J,J2,L,LL,ierr,itest
     character(len=80) :: filename
     !// --------------------------------------------------------------------
 
@@ -1038,7 +1039,14 @@ contains
 
     if (NDGRD .eq. 1) then
        !// Simulation is done in native resolution
-       filename = './tables/r42het_'//trim(HnativeRES)//'.dat'
+       !//filename = './tables/r42het_'//trim(HnativeRES)//'.dat'
+       filename = INFILE_RES
+       !// Test if file profided is in right resolution
+       itest = SCAN(INFILE_RES, trim(HnativeRES))
+       if (itest .eq. 0) then
+          !// wrong reolution or option!
+          call ctmExitC('*** Wrong resolution or resolution option '//trim(filename))
+       end if
 
        open(1,File=filename,Form='FORMATTED',Status='OLD',iostat=ierr)
 
@@ -1053,7 +1061,7 @@ contains
 
     else
        !// Not native resolution; must interpolate
-       filename = './tables/r42het_T159.dat'
+       filename = INFILE_RES
        open(1,File=filename,Form='FORMATTED',Status='OLD',iostat=ierr)
        if (ierr .ne. 0) then
           !// file does not exist!

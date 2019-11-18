@@ -1536,7 +1536,7 @@ contains
     !// Ole Amund Sovde, February 2012
     !//---------------------------------------------------------------------
     use cmn_size, only: LLINOZ
-    use cmn_chem, only: E90VMR_TP, O3iso1, O3iso2
+    use cmn_chem, only: E90VMR_TP, O3iso1, O3iso2, INFILE_POLAR_O3LOSS
     use utilities, only: get_free_fileid
     !//---------------------------------------------------------------------
     implicit none
@@ -1548,7 +1548,7 @@ contains
     if (LLINOZ) return
 
     !// Read parameters from Linoz-file
-    INITFI = 'tables/polar_o3loss.dat'
+    INITFI = INFILE_POLAR_O3LOSS
 
     !// Get free file id
     fnr = get_free_fileid()

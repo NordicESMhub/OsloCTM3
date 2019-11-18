@@ -19,6 +19,10 @@ module cmn_fjx
   implicit none
   !//-----------------------------------------------------------------------
 
+  !// FASTJ specific input files
+  character(len=80) :: INFILE_FJX_SPEC, INFILE_FJX_SCAT, INFILE_FJX_AERO
+  character(len=80) :: INFILE_FJX_JS, INFILE_FJX_O1D, INFILE_FJX_CLIM
+
   !// Fast-JX parameters v5.3 (prather 6/05)
 
   !// Not yet compatible with 7.1
