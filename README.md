@@ -13,7 +13,7 @@ Or can be found on git-hub.
 ---
 ## Quick start
 
-Log in to abel and create a directory:
+Log in to ABEL/SAGA and create a directory:
 ~~~
 > mkdir models
 ~~~
@@ -22,6 +22,8 @@ Change into the directory:
 ~~~
 > cd models
 ~~~
+
+> WARNING: The code changes and configuration for SAGA will be merged into the master after December 1
 
 ### 1. Fork
 
@@ -73,15 +75,31 @@ You should always unload all automatically loaded modules first:
 ~~~
 This will load all necessary dependencies:
 ~~~
-> module load netcdf.intel/4.3.3.1
+> ABEL: module load netcdf.intel/4.3.3.1
+~~~
+~~~
+> SAGA: module load netCDF-Fortran/4.4.4-intel-2018b
 ~~~
 Export the path of your Oslo CTM3 working directory <username_project>:
 ~~~
 > export CTM3_ROOT=${HOME}/OsloCTM3/<username_project>
 ~~~
 and do the same with your work directory:
+ABEL: 
 ~~~
-> export WORK=/work/users/<your_username> 
+> export WORK=/work/users/${USER}
+~~~
+SAGA: 
+~~~
+> export WORK=/cluster/work/users/${USER}
+~~~
+Export the input directory:
+~~~
+> export CICERO=/cluster/projects/nn9188k/OsloCTM3
+~~~
+You have to set:
+~~~
+> export NETCDF_ROOT=$EBROOTNETCDFMINFORTRAN
 ~~~
 Export your notur project number:
 ~~~
@@ -112,7 +130,7 @@ In case the compilation was successful, you will find the Oslo CTM3 executable
 
 ## Before running
 
-Make sure you are member of the group "cic-hpc" and have access to
+ABEL: Make sure you are member of the group "cic-hpc" and have access to
 ~~~
 > ls /work/projects/cicero/ctm_input/
 ~~~
@@ -128,6 +146,20 @@ Then export the path:
 ~~~
 > export CTM_USR_INPUT=/projects/researchers/researchers01/sfalk/input/ctm_input/
 ~~~
+
+SAGA: Make sure you are member of the group "nn9188k" and have access to
+~~~
+ls $CICERO
+~~~
+Then export the path to forcing etc.:
+~~~
+> export CTM3_INPUT=${CICERO}/Indata_CTM3
+~~~
+You can use your own forcings by setting:
+~~~
+> export CTM_USR_INPUT=<your_forcing_files>
+~~~
+
 ## Run the example ("c3run_example.job") in c3run
 
 Change to the run script directory:
@@ -151,7 +183,7 @@ Create a new directory - it should always have the same name as is given in line
 > mkdir C3RUN_example
 > cd C3RUN_example
 ~~~
-Finally send the model run to the batch system of abel:
+Finally send the model run to the batch system on ABEL/SAGA:
 ~~~
 > sbatch $CTM3_ROOT/c3run/c3run_example.job
 ~~~
