@@ -106,7 +106,8 @@ for each in `grep -rh "'tables/*" $MODELDIR/$SCENDIR/$INPUTFILE`; do
     if [[ $each =~ "'tables" ]]; then 
         FILE=`echo $each | tr -d "'"`
         echo "Copying $FILE"
-        cp $MODELDIR/$FILE              $SCRATCH/tables
+        # Replace env variables while moving the files
+        sed 's^$CICERO^'$CICERO'^g' $MODELDIR/$FILE > $SCRATCH/$FILE
     fi 
 done
 # Link the input data
