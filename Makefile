@@ -1019,7 +1019,8 @@ $(filter %chem_oslo_rates.o, $(ALL_OBJ)): \
 	$(filter %utilities_troe.o, $(ALL_OBJ))
 # bromine_explosion.o dependencies
 $(filter %bromine_explosion.o, $(ALL_OBJ)): \
-	$(filter %cmn_precision.o, $(ALL_OBJ))
+	$(filter %cmn_precision.o, $(ALL_OBJ)) \
+	$(filter %cmn_size.o, $(ALL_OBJ))
 # cnv_oslo.o dependencies
 $(filter %cnv_oslo.o, $(ALL_OBJ)): \
 	$(filter %cmn_precision.o, $(ALL_OBJ)) \
