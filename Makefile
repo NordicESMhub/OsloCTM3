@@ -100,7 +100,7 @@ null=
 space=$(null) $(null)
 kolon=$(null):$(null)
 #Directory where object files are put during compilation
-MY_OBJ_DIR:=tmp
+MY_OBJ_DIR:=bin
 #Directory where .mod files can be put during compilation
 MY_MOD_DIR:=mod
 #Initialize includes
