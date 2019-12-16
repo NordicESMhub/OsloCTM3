@@ -50,7 +50,7 @@ module CMN_SIZE
   public
   !//-----------------------------------------------------------------------
   character(len=9), parameter ::  MODEL = 'Oslo CTM3'
-  character(len=4), parameter ::  MODEL_VERSION = 'v1.0'
+  character(len=4), parameter ::  MODEL_VERSION = 'v1.1'
 
   !// Metdata: Number of meteorological time steps per day
   !//-----------------------------------------------------------------------
