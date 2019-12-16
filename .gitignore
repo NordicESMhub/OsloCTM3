@@ -3,4 +3,4 @@
 osloctm3
 # Compiled modules
 mod/
-tmp/
+bin/
