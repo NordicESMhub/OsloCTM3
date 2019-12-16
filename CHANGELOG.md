@@ -1,6 +1,7 @@
 *******************************
 # Oslo CTM3 v1.1
 Developer: 	Stefanie Falk
+		Amund Søvde Haslerud
 Organization: 	MetOs
 Date:		2018-2019
 *******************************
