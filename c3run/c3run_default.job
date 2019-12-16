@@ -65,7 +65,7 @@ export SCRATCH=$WORK/$SCEN
 # Result directory (where your files end up)
 export RESULTDIR=$WORK/$SCEN.$PID
 
-# Directory, where restart files will be placed
+# Restart directory (where restart files will be placed)
 export RESTARTDIR=$RESULTDIR/restart_$PID
 
 # Set input file name
