@@ -36,7 +36,7 @@ VNATIVE :=VNATIVEL60
 #
 #CTM run resolution (degrade horizontal, collapse vertical)
 #Horizontal resolution (HORIGINAL/HTWO/HFOUR)
-HWINDOW :=HTWO
+HWINDOW :=HORIGINAL
 #Collapse layer 1:3 and 4:5?
 COLLAPSE :=N
 #-----------------------------------------------------------------
@@ -45,7 +45,7 @@ OSLOCHEM :=Y
 #Compile with Oslo tropospheric chemistry
 TROPCHEM :=Y
 #Compile with Oslo stratospheric chemistry
-STRATCHEM :=Y
+STRATCHEM :=N
 #Sulfur scheme
 SULPHUR :=Y
 #BC/OC
@@ -59,7 +59,7 @@ DUST :=N
 #Secondary organic aerosols
 SOA :=N
 #E90 (MUST be Y to calculate STE fluxes!)
-E90 :=Y
+E90 :=N
 #LINOZ (NOT set up to replace stratospheric chemistry, only included
 #       to calculate STE flux as UCI does it.
 LINOZ :=N
