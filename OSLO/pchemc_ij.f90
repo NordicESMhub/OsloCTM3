@@ -645,8 +645,12 @@ contains
       DCH3COY= JV(20,L)          !// CH3COCOCH3 + hv -> 2 CH3CO
                                  !// Uses J-value from CH3COCHO
 
+      !// Marit, forgotten components, 08.01.20
+      ! DBr2   = 0._r8             !// Br2 + hv -> 2Br
+      DHOBr  = JV(32,L)          !// HOBr + hv -> Br + OH
+      DBrO   = JV(30,L)          !// BrO + hv -> Br + Cl
       !// Marit, emissions from sea, 26.09.19
-      DCH3Br = JV(42, L)
+      DCH3Br = JV(42, L)         !// CHBr3 + hv -> 3Br + products
 
       
       !// Marit, ozone etc., 05.11.19
