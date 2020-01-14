@@ -1598,7 +1598,7 @@ contains
                   ) / M_O3 &
                 + k_o3_c3h6 * M_C3H6 &
                 + k_o3_oh * M_OH &
-                + VDEP_L(1)&
+                + VDEP_L(1)
 
 
            if (LSULPHUR) LOSS = LOSS + CAQ0172 * M_SO2
