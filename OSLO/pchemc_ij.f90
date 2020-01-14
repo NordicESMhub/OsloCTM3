@@ -1599,9 +1599,7 @@ contains
                 + k_o3_c3h6 * M_C3H6 &
                 + k_o3_oh * M_OH &
                 + VDEP_L(1)&
-                !// Marit, ozone etc., 05.11.19
-                + k_br_o3 * M_Br &!Br + O3 -> BrO + O2
-                + k_o3_cl * M_Cl  !Cl + O3 -> ClO + O2
+
 
            if (LSULPHUR) LOSS = LOSS + CAQ0172 * M_SO2
            !// SOA Secondary organic aerosols
@@ -2820,7 +2818,10 @@ contains
                ) / M_O3 &
              + k_o3_c3h6 * M_C3H6 &
              + k_o3_oh * M_OH &
-             + VDEP_L(1)
+             + VDEP_L(1)&
+             !// Marit, moved ozone loss term from O3 when NO > O3, 14.01.20
+             + k_br_o3 * M_Br &!Br + O3 -> BrO + O2
+             + k_o3_cl * M_Cl  !Cl + O3 -> ClO + O2
         !// Sulphur reactions
         if (LSULPHUR) LOSS_O3 = LOSS_O3 &
              + CAQ0172 * M_SO2
