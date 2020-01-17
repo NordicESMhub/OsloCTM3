@@ -426,8 +426,10 @@ contains
       sea_multi = 1._r8
 
       if (L .eq. 1) then
+         k_hobr_dep = r_hobr_dep
          POLL_CHBr3_L1 = POLL_CHBr3 * sea_multi
       else
+         k_hobr_dep = 0._r8
          POLL_CHBr3_L1 = 0._r8
       end if
 
@@ -594,7 +596,7 @@ contains
       k_oh_ar2    = r_oh_ar2
       k_no_c3h7o2 = r_no_c3h7o2
       !// Marit, HOBr deposition, 7.10.19
-      k_hobr_dep = r_hobr_dep
+      !k_hobr_dep = r_hobr_dep
       !// Marit, BrO + NO2 -> BrONO2, 8.10.19
       k_no2_bro_m = r_no2_bro_m
 
