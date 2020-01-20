@@ -100,7 +100,7 @@ null=
 space=$(null) $(null)
 kolon=$(null):$(null)
 #Directory where object files are put during compilation
-MY_OBJ_DIR:=tmp
+MY_OBJ_DIR:=bin
 #Directory where .mod files can be put during compilation
 MY_MOD_DIR:=mod
 #Initialize includes
@@ -132,16 +132,18 @@ NETCDF_LLIBS=-lnetcdf
 endif #UCI netCDF
 ifneq ($(null),$(findstring .local,$(UNAMEN)))
 #UiO Abel nodes
-#NETCDF_INC=/projects/geo/netCDF/$(FC)_inc
-#NETCDF_LIB=/projects/geo/netCDF/$(FC)_lib
+NETCDF_INC=$(NETCDF_ROOT)/include
+NETCDF_LIB=$(NETCDF_ROOT)/lib
+NETCDF_LLIBS=-lnetcdff -lnetcdf
+endif
+ifneq ($(null),$(findstring login-,$(UNAMEN)))
+#UiO SAGA nodes
 NETCDF_INC=$(NETCDF_ROOT)/include
 NETCDF_LIB=$(NETCDF_ROOT)/lib
 NETCDF_LLIBS=-lnetcdff -lnetcdf
 endif
 ifneq ($(null),$(findstring .hpc.uio.,$(UNAMEN)))
 #UiO enso/nao
-#NETCDF_INC=/cluster/software/VERSIONS/netcdf.intel-4.2.1.1/include
-#NETCDF_LIB=/cluster/software/VERSIONS/netcdf.intel-4.2.1.1/lib
 NETCDF_INC=$(NETCDF_ROOT)/include
 NETCDF_LIB=$(NETCDF_ROOT)/lib
 NETCDF_LLIBS=-lnetcdff -lnetcdf
@@ -158,16 +160,16 @@ FIXEDFLAGS = -fixed
 FREEFLAGS  = -free
 #
 # intel version 10-15
-STDOPTS= -auto -fpp -mcmodel=large -shared-intel -mp1 -module $(MY_MOD_DIR)
-FCOPT  = -inline-forceinline -ip -O2 -openmp -ftz -fno-alias -fomit-frame-pointer
-FCAGR  = -inline-forceinline -ip -O3 -openmp -ftz -fno-alias -fomit-frame-pointer
-DEBUG  = -check bounds -check uninit -traceback -openmp -g
+#STDOPTS= -auto -fpp -mcmodel=large -shared-intel -mp1 -module $(MY_MOD_DIR)
+#FCOPT  = -inline-forceinline -ip -O2 -openmp -ftz -fno-alias -fomit-frame-pointer
+#FCAGR  = -inline-forceinline -ip -O3 -openmp -ftz -fno-alias -fomit-frame-pointer
+#DEBUG  = -check bounds -check uninit -traceback -openmp -g
 #
 # intel version >= 17
-#STDOPTS= -auto -fpp -mcmodel=large -shared-intel -mp1 -module $(MY_MOD_DIR)
-#FCOPT  = -inline-forceinline -ip -O2 -qopenmp -ftz -fno-alias -fomit-frame-pointer
-#FCAGR  = -inline-forceinline -ip -O3 -qopenmp -ftz -fno-alias -fomit-frame-pointer
-#DEBUG  = -check bounds -check uninit -traceback -qopenmp -g
+STDOPTS= -auto -fpp -mcmodel=large -shared-intel -mp1 -module $(MY_MOD_DIR)
+FCOPT  = -inline-forceinline -ip -O2 -qopenmp -ftz -fno-alias -fomit-frame-pointer
+FCAGR  = -inline-forceinline -ip -O3 -qopenmp -ftz -fno-alias -fomit-frame-pointer
+DEBUG  = -check bounds -check uninit -traceback -qopenmp -g
 #
 #Special x86_64 options:
 ifneq ($(null),$(findstring _64,$(UNAMEM)))
@@ -1797,6 +1799,9 @@ check:
 	@echo "MAKEFILE:   " $(MAKEFILE)
 	@echo
 	@echo "INCLUDES: " $(INCLUDES)
+	@echo "NETCDF_INC: " $(NETCDF_INC)
+	@echo "NETCDF_LIB: " $(NETCDF_LIB)
+	@echo "NETCDF_LLIBS: " $(NETCDF_LLIBS)
 	@echo "VPATH: " $(VPATH)
 	@echo
 	@echo "ALL_DIRS: " $(ALL_DIRS)

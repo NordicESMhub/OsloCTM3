@@ -16,7 +16,7 @@
 ----Meteorological data: File name will be built from following info------------
 ECMWF_oIFSnc4       met data type (ECMWF_oIFSnc4/ECMWF_oIFS/ECMWF_IFS)
    38    1       met data cycle & revision number
-'/work/projects/cicero/ctm_input/metdataOpenIFS/'                 met data root
+'$CICERO/metdataOpenIFS/'                 met data root
     F  LLPYR = allow for leap year (if true, looks for day=901 for Feb 29)
     T  LFIXMET = annually recycle met field (do not allow leap year)           
     0  JMPOLR (if .not.LGAUGRD) =0 =>polar box same delta-lat as others, =1=>halfsize
@@ -104,11 +104,11 @@ PFZON  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1
     T  LDDEPmOSaic / T = mosaic dry dep scheme based on Simpson et al. (2012), F = old scheme
 'tables/mOSaic.par'
 --- PPFD directory and dummy filename ---
-'/projects/researchers/researchers01/sfalk/input_data/ctm_input/PPFD/'
+'$CTM3_INPUT/PPFD/'
 'ECopenIFSc38r1_yYYYYmMMdDDhHH_T159N80L60'
 --- Growing Season ---
     T  LGSMAP Growing season (GDAY/GLEN) / T = Use preprocessed  maps, F = use fixed latitudinal bands
-'/projects/researchers/researchers01/sfalk/input_data/ctm_input/GROWING_SEASON/GROWING_SEASON_2005.nc'
+'$CTM3_INPUT/GROWING_SEASON/GROWING_SEASON_2005.nc'
 --- tracer specific section ---
  T  1  LCONT T: start from restart file, F: set START_AVG: 0: start from STT=0, 1: CTM3 average, 2: CTM2 average
     F  LNCR T: use restart file in netCDF, F: old .sav format
@@ -119,7 +119,22 @@ PFZON  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1
 --- General multi-species dry scavenging data set:  call DRYSET_CTM3
 'tables/scavenging_dry.inp'            DRY deposition data set
 --- Emission list ---
-'tables/Ltracer_emis_ceds17_2005_megan_gfed4blhdaily.inp'    See ./tables/ for more
+'tables/dummy_Ltracer_emis_ceds17_2005_megan_gfed4blhdaily.inp'    See ./tables/ for more
+--- Radiation (FASTJX) ---
+'tables/FJX_spec.dat'                   spectral data
+'tables/FJX_scat.dat'                   mie scattering data
+'tables/FJX_UMaer.dat'                  UMich aerosol optical data
+'tables/ratj_oc.d'                      FASTJ->Oslo CTM3 species mapping
+'tables/ratO1D.d'                       FASTJ->Oslo CTM3 species mapping O1D
+'tables/atmos_std.dat'                  T and O3 climatology
+--- Polar Ozone Loss ---
+'tables/polar_o3loss.dat'
+--- Chemical rates ---
+'tables/r42het_T159.dat'
+--- MEGAN tables ---
+'tables/megan_tables.dat'
+--- Lightning distribution ---
+'tables/light_dist.ott2010.dat'         Ott et al [JGR, 2010]
 --------------------------------------------------------------------------------
 ---- DIAGNOSTICS ---------------------------------------------------------------
 LDUMP3HRS - T: Write diagnostic 3 hourly output and monthly means of defined tracers; F: Do not

@@ -13,15 +13,17 @@ Or can be found on git-hub.
 ---
 ## Quick start
 
-Log in to abel and create a directory:
+Log in to ABEL/SAGA and create a directory:
 ~~~
-> mkdir OsloCTM3
+> mkdir models
 ~~~
 You are going to clone the Oslo CTM3 into that directory.
 Change into the directory:
 ~~~
-> cd OsloCTM3
+> cd models
 ~~~
+
+> WARNING: The code changes and configuration for SAGA will only be merged into the master after December 1!!
 
 ### 1. Fork
 
@@ -71,17 +73,9 @@ You should always unload all automatically loaded modules first:
 ~~~
 > module purge
 ~~~
-This will load all necessary dependencies:
-~~~
-> module load netcdf.intel/4.3.3.1
-~~~
 Export the path of your Oslo CTM3 working directory <username_project>:
 ~~~
 > export CTM3_ROOT=${HOME}/OsloCTM3/<username_project>
-~~~
-and do the same with your work directory:
-~~~
-> export WORK=/work/users/<your_username> 
 ~~~
 Export your notur project number:
 ~~~
@@ -90,6 +84,34 @@ Export your notur project number:
 Set an alias for the job queue on abel:
 ~~~
 > alias squeue='squeue -lA ${PROJECT}'
+~~~
+
+### 1. ABEL
+Load all necessary dependencies:
+~~~
+> module load netcdf.intel/4.3.3.1
+~~~
+Export your work directory:
+~~~
+> export WORK=/work/users/${USER}
+~~~
+
+### 2. SAGA
+Load all necessary dependencies:
+~~~
+> module load netCDF-Fortran/4.4.4-intel-2018b
+~~~
+Export your work directory:
+~~~
+> export WORK=/cluster/work/users/${USER}
+~~~
+Export the input directory:
+~~~
+> export CICERO=/cluster/projects/nn9188k/OsloCTM3
+~~~
+You have to set:
+~~~
+> export NETCDF_ROOT=$EBROOTNETCDFMINFORTRAN
 ~~~
 
 > Tip: 
@@ -112,6 +134,7 @@ In case the compilation was successful, you will find the Oslo CTM3 executable
 
 ## Before running
 
+### 1. ABEL
 Make sure you are member of the group "cic-hpc" and have access to
 ~~~
 > ls /work/projects/cicero/ctm_input/
@@ -128,6 +151,21 @@ Then export the path:
 ~~~
 > export CTM_USR_INPUT=/projects/researchers/researchers01/sfalk/input/ctm_input/
 ~~~
+
+### 2. SAGA
+Make sure you are member of the group "nn9188k" and have access to
+~~~
+ls $CICERO
+~~~
+Then export the path to forcing etc.:
+~~~
+> export CTM3_INPUT=${CICERO}/Indata_CTM3
+~~~
+You can use your own forcings by setting:
+~~~
+> export CTM_USR_INPUT=<your_forcing_files>
+~~~
+
 ## Run the example ("c3run_example.job") in c3run
 
 Change to the run script directory:
@@ -151,7 +189,7 @@ Create a new directory - it should always have the same name as is given in line
 > mkdir C3RUN_example
 > cd C3RUN_example
 ~~~
-Finally send the model run to the batch system of abel:
+Finally send the model run to the batch system on ABEL/SAGA:
 ~~~
 > sbatch $CTM3_ROOT/c3run/c3run_example.job
 ~~~
@@ -194,7 +232,9 @@ Create a new file:
 ~~~
 > emacs setpaths &
 ~~~
-Add the lines:
+Add the lines and don't forget to change the names in <>!
+Save the file (EMACS: CTRL-x-s).
+### 1. ABEL
 ~~~~~~~~~~~~~
 #! /bin/bash
 echo "To set work environment do set_up <opt>"
@@ -218,8 +258,28 @@ export CTM3_ROOT=${HOME}/OsloCTM3/<username_project>
 module load netcdf.intel/4.3.3.1
 ~~~~~~~~~~~~~
 
-Don't forget to change the names in <>!
-Save the file (CTRL-x-s).
+### 2. SAGA
+~~~~~~~~~~~~~
+#! /bin/bash
+echo "To set work environment do set_up <opt>"
+# Export the current project number
+export PROJECT=<nnXXXXk>
+# alias for squeue
+alias squeue='squeue -lA ${PROJECT}'
+# Export the work directory
+export WORK=/cluster/work/users/${USER}
+# Export CICERO directory
+export CICERO=/cluster/projects/nn9188k/OsloCTM3
+
+# Load modules and setup
+module purge
+echo "Settings for OsloCTM3git"
+module load netCDF-Fortran/4.4.4-intel-2018b
+export CTM3_INPUT=${CICERO}/Indata_CTM3
+export CTM3_USR_INPUT=<your_forcing_files>
+export CTM3_ROOT=${WORKSPACE}/OsloCTM3
+export NETCDF_ROOT=$EBROOTNETCDFMINFORTRAN
+~~~~~~~~~~~~~
 
 ## git
 
@@ -246,7 +306,7 @@ Merge the "original" master into your "local" master:
 ~~~
 > git merge upstream/master
 ~~~
-## 2. Branch
+### 2. Branch
 
 Sometimes it will be necessary to "merge" changes in the master branch beck into your own branch. Here we will give a brief summary of the steps:
 

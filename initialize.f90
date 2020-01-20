@@ -39,7 +39,8 @@ contains
     use cmn_size, only: IPAR, IPARW, JPAR, JPARW, LPAR, LPARW, IDBLK, &
          JDBLK, MPBLK, MPIPAR, MPJPAR, LOSLOCSTRAT, LE90, IMDIV, &
          NTDPAR, NTBPAR, NSBPAR, NSTPAR, NPAR, NRMETD
-    use cmn_chem, only: INFILE_T, INFILE_WET, INFILE_DRY, INFILE_EMIS
+    use cmn_chem, only: INFILE_T, INFILE_WET, INFILE_DRY, INFILE_EMIS, &
+         INFILE_POLAR_O3LOSS, INFILE_RES, INFILE_MEGAN, INFILE_LIGHTNING
     use cmn_ctm, only: MPBLKIB, MPBLKIE, MPBLKJB, MPBLKJE, &
          AIR, STT, SUT, SVT, SWT, SUU, SVV, SWW, SUV, SUW, SVW, &
          IYEAR, JDAY, JYEAR, JMON, JDATE, GMTAU, TMON, TMET, &
@@ -68,6 +69,8 @@ contains
     use cmn_sfc, only: LANDUSE_IDX, LANDUSE_YEAR, fileLandSurfTypeFrac, &
          LAI_YEAR, fileLAI, ZOI_YEAR, fileZOI, LDDEPmOSaic, DDEP_PAR, &
          LGSMAP, fileGSMAP, NLCAT
+    use cmn_fjx, only: INFILE_FJX_SPEC, INFILE_FJX_SCAT, INFILE_FJX_AERO, &
+         INFILE_FJX_JS, INFILE_FJX_O1D, INFILE_FJX_CLIM
     use cloudjx, only: CLDFLAG, NRANDO, RANSEED, &
          LCLDQMD, LCLDQMN, LCLDRANA, LCLDRANQ, LCLDAVG
     use grid, only: SET_GRID, SET_GRID_VERT, SET_MEAN_PSFC, &
@@ -541,14 +544,49 @@ contains
 
     read (5,*)
     read(5,*)  INFILE_WET  ! wet scav list
-    write(6,'(a)') 'wet scaveinging list: '//trim(INFILE_WET)
+    write(6,'(a)') 'wet scavenging list: '//trim(INFILE_WET)
     read (5,*)
     read(5,*)  INFILE_DRY  ! dry scav list
-    write(6,'(a)') 'UCI dry scaveinging list: '//trim(INFILE_DRY)
+    write(6,'(a)') 'UCI dry scavenging list: '//trim(INFILE_DRY)
     read (5,*)
     read(5,*)  INFILE_EMIS  ! tracer emission list
     write(6,'(a)') 'tracer emission list: '//trim(INFILE_EMIS)
+
+    !// Read FASTJ related tables
+    read (5,*)
+    read(5,*)  INFILE_FJX_SPEC  ! spectral data
+    write(6,'(a)') 'FASTJ spectral data: '//trim(INFILE_FJX_SPEC)
+    read(5,*)  INFILE_FJX_SCAT  ! mie scattering data
+    write(6,'(a)') 'FASTJ mie scattering data: '//trim(INFILE_FJX_SCAT)
+    read(5,*)  INFILE_FJX_AERO  ! aerosol optical data
+    write(6,'(a)') 'FASTJ aerosol optical data: '//trim(INFILE_FJX_AERO)
+    read(5,*)  INFILE_FJX_JS  ! FASTJ->Oslo CTM3 species mapping
+    write(6,'(a)') 'FASTJ->Oslo CTM3 species mapping: '//trim(INFILE_FJX_JS)
+    read(5,*)  INFILE_FJX_O1D  ! FASTJ->Oslo CTM3 species mapping O1D
+    write(6,'(a)') 'FASTJ->Oslo CTM3 species mapping O1D: '//trim(INFILE_FJX_O1D)
+    read(5,*)  INFILE_FJX_CLIM  ! T and O3 climatology
+    write(6,'(a)') 'FASTJ temperature and ozone climatology: '//trim(INFILE_FJX_CLIM)
     
+    !// Read Polar ozone loss data
+    read (5,*)
+    read(5,*)  INFILE_POLAR_O3LOSS  ! polar ozone loss data
+    write(6,'(a)') 'Polar ozone loss data: '//trim(INFILE_POLAR_O3LOSS)
+
+    !// Read chemical rates in specified resolution
+    read (5,*)
+    read(5,*)  INFILE_RES  ! chemical rates in given resolution
+    write(6,'(a)') 'Chemical rates: '//trim(INFILE_RES)
+
+    !// Read MEGAN tables
+    read (5,*)
+    read(5,*)  INFILE_MEGAN  ! MEGAN input tables
+    write(6,'(a)') 'MEGAN tables: '//trim(INFILE_MEGAN)
+
+    !// Read Lightning distributions
+    read (5,*)
+    read(5,*)  INFILE_LIGHTNING  ! lightning distributions
+    write(6,'(a)') 'Lightning distributions: '//trim(INFILE_LIGHTNING)
+
     read (5,*)
     !// DIAGNOSTICS
     !//---------------------------------------------------------------------

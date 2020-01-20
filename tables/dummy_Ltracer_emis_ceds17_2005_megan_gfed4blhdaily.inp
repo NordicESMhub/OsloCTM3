@@ -1,0 +1,1315 @@
+----- Emissions for Oslo CTM3 -----------------------------------------------
+Lists the emissions used in monthly emission tables. In addition there are
+some hard coded emissions, which you define by setting the following flags.
+They are hard coded because they have their own arrays, and do not use the
+emission arrays E2DS and E3DS, and may be updated more often.
+--- IMPORTANT!!! ------------------------------------------------------------
+Nothing special yet.
+--- Aircraft emission data --------------------------------------------------
+  AirScen CEDS2017 2005     #NONE/REACT4C_5a/Quantify_MA8/TradeOff_1e
+  AirEmisPath '$CICERO/EMIS/CEDS0517/'
+--- Lightning emission data -------------------------------------------------
+  1       No. of species with lightning sources; emissions in Tg/yr
+  'NO'       14.0D0   5.0000D+00  0
+-2D-- 2D emissions ----------------------------------------------------------
+filename / description  (See detailed description below)
+  ID     SCALE       RES MONTH YEAR  CAT TYPE UNIT DIURN VERT DATASET_NAME SCENYEAR
+    SPECIES SCALING ('xxx' to close dataset)
+
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/NOx-em-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18_gn_200001-201412_CICERO.nc'
+  460    1.0000d+00  HLF   99  9999  AGR   2    0    0    0   'NOx_em_anthro_AGR'  2005
+    NO 0.62608694d0   # Convert from NO2 to NO: 30/46 * 0.96
+   NO2 0.04d0         # 0.04 as NO2
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/NOx-em-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18_gn_200001-201412_CICERO.nc'
+  460    1.0000d+00  HLF   99  9999  ENE   2    0    0    0   'NOx_em_anthro_ENE'  2005
+    NO 0.62608694d0   # Convert from NO2 to NO: 30/46 * 0.96
+   NO2 0.04d0         # 0.04 as NO2
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/NOx-em-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18_gn_200001-201412_CICERO.nc'
+  460    1.0000d+00  HLF   99  9999  IND   2    0    0    0   'NOx_em_anthro_IND'  2005
+    NO 0.62608694d0   # Convert from NO2 to NO: 30/46 * 0.96
+   NO2 0.04d0         # 0.04 as NO2
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/NOx-em-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18_gn_200001-201412_CICERO.nc'
+  460    1.0000d+00  HLF   99  9999  TRA   2    0    0    0   'NOx_em_anthro_TRA'  2005
+    NO 0.62608694d0   # Convert from NO2 to NO: 30/46 * 0.96
+   NO2 0.04d0         # 0.04 as NO2
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/NOx-em-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18_gn_200001-201412_CICERO.nc'
+  460    1.0000d+00  HLF   99  9999  RCO   2    0    0    0   'NOx_em_anthro_RCO'  2005
+    NO 0.62608694d0   # Convert from NO2 to NO: 30/46 * 0.96
+   NO2 0.04d0         # 0.04 as NO2
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/NOx-em-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18_gn_200001-201412_CICERO.nc'
+  460    1.0000d+00  HLF   99  9999  SLV   2    0    0    0   'NOx_em_anthro_SOL'  2005
+    NO 0.62608694d0   # Convert from NO2 to NO: 30/46 * 0.96
+   NO2 0.04d0         # 0.04 as NO2
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/NOx-em-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18_gn_200001-201412_CICERO.nc'
+  460    1.0000d+00  HLF   99  9999  WAS   2    0    0    0   'NOx_em_anthro_WAS'  2005
+    NO 0.62608694d0   # Convert from NO2 to NO: 30/46 * 0.96
+   NO2 0.04d0         # 0.04 as NO2
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/NOx-em-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18_gn_200001-201412_CICERO.nc'
+  460    1.0000d+00  HLF   99  9999  SHI   2    0    0    0   'NOx_em_anthro_SHI'  2005
+    NO 0.62608694d0   # Convert from NO2 to NO: 30/46 * 0.96
+   NO2 0.04d0         # 0.04 as NO2
+    xxx 0 To close this data set
+
+
+
+
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/CO-em-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18_gn_200001-201412_CICERO.nc'
+  460    1.0000d+00  HLF   99  9999  AGR   2    0    0    0   'CO_em_anthro_AGR'  2005
+    CO 1.d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/CO-em-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18_gn_200001-201412_CICERO.nc'
+  460    1.0000d+00  HLF   99  9999  ENE   2    0    0    0   'CO_em_anthro_ENE'  2005
+    CO 1.d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/CO-em-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18_gn_200001-201412_CICERO.nc'
+  460    1.0000d+00  HLF   99  9999  IND   2    0    0    0   'CO_em_anthro_IND'  2005
+    CO 1.d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/CO-em-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18_gn_200001-201412_CICERO.nc'
+  460    1.0000d+00  HLF   99  9999  TRA   2    0    0    0   'CO_em_anthro_TRA'  2005
+    CO 1.d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/CO-em-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18_gn_200001-201412_CICERO.nc'
+  460    1.0000d+00  HLF   99  9999  RCO   2    0    0    0   'CO_em_anthro_RCO'  2005
+    CO 1.d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/CO-em-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18_gn_200001-201412_CICERO.nc'
+  460    1.0000d+00  HLF   99  9999  SLV   2    0    0    0   'CO_em_anthro_SOL'  2005
+    CO 1.d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/CO-em-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18_gn_200001-201412_CICERO.nc'
+  460    1.0000d+00  HLF   99  9999  WAS   2    0    0    0   'CO_em_anthro_WAS'  2005
+    CO 1.d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/CO-em-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18_gn_200001-201412_CICERO.nc'
+  460    1.0000d+00  HLF   99  9999  SHI   2    0    0    0   'CO_em_anthro_SHI'  2005
+    CO 1.d0
+    xxx 0 To close this data set
+
+
+
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/SO2-em-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18_gn_200001-201412_CICERO.nc'
+  460    1.0000d+00  HLF   99  9999  AGR   2    0    0    0   'SO2_em_anthro_AGR'  2005
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/SO2-em-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18_gn_200001-201412_CICERO.nc'
+  460    1.0000d+00  HLF   99  9999  ENE   2    0    0    0   'SO2_em_anthro_ENE'  2005
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/SO2-em-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18_gn_200001-201412_CICERO.nc'
+  460    1.0000d+00  HLF   99  9999  IND   2    0    0    0   'SO2_em_anthro_IND'  2005
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/SO2-em-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18_gn_200001-201412_CICERO.nc'
+  460    1.0000d+00  HLF   99  9999  TRA   2    0    0    0   'SO2_em_anthro_TRA'  2005
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/SO2-em-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18_gn_200001-201412_CICERO.nc'
+  460    1.0000d+00  HLF   99  9999  RCO   2    0    0    0   'SO2_em_anthro_RCO'  2005
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/SO2-em-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18_gn_200001-201412_CICERO.nc'
+  460    1.0000d+00  HLF   99  9999  SLV   2    0    0    0   'SO2_em_anthro_SOL'  2005
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/SO2-em-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18_gn_200001-201412_CICERO.nc'
+  460    1.0000d+00  HLF   99  9999  WAS   2    0    0    0   'SO2_em_anthro_WAS'  2005
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/SO2-em-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18_gn_200001-201412_CICERO.nc'
+  460    1.0000d+00  HLF   99  9999  SHI   2    0    0    0   'SO2_em_anthro_SHI'  2005
+    SO2 0.975d0      # 97.5% as SO2, 2.5% as SO4 # Indata is kg(SO2)
+    SO4 0.0375d0     # 0.025 * 96/64
+    xxx 0 To close this data set
+
+
+
+
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/NH3-em-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18_gn_200001-201412_CICERO.nc'
+  460    1.0000d+00  HLF   99  9999  AGR   2    0    0    0   'NH3_em_anthro_AGR'  2005
+    NH3 1.d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/NH3-em-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18_gn_200001-201412_CICERO.nc'
+  460    1.0000d+00  HLF   99  9999  ENE   2    0    0    0   'NH3_em_anthro_ENE'  2005
+    NH3 1.d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/NH3-em-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18_gn_200001-201412_CICERO.nc'
+  460    1.0000d+00  HLF   99  9999  IND   2    0    0    0   'NH3_em_anthro_IND'  2005
+    NH3 1.d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/NH3-em-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18_gn_200001-201412_CICERO.nc'
+  460    1.0000d+00  HLF   99  9999  TRA   2    0    0    0   'NH3_em_anthro_TRA'  2005
+    NH3 1.d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/NH3-em-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18_gn_200001-201412_CICERO.nc'
+  460    1.0000d+00  HLF   99  9999  RCO   2    0    0    0   'NH3_em_anthro_RCO'  2005
+    NH3 1.d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/NH3-em-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18_gn_200001-201412_CICERO.nc'
+  460    1.0000d+00  HLF   99  9999  SLV   2    0    0    0   'NH3_em_anthro_SOL'  2005
+    NH3 1.d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/NH3-em-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18_gn_200001-201412_CICERO.nc'
+  460    1.0000d+00  HLF   99  9999  WAS   2    0    0    0   'NH3_em_anthro_WAS'  2005
+    NH3 1.d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/NH3-em-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18_gn_200001-201412_CICERO.nc'
+  460    1.0000d+00  HLF   99  9999  SHI   2    0    0    0   'NH3_em_anthro_SHI'  2005
+    NH3 1.d0
+    xxx 0 To close this data set
+
+
+
+
+
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC02-ethane-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  AGR   2    0    0    0   'VOC02_ethane_em_speciated_VOC_anthro_AGR'  2005
+    C2H6 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC02-ethane-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  ENE   2    0    0    0   'VOC02_ethane_em_speciated_VOC_anthro_ENE'  2005
+    C2H6 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC02-ethane-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  IND   2    0    0    0   'VOC02_ethane_em_speciated_VOC_anthro_IND'  2005
+    C2H6 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC02-ethane-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  TRA   2    0    0    0   'VOC02_ethane_em_speciated_VOC_anthro_TRA'  2005
+    C2H6 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC02-ethane-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  RCO   2    0    0    0   'VOC02_ethane_em_speciated_VOC_anthro_RCO'  2005
+    C2H6 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC02-ethane-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  SLV   2    0    0    0   'VOC02_ethane_em_speciated_VOC_anthro_SOL'  2005
+    C2H6 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC02-ethane-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  WAS   2    0    0    0   'VOC02_ethane_em_speciated_VOC_anthro_WAS'  2005
+    C2H6 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC02-ethane-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  SHI   2    0    0    0   'VOC02_ethane_em_speciated_VOC_anthro_SHI'  2005
+    C2H6 1.0000d0
+    xxx 0 To close this data set
+
+
+
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC03-propane-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  AGR   2    0    0    0   'VOC03_propane_em_speciated_VOC_anthro_AGR'  2005
+    C3H8 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC03-propane-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  ENE   2    0    0    0   'VOC03_propane_em_speciated_VOC_anthro_ENE'  2005
+    C3H8 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC03-propane-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  IND   2    0    0    0   'VOC03_propane_em_speciated_VOC_anthro_IND'  2005
+    C3H8 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC03-propane-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  TRA   2    0    0    0   'VOC03_propane_em_speciated_VOC_anthro_TRA'  2005
+    C3H8 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC03-propane-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  RCO   2    0    0    0   'VOC03_propane_em_speciated_VOC_anthro_RCO'  2005
+    C3H8 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC03-propane-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  SLV   2    0    0    0   'VOC03_propane_em_speciated_VOC_anthro_SOL'  2005
+    C3H8 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC03-propane-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  WAS   2    0    0    0   'VOC03_propane_em_speciated_VOC_anthro_WAS'  2005
+    C3H8 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC03-propane-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  SHI   2    0    0    0   'VOC03_propane_em_speciated_VOC_anthro_SHI'  2005
+    C3H8 1.0000d0
+    xxx 0 To close this data set
+
+
+
+
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC04-butanes-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  AGR   2    0    0    0   'VOC04_butanes_em_speciated_VOC_anthro_AGR'  2005
+    C4H10 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC04-butanes-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  ENE   2    0    0    0   'VOC04_butanes_em_speciated_VOC_anthro_ENE'  2005
+    C4H10 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC04-butanes-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  IND   2    0    0    0   'VOC04_butanes_em_speciated_VOC_anthro_IND'  2005
+    C4H10 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC04-butanes-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  TRA   2    0    0    0   'VOC04_butanes_em_speciated_VOC_anthro_TRA'  2005
+    C4H10 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC04-butanes-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  RCO   2    0    0    0   'VOC04_butanes_em_speciated_VOC_anthro_RCO'  2005
+    C4H10 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC04-butanes-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  SLV   2    0    0    0   'VOC04_butanes_em_speciated_VOC_anthro_SOL'  2005
+    C4H10 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC04-butanes-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  WAS   2    0    0    0   'VOC04_butanes_em_speciated_VOC_anthro_WAS'  2005
+    C4H10 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC04-butanes-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  SHI   2    0    0    0   'VOC04_butanes_em_speciated_VOC_anthro_SHI'  2005
+    C4H10 1.0000d0
+    xxx 0 To close this data set
+
+
+
+
+
+
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC05-pentanes-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  AGR   2    0    0    0   'VOC05_pentanes_em_speciated_VOC_anthro_AGR'  2005
+    C4H10 0.80555555d0    # Change from pentanes to butanes
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC05-pentanes-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  ENE   2    0    0    0   'VOC05_pentanes_em_speciated_VOC_anthro_ENE'  2005
+    C4H10 0.80555555d0    # Change from pentanes to butanes
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC05-pentanes-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  IND   2    0    0    0   'VOC05_pentanes_em_speciated_VOC_anthro_IND'  2005
+    C4H10 0.80555555d0    # Change from pentanes to butanes
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC05-pentanes-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  TRA   2    0    0    0   'VOC05_pentanes_em_speciated_VOC_anthro_TRA'  2005
+    C4H10 0.80555555d0    # Change from pentanes to butanes
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC05-pentanes-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  RCO   2    0    0    0   'VOC05_pentanes_em_speciated_VOC_anthro_RCO'  2005
+    C4H10 0.80555555d0    # Change from pentanes to butanes
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC05-pentanes-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  SLV   2    0    0    0   'VOC05_pentanes_em_speciated_VOC_anthro_SOL'  2005
+    C4H10 0.80555555d0    # Change from pentanes to butanes
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC05-pentanes-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  WAS   2    0    0    0   'VOC05_pentanes_em_speciated_VOC_anthro_WAS'  2005
+    C4H10 0.80555555d0    # Change from pentanes to butanes
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC05-pentanes-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  SHI   2    0    0    0   'VOC05_pentanes_em_speciated_VOC_anthro_SHI'  2005
+    C4H10 0.80555555d0    # Change from pentanes to butanes
+    xxx 0 To close this data set
+
+
+
+
+
+
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC06-hexanes-pl-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  AGR   2    0    0    0   'VOC06_hexanes_pl_em_speciated_VOC_anthro_AGR'  2005
+    C6H14 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC06-hexanes-pl-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  ENE   2    0    0    0   'VOC06_hexanes_pl_em_speciated_VOC_anthro_ENE'  2005
+    C6H14 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC06-hexanes-pl-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  IND   2    0    0    0   'VOC06_hexanes_pl_em_speciated_VOC_anthro_IND'  2005
+    C6H14 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC06-hexanes-pl-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  TRA   2    0    0    0   'VOC06_hexanes_pl_em_speciated_VOC_anthro_TRA'  2005
+    C6H14 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC06-hexanes-pl-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  RCO   2    0    0    0   'VOC06_hexanes_pl_em_speciated_VOC_anthro_RCO'  2005
+    C6H14 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC06-hexanes-pl-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  SLV   2    0    0    0   'VOC06_hexanes_pl_em_speciated_VOC_anthro_SOL'  2005
+    C6H14 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC06-hexanes-pl-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  WAS   2    0    0    0   'VOC06_hexanes_pl_em_speciated_VOC_anthro_WAS'  2005
+    C6H14 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC06-hexanes-pl-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  SHI   2    0    0    0   'VOC06_hexanes_pl_em_speciated_VOC_anthro_SHI'  2005
+    C6H14 1.0000d0
+    xxx 0 To close this data set
+
+
+
+
+
+
+
+
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC07-ethene-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  AGR   2    0    0    0   'VOC07_ethene_em_speciated_VOC_anthro_AGR'  2005
+    C2H4 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC07-ethene-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  ENE   2    0    0    0   'VOC07_ethene_em_speciated_VOC_anthro_ENE'  2005
+    C2H4 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC07-ethene-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  IND   2    0    0    0   'VOC07_ethene_em_speciated_VOC_anthro_IND'  2005
+    C2H4 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC07-ethene-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  TRA   2    0    0    0   'VOC07_ethene_em_speciated_VOC_anthro_TRA'  2005
+    C2H4 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC07-ethene-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  RCO   2    0    0    0   'VOC07_ethene_em_speciated_VOC_anthro_RCO'  2005
+    C2H4 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC07-ethene-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  SLV   2    0    0    0   'VOC07_ethene_em_speciated_VOC_anthro_SOL'  2005
+    C2H4 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC07-ethene-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  WAS   2    0    0    0   'VOC07_ethene_em_speciated_VOC_anthro_WAS'  2005
+    C2H4 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC07-ethene-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  SHI   2    0    0    0   'VOC07_ethene_em_speciated_VOC_anthro_SHI'  2005
+    C2H4 1.0000d0
+    xxx 0 To close this data set
+
+
+
+
+
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC08-propene-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  AGR   2    0    0    0   'VOC08_propene_em_speciated_VOC_anthro_AGR'  2005
+    C3H6 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC08-propene-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  ENE   2    0    0    0   'VOC08_propene_em_speciated_VOC_anthro_ENE'  2005
+    C3H6 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC08-propene-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  IND   2    0    0    0   'VOC08_propene_em_speciated_VOC_anthro_IND'  2005
+    C3H6 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC08-propene-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  TRA   2    0    0    0   'VOC08_propene_em_speciated_VOC_anthro_TRA'  2005
+    C3H6 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC08-propene-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  RCO   2    0    0    0   'VOC08_propene_em_speciated_VOC_anthro_RCO'  2005
+    C3H6 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC08-propene-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  SLV   2    0    0    0   'VOC08_propene_em_speciated_VOC_anthro_SOL'  2005
+    C3H6 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC08-propene-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  WAS   2    0    0    0   'VOC08_propene_em_speciated_VOC_anthro_WAS'  2005
+    C3H6 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC08-propene-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  SHI   2    0    0    0   'VOC08_propene_em_speciated_VOC_anthro_SHI'  2005
+    C3H6 1.0000d0
+    xxx 0 To close this data set
+
+
+
+
+
+
+
+
+
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC13-benzene-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  AGR   2    0    0    0   'VOC13_benzene_em_speciated_VOC_anthro_AGR'  2005
+    C6HXR 1.0000d0
+    Benzene 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC13-benzene-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  ENE   2    0    0    0   'VOC13_benzene_em_speciated_VOC_anthro_ENE'  2005
+    C6HXR 1.0000d0
+    Benzene 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC13-benzene-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  IND   2    0    0    0   'VOC13_benzene_em_speciated_VOC_anthro_IND'  2005
+    C6HXR 1.0000d0
+    Benzene 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC13-benzene-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  TRA   2    0    0    0   'VOC13_benzene_em_speciated_VOC_anthro_TRA'  2005
+    C6HXR 1.0000d0
+    Benzene 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC13-benzene-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  RCO   2    0    0    0   'VOC13_benzene_em_speciated_VOC_anthro_RCO'  2005
+    C6HXR 1.0000d0
+    Benzene 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC13-benzene-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  SLV   2    0    0    0   'VOC13_benzene_em_speciated_VOC_anthro_SOL'  2005
+    C6HXR 1.0000d0
+    Benzene 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC13-benzene-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  WAS   2    0    0    0   'VOC13_benzene_em_speciated_VOC_anthro_WAS'  2005
+    C6HXR 1.0000d0
+    Benzene 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC13-benzene-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  SHI   2    0    0    0   'VOC13_benzene_em_speciated_VOC_anthro_SHI'  2005
+    C6HXR 1.0000d0
+    Benzene 1.0000d0
+    xxx 0 To close this data set
+
+
+
+
+
+
+
+
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC14-toluene-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  AGR   2    0    0    0   'VOC14_toluene_em_speciated_VOC_anthro_AGR'  2005
+    C6HXR 1.1500d0        # For non-SOA. Mass of toluene (92g7mol) converted to xylene (106g/mol)
+    Tolmatic 1.0000d0     # For SOA
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC14-toluene-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  ENE   2    0    0    0   'VOC14_toluene_em_speciated_VOC_anthro_ENE'  2005
+    C6HXR 1.1500d0
+    Tolmatic 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC14-toluene-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  IND   2    0    0    0   'VOC14_toluene_em_speciated_VOC_anthro_IND'  2005
+    C6HXR 1.1500d0
+    Tolmatic 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC14-toluene-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  TRA   2    0    0    0   'VOC14_toluene_em_speciated_VOC_anthro_TRA'  2005
+    C6HXR 1.1500d0
+    Tolmatic 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC14-toluene-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  RCO   2    0    0    0   'VOC14_toluene_em_speciated_VOC_anthro_RCO'  2005
+    C6HXR 1.1500d0
+    Tolmatic 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC14-toluene-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  SLV   2    0    0    0   'VOC14_toluene_em_speciated_VOC_anthro_SOL'  2005
+    C6HXR 1.1500d0
+    Tolmatic 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC14-toluene-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  WAS   2    0    0    0   'VOC14_toluene_em_speciated_VOC_anthro_WAS'  2005
+    C6HXR 1.1500d0
+    Tolmatic 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC14-toluene-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  SHI   2    0    0    0   'VOC14_toluene_em_speciated_VOC_anthro_SHI'  2005
+    C6HXR 1.1500d0
+    Tolmatic 1.0000d0
+    xxx 0 To close this data set
+
+
+
+
+
+
+
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC15-xylene-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  AGR   2    0    0    0   'VOC15_xylene_em_speciated_VOC_anthro_AGR'  2005
+    C6HXR 1.0000d0
+    C6HXR_SOA 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC15-xylene-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  ENE   2    0    0    0   'VOC15_xylene_em_speciated_VOC_anthro_ENE'  2005
+    C6HXR 1.0000d0
+    C6HXR_SOA 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC15-xylene-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  IND   2    0    0    0   'VOC15_xylene_em_speciated_VOC_anthro_IND'  2005
+    C6HXR 1.0000d0
+    C6HXR_SOA 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC15-xylene-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  TRA   2    0    0    0   'VOC15_xylene_em_speciated_VOC_anthro_TRA'  2005
+    C6HXR 1.0000d0
+    C6HXR_SOA 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC15-xylene-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  RCO   2    0    0    0   'VOC15_xylene_em_speciated_VOC_anthro_RCO'  2005
+    C6HXR 1.0000d0
+    C6HXR_SOA 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC15-xylene-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  SLV   2    0    0    0   'VOC15_xylene_em_speciated_VOC_anthro_SOL'  2005
+    C6HXR 1.0000d0
+    C6HXR_SOA 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC15-xylene-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  WAS   2    0    0    0   'VOC15_xylene_em_speciated_VOC_anthro_WAS'  2005
+    C6HXR 1.0000d0
+    C6HXR_SOA 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC15-xylene-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  SHI   2    0    0    0   'VOC15_xylene_em_speciated_VOC_anthro_SHI'  2005
+    C6HXR 1.0000d0
+    C6HXR_SOA 1.0000d0
+    xxx 0 To close this data set
+
+
+
+
+
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC16-trimethylb-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  AGR   2    0    0    0   'VOC16_trimethylb_em_speciated_VOC_anthro_AGR'  2005
+    C6HXR 0.8833d0              # For non-SOA. Input 120g/mol converted to 106g/mol
+    C6HXR_SOA 0.8833d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC16-trimethylb-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  ENE   2    0    0    0   'VOC16_trimethylb_em_speciated_VOC_anthro_ENE'  2005
+    C6HXR 0.8833d0
+    C6HXR_SOA 0.8833d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC16-trimethylb-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  IND   2    0    0    0   'VOC16_trimethylb_em_speciated_VOC_anthro_IND'  2005
+    C6HXR 0.8833d0
+    C6HXR_SOA 0.8833d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC16-trimethylb-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  TRA   2    0    0    0   'VOC16_trimethylb_em_speciated_VOC_anthro_TRA'  2005
+    C6HXR 0.8833d0
+    C6HXR_SOA 0.8833d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC16-trimethylb-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  RCO   2    0    0    0   'VOC16_trimethylb_em_speciated_VOC_anthro_RCO'  2005
+    C6HXR 0.8833d0
+    C6HXR_SOA 0.8833d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC16-trimethylb-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  SLV   2    0    0    0   'VOC16_trimethylb_em_speciated_VOC_anthro_SOL'  2005
+    C6HXR 0.8833d0
+    C6HXR_SOA 0.8833d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC16-trimethylb-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  WAS   2    0    0    0   'VOC16_trimethylb_em_speciated_VOC_anthro_WAS'  2005
+    C6HXR 0.8833d0
+    C6HXR_SOA 0.8833d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC16-trimethylb-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  SHI   2    0    0    0   'VOC16_trimethylb_em_speciated_VOC_anthro_SHI'  2005
+    C6HXR 0.8833d0
+    C6HXR_SOA 0.8833d0
+    xxx 0 To close this data set
+
+
+
+
+
+
+
+
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC17-other-arom-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  AGR   2    0    0    0   'VOC17_other_arom_em_speciated_VOC_anthro_AGR'  2005
+    C6HXR 1.0000d0              # For non-SOA
+    Tolmatic 1.0000d0           # For SOA
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC17-other-arom-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  ENE   2    0    0    0   'VOC17_other_arom_em_speciated_VOC_anthro_ENE'  2005
+    C6HXR 1.0000d0
+    Tolmatic 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC17-other-arom-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  IND   2    0    0    0   'VOC17_other_arom_em_speciated_VOC_anthro_IND'  2005
+    C6HXR 1.0000d0
+    Tolmatic 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC17-other-arom-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  TRA   2    0    0    0   'VOC17_other_arom_em_speciated_VOC_anthro_TRA'  2005
+    C6HXR 1.0000d0
+    Tolmatic 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC17-other-arom-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  RCO   2    0    0    0   'VOC17_other_arom_em_speciated_VOC_anthro_RCO'  2005
+    C6HXR 1.0000d0
+    Tolmatic 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC17-other-arom-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  SLV   2    0    0    0   'VOC17_other_arom_em_speciated_VOC_anthro_SOL'  2005
+    C6HXR 1.0000d0
+    Tolmatic 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC17-other-arom-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  WAS   2    0    0    0   'VOC17_other_arom_em_speciated_VOC_anthro_WAS'  2005
+    C6HXR 1.0000d0
+    Tolmatic 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC17-other-arom-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  SHI   2    0    0    0   'VOC17_other_arom_em_speciated_VOC_anthro_SHI'  2005
+    C6HXR 1.0000d0
+    Tolmatic 1.0000d0
+    xxx 0 To close this data set
+
+
+
+
+
+
+
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC21-methanal-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  AGR   2    0    0    0   'VOC21_methanal_em_speciated_VOC_anthro_AGR'  2005
+    CH2O 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC21-methanal-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  ENE   2    0    0    0   'VOC21_methanal_em_speciated_VOC_anthro_ENE'  2005
+    CH2O 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC21-methanal-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  IND   2    0    0    0   'VOC21_methanal_em_speciated_VOC_anthro_IND'  2005
+    CH2O 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC21-methanal-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  TRA   2    0    0    0   'VOC21_methanal_em_speciated_VOC_anthro_TRA'  2005
+    CH2O 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC21-methanal-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  RCO   2    0    0    0   'VOC21_methanal_em_speciated_VOC_anthro_RCO'  2005
+    CH2O 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC21-methanal-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  SLV   2    0    0    0   'VOC21_methanal_em_speciated_VOC_anthro_SOL'  2005
+    CH2O 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC21-methanal-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  WAS   2    0    0    0   'VOC21_methanal_em_speciated_VOC_anthro_WAS'  2005
+    CH2O 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC21-methanal-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  SHI   2    0    0    0   'VOC21_methanal_em_speciated_VOC_anthro_SHI'  2005
+    CH2O 1.0000d0
+    xxx 0 To close this data set
+
+
+
+
+
+
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC22-other-alka-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  AGR   2    0    0    0   'VOC22_other_alka_em_speciated_VOC_anthro_AGR'  2005
+    CH3CHO 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC22-other-alka-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  ENE   2    0    0    0   'VOC22_other_alka_em_speciated_VOC_anthro_ENE'  2005
+    CH3CHO 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC22-other-alka-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  IND   2    0    0    0   'VOC22_other_alka_em_speciated_VOC_anthro_IND'  2005
+    CH3CHO 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC22-other-alka-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  TRA   2    0    0    0   'VOC22_other_alka_em_speciated_VOC_anthro_TRA'  2005
+    CH3CHO 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC22-other-alka-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  RCO   2    0    0    0   'VOC22_other_alka_em_speciated_VOC_anthro_RCO'  2005
+    CH3CHO 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC22-other-alka-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  SLV   2    0    0    0   'VOC22_other_alka_em_speciated_VOC_anthro_SOL'  2005
+    CH3CHO 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC22-other-alka-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  WAS   2    0    0    0   'VOC22_other_alka_em_speciated_VOC_anthro_WAS'  2005
+    CH3CHO 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC22-other-alka-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  SHI   2    0    0    0   'VOC22_other_alka_em_speciated_VOC_anthro_SHI'  2005
+    CH3CHO 1.0000d0
+    xxx 0 To close this data set
+
+
+
+
+
+
+
+
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC23-ketones-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  AGR   2    0    0    0   'VOC23_ketones_em_speciated_VOC_anthro_AGR'  2005
+    ACETONE 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC23-ketones-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  ENE   2    0    0    0   'VOC23_ketones_em_speciated_VOC_anthro_ENE'  2005
+    ACETONE 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC23-ketones-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  IND   2    0    0    0   'VOC23_ketones_em_speciated_VOC_anthro_IND'  2005
+    ACETONE 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC23-ketones-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  TRA   2    0    0    0   'VOC23_ketones_em_speciated_VOC_anthro_TRA'  2005
+    ACETONE 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC23-ketones-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  RCO   2    0    0    0   'VOC23_ketones_em_speciated_VOC_anthro_RCO'  2005
+    ACETONE 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC23-ketones-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  SLV   2    0    0    0   'VOC23_ketones_em_speciated_VOC_anthro_SOL'  2005
+    ACETONE 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC23-ketones-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  WAS   2    0    0    0   'VOC23_ketones_em_speciated_VOC_anthro_WAS'  2005
+    ACETONE 1.0000d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/VOC23-ketones-em-speciated-VOC-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  SHI   2    0    0    0   'VOC23_ketones_em_speciated_VOC_anthro_SHI'  2005
+    ACETONE 1.0000d0
+    xxx 0 To close this data set
+
+
+
+
+
+
+
+
+
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/BC-em-FOSSIL-FUEL-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  AGR   2    0    0    0   'BC_em_FOSSIL_FUEL_anthro_AGR'  2005
+    bcFF1fob 0.8d0
+    bcFF1fil 0.2d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/BC-em-FOSSIL-FUEL-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  ENE   2    0    0    0   'BC_em_FOSSIL_FUEL_anthro_ENE'  2005
+    bcFF1fob 0.8d0
+    bcFF1fil 0.2d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/BC-em-FOSSIL-FUEL-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  IND   2    0    0    0   'BC_em_FOSSIL_FUEL_anthro_IND'  2005
+    bcFF1fob 0.8d0
+    bcFF1fil 0.2d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/BC-em-FOSSIL-FUEL-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  TRA   2    0    0    0   'BC_em_FOSSIL_FUEL_anthro_TRA'  2005
+    bcFF1fob 0.8d0
+    bcFF1fil 0.2d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/BC-em-FOSSIL-FUEL-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  RCO   2    0    0    0   'BC_em_FOSSIL_FUEL_anthro_RCO'  2005
+    bcFF1fob 0.8d0
+    bcFF1fil 0.2d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/BC-em-FOSSIL-FUEL-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  SLV   2    0    0    0   'BC_em_FOSSIL_FUEL_anthro_SOL'  2005
+    bcFF1fob 0.8d0
+    bcFF1fil 0.2d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/BC-em-FOSSIL-FUEL-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  WAS   2    0    0    0   'BC_em_FOSSIL_FUEL_anthro_WAS'  2005
+    bcFF1fob 0.8d0
+    bcFF1fil 0.2d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/BC-em-FOSSIL-FUEL-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  SHI   2    0    0    0   'BC_em_FOSSIL_FUEL_anthro_SHI'  2005
+    bcFF1fob 0.8d0
+    bcFF1fil 0.2d0
+    xxx 0 To close this data set
+
+
+
+
+
+
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/BC-em-SOLID-BIOFUEL-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  AGR   2    0    0    0   'BC_em_SOLID_BIOFUEL_anthro_AGR'  2005
+    bcBF1fob 0.8d0
+    bcBF1fil 0.2d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/BC-em-SOLID-BIOFUEL-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  ENE   2    0    0    0   'BC_em_SOLID_BIOFUEL_anthro_ENE'  2005
+    bcBF1fob 0.8d0
+    bcBF1fil 0.2d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/BC-em-SOLID-BIOFUEL-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  IND   2    0    0    0   'BC_em_SOLID_BIOFUEL_anthro_IND'  2005
+    bcBF1fob 0.8d0
+    bcBF1fil 0.2d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/BC-em-SOLID-BIOFUEL-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  TRA   2    0    0    0   'BC_em_SOLID_BIOFUEL_anthro_TRA'  2005
+    bcBF1fob 0.8d0
+    bcBF1fil 0.2d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/BC-em-SOLID-BIOFUEL-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  RCO   2    0    0    0   'BC_em_SOLID_BIOFUEL_anthro_RCO'  2005
+    bcBF1fob 0.8d0
+    bcBF1fil 0.2d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/BC-em-SOLID-BIOFUEL-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  SLV   2    0    0    0   'BC_em_SOLID_BIOFUEL_anthro_SOL'  2005
+    bcBF1fob 0.8d0
+    bcBF1fil 0.2d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/BC-em-SOLID-BIOFUEL-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  WAS   2    0    0    0   'BC_em_SOLID_BIOFUEL_anthro_WAS'  2005
+    bcBF1fob 0.8d0
+    bcBF1fil 0.2d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/BC-em-SOLID-BIOFUEL-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460    1.d0  HLF   99  9999  SHI   2    0    0    0   'BC_em_SOLID_BIOFUEL_anthro_SHI'  2005
+    bcBF1fob 0.8d0
+    bcBF1fil 0.2d0
+    xxx 0 To close this data set
+
+
+
+
+
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/OC-em-FOSSIL-FUEL-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460   1.6d0  HLF   99  9999  AGR   2    0    0    0   'OC_em_FOSSIL_FUEL_anthro_AGR'  2005
+    omFF1fob 0.5d0
+    omFF1fil 0.5d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/OC-em-FOSSIL-FUEL-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460   1.6d0  HLF   99  9999  ENE   2    0    0    0   'OC_em_FOSSIL_FUEL_anthro_ENE'  2005
+    omFF1fob 0.5d0
+    omFF1fil 0.5d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/OC-em-FOSSIL-FUEL-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460   1.6d0  HLF   99  9999  IND   2    0    0    0   'OC_em_FOSSIL_FUEL_anthro_IND'  2005
+    omFF1fob 0.5d0
+    omFF1fil 0.5d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/OC-em-FOSSIL-FUEL-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460   1.6d0  HLF   99  9999  TRA   2    0    0    0   'OC_em_FOSSIL_FUEL_anthro_TRA'  2005
+    omFF1fob 0.5d0
+    omFF1fil 0.5d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/OC-em-FOSSIL-FUEL-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460   1.6d0  HLF   99  9999  RCO   2    0    0    0   'OC_em_FOSSIL_FUEL_anthro_RCO'  2005
+    omFF1fob 0.5d0
+    omFF1fil 0.5d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/OC-em-FOSSIL-FUEL-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460   1.6d0  HLF   99  9999  SLV   2    0    0    0   'OC_em_FOSSIL_FUEL_anthro_SOL'  2005
+    omFF1fob 0.5d0
+    omFF1fil 0.5d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/OC-em-FOSSIL-FUEL-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460   1.6d0  HLF   99  9999  WAS   2    0    0    0   'OC_em_FOSSIL_FUEL_anthro_WAS'  2005
+    omFF1fob 0.5d0
+    omFF1fil 0.5d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/OC-em-FOSSIL-FUEL-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460   1.6d0  HLF   99  9999  SHI   2    0    0    0   'OC_em_FOSSIL_FUEL_anthro_SHI'  2005
+    omFF1fob 0.5d0
+    omFF1fil 0.5d0
+    xxx 0 To close this data set
+
+
+
+
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/OC-em-SOLID-BIOFUEL-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460   1.6d0  HLF   99  9999  AGR   2    0    0    0   'OC_em_SOLID_BIOFUEL_anthro_AGR'  2005
+    omBF1fob 0.5d0
+    omBF1fil 0.5d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/OC-em-SOLID-BIOFUEL-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460   1.6d0  HLF   99  9999  ENE   2    0    0    0   'OC_em_SOLID_BIOFUEL_anthro_ENE'  2005
+    omBF1fob 0.5d0
+    omBF1fil 0.5d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/OC-em-SOLID-BIOFUEL-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460   1.6d0  HLF   99  9999  IND   2    0    0    0   'OC_em_SOLID_BIOFUEL_anthro_IND'  2005
+    omBF1fob 0.5d0
+    omBF1fil 0.5d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/OC-em-SOLID-BIOFUEL-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460   1.6d0  HLF   99  9999  TRA   2    0    0    0   'OC_em_SOLID_BIOFUEL_anthro_TRA'  2005
+    omBF1fob 0.5d0
+    omBF1fil 0.5d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/OC-em-SOLID-BIOFUEL-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460   1.6d0  HLF   99  9999  RCO   2    0    0    0   'OC_em_SOLID_BIOFUEL_anthro_RCO'  2005
+    omBF1fob 0.5d0
+    omBF1fil 0.5d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/OC-em-SOLID-BIOFUEL-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460   1.6d0  HLF   99  9999  SLV   2    0    0    0   'OC_em_SOLID_BIOFUEL_anthro_SOL'  2005
+    omBF1fob 0.5d0
+    omBF1fil 0.5d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/OC-em-SOLID-BIOFUEL-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460   1.6d0  HLF   99  9999  WAS   2    0    0    0   'OC_em_SOLID_BIOFUEL_anthro_WAS'  2005
+    omBF1fob 0.5d0
+    omBF1fil 0.5d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/CEDS0517/CEDS_CICERO/OC-em-SOLID-BIOFUEL-anthro_input4MIPs_emissions_CMIP_CEDS-2017-05-18-supplemental-data_gn_200001-201412_CICERO.nc'
+  460   1.6d0  HLF   99  9999  SHI   2    0    0    0   'OC_em_SOLID_BIOFUEL_anthro_SHI'  2005
+    omBF1fob 0.5d0
+    omBF1fil 0.5d0
+    xxx 0 To close this data set
+
+
+
+
+
+
+
+
+
+
+
+'$CICERO/EMIS/POET/oceans.co.nc'
+  601    1.0000d+00  1x1   99  9999  OCE   1    1    0    0   'oceans'  9999
+    CO 1.d0         # Oceanic emissions not included in MEGAN
+    xxx 0 To close this data set
+'$CICERO/EMIS/POET/oceans.c2h4.nc'
+  601    1.0000d+00  1x1   99  9999  OCE   1    1    0    0   'oceans'  9999
+    C2H4 1.d0         # Oceanic emissions not included in MEGAN
+    xxx 0 To close this data set
+'$CICERO/EMIS/POET/oceans.c2h6.nc'
+  601    1.0000d+00  1x1   99  9999  OCE   1    1    0    0   'oceans'  9999
+    C2H6 1.d0         # Oceanic emissions not included in MEGAN
+    xxx 0 To close this data set
+'$CICERO/EMIS/POET/oceans.c3h6.nc'
+  601    1.0000d+00  1x1   99  9999  OCE   1    1    0    0   'oceans'  9999
+    C3H6 1.d0         # Oceanic emissions not included in MEGAN
+    xxx 0 To close this data set
+'$CICERO/EMIS/POET/oceans.c3h8.nc'
+  601    1.0000d+00  1x1   99  9999  OCE   1    1    0    0   'oceans'  9999
+    C3H8 1.d0         # Oceanic emissions not included in MEGAN
+    xxx 0 To close this data set
+
+
+'$CICERO/EMIS/NH3/NH3geia1997.nc'
+  601    1.0000d+00  1x1   99  9999  NAT   0    0    0    0   'emiss_wilan'  9999
+    NH3  1.d0
+    xxx 0 To close this data set
+'$CICERO/EMIS/NH3/NH3geia1997.nc'
+  601    1.0000d+00  1x1   99  9999  OCE   0    0    0    0   'emiss_oce'  9999
+    NH3  1.d0
+    xxx 0 To close this data set
+
+'$CICERO/EMIS/SULFUR/H2Ssol.1x1'
+  551    1.0000d+00  1x1   99  9999  NAT   1    1    0    0   'H2S_soil'  9999
+    H2S 1.d0
+    xxx 0 To close this data set
+
+
+'end2D' 'end2D' -------------------------------------------------------------
+-3D-- Emissions 3-D ---------------------------------------------------------
+filename / description
+  ID     SCALE       RES MONTH YEAR  CAT TYPE UNIT DIURN DATASET_NAME SCENYEAR
+
+'end3D' 'end3D' -------------------------------------------------------------
+-STV- Used for short time variations; only one species per field ------------
+format(char)/name for 2d-variable/tracer info
+
+'$CICERO/EMIS/SULFUR/DMSconc_Kettle2.1x1'
+  551    1.0000d+00  1x1   99  9999  NAT   2   -1    0   'DMSseaconc'  9999
+    DMS     # Unit is nmol*m2/L, handeled by read-in
+
+'$CICERO/EMIS/SULFUR/contineous_volc.1x1'  
+  554    1.0000d+00  1x1   99  9999  NAT   2   -1    0   '---' 9999
+    SO2     # Unit is kg/year, changed to kg/s in read-in
+
+'Indata_CTM3/oceanemis/'
+  555    1.0000d+00  HLF   99  9999  OCN   0   -1    0   '---'  9999
+  ---   #This section just turns on the OC oceanic emissions
+
+'DEAD_Mineral_Dust_Mobilisation_Dataset_Name'
+  556    2.74925d-04  HLF   99  9999  NAT   0   -1    0   'mbl_bsn_fct'  9999
+  ---   #This section sets mobilisation map name and fudge factor for DUST
+
+'Indata_CTM3/MEGAN/'
+  557    1.00000d+00  HLF   99  9999  BIO   0   -1    0   '---'  9999
+  ---   #This section defines the use of MEGAN and sets path to MEGAN datasets
+
+-END- -END-  ----------------------------------------------------------------
+
+-BBB- Used for biomass burning - may list several species -------------------
+filename / description
+  ID     SCALE       RES MONTH YEAR  CAT TYPE UNIT DIURN DATASET_NAME
+'$CICERO/EMIS/GFEDv4/'
+  572    1.0000d-00  HLF   99  9999  NAT   0   -1    0   'biomass_burning'
+  #CTMname    GFEDname        Scaling    Part.factor (SAVA/BORF/TEMF/DEFO/PEAT/AGRI)
+   'CO'       'CO'             1.0000d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 1.00d0
+   'NO'       'NOx'            0.9000d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 1.00d0
+   'NO2'      'NOx'            0.1533d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 1.00d0
+   'CH4'      'CH4'            0.0000d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 1.00d0
+   'C2H4'     'C2H4'           1.0000d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 1.00d0
+   'C2H6'     'C2H6'           1.0000d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 1.00d0
+   'C3H6'     'C3H6'           1.0000d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 1.00d0
+   'C4H10'    'NMHC'           0.0000d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 1.00d0
+   'C6H14'    'Higher_Alkanes' 1.0000d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 1.00d0
+   'C6HXR'    'Toluene_lump'   1.0000d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 1.00d0
+   'Tolmatic' 'Toluene_lump'   1.0000d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 1.00d0
+   'CH2O'     'CH2O'           1.0000d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 1.00d0
+   'CH3CHO'   'C2H4O'          1.0000d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 1.00d0
+   'ISOPRENE' 'C5H8'           1.0000d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 1.00d0
+   'C3H8'     'C3H8'           1.0000d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 1.00d0
+   'ACETONE'  'C3H6O'          1.0000d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 1.00d0
+   'NH3'      'NH3'            1.0000d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 1.00d0
+   'SO2'      'SO2'            0.9750d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 1.00d0
+   'SO4'      'SO2'            0.0375d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 1.00d0
+   'bcBB1fob' 'BC'             0.8000d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 0.00d0
+   'bcBB1fil' 'BC'             0.2000d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 0.00d0
+   'omBB1fob' 'OC'             1.3000d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 0.00d0
+   'omBB1fil' 'OC'             1.3000d0   1.00d0 1.00d0 1.00d0 1.00d0 1.00d0 0.00d0
+   '---'      '---'            0.0000d0   0.00d0 0.00d0 0.00d0 0.00d0 0.00d0 0.00d0
+'endFF' 'endFF'  -------------------------------------------------------------
+
+
+==============================================================================
+DESCRIPTION OF FILE SETTINGS
+==============================================================================
+----- Variables to set above -----
+ID:    ID number to control read-in, connected to the file structure
+SCALE: Dataset scaling factor. No scaling when 1.d0.
+RES:   Resolution of input data (character)
+       1x1 = 1x1 degree, HLF = half; 0.5x0.5, ZP1 = zero point 1; 0.1:0.1, QRT=0.25x0.25
+MONTH: Month which the emissions apply for (99 = all months)
+YEAR:  Year which the emissions apply for (9999 = all years)
+CAT:   Category of the emissions (for diagnostics)
+TYPE:  Read into ETYP
+       0: Use data as is
+       1: Data is per cm2, multiply with area (m2)*1.d4
+       2: Data is per m2, multiply with area (m2)
+UNIT:  Read into EUNIT
+       0: kg/s (or kg/area/s when ETYP=1,2)
+       1: molec/s (or molec/area/s when ETYP=1,2)
+       2: kg/y (or kg/area/y when ETYP=1,2)
+       3: kg/month (or kg/area/month when ETYP=1,2)
+DIURN: Flag for diurnal variation, local hour or based on 2D field.
+       0: No diurnal variation
+       1: RETRO variations (TNO)
+       2: +50% from 8am to 7pm, -50% from 8pm to 7am (e.g. for BCOC)
+       3: Scale with both sunlight and temperature
+       4: Scale with sunlight
+       5: Scale with heating degree day (HDD)
+VERT:  Distribute 2D emissions on a few layers
+       Alt 0-16/16-41/41-77/77-128
+       1: 0.250/0.125/0.125/0.500  (typical power/industrial combustion)
+       2: 0.600/0.200/0.200/0.000  (typical residential heating)
+       3: 0.300/0.400/0.300/0.000  (typical ships)
+DATASET_NAME: Name of dataset (e.g. in netCDF files).
+SPECIES: The name of the species to use the listed dataset.
+SCALING: Separate scaling factor for the listed species.
+         Used in addition to SCALE above, which applies for the dataset.
+           Normal usage:
+         If the units of the input data on file is other than molecules
+         per time and/or area, you have to scale the data to correct for
+         differences in molecular mass.
+         If input is molecules, you should *not* scale with molecular mass.
+
+         If you specify a category not on file, the program will stop.
+
+
+EDGAR category definitios:
+http://edgar.jrc.ec.europa.eu/methodology.php

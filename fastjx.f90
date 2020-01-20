@@ -46,7 +46,9 @@ contains
     !// Will be updated for fastJX7
     !//---------------------------------------------------------------------
     use cmn_precision, only: r8
-    use cmn_fjx, only: AER1N, AER2N, AER1P, AER2P, LTROP
+    use cmn_fjx, only: AER1N, AER2N, AER1P, AER2P, LTROP, &
+         INFILE_FJX_SPEC, INFILE_FJX_SCAT, INFILE_FJX_AERO, &
+         INFILE_FJX_JS, INFILE_FJX_O1D, INFILE_FJX_CLIM
     use utilities, only: get_free_fileid
     !//---------------------------------------------------------------------
     implicit none
@@ -58,24 +60,24 @@ contains
     IPH = get_free_fileid()
 
     !// Read in fast-J X-sections (spectral data) <<<<<< new fast-JX
-    call RD_XXX(IPH,'tables/FJX_spec.dat')
+    call RD_XXX(IPH,INFILE_FJX_SPEC)
 
     !// Read in aerosol/cloud scattering data <<<<<<<<<< new fast-JX
-    call RD_MIE(IPH,'tables/FJX_scat.dat')
+    call RD_MIE(IPH,INFILE_FJX_SCAT)
 
     !// Read in UMich aerosol optical data   <<<<<<<<<<< new fast-JX 6.1
-    call RD_UM (IPH,'tables/FJX_UMaer.dat')
+    call RD_UM (IPH,INFILE_FJX_AERO)
 
     !// Read in labels of photolysis rates required
     !// >>>>> keyed to users chem code
     !// this is a tranfer map from the J_s automatically calculated in
     !// fast-JX onto the names and order in the users chemistry code
     !// CTM3: skip TSPECI
-    call RD_JS(IPH,'tables/ratj_oc.d') !,TSPECI)
-    call RD_O1D(IPH,'tables/ratO1D.d')
+    call RD_JS(IPH,INFILE_FJX_JS) !,TSPECI)
+    call RD_O1D(IPH,INFILE_FJX_O1D)
 
     !// Read in T & O3 climatology            >>>> general backup clim.
-    call RD_PROF(IPH,'tables/atmos_std.dat')
+    call RD_PROF(IPH,INFILE_FJX_CLIM)
 
     !// Aerosol paths
     AER1N(:,:,:) = 0
