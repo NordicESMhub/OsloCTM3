@@ -426,8 +426,10 @@ contains
       sea_multi = 1._r8
 
       if (L .eq. 1) then
+         k_hobr_dep = r_hobr_dep
          POLL_CHBr3_L1 = POLL_CHBr3 * sea_multi
       else
+         k_hobr_dep = 0._r8
          POLL_CHBr3_L1 = 0._r8
       end if
 
@@ -594,7 +596,7 @@ contains
       k_oh_ar2    = r_oh_ar2
       k_no_c3h7o2 = r_no_c3h7o2
       !// Marit, HOBr deposition, 7.10.19
-      k_hobr_dep = r_hobr_dep
+      !k_hobr_dep = r_hobr_dep
       !// Marit, BrO + NO2 -> BrONO2, 8.10.19
       k_no2_bro_m = r_no2_bro_m
 
@@ -1205,7 +1207,7 @@ contains
              M_HOBr .lt. 0._r8 .or. M_BrCl .lt. 0._r8) then
            if (LDEBUG) then
               if (SCAL .lt. 0._r8) then
-                 print*,'OSLO_CHEM: Br SCAL',ICOL,JCOL,l,SCAL
+                 print*,'OSLO_CHEM: LON/LAT/L/SCAL',ICOL,JCOL,l,SCAL
                  print*,"M_NO:",M_NO
                  print*,'M_Bry',M_Bry
                  print*,'Br2X',Br2x
@@ -3631,8 +3633,8 @@ contains
            COUNTnegO3(L) = COUNTnegO3(L) + 1._r8
            !// If you need to look into the specifics of the negative
            !// O3, you can include this print-outs:
-           !write(*,'(a,2i4,i3,2es12.4)')'NEGATIVE O3',ICOL,JCOL,l,&
-           !                             ZC(1,L),ZC(43,L)
+           write(*,'(a,2i4,i3,2es12.4)')'NEGATIVE O3',ICOL,JCOL,L,&
+                                        ZC(1,L),ZC(43,L)
            !// In CTM1 or older, O3 was set to 1.d+9: ZC(1,L) = 1.d+9
            !// but CTM2 always used 1.1[NO]
            ZC(1,L) = 1.1_r8 * ZC(43,L)
