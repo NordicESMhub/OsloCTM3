@@ -271,7 +271,7 @@ contains
     !// Input
 
     !// Local parameters
-    integer, parameter :: nObs = 33
+    integer, parameter :: nObs = 1
     real(r8), dimension(nObs), parameter :: ANNUAL_CH4 = &
       (/ 808.25_r8 /)
       !(/ 1644.56_r8, 1657.39_r8, 1669.79_r8, 1682.08_r8, 1693.18_r8, &
