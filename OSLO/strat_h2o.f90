@@ -60,7 +60,7 @@ module strat_h2o
 
   !// Sum of H2+2CH4+H2O:e sumH2 = 7.72ppm (Zöger et al, JGR 1999, vol 104,
   !// D1, pp 1817-1825) OLD VALUE: 6.97d-6
-  real(r8), parameter :: sumH2 = 5.61e-06_r8 !1850 value
+  real(r8), parameter :: sumH2 = 7.72e-6_r8 
 
   !// For converting from mass to concentration
   real(r8), parameter :: &
