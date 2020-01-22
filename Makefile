@@ -36,7 +36,7 @@ VNATIVE :=VNATIVEL60
 #
 #CTM run resolution (degrade horizontal, collapse vertical)
 #Horizontal resolution (HORIGINAL/HTWO/HFOUR)
-HWINDOW :=HFOUR
+HWINDOW :=HTWO
 #Collapse layer 1:3 and 4:5?
 COLLAPSE :=N
 #-----------------------------------------------------------------
