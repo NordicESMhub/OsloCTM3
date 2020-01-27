@@ -111,9 +111,9 @@ contains
     !// Update CH4FIELD
     if (CH4TYPE .eq. 1) then
        !// HYMN (default)
-       !call ch4surface_hymn()
+       call ch4surface_hymn()
        !// Scale hymn data - uses MYEAR for scaling.
-       call ch4surface_scale_hymn()
+       !call ch4surface_scale_hymn()
     else if (CH4TYPE .eq. 2) then
        !// POET
        call ch4surface_poet(2000)
@@ -245,6 +245,9 @@ contains
     end if
 
     write(6,'(a)') '* Surface CH4 updated to HYMN fields.'
+    write(6, *) '---------------------'
+    write(6, *) 'CH4Field::'
+    write(6, *) CH4FIELD
 
     !// --------------------------------------------------------------------
   end subroutine ch4surface_hymn
