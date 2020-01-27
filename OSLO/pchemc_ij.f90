@@ -908,7 +908,10 @@ contains
         !From (PROD_Bry + LOSS * M_CH3Br) to:
         PROD_Bry =  PROD_Bry + &
              (k_oh_chbr3 * 3._r8 * M_OH + DCH3Br * 3._r8) * M_CH3Br &!CHBr3 + OH -> 3Br + prod and CHBr3 + hv -> 3Br + prod.
-             + 0.5_r8 * k_hobr_dep * M_HOBr !HOBr + H+ + Br-(snow) -> Br2 + H2O
+             !// Original: 
+             !+ 0.5_r8 * k_hobr_dep * M_HOBr !HOBr + H+ + Br-(snow) -> Br2 + H2O
+             !// New (27.01.20)
+             + k_hobr_dep * M_HOBr !HOBr + H+ + Br-(snow) -> Br2 + H2O
 
 
         !// Marit, halogen scaling, 13.10.19
@@ -939,7 +942,10 @@ contains
               !// Clx will have a different scaling than strat.
               !// Clx:
               xClx = M_Clx
-              yClx = M_Cl + M_ClO + M_BrCl
+              !// Original:
+              !yClx = M_Cl + M_ClO + M_BrCl
+              !// New (27.01.20)
+              yClx = M_Cl + M_ClO
 
               FACN = xClx/yClx
 
@@ -999,7 +1005,10 @@ contains
         !// saturday 05.08.17
         !// Setting 0.50_r8 to 1.0_r8, all dependence on Bry
         PROD_Bry = &
-             + 0.50_r8 * k_hobr_dep * M_HOBr &!HOBr + H+ + Br-(snow)-> Br2 + H20
+             !// Original: 
+             ! + 0.50_r8 * k_hobr_dep * M_HOBr &!HOBr + H+ + Br-(snow)-> Br2 + H20
+             !// New (27.01.20):
+             + k_hobr_dep * M_HOBr &!HOBr + H+ + Br-(snow)-> Br2 + H20
              + PROD_Bry                   !Sources from CHBr3
             ! + 0.5 * k_hobr_dep * M_HOBr !HOBr + H+ + Cl- (snow) -> BrCl + H2O
 
@@ -1041,7 +1050,10 @@ contains
         !// Integrate BrCl
 
         PROD = k_hobr_hcl_a * M_HOBr    &!HOBr + HCl (aerosol) -> BrCl + H2O
-             + 0.50_r8 * k_hobr_dep * M_HOBr !HOBr + H+ + Cl-(snow)-> BrCl + H2O
+             !// Original:
+             !+ 0.50_r8 * k_hobr_dep * M_HOBr !HOBr + H+ + Cl-(snow)-> BrCl + H2O
+             !// New (27.01.20)
+             + k_hobr_dep * M_HOBr !HOBr + H+ + Cl-(snow)-> BrCl + H2O
 
         LOSS = DBrCl * M_BrCl            !BrCl + hv -> Br + Cl
 
@@ -1055,7 +1067,10 @@ contains
         !// Q[--] is not mulitiplied with [--], because of d[x]/dt = P - Q[x]
 
         PBr2 = k_hobr_hbr_a * M_HOBr      &!HOBr + HBr (aerosol) -> Br2 + H2O
-               + 0.50_r8 * k_hobr_dep * M_HOBr !HOBr + h+ +Br-(snow)-> Br2 + H2O
+             !// Original
+             ! + 0.50_r8 * k_hobr_dep * M_HOBr !HOBr + h+ +Br-(snow)-> Br2 + H2O
+             !// New (27.01.20):
+             + k_hobr_dep * M_HOBr !HOBr + h+ +Br-(snow)-> Br2 + H2O
 
         QBr2 = DBr2                        !Br2 + hv -> 2Br
 
@@ -1082,8 +1097,9 @@ contains
         BrZ = M_Br + M_BrO
 
         PBrZ = DHOBr * M_HOBr            &!HOBr + hv -> Br + OH
-             + k_hobr_hbr_a * M_HOBr      &!HOBr + HBr (aerosol) -> Br2 + H2O
-             + 0.50_r8 * k_hobr_dep * M_HOBr &!HOBr + h+ + Br-(snow)-> Br2 + H2O
+             !// Original (removed as Br2 is not a part of BrZ) (27.01.20)
+             !+ k_hobr_hbr_a * M_HOBr      &!HOBr + HBr (aerosol) -> Br2 + H2O
+             !+ 0.50_r8 * k_hobr_dep * M_HOBr &!HOBr + h+ + Br-(snow)-> Br2 + H2O
              + 2._r8 * DBr2 * M_Br2      &!Br2 + hv -> 2Br
              + DBrCl * M_BrCl            &!BrCl + hv -> Br + Cl
 !             + k_oh_ch3br * M_CH3Br * M_OH         &!CH3Br + OH -> Br + prod.
@@ -1161,35 +1177,48 @@ contains
         BrTOT = BrZX + BrNO3X + 2._r8*Br2X + HBrX + OHBrX + M_BrCl
 
         if (BrZX .gt. M_BrCl .and. BrZX .gt. BrNO3X .and. &
-             BrZX .gt. HBrX .and. BrZX .gt. OHBrX) then
+             BrZX .gt. HBrX .and. BrZX .gt. OHBrX .and. &
+             BrZX .gt. 2._r8*Br2x) then
            BrZ = BrZX + M_Bry - BrTOT
         else
            BrZ = BrZX
         end if
 
         if (BrNO3X .gt. M_BrCl .and. BrNO3X .gt. BrZX .and. &
-             BrNO3X .gt. HBrX .and. BrNO3X .gt. OHBrX) then
+             BrNO3X .gt. HBrX .and. BrNO3X .gt. OHBrX .and. &
+             BrNO3X .gt. 2._r8*Br2x) then
            M_BrONO2 = BrNO3X + M_Bry - BrTOT
         else
            M_BrONO2 = BrNO3X
         end if
 
+        if ( 2._r8*Br2x .gt. M_BrCl .and.  2._r8*Br2x .gt. BrZX .and. &
+              2._r8*Br2x .gt. HBrX .and.  2._r8*Br2x .gt. OHBrX .and. &
+              2._r8*Br2x .gt. BrNO3X) then
+           M_Br2 = Br2x + 0.5_r8*M_Bry - 0.5_r8*BrTOT
+        else
+           M_Br2 = Br2x
+        end if
+
         if (HBrX .gt. M_BrCl .and. HBrX .gt. BrZX .and. &
-             HBrX .gt. BrNO3X .and. HBrX .gt. OHBrX) then
+             HBrX .gt. BrNO3X .and. HBrX .gt. OHBrX .and. &
+             HBrX .gt. 2._r8*Br2x) then
            M_HBr = HBrX + M_Bry - BrTOT
         else
            M_HBr = HBrX
         end if
 
         if (OHBrX .gt. M_BrCl .and. OHBrX .gt. BrZX .and. &
-             OHBrX .gt. BrNO3X .and. OHBrX .gt. HBrX) then
+             OHBrX .gt. BrNO3X .and. OHBrX .gt. HBrX .and. &
+             OHBrX .gt. 2._r8*Br2x) then
            M_HOBr = OHBrX + M_Bry - BrTOT
         else
            M_HOBr = OHBrX
         end if
 
         if (M_BrCl .gt. BrZX .and. M_BrCl .gt. BrNO3X .and. &
-             M_BrCl .gt. HBrX .and. M_BrCl .gt. OHBrX) then
+             M_BrCl .gt. HBrX .and. M_BrCl .gt. OHBrX .and. &
+             M_BrCl .gt. 2._r8*Br2x) then
            M_BrCl = M_BrCl + M_Bry - BrTOT
            !// No need for else-statement
         end if
