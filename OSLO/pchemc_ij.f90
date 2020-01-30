@@ -939,6 +939,12 @@ contains
               M_Br2    = M_Br2 * FACN
               M_BrCl   = M_BrCl * FACN
 
+              write(6,*) '----'
+              write(6,*) 'First loop: Iteration number:'
+              write(6,*) ISCALE
+              write(6,*) 'FACN M_Br  M_BrO  M_HBr M_BrONO2 M_HOBr  M_Br2 M_BrCl'
+              write(6,*) FACN, M_Br,M_BrO,M_HBr,M_BrONO2,M_HOBr,M_Br2,M_BrCl
+              write(6,*) '-----------'
               !// Clx will have a different scaling than strat.
               !// Clx:
               xClx = M_Clx
@@ -951,6 +957,7 @@ contains
 
               M_Cl  = M_Cl * FACN
               M_ClO = M_ClO * FACN
+              
 
            end do !// do ISCALE = 1,3
 
@@ -1344,6 +1351,14 @@ contains
               M_HOBr = M_HOBr * FACN
               M_Br2  = M_Br2 * FACN
               M_BrCl = M_BrCl * FACN
+
+
+              write(6,*) '----'
+              write(6,*) 'Second loop: Iteration number:'
+              write(6,*) ISCALE
+              write(6,*) 'FACN M_Br  M_BrO  M_HBr M_BrONO2 M_HOBr  M_Br2 M_BrCl'
+              write(6,*) FACN, M_Br,M_BrO,M_HBr,M_BrONO2,M_HOBr,M_Br2,M_BrCl
+              write(6,*) '--------'
 
               !// Clx:
               XClx = M_Clx
