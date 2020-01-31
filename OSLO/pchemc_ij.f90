@@ -908,14 +908,13 @@ contains
         !From (PROD_Bry + LOSS * M_CH3Br) to:
         PROD_Bry =  PROD_Bry + &
              (k_oh_chbr3 * 3._r8 * M_OH + DCH3Br * 3._r8) * M_CH3Br &!CHBr3 + OH -> 3Br + prod and CHBr3 + hv -> 3Br + prod.
-             + 0.5_r8 * k_hobr_dep * M_HOBr !HOBr + H+ + Br-(snow) -> Br2 + H2O
 
 
         !// Marit, halogen scaling, 13.10.19
          !// Scale if this is the first loop with the latest J-values
 
         !// Bry = Br + BrO + BrONO2 + OHBr + HBr + 2*Br2 + BrCl (same as strat.)
-        !// Clx = Cl + ClO + BrCl (not the same as strat.)
+        !// Clx = Cl + ClO (not the same as strat.)
         !// Cly = Clx + HCl
 
         if (NST .eq. 1) then
@@ -936,15 +935,25 @@ contains
               M_Br2    = M_Br2 * FACN
               M_BrCl   = M_BrCl * FACN
 
+              write(6,*) '----'
+              write(6,*) 'First loop: Iteration number:'
+              write(6,*) ISCALE
+              write(6,*) 'FACN M_Br  M_BrO  M_HBr M_BrONO2 M_HOBr  M_Br2 M_BrCl'
+              write(6,*) FACN, M_Br,M_BrO,M_HBr,M_BrONO2,M_HOBr,M_Br2,M_BrCl
+              write(6,*) '-----------'
               !// Clx will have a different scaling than strat.
               !// Clx:
               xClx = M_Clx
-              yClx = M_Cl + M_ClO + M_BrCl
+              !// Original:
+              !yClx = M_Cl + M_ClO + M_BrCl
+              !// New (27.01.20)
+              yClx = M_Cl + M_ClO
 
               FACN = xClx/yClx
 
               M_Cl  = M_Cl * FACN
               M_ClO = M_ClO * FACN
+              
 
            end do !// do ISCALE = 1,3
 
@@ -974,16 +983,18 @@ contains
         !// Loss of the is what is produced of HCl
         !// Testing value of M_Clx
         !// Cly is from the CFC-gas section, not really nessecary here
-        PROD_Cly = 0._r8
-        PROD_Clx = PROD_Cly + LOSS*M_HCl
+        PROD_Cly = DBrCl * M_BrCl
+        PROD_Clx = PROD_Cly
 
-        if (M_Clx .gt. 1.e-21_r8) then
-           LOSS = PROD / M_Clx
-        else
-           LOSS = 0._r8
-        end if
+        LOSS_Clx = k_oh_clo_b * M_OH
 
-        call QSSA(67,'Clx',DTCH,QLIN,ST,PROD_Clx,LOSS,M_Clx)
+        !if (M_Clx .gt. 1.e-21_r8) then
+        !   LOSS = PROD / M_Clx
+        !else
+        !   LOSS = 0._r8
+        !end if
+
+        call QSSA(67,'Clx',DTCH,QLIN,ST,PROD_Clx,LOSS_Clx,M_Clx)
 
         !// Scaling of Clx and HCl with Cly:
         xCly = M_Clx + M_HCl
@@ -998,16 +1009,16 @@ contains
 
         !// saturday 05.08.17
         !// Setting 0.50_r8 to 1.0_r8, all dependence on Bry
-        PROD_Bry = &
+        PROD_Bry = & 
+             !// Assume half of HOBr deposition yields Br2 and half BrCl
              + 0.50_r8 * k_hobr_dep * M_HOBr &!HOBr + H+ + Br-(snow)-> Br2 + H20
              + PROD_Bry                   !Sources from CHBr3
-            ! + 0.5 * k_hobr_dep * M_HOBr !HOBr + H+ + Cl- (snow) -> BrCl + H2O
 
         !// No loss in the strat, but there is loss in trop.
-        LOSS = 0._r8 !Not inclued washout, as it returns Br2 and BrCl
+        LOSS_Bry = 0._r8 !Not inclued washout, as it returns Br2 and BrCl
               !k_hobr_dep * M_HOBr  !Deposition of HOBr
 
-        call QSSA(68, 'Bry', DTCH, QLIN, ST, PROD_Bry, LOSS, M_Bry)
+        call QSSA(68, 'Bry', DTCH, QLIN, ST, PROD_Bry, LOSS_Bry, M_Bry)
 
 
         !//..Bromine (Only with CHBr3)
@@ -1030,10 +1041,10 @@ contains
 
         !// Integrate ClO
 
-        PROD = k_o3_cl * M_O3             !O3 + Cl -> ClO + O2
+        PROD = k_o3_cl * M_O3 * M_Cl      !O3 + Cl -> ClO + O2
 
-        LOSS = k_oh_clo_b * M_ClO * M_OH &!ClO + OH -> HCl + O2
-             + k_oh_clo_a * M_ClO * M_OH  !ClO + OH -> Cl + HO2
+        LOSS = k_oh_clo_b * M_OH &        !ClO + OH -> HCl + O2
+             + k_oh_clo_a * M_OH          !ClO + OH -> Cl + HO2
 
         XCLO = M_ClO
         call QSSA(70,'XClO',DTCH,QLIN,ST,PROD,LOSS,XCLO)
@@ -1041,13 +1052,14 @@ contains
         !// Integrate BrCl
 
         PROD = k_hobr_hcl_a * M_HOBr    &!HOBr + HCl (aerosol) -> BrCl + H2O
+             !// Assume half of HOBr deposition yields Br2 and half BrCl
              + 0.50_r8 * k_hobr_dep * M_HOBr !HOBr + H+ + Cl-(snow)-> BrCl + H2O
 
-        LOSS = DBrCl * M_BrCl            !BrCl + hv -> Br + Cl
+        LOSS = DBrCl            !BrCl + hv -> Br + Cl
 
-        BrClx = M_BrCl
-        call QSSA(71,'BrClx',DTCH,QLIN,ST,PROD,LOSS,BrClx)
-!// a little unsure about this BrCl handeling, see questionare
+        BrClX = M_BrCl
+        call QSSA(71,'BrClx',DTCH,QLIN,ST,PROD,LOSS,BrClX)
+
         !//..Bromine ---------------------------------------------------------
         !// Except BrCl, which was already done with chlorine(from strat)
         !// Included here
@@ -1055,7 +1067,8 @@ contains
         !// Q[--] is not mulitiplied with [--], because of d[x]/dt = P - Q[x]
 
         PBr2 = k_hobr_hbr_a * M_HOBr      &!HOBr + HBr (aerosol) -> Br2 + H2O
-               + 0.50_r8 * k_hobr_dep * M_HOBr !HOBr + h+ +Br-(snow)-> Br2 + H2O
+             !// Assume half of HOBr deposition yields Br2 and half BrCl
+             + 0.50_r8 * k_hobr_dep * M_HOBr !HOBr + h+ +Br-(snow)-> Br2 + H2O
 
         QBr2 = DBr2                        !Br2 + hv -> 2Br
 
@@ -1082,8 +1095,9 @@ contains
         BrZ = M_Br + M_BrO
 
         PBrZ = DHOBr * M_HOBr            &!HOBr + hv -> Br + OH
-             + k_hobr_hbr_a * M_HOBr      &!HOBr + HBr (aerosol) -> Br2 + H2O
-             + 0.50_r8 * k_hobr_dep * M_HOBr &!HOBr + h+ + Br-(snow)-> Br2 + H2O
+             !// Original (removed as Br2 is not a part of BrZ) (27.01.20)
+             !+ k_hobr_hbr_a * M_HOBr      &!HOBr + HBr (aerosol) -> Br2 + H2O
+             !+ 0.50_r8 * k_hobr_dep * M_HOBr &!HOBr + h+ + Br-(snow)-> Br2 + H2O
              + 2._r8 * DBr2 * M_Br2      &!Br2 + hv -> 2Br
              + DBrCl * M_BrCl            &!BrCl + hv -> Br + Cl
 !             + k_oh_ch3br * M_CH3Br * M_OH         &!CH3Br + OH -> Br + prod.
@@ -1126,27 +1140,29 @@ contains
         !// Br2 is put directly in in the strat. file, as it didn't have
         !// any more code. Unsure if that applies anymore.
         !// Will do the same for Br2 as in strat (no preliminary specie)
+        
 
-        call QSSA(72,'Br2',DTCH,QLIN,ST,PBr2,QBr2,M_Br2)
         Br2X = M_Br2
+        call QSSA(72,'Br2',DTCH,QLIN,ST,PBr2,QBr2,Br2X)
+        
 
         OHBrX = M_HOBr
-        call QSSA(73,'HOBrx',DTCH,QLIN,ST,POHBr,QOHBr,OHBrx)
+        call QSSA(73,'HOBrx',DTCH,QLIN,ST,POHBr,QOHBr,OHBrX)
 
         BrNO3X = M_BrONO2
-        call QSSA(74,'BrNO3x',DTCH,QLIN,ST,PBrNO3,QBrNO3,BrNO3x)
+        call QSSA(74,'BrNO3x',DTCH,QLIN,ST,PBrNO3,QBrNO3,BrNO3X)
 
         HBrX = M_HBr
-        call QSSA(75,'HBrx',DTCH,QLIN,ST,PHBr,QHBr,HBrx)
+        call QSSA(75,'HBrx',DTCH,QLIN,ST,PHBr,QHBr,HBrX)
 
         BrzX = Brz
-        call QSSA(76,'Brzx',DTCH,QLIN,ST,PBrz,QBrz,Brzx)
+        call QSSA(76,'Brzx',DTCH,QLIN,ST,PBrz,QBrz,BrzX)
 
         BrX = M_Br
-        call QSSA(77,'Brx',DTCH,QLIN,ST,PBr,QBr,Brx)
+        call QSSA(77,'Brx',DTCH,QLIN,ST,PBr,QBr,BrX)
 
         BrOX = M_BrO
-        call QSSA(78,'BrOx',DTCH,QLIN,ST,pBrO,qBrO,BrOx)
+        call QSSA(78,'BrOx',DTCH,QLIN,ST,pBrO,qBrO,BrOX)
 
  !-----------------------------------------------------------------------
         !// Copied directly from the stratosphere model, unsure if needed
@@ -1158,39 +1174,52 @@ contains
         !// included herein. Br2 seems to be excluded. MtR, 960507.
         !// Note that only one of the species underneath can become reset with
         !// Bry and BrTOT.
-        BrTOT = BrZX + BrNO3X + 2._r8*Br2X + HBrX + OHBrX + M_BrCl
+        BrTOT = BrZX + BrNO3X + 2._r8*Br2X + HBrX + OHBrX + BrClX
 
-        if (BrZX .gt. M_BrCl .and. BrZX .gt. BrNO3X .and. &
-             BrZX .gt. HBrX .and. BrZX .gt. OHBrX) then
+        if (BrZX .gt. BrClX .and. BrZX .gt. BrNO3X .and. &
+             BrZX .gt. HBrX .and. BrZX .gt. OHBrX .and. &
+             BrZX .gt. 2._r8*Br2x) then
            BrZ = BrZX + M_Bry - BrTOT
         else
            BrZ = BrZX
         end if
 
-        if (BrNO3X .gt. M_BrCl .and. BrNO3X .gt. BrZX .and. &
-             BrNO3X .gt. HBrX .and. BrNO3X .gt. OHBrX) then
+        if (BrNO3X .gt. BrClX .and. BrNO3X .gt. BrZX .and. &
+             BrNO3X .gt. HBrX .and. BrNO3X .gt. OHBrX .and. &
+             BrNO3X .gt. 2._r8*Br2x) then
            M_BrONO2 = BrNO3X + M_Bry - BrTOT
         else
            M_BrONO2 = BrNO3X
         end if
 
-        if (HBrX .gt. M_BrCl .and. HBrX .gt. BrZX .and. &
-             HBrX .gt. BrNO3X .and. HBrX .gt. OHBrX) then
+        if ( 2._r8*Br2x .gt. BrClX .and.  2._r8*Br2x .gt. BrZX .and. &
+              2._r8*Br2x .gt. HBrX .and.  2._r8*Br2x .gt. OHBrX .and. &
+              2._r8*Br2x .gt. BrNO3X) then
+           M_Br2 = Br2x + 0.5_r8*M_Bry - 0.5_r8*BrTOT
+        else
+           M_Br2 = Br2x
+        end if
+
+        if (HBrX .gt. BrClX .and. HBrX .gt. BrZX .and. &
+             HBrX .gt. BrNO3X .and. HBrX .gt. OHBrX .and. &
+             HBrX .gt. 2._r8*Br2x) then
            M_HBr = HBrX + M_Bry - BrTOT
         else
            M_HBr = HBrX
         end if
 
-        if (OHBrX .gt. M_BrCl .and. OHBrX .gt. BrZX .and. &
-             OHBrX .gt. BrNO3X .and. OHBrX .gt. HBrX) then
+        if (OHBrX .gt. BrClX .and. OHBrX .gt. BrZX .and. &
+             OHBrX .gt. BrNO3X .and. OHBrX .gt. HBrX .and. &
+             OHBrX .gt. 2._r8*Br2x) then
            M_HOBr = OHBrX + M_Bry - BrTOT
         else
            M_HOBr = OHBrX
         end if
 
-        if (M_BrCl .gt. BrZX .and. M_BrCl .gt. BrNO3X .and. &
-             M_BrCl .gt. HBrX .and. M_BrCl .gt. OHBrX) then
-           M_BrCl = M_BrCl + M_Bry - BrTOT
+        if (BrClX .gt. BrZX .and. BrClX .gt. BrNO3X .and. &
+             BrClX .gt. HBrX .and. BrClX .gt. OHBrX .and. &
+             BrClX .gt. 2._r8*Br2x) then
+           BrClX = BrClX + M_Bry - BrTOT
            !// No need for else-statement
         end if
 
@@ -1198,13 +1227,18 @@ contains
         !// negative, scale the individually integrated values with the
         !// integrated family. Br2 is again excluded from this.
 
-        SCAL = ( M_Bry - 2._r8 * Br2x ) &
-               / ( BrZX + BrNO3X + HBrX + OHBrx + BrClx )
+        !// Original: 
+        !SCAL = ( M_Bry - 2._r8 * Br2x ) &
+        !       / ( BrZX + BrNO3X + HBrX + OHBrx + BrClx )
+        !// Changed to (31.01.20):
+        SCAL = ( M_Bry ) &
+               / ( BrZX + BrNO3X + HBrX + OHBrx + BrClx + 2._r8 * Br2x)
 
 
         if ( M_BrONO2 .lt. 0._r8 .or. M_HBr .lt. 0._r8 .or. &
              BrZ .lt. 0._r8 .or. &
-             M_HOBr .lt. 0._r8 .or. M_BrCl .lt. 0._r8) then
+             M_HOBr .lt. 0._r8 .or. M_BrCl .lt. 0._r8 .or. &
+             M_Br2 .lt. 0._r8) then
            if (LDEBUG) then
               if (SCAL .lt. 0._r8) then
                  print*,'OSLO_CHEM: LON/LAT/L/SCAL',ICOL,JCOL,l,SCAL
@@ -1315,6 +1349,14 @@ contains
               M_HOBr = M_HOBr * FACN
               M_Br2  = M_Br2 * FACN
               M_BrCl = M_BrCl * FACN
+
+
+              write(6,*) '----'
+              write(6,*) 'Second loop: Iteration number:'
+              write(6,*) ISCALE
+              write(6,*) 'FACN M_Br  M_BrO  M_HBr M_BrONO2 M_HOBr  M_Br2 M_BrCl'
+              write(6,*) FACN, M_Br,M_BrO,M_HBr,M_BrONO2,M_HOBr,M_Br2,M_BrCl
+              write(6,*) '--------'
 
               !// Clx:
               XClx = M_Clx
