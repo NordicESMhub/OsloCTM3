@@ -907,7 +907,7 @@ contains
 
         !From (PROD_Bry + LOSS * M_CH3Br) to:
         PROD_Bry =  PROD_Bry + &
-             (k_oh_chbr3 * 3._r8 * M_OH + DCH3Br * 3._r8) * M_CH3Br &!CHBr3 + OH -> 3Br + prod and CHBr3 + hv -> 3Br + prod.
+             (k_oh_chbr3 * 3._r8 * M_OH + DCH3Br * 3._r8) * M_CH3Br !CHBr3 + OH -> 3Br + prod and CHBr3 + hv -> 3Br + prod.
 
 
         !// Marit, halogen scaling, 13.10.19
@@ -986,7 +986,7 @@ contains
         PROD_Cly = DBrCl * M_BrCl
         PROD_Clx = PROD_Cly
 
-        LOSS_Clx = k_oh_clo_b * M_OH
+        LOSS = k_oh_clo_b * M_OH
 
         !if (M_Clx .gt. 1.e-21_r8) then
         !   LOSS = PROD / M_Clx
@@ -994,7 +994,7 @@ contains
         !   LOSS = 0._r8
         !end if
 
-        call QSSA(67,'Clx',DTCH,QLIN,ST,PROD_Clx,LOSS_Clx,M_Clx)
+        call QSSA(67,'Clx',DTCH,QLIN,ST,PROD_Clx,LOSS,M_Clx)
 
         !// Scaling of Clx and HCl with Cly:
         xCly = M_Clx + M_HCl
@@ -1015,10 +1015,10 @@ contains
              + PROD_Bry                   !Sources from CHBr3
 
         !// No loss in the strat, but there is loss in trop.
-        LOSS_Bry = 0._r8 !Not inclued washout, as it returns Br2 and BrCl
+        LOSS = 0._r8 !Not inclued washout, as it returns Br2 and BrCl
               !k_hobr_dep * M_HOBr  !Deposition of HOBr
 
-        call QSSA(68, 'Bry', DTCH, QLIN, ST, PROD_Bry, LOSS_Bry, M_Bry)
+        call QSSA(68, 'Bry', DTCH, QLIN, ST, PROD_Bry, LOSS, M_Bry)
 
 
         !//..Bromine (Only with CHBr3)
@@ -1095,9 +1095,6 @@ contains
         BrZ = M_Br + M_BrO
 
         PBrZ = DHOBr * M_HOBr            &!HOBr + hv -> Br + OH
-             !// Original (removed as Br2 is not a part of BrZ) (27.01.20)
-             !+ k_hobr_hbr_a * M_HOBr      &!HOBr + HBr (aerosol) -> Br2 + H2O
-             !+ 0.50_r8 * k_hobr_dep * M_HOBr &!HOBr + h+ + Br-(snow)-> Br2 + H2O
              + 2._r8 * DBr2 * M_Br2      &!Br2 + hv -> 2Br
              + DBrCl * M_BrCl            &!BrCl + hv -> Br + Cl
 !             + k_oh_ch3br * M_CH3Br * M_OH         &!CH3Br + OH -> Br + prod.
