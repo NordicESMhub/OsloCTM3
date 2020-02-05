@@ -245,6 +245,9 @@ contains
     end if
 
     write(6,'(a)') '* Surface CH4 updated to HYMN fields.'
+    write(6, *) '---------------------'
+    write(6, *) 'CH4Field::'
+    write(6, *) CH4FIELD
 
     !// --------------------------------------------------------------------
   end subroutine ch4surface_hymn
@@ -271,17 +274,26 @@ contains
     !// Input
 
     !// Local parameters
-    integer, parameter :: nObs = 33
+    integer, parameter :: nObs = 35
     real(r8), dimension(nObs), parameter :: ANNUAL_CH4 = &
-      (/ 1644.56_r8, 1657.39_r8, 1669.79_r8, 1682.08_r8, 1693.18_r8, &
-         1704.10_r8, 1714.00_r8, 1724.64_r8, 1735.35_r8, 1736.38_r8, &
-         1741.84_r8, 1748.73_r8, 1751.02_r8, 1754.36_r8, 1765.34_r8, &
-         1772.00_r8, 1773.00_r8, 1771.04_r8, 1772.59_r8, 1776.92_r8, &
-         1776.94_r8, 1773.96_r8, 1774.69_r8, 1781.14_r8, 1786.77_r8, &
-         1793.21_r8, 1798.65_r8, 1803.01_r8, 1808.23_r8, 1813.32_r8, &
-         1822.49_r8, 1833.99_r8, 1842.99_r8 /)
+      !(/ 808.25_r8 /)
+      !(/ 722.00_r8, 808.25_r8, 1644.56_r8, 1657.39_r8, 1669.79_r8, 1682.08_r8, 1693.18_r8, &
+      !   1704.10_r8, 1714.00_r8, 1724.64_r8, 1735.35_r8, 1736.38_r8, &
+      !   1741.84_r8, 1748.73_r8, 1751.02_r8, 1754.36_r8, 1765.34_r8, &
+      !   1772.00_r8, 1773.00_r8, 1771.04_r8, 1772.59_r8, 1776.92_r8, &
+      !   1776.94_r8, 1773.96_r8, 1774.69_r8, 1781.14_r8, 1786.77_r8, &
+      !   1793.21_r8, 1798.65_r8, 1803.01_r8, 1808.23_r8, 1813.32_r8, &
+      !   1822.49_r8, 1833.99_r8, 1842.99_r8 /)
+      (/ 722.00_r8, 808.25_r8, 808.25_r8, 808.25_r8, 808.25_r8, 808.25_r8, 808.25_r8, &
+         808.25_r8, 808.25_r8, 808.25_r8, 808.25_r8, 808.25_r8, &
+         808.25_r8, 808.25_r8, 808.25_r8, 808.25_r8, 808.25_r8, &
+         808.25_r8, 808.25_r8, 808.25_r8, 808.25_r8, 808.25_r8, &
+         808.25_r8, 808.25_r8, 808.25_r8, 808.25_r8, 808.25_r8, &
+         808.25_r8, 808.25_r8, 808.25_r8, 808.25_r8, 808.25_r8, &
+         808.25_r8, 808.25_r8, 808.25_r8 /)
     integer, dimension(nObs), parameter :: ANNUAL_YEAR = &
-       (/ 1984, 1985, 1986, 1987, 1988, 1989, 1990, 1991, 1992, 1993, &
+      !(/ 1850 /)
+      (/ 1750, 1850, 1984, 1985, 1986, 1987, 1988, 1989, 1990, 1991, 1992, 1993, &
           1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, &
           2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, &
           2014, 2015, 2016 /)
@@ -295,14 +307,20 @@ contains
     !// Scale to observed year, but not outside the range
     if (MYEAR .lt. ANNUAL_YEAR(1)) then
        YSC = 1 !// Use the first year (1984)
+       write(6,*) 'Myear lt annual year:'
+       write(6,*) YSC
     else if (MYEAR .gt. maxval(ANNUAL_YEAR)) then
        YSC = nObs !// Use the last year (2015)
+       write(6,*) 'Myear gt annual year:'
+       write(6,*) YSC
     else
        !// Scale to year
        do YSC = 1, nObs
           if (MYEAR .eq. ANNUAL_YEAR(YSC)) then
              exit
           end if
+          write(6,*) 'Myear eq annual year:'
+          write(6,*) YSC
        end do
     end if
 
@@ -311,13 +329,31 @@ contains
        if (2003 .eq. ANNUAL_YEAR(YCH4)) then
           exit
        end if
+       write(6,*) 'Scale from year:'
+       write(6,*) YCH4
     end do
+
+    write(6,*) '---------------'
+    write(6,*) 'YSC and YCH4 before scaling (after loop)'
+    write(6,*) YSC
+    write(6,*) YCH4
+    write(6,*) '---------------'
+    write(6,*) 'MYEAR'
+    write(6,*) MYEAR
+
 
     SCALE = ANNUAL_CH4(YSC)/ANNUAL_CH4(YCH4)
     CH4FIELD(:,:) = CH4FIELD(:,:) * SCALE
 
     write(6,'(a24,i4,a4,i4,a3,f8.4)') 'CH4@surface scaled from ',&
          ANNUAL_YEAR(YCH4),' to ',ANNUAL_YEAR(YSC),' : ',scale
+    write(6,*) '---------------------'
+    write(6,*) 'ANNUAL_CH4(YSC):'
+    write(6,*) ANNUAL_CH4(YSC)
+    write(6,*) '----------------------'
+    write(6,*) 'ANNUAL_CH4(YCH4):'
+    write(6,*) ANNUAL_CH4(YCH4)
+    
 
     !// --------------------------------------------------------------------
   end subroutine ch4surface_scale_hymn
