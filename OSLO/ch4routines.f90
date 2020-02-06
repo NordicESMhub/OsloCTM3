@@ -111,9 +111,9 @@ contains
     !// Update CH4FIELD
     if (CH4TYPE .eq. 1) then
        !// HYMN (default)
-       call ch4surface_hymn()
+       !call ch4surface_hymn()
        !// Scale hymn data - uses MYEAR for scaling.
-       !call ch4surface_scale_hymn()
+       call ch4surface_scale_hymn()
     else if (CH4TYPE .eq. 2) then
        !// POET
        call ch4surface_poet(2000)
@@ -333,9 +333,11 @@ contains
     write(6,*) MYEAR
 
 
-    SCALE = ANNUAL_CH4(YSC)/ANNUAL_CH4(YCH4)
+    SCALE = ANNUAL_CH4(2)/ANNUAL_CH4(YCH4) ! ANNUAL_CH4(2) = 1850 value
     CH4FIELD(:,:) = CH4FIELD(:,:) * SCALE
+    
 
+    call set_ch4_stt()
     write(6,'(a24,i4,a4,i4,a3,f8.4)') 'CH4@surface scaled from ',&
          ANNUAL_YEAR(YCH4),' to ',ANNUAL_YEAR(YSC),' : ',scale
     write(6,*) '---------------------'
@@ -344,6 +346,9 @@ contains
     write(6,*) '----------------------'
     write(6,*) 'ANNUAL_CH4(YCH4):'
     write(6,*) ANNUAL_CH4(YCH4)
+    write(6,*) '----------------------'
+    write(6,*) 'ANNUAL_CH4(2):'
+    write(6,*) ANNUAL_CH4(2)
     
 
     !// --------------------------------------------------------------------
@@ -685,6 +690,7 @@ contains
     character(len=100) :: FILENAME
 
     character(len=4) :: CYEAR
+    real(r8) :: scale
 
     integer :: nLev, nLon, nLat, nTime
 
@@ -700,6 +706,8 @@ contains
     character(len=*), parameter :: subr='set_ch4_stt'
     !// --------------------------------------------------------------------
 
+
+    scale = 808.25_r8/1776.92_r8
     !// Skip if METHANEMIS == .true.
     if (METHANEMIS) return
 
@@ -841,11 +849,13 @@ contains
     write(6,'(a,2f12.2)') '* Overriding CH4 min/max (ppbv):',&
          minval(inR8XYZ(:,:,:))*1.e9_r8,maxval(inR8XYZ(:,:,:))*1.e9_r8
 
-    if (meansfc .gt. 0._r8) then
-       STT(:,:,:,trsp_idx(46)) = STT(:,:,:,trsp_idx(46)) * meansfc / hymnmean
-       write(6,'(a,2es16.4)') '* Scaling 3D CH4 (ppbv) from/to:', &
+    !if (meansfc .gt. 0._r8) then
+    write(6,*) 'Scaling is done! set_ch4_stt, scale: '
+    write(6,*) scale
+    STT(:,:,:,trsp_idx(46)) = STT(:,:,:,trsp_idx(46))*scale! * meansfc / hymnmean
+    write(6,'(a,2es16.4)') '* Scaling 3D CH4 (ppbv) from/to:', &
             hymnmean, meansfc
-    end if
+    !end if
 
     !// Deallocate
     deallocate (inR8XYZ, inR8XY, xbedge, ybedge, WGAULAT, WGAUWT, &
@@ -873,17 +883,20 @@ contains
     use cmn_sfc, only: LSMASK
     use cmn_oslo, only: CH4FIELD, trsp_idx, METHANEMIS
     use ncutils, only: GET_NETCDF_VAR_1D, GET_NETCDF_VAR_3D, GET_NETCDF_VAR_4D
+    
     !// --------------------------------------------------------------------
     implicit none
     !// --------------------------------------------------------------------
     integer :: I, J
+    real(r8) :: scale
     real(r8) :: sttmean, totarea
     !// Observed 1990: ESRL Global Monitoring Division marine global annual CH4.
     real(r8), parameter :: meansfc = 1682.08e-9_r8
     !// --------------------------------------------------------------------
     character(len=*), parameter :: subr='scale_ch4_stt'
     !// --------------------------------------------------------------------
-
+    
+    scale = 808.25_r8/1776.92_r8
     sttmean = 0._r8
     totarea = 0._r8
 
@@ -898,8 +911,9 @@ contains
        end do
     end do
     sttmean = sttmean / totarea
-
-    STT(:,:,:,trsp_idx(46)) = STT(:,:,:,trsp_idx(46)) * meansfc / sttmean
+    write(6,*) 'scale_ch4_stt is used!: SCALE'
+    write(6,*) scale
+    STT(:,:,:,trsp_idx(46)) = STT(:,:,:,trsp_idx(46)) * scale !scale with ANNUAL_CH4(2)/ANNUAL_CH4(YCH4) !* meansfc / sttmean
     
     write(6,'(a,2es16.4)') f90file//':'//subr//': Scaling 3D CH4 (ppbv) from/to:', &
          sttmean, meansfc
