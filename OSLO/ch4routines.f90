@@ -111,7 +111,7 @@ contains
     !// Update CH4FIELD
     if (CH4TYPE .eq. 1) then
        !// HYMN (default)
-       !call ch4surface_hymn()
+       call ch4surface_hymn()
        !// Scale hymn data - uses MYEAR for scaling.
        call ch4surface_scale_hymn()
     else if (CH4TYPE .eq. 2) then
@@ -337,7 +337,7 @@ contains
     CH4FIELD(:,:) = CH4FIELD(:,:) * SCALE
     
 
-    call set_ch4_stt()
+    !call set_ch4_stt()
     write(6,'(a24,i4,a4,i4,a3,f8.4)') 'CH4@surface scaled from ',&
          ANNUAL_YEAR(YCH4),' to ',ANNUAL_YEAR(YSC),' : ',scale
     write(6,*) '---------------------'
