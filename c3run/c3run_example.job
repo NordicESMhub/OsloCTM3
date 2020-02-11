@@ -5,7 +5,7 @@
 #SBATCH --job-name=C3RUN_example
 #
 # Project (enter your noturn project number):
-#SBATCH --account=nn2806k
+#SBATCH --account=nn9188k
 #
 # Wall clock limit (setting for one year 96:0:0):
 #SBATCH --time=0:60:0
@@ -20,7 +20,7 @@
 #SBATCH --ntasks-per-node=16
 #
 # Number of nodes:
-#SBATCH --nodes=1
+#SBATCH --nodes=2
 #
 #
 ## Set up job environment:
@@ -82,7 +82,7 @@ export DUSTFILE=OSLO/DEAD_COLUMN/dustinput/dst_T159.nc
 
 # Load a restart file 
 # ! In example.inp: LNCR T: use restart file in netCDF, F: old .sav format
-export RESTARTFILE=$CTM3_USR_INPUT/restart/restart.sav
+export RESTARTFILE=$CTM3_USR_INPUT/restart/ctm3_restart_20000701.nc
 
 # --------------------------------------------------------------------------
 # Initialize the model run
