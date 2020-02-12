@@ -2387,9 +2387,10 @@ contains
            CHEMLOSS(5,46,L) = CHEMLOSS(5,46,L) + k_od_ch4_b*M_O1D*M_CH4*DTCH
            CHEMLOSS(6,46,L) = CHEMLOSS(6,46,L) + k_od_ch4_c*M_O1D*M_CH4*DTCH
         end if
-
+        
+        
         call QSSA(26,'CH4',DTCH,QLIN,ST,PROD,LOSS,ZC(46,L))
-
+       
 
 
         !// -----------------------------------------------------------------
