@@ -298,20 +298,14 @@ contains
     !// Scale to observed year, but not outside the range
     if (MYEAR .lt. ANNUAL_YEAR(1)) then
        YSC = 1 !// Use the first year (1984)
-       write(6,*) 'Myear lt annual year:'
-       write(6,*) YSC
     else if (MYEAR .gt. maxval(ANNUAL_YEAR)) then
        YSC = nObs !// Use the last year (2015)
-       write(6,*) 'Myear gt annual year:'
-       write(6,*) YSC
     else
        !// Scale to year
        do YSC = 1, nObs
           if (MYEAR .eq. ANNUAL_YEAR(YSC)) then
              exit
           end if
-          write(6,*) 'Myear eq annual year:'
-          write(6,*) YSC
        end do
     end if
 
@@ -320,35 +314,16 @@ contains
        if (2003 .eq. ANNUAL_YEAR(YCH4)) then
           exit
        end if
-       write(6,*) 'Scale from year:'
-       write(6,*) YCH4
     end do
-
-    write(6,*) '---------------'
-    write(6,*) 'YSC and YCH4 before scaling (after loop)'
-    write(6,*) YSC
-    write(6,*) YCH4
-    write(6,*) '---------------'
-    write(6,*) 'MYEAR'
-    write(6,*) MYEAR
 
 
     SCALE = ANNUAL_CH4(2)/ANNUAL_CH4(YCH4) ! ANNUAL_CH4(2) = 1850 value
     CH4FIELD(:,:) = CH4FIELD(:,:) * SCALE
     
 
-    !call set_ch4_stt()
+    
     write(6,'(a24,i4,a4,i4,a3,f8.4)') 'CH4@surface scaled from ',&
          ANNUAL_YEAR(YCH4),' to ',ANNUAL_YEAR(YSC),' : ',scale
-    write(6,*) '---------------------'
-    write(6,*) 'ANNUAL_CH4(YSC):'
-    write(6,*) ANNUAL_CH4(YSC)
-    write(6,*) '----------------------'
-    write(6,*) 'ANNUAL_CH4(YCH4):'
-    write(6,*) ANNUAL_CH4(YCH4)
-    write(6,*) '----------------------'
-    write(6,*) 'ANNUAL_CH4(2):'
-    write(6,*) ANNUAL_CH4(2)
     
 
     !// --------------------------------------------------------------------
@@ -850,8 +825,7 @@ contains
          minval(inR8XYZ(:,:,:))*1.e9_r8,maxval(inR8XYZ(:,:,:))*1.e9_r8
 
     !if (meansfc .gt. 0._r8) then
-    write(6,*) 'Scaling is done! set_ch4_stt, scale: '
-    write(6,*) scale
+    
     STT(:,:,:,trsp_idx(46)) = STT(:,:,:,trsp_idx(46))*scale! * meansfc / hymnmean
     write(6,'(a,2es16.4)') '* Scaling 3D CH4 (ppbv) from/to:', &
             hymnmean, meansfc
