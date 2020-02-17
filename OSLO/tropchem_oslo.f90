@@ -305,8 +305,8 @@ contains
 !// HFOUR = 4.5 deg, HTWO = 2.25 deg 
          POLL_CHBr3 = 0._r8
 
-         !if (YDGRD(J) .LE. 9._r8) then      !//Latitude bands, 90S - 50S -- HFOUR
-         if (YDGRD(J) .LE. 18._r8) then      !//Latitude bands, 90S - 50S -- HTWO
+         if (YDGRD(J) .LE. 9._r8) then      !//Latitude bands, 90S - 50S -- HFOUR
+         !if (YDGRD(J) .LE. 18._r8) then      !//Latitude bands, 90S - 50S -- HTWO
             if (PLAND(I,J) .eq. 0._r8) then   !//Open ocean (PLAND=0)
                POLL_CHBr3 = 0.05e-13_r8 * 1.14*(2._r8/3._r8)
             elseif (PLAND(I,J) .gt. 0._r8 .and. PLAND(I,J) .lt. 0.5_r8) then
@@ -314,8 +314,8 @@ contains
                  POLL_CHBr3 = 0.3e-13_r8 * 1.14*(2._r8/3._r8)
             end if
 
-         !elseif (YDGRD(J) .LE. 18._r8 .AND. YDGRD(J) .GT. 9._r8 ) then !//Latitude bands, 50S - 10S -- HFOUR
-         elseif (YDGRD(J) .LE. 36._r8 .AND. YDGRD(J) .GT. 18._r8 ) then !//Latitude bands, 50S - 10S -- HTWO
+         elseif (YDGRD(J) .LE. 18._r8 .AND. YDGRD(J) .GT. 9._r8 ) then !//Latitude bands, 50S - 10S -- HFOUR
+         !elseif (YDGRD(J) .LE. 36._r8 .AND. YDGRD(J) .GT. 18._r8 ) then !//Latitude bands, 50S - 10S -- HTWO
             if (PLAND(I,J) .eq. 0._r8) then   !//Open ocean (PLAND=0)
                POLL_CHBr3 = 0.15e-13_r8 * 1.14*(2._r8/3._r8)
             elseif (PLAND(I,J) .gt. 0._r8 .and. PLAND(I,J) .lt. 0.5_r8) then
@@ -323,8 +323,8 @@ contains
                POLL_CHBr3 = 0.9e-13_r8 * 1.14*(2._r8/3._r8)
             end if
 
-         !elseif (YDGRD(J) .LE. 22._r8 .AND. YDGRD(J) .GT. 18._r8) then  !//Latitude bands, 10S - 10N -- HFOUR
-         elseif (YDGRD(J) .LE. 44._r8 .AND. YDGRD(J) .GT. 36._r8) then  !//Latitude bands, 10S - 10N -- HTWO
+         elseif (YDGRD(J) .LE. 22._r8 .AND. YDGRD(J) .GT. 18._r8) then  !//Latitude bands, 10S - 10N -- HFOUR
+         !elseif (YDGRD(J) .LE. 44._r8 .AND. YDGRD(J) .GT. 36._r8) then  !//Latitude bands, 10S - 10N -- HTWO
             if (PLAND(I,J) .eq. 0._r8) then   !//Open ocean (PLAND=0)
                POLL_CHBr3 = 0.7e-13_r8 * 1.14*(2._r8/3._r8)
             elseif (PLAND(I,J) .gt. 0._r8 .and. PLAND(I,J) .lt. 0.5_r8) then
@@ -332,8 +332,8 @@ contains
                POLL_CHBr3 = 0.9e-13_r8 * 1.14*(2._r8/3._r8)
             end if
 
-         !elseif (YDGRD(J) .LE. 31._r8 .AND. YDGRD(J) .GT. 22._r8) then  !//Latitude bands, 10N - 50N -- HFOUR
-         elseif (YDGRD(J) .LE. 62._r8 .AND. YDGRD(J) .GT. 44._r8) then  !//Latitude bands, 10N - 50N --HTWO
+         elseif (YDGRD(J) .LE. 31._r8 .AND. YDGRD(J) .GT. 22._r8) then  !//Latitude bands, 10N - 50N -- HFOUR
+         !elseif (YDGRD(J) .LE. 62._r8 .AND. YDGRD(J) .GT. 44._r8) then  !//Latitude bands, 10N - 50N --HTWO
             if (PLAND(I,J) .eq. 0._r8) then   !//Open ocean (PLAND=0)
                POLL_CHBr3 = 0.15e-13_r8 * 1.14*(2._r8/3._r8)
             elseif (PLAND(I,J) .gt. 0._r8 .and. PLAND(I,J) .lt. 0.5_r8) then
@@ -341,37 +341,16 @@ contains
                POLL_CHBr3 = 0.9e-13_r8 * 1.14*(2._r8/3._r8)
             end if
 
-        !elseif (YDGRD(J) .GT. 31._r8) then      !//Latitude bands, 50N - 90N -- HFOUR
-        elseif (YDGRD(J) .GT. 62._r8) then      !//Latitude bands, 50N - 90N -- HTWO
+        elseif (YDGRD(J) .GT. 31._r8) then      !//Latitude bands, 50N - 90N -- HFOUR
+        !elseif (YDGRD(J) .GT. 62._r8) then      !//Latitude bands, 50N - 90N -- HTWO
             if (PLAND(I,J) .eq. 0._r8) then   !//Open ocean (PLAND=0)
                POLL_CHBr3 = 0.05e-13_r8 * 1.14*(2._r8/3._r8)
-!               write(6,*) '- - - - - - - - - - - - - - - - - - - - - - - -'
-!               write(6,*) ' tropchem_oslo   CHECK IF THIS IS REALLY OCEAN '
-!               write(6,*) ' PLAND: '
-!               write(6,*) PLAND(I,J)
-!               write(6,*) ' Latidute'
-!               write(6,*) YDGRD(J)
-!               write(6,*) ' Longidute'
-!               write(6,*) XDGRD(I)
             elseif (PLAND(I,J) .gt. 0._r8 .and. PLAND(I,J) .lt. 0.5_r8) then
                !//coast/islands
                POLL_CHBr3 = 0.3e-13_r8 * 1.14*(2._r8/3._r8)
             end if
         end if !//(J .LE. 15) then      !//Latitude bands, 90S - 50S
         
-!        if (YDGRD(J) .GT. 50._r8 .and. YDGRD(J) .LT. 52._r8) then
-!           if (XDGRD(I) .GT. 65._r8 .and. XDGRD(I) .LT. 68._r8) then
-!              write(6,*) '================ tropchem_oslo ==============='
-!              write(6,*) 'CHBr3:'
-!              write(6,*) POLL_CHBr3
-!              write(6,*) ' Latidute'
-!              write(6,*) YDGRD(J)
-!              write(6,*) ' Longidute'
-!              write(6,*) XDGRD(I)
-!              write(6,*) 'What is PLAND here?'
-!              write(6,*) PLAND(I,J)
-!           end if
-!        end if
 
 
           !//Converting from [kg/(m2*s)] to [molecules/(cm3*s)]
