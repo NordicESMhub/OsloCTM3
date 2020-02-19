@@ -8,7 +8,7 @@
 #SBATCH --account=nn2806k
 #
 # Wall clock limit (setting for one year 96:0:0):
-#SBATCH --time=0:60:0
+#SBATCH --time=0:15:0
 #
 # Does your job exceed one week, use "--partition=long":
 # ####SBATCH --partition=long
@@ -17,7 +17,8 @@
 #SBATCH --mem-per-cpu=3000M
 #
 # Number of cores:
-#SBATCH --ntasks-per-node=16
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=40
 #
 # Number of nodes:
 #SBATCH --nodes=1

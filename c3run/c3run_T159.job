@@ -20,7 +20,8 @@
 #SBATCH --partition=hugemem
 #
 # Number of cores:
-#SBATCH --ntasks-per-node=16
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=40
 #
 # Number of nodes:
 #SBATCH --nodes=1
