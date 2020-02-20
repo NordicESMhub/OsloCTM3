@@ -1001,9 +1001,12 @@ contains
 !                Marit 26.09.19
 !============================================================
        !// CHBr3 + OH -> 3Br + products
-       !// From Parella et. al. 2012
+       !// From Parella et. al. 2012 (and JPL)
        r_oh_chbr3(I) = 1.35e-12_r8 * exp(-600._r8 * ZTEM)
-
+       
+       !// CH2Br2 + OH -> 2Br + products
+       !// From Parella et. al. 2012 (and JPL)
+       !r_oh_ch2br2(I) = 2.0e-12_r8 * exp(-840._r8 * ZTEM)
 
 !============================================================
 

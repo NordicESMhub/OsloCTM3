@@ -69,7 +69,7 @@ contains
     use diagnostics_general, only: nchemdiag, save_chemPL, save_chemOxPL
     use diagnostics_scavenging, only: scav_diag_put_ddep
     !// Marit, sea ice implementation attempt, 14.11.19
-    use bromine_explosion, only: be_getspringsummer, seafraclim
+    !use bromine_explosion, only: be_getspringsummer, seafraclim
     !use bcoc_oslo, only: LSNW_IJ
     !// --------------------------------------------------------------------
     implicit none
@@ -305,60 +305,72 @@ contains
 !// HFOUR = 4.5 deg, HTWO = 2.25 deg 
          POLL_CHBr3 = 0._r8
 
-         if (YDGRD(J) .LE. 9._r8) then      !//Latitude bands, 90S - 50S -- HFOUR
+         !if (YDGRD(J) .LE. 9._r8) then      !//Latitude bands, 90S - 50S -- HFOUR
          !if (YDGRD(J) .LE. 18._r8) then      !//Latitude bands, 90S - 50S -- HTWO
+         if (abs(YDGRD(J)) .gt. 50._r8) then !// Latitude bands 90s - 50s/50n - 90n
             if (PLAND(I,J) .eq. 0._r8) then   !//Open ocean (PLAND=0)
                POLL_CHBr3 = 0.05e-13_r8 * 1.14*(2._r8/3._r8)
             elseif (PLAND(I,J) .gt. 0._r8 .and. PLAND(I,J) .lt. 0.5_r8) then
                !//coast/islands
                  POLL_CHBr3 = 0.3e-13_r8 * 1.14*(2._r8/3._r8)
+                 write(6,*) '--------------------------'
+                 write(6,*) 'coast/island above 50deg n/s, lat:'
+                 write(6,*) YDGRD(J)
             end if
 
-         elseif (YDGRD(J) .LE. 18._r8 .AND. YDGRD(J) .GT. 9._r8 ) then !//Latitude bands, 50S - 10S -- HFOUR
+         !elseif (YDGRD(J) .LE. 18._r8 .AND. YDGRD(J) .GT. 9._r8 ) then !//Latitude bands, 50S - 10S -- HFOUR
          !elseif (YDGRD(J) .LE. 36._r8 .AND. YDGRD(J) .GT. 18._r8 ) then !//Latitude bands, 50S - 10S -- HTWO
+         elseif (abs(YDGRD(J)) .gt. 10._r8 .and. abs(YDGRD(J)) .le. 50._r8) then 
             if (PLAND(I,J) .eq. 0._r8) then   !//Open ocean (PLAND=0)
                POLL_CHBr3 = 0.15e-13_r8 * 1.14*(2._r8/3._r8)
             elseif (PLAND(I,J) .gt. 0._r8 .and. PLAND(I,J) .lt. 0.5_r8) then
                !//coast/islands
                POLL_CHBr3 = 0.9e-13_r8 * 1.14*(2._r8/3._r8)
+               write(6,*) '--------------------------'
+               write(6,*) 'coast/island between 10deg and 50deg n/s, lat:'
+               write(6,*) YDGRD(J)
             end if
 
-         elseif (YDGRD(J) .LE. 22._r8 .AND. YDGRD(J) .GT. 18._r8) then  !//Latitude bands, 10S - 10N -- HFOUR
+         !elseif (YDGRD(J) .LE. 22._r8 .AND. YDGRD(J) .GT. 18._r8) then  !//Latitude bands, 10S - 10N -- HFOUR
          !elseif (YDGRD(J) .LE. 44._r8 .AND. YDGRD(J) .GT. 36._r8) then  !//Latitude bands, 10S - 10N -- HTWO
+         elseif (abs(YDGRD(J)) .le. 10._r8) then
             if (PLAND(I,J) .eq. 0._r8) then   !//Open ocean (PLAND=0)
                POLL_CHBr3 = 0.7e-13_r8 * 1.14*(2._r8/3._r8)
             elseif (PLAND(I,J) .gt. 0._r8 .and. PLAND(I,J) .lt. 0.5_r8) then
                !//coast/islands
                POLL_CHBr3 = 0.9e-13_r8 * 1.14*(2._r8/3._r8)
+               write(6,*) '--------------------------'
+               write(6,*) 'coast/island less than 10deg n/s, lat:'
+               write(6,*) YDGRD(J)
             end if
 
-         elseif (YDGRD(J) .LE. 31._r8 .AND. YDGRD(J) .GT. 22._r8) then  !//Latitude bands, 10N - 50N -- HFOUR
+         !elseif (YDGRD(J) .LE. 31._r8 .AND. YDGRD(J) .GT. 22._r8) then  !//Latitude bands, 10N - 50N -- HFOUR
          !elseif (YDGRD(J) .LE. 62._r8 .AND. YDGRD(J) .GT. 44._r8) then  !//Latitude bands, 10N - 50N --HTWO
-            if (PLAND(I,J) .eq. 0._r8) then   !//Open ocean (PLAND=0)
-               POLL_CHBr3 = 0.15e-13_r8 * 1.14*(2._r8/3._r8)
-            elseif (PLAND(I,J) .gt. 0._r8 .and. PLAND(I,J) .lt. 0.5_r8) then
+         !   if (PLAND(I,J) .eq. 0._r8) then   !//Open ocean (PLAND=0)
+         !      POLL_CHBr3 = 0.15e-13_r8 * 1.14*(2._r8/3._r8)
+         !   elseif (PLAND(I,J) .gt. 0._r8 .and. PLAND(I,J) .lt. 0.5_r8) then
                !//coast/islands
-               POLL_CHBr3 = 0.9e-13_r8 * 1.14*(2._r8/3._r8)
-            end if
+         !      POLL_CHBr3 = 0.9e-13_r8 * 1.14*(2._r8/3._r8)
+         !   end if
 
-        elseif (YDGRD(J) .GT. 31._r8) then      !//Latitude bands, 50N - 90N -- HFOUR
+        !elseif (YDGRD(J) .GT. 31._r8) then      !//Latitude bands, 50N - 90N -- HFOUR
         !elseif (YDGRD(J) .GT. 62._r8) then      !//Latitude bands, 50N - 90N -- HTWO
-            if (PLAND(I,J) .eq. 0._r8) then   !//Open ocean (PLAND=0)
-               POLL_CHBr3 = 0.05e-13_r8 * 1.14*(2._r8/3._r8)
-            elseif (PLAND(I,J) .gt. 0._r8 .and. PLAND(I,J) .lt. 0.5_r8) then
+        !    if (PLAND(I,J) .eq. 0._r8) then   !//Open ocean (PLAND=0)
+        !       POLL_CHBr3 = 0.05e-13_r8 * 1.14*(2._r8/3._r8)
+        !    elseif (PLAND(I,J) .gt. 0._r8 .and. PLAND(I,J) .lt. 0.5_r8) then
                !//coast/islands
-               POLL_CHBr3 = 0.3e-13_r8 * 1.14*(2._r8/3._r8)
-            end if
+        !       POLL_CHBr3 = 0.3e-13_r8 * 1.14*(2._r8/3._r8)
+        !    end if
         end if !//(J .LE. 15) then      !//Latitude bands, 90S - 50S
         
 
 
           !//Converting from [kg/(m2*s)] to [molecules/(cm3*s)]
 
-          Mol_CHBr3 = 45.45164   !Molar mass of CHBr3, [g/mol]
+          Mol_CHBr3 = 252.73   !Molar mass of CHBr3, [g/mol]
  
-          POLL_CHBr3 = (POLL_CHBr3 * 1e-1_r8 * AVOGNR) &
-                 / ( Mol_CHBr3 * 100  &
+          POLL_CHBr3 = (POLL_CHBr3 * 1e-3_r8 * AVOGNR) &
+                 / ( Mol_CHBr3  &
                  * ( DV(1) / AREAXY(I,J) ) )
  
 !//=========================================================================
@@ -376,8 +388,8 @@ contains
           vd = 0.00605           !Deposition velocity for Lmix=200 -> vd = 0.00605, [m/s]
           !// separate treatement for NH and SH; get day and info about
           !// spring and summer
-          call be_getspringsummer(YDGRD(J), JDAY, &
-               springday, springend, summermid, summerend, KDAY)
+          !call be_getspringsummer(YDGRD(J), JDAY, &
+          !     springday, springend, summermid, summerend, KDAY)
 
 
           if (CI(I,J) .lt. 0.7_r8) then
