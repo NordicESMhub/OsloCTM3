@@ -8,7 +8,7 @@
 #SBATCH --account=nn2806k
 #
 # Wall clock limit (setting for one year 96:0:0):
-#SBATCH --time=0:15:0
+#SBATCH --time=0:30:0
 #
 # Does your job exceed one week, use "--partition=long":
 # ####SBATCH --partition=long
@@ -18,7 +18,7 @@
 #
 # Number of cores:
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=40
+#SBATCH --cpus-per-task=16
 #
 # Number of nodes:
 #SBATCH --nodes=1
@@ -157,8 +157,6 @@ echo 'Results copied to '$RESTARTDIR
 mv results.$PID     $RESULTDIR/
 mv *.nc             $RESULTDIR/
 mv *dta             $RESULTDIR/
-mv *.dat            $RESULTDIR/
-mv OSLO/Ltracer*    $RESULTDIR/
 
 echo 'Results copied to ${RESULTDIR}'
 
