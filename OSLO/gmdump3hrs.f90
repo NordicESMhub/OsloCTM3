@@ -13,18 +13,19 @@ module gmdump3hrs
   !//
   !// Ole Amund Sovde, June 2012
   !// ----------------------------------------------------------------------
-  use cmn_size, only: NPAR
+  use cmn_size, only: NPAR, NOTRPAR
   use cmn_ctm, only: LDUMP3HRS
   !// ----------------------------------------------------------------------
   implicit none
   !// ----------------------------------------------------------------------
 
   !// List of tracers to put out
-  integer, parameter :: trp_nr = 7, sul_nr = 3, slt_nr = 8, min_nr = 8, &
+  integer, parameter :: trp_nr = 16, sul_nr = 3, slt_nr = 8, min_nr = 8, &
        nit_nr = 5, bio_nr = 4, moa_nr=2, ffc_nr = 4, bfc_nr = 4, &
-       soa_ant_nr = 17, soa_nat_nr = 4
+       soa_ant_nr = 17, soa_nat_nr = 4, ntr_nr = 3
   integer, parameter,dimension(trp_nr) :: &
-       trp_list = (/ 1, 6, 46, 41, 42, 43, 44 /)
+       trp_list = (/ 1, 6, 46, 41, 42, 43, 44, 116, 119, 133, 136, 140, 141, &
+                   142, 143, 146 /)
   integer, parameter,dimension(sul_nr) :: &
        sul_list = (/ 71, 72, 73 /)
   integer, parameter,dimension(slt_nr) :: &
@@ -41,6 +42,9 @@ module gmdump3hrs
        ffc_list = (/ 232, 233, 242, 243 /)
   integer, parameter,dimension(bfc_nr) :: &
        bfc_list = (/ 234, 235, 244, 245 /)
+! NOTRPAR is of same size as the length of list in tracer_list -> counted from top to get index!
+  integer, parameter,dimension(ntr_nr) :: &
+       ntr_list = (/ 132, 138, 139 /)
 
   !// Not included yet (usually put out as the sum, not every species)
   integer, parameter,dimension(soa_ant_nr) :: &
@@ -71,7 +75,7 @@ contains
          LDUST, LNITRATE, LBCOC, LSOA, TRACER_ID_MAX
     use cmn_ctm, only: STT, AIR, JYEAR, JMON, JDATE
     use cmn_chem, only: TNAME
-    use cmn_oslo, only: trsp_idx
+    use cmn_oslo, only: trsp_idx, Xtrsp_idx, XSTT, XTNAME
     !// --------------------------------------------------------------------
     implicit none
     !// --------------------------------------------------------------------
@@ -160,6 +164,10 @@ contains
        ncfilename = 'trp'//cyear//'_'//cday//'.nc'
        call gm_dump_nc(NPAR, GMNAME, STT, TRACER_ID_MAX, trsp_idx, &
             NMET, trp_nr, TRP_LIST, time_label, ncfilename)
+       !// Output of selected non transported tracers + air (netCDF)
+       ncfilename = 'ntr'//cyear//'_'//cday//'.nc'
+       call gm_dump_nc(NOTRPAR, XTNAME, XSTT, TRACER_ID_MAX, Xtrsp_idx, &
+            NMET, ntr_nr, NTR_LIST, time_label, ncfilename)
     end if
 
     if (LSULPHUR .and. LDUMP3HRS(4)) then
