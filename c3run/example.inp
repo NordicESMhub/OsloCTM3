@@ -138,8 +138,8 @@ PFZON  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1
 --------------------------------------------------------------------------------
 ---- DIAGNOSTICS ---------------------------------------------------------------
 LDUMP3HRS - T: Write diagnostic 3 hourly output and monthly means of defined tracers; F: Do not
-   all air trp sul slt min nit bio moa ffc bfc soa
-    T  T  T  T  F  T  F  T  T  T  T  T
+   all air trp sul slt min nit bio moa ffc bfc soa ntr
+    T  T  T  T  F  T  F  T  T  T  T  T  T
 LSTOM1HRS - T: Write diagnostic 1 hourly output of GstO3 and FstO3; F: Do not
     T  
 LDLYSCAV - T: Write daily total and 2d scavenging; F: Do not
