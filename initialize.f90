@@ -596,7 +596,7 @@ contains
     !// Switch on 3 hourly output  
     read(5,*) LDUMP3HRS
     if (LDUMP3HRS(1)) then
-       write(6,*) f90file//':'//subr//': Diagnostic output: Dump3hrs (all/trp/sul/slt/min/nit/bio/moa/ffc/bfc)', LDUMP3HRS
+       write(6,*) f90file//':'//subr//': Diagnostic output: Dump3hrs (all/trp/sul/slt/min/nit/bio/moa/ffc/bfc/ntr)', LDUMP3HRS
     end if
     read (5,*)
     ! Switch on 1 hourly output of GstO3 and FstO3

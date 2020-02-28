@@ -163,6 +163,9 @@ contains
        ncfilename = 'trp'//cyear//'_'//cday//'.nc'
        call gm_dump_nc(NPAR, GMNAME, STT, TRACER_ID_MAX, trsp_idx, &
             NMET, trp_nr, TRP_LIST, time_label, ncfilename)
+    end if
+
+    if (LOSLOCTROP .and. LDUMP3HRS(13)) then
        !// Output of selected non transported tracers + air (netCDF)
        ncfilename = 'ntr'//cyear//'_'//cday//'.nc'
        call gm_dump_nc(NOTRPAR, XTNAME, XSTT, TRACER_ID_MAX, Xtrsp_idx, &

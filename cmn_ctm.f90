@@ -174,7 +174,7 @@ module CMN_CTM
   
   !// Diagnostic output
   !//-----------------------------------------------------------------------
-  logical, dimension(12) :: LDUMP3HRS ! Switch on 3 hourly output of defined tracers
+  logical, dimension(13) :: LDUMP3HRS ! Switch on 3 hourly output of defined tracers
   logical :: LSTOM1HRS ! Switch on 1 hourly output of GstO3 and FstO3
   ! Switch on daily total/2d scavening output channels (burden, large-scale,...)
   logical, dimension(7) :: LDLYSCAV  
