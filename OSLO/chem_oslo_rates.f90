@@ -58,6 +58,7 @@ module chem_oslo_rates
        !r_hobr_dep, vd, Lmix, beta, &
        !// Marit, BrO + NO2 -> BrONO2, 8.10.19
        r_no2_bro_m
+       
 
 
 
@@ -1927,7 +1928,7 @@ contains
        !// JPL number: G2 (JPL06, 20080617)
        r_no2_bro_m(L) = rate3B(314, TZ300, AIR_MOLEC(L), &
             5.2e-31_r8, 3.2_r8, 6.9e-12_r8, 2.9_r8, 0.6_r8, 0)
-
+       write(6,*) 'kjører denne?'
     end do !// do L = LMTROP+1, LMAX
 
     !// Other T,p-dependent calculations

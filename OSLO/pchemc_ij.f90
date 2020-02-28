@@ -119,6 +119,8 @@ contains
          r_oh_benzene, &
          !// Marit, ocean emissions, 26.09.19
          r_oh_chbr3, &
+         !// Marit, cl + ch4, 28.02.20
+         r_cl_ch4, &
          !// Marit, HCl, 13.10.19
          r_oh_clo_a, r_oh_clo_b, &
          !// Marit, ozone etc., 05.11.19
@@ -277,6 +279,8 @@ contains
          k_ch3o_o2, &
          !// Marit, emissions from sea, 26.09.19
          k_oh_chbr3, &
+         !// Marit, cl + ch4, 28.02.20
+         k_cl_ch4, &
          !// Marit, HCl, 13.10.19
          k_oh_clo_a, k_oh_clo_b, &
          !// Marit, ozone etc., 05.11.19
@@ -499,6 +503,8 @@ contains
       k_ch3o_o2 = r_ch3o_o2(JTEMP)
       !// Marit, emissions from the ocean, 26.09.19
       k_oh_chbr3 = r_oh_chbr3(JTEMP)
+      !// Marit, cl + ch4, 28.02.20
+      k_cl_ch4 = r_cl_ch4(JTEMP)
       !// Marit, HCl, 13.10.19
       k_oh_clo_a = r_oh_clo_a(JTEMP) !ClO + OH -> Cl + HO2
       k_oh_clo_b = r_oh_clo_b(JTEMP) !OH + ClO -> HCl + O2
@@ -971,7 +977,8 @@ contains
 
         !//..HCl------------------------------------------------------------
         
-        PROD = k_oh_clo_b * M_OH * M_ClO !OH + ClO -> HCl + O2
+        PROD = k_oh_clo_b * M_OH * M_ClO &!OH + ClO -> HCl + O2
+             + k_cl_ch4 * M_Cl * M_CH4    !Cl + CH4 -> HCl + CH3
         
         LOSS = k_hobr_hcl_a * M_HOBr !HOBr + HCl ->(aerosol) BrCl + H2O
         
@@ -1032,7 +1039,8 @@ contains
         PROD = DBrCl * M_BrCl            &!BrCl + hv -> Br + Cl
              + k_oh_clo_a * M_ClO * M_OH  !ClO + OH -> Cl + HO2
 
-        LOSS = k_o3_cl * M_O3             !O3 + Cl -> ClO + O2
+        LOSS = k_o3_cl * M_O3            &!O3 + Cl -> ClO + O2
+             + k_cl_ch4 * M_CH4           !Cl + CH4 -> HCl + CH3
 
 !// In strat they assume steady state, not the case in the trop.
         XCl = M_Cl
@@ -2212,7 +2220,9 @@ contains
                + k_no_c3h7o2 * M_C3H7O2 * M_NO &
                              * fa_no_c3h7o2 * (1._r8 - fb_no_c3h7o2) &
                + k_ch3o2_ch3x_a * M_CH3O2 * M_CH3X &
-               + (DACETON_A + 2._r8 * DACETON_B) * M_ACETON
+               + (DACETON_A + 2._r8 * DACETON_B) * M_ACETON &
+               !// Marit, Cl + CH4, 28.02.20
+               + k_cl_ch4 * M_Cl * M_CH4 
           if (.not. LOLD_H2OTREATMENT) PROD = PROD &
                + k_od_ch4_a * M_O1D * M_CH4 !O(1D) + CH4 -> OH + CH3
 
@@ -3048,6 +3058,8 @@ contains
         PROD = POLLX(46)
         LOSS = &
              k_oh_ch4 * M_OH    &!OH + CH4  -> CH3 + H2O
+             !// Marit, Cl + CH4, 28.02.20
+             + k_cl_ch4 * M_Cl    &!Cl + CH4 -> HCl + CH3
              + VDEP_L(46)     !Soil uptake / dry deposition
         if (.not. LOLD_H2OTREATMENT) LOSS = LOSS &
              + ( k_od_ch4_a   &!O(1D) + CH4 -> OH + CH3
