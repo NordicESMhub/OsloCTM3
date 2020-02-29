@@ -94,6 +94,8 @@ contains
          !r_hobr_dep, &
          !// Marit, BrO + NO2 -> BrONO2, 8.10.19
          r_no2_bro_m, &
+         !// Marit, ClO + NO2 -> ClONO2, 29.02.20
+         r_no2_clo_m, &
          !// Temperature dependent rates
          r_od_m, r_od_h2o, r_op_no2, &
          r_o3_no, r_o3_no2, r_o3_oh, r_o3_ho2, r_o3_c2h4, r_o3_c3h6, &
@@ -240,6 +242,8 @@ contains
          !// Marit, emissions from ocean, 26.09.19
          M_CH3Br, M_Bry, sea_multi, &
          AIRMOLEC, &
+         !// Marit, ClONO2, 29.02.20
+         M_ClONO2, &
          !// Short-lived, steady state, not transported
          M_CH3, M_CH3O, M_CHO, M_O3NO, &
          XNOX,   XHO2NO2, &
@@ -309,6 +313,8 @@ contains
          k_no_ho2_b, k_op_no_m, k_op_no2_m, &
          !// Marit, BrO + NO2 -> BrONO2, 8.10.19
          k_no2_bro_m, &
+         !// Marit, ClO + NO2 -> ClONO2, 29.02.20
+         k_no2_clo_m, &
          !// Marit, heterogenous halogen reactions, 10.10.19
          k_brono2_h2o_a, k_hobr_hcl_a, k_hobr_hbr_a
 
@@ -568,6 +574,10 @@ contains
       k_hobr_hcl_a = r_hobr_hcl_a(L)
       k_hobr_hbr_a = r_hobr_hbr_a(L)
       k_brono2_h2o_a = r_brono2_h2o_a(L) 
+      !// Marit, BrO + NO2 -> BrONO2, 8.10.19
+      k_no2_bro_m = r_no2_bro_m(L)
+      !// Marit, ClO + NO2 -> ClONO2, 29.02.20
+      k_no2_clo_m = r_no2_clo_m(L)
 
       C4071b  = R4071b(L)
       CTOT4072= RTOT4072(L)
@@ -603,8 +613,7 @@ contains
       k_no_c3h7o2 = r_no_c3h7o2
       !// Marit, HOBr deposition, 7.10.19
       !k_hobr_dep = r_hobr_dep
-      !// Marit, BrO + NO2 -> BrONO2, 8.10.19
-      k_no2_bro_m = r_no2_bro_m
+
 
       !// Emissions
       do N = 1,TRACER_ID_MAX
@@ -792,6 +801,8 @@ contains
         M_BrO    = ZC(139,L)
         M_Br2    = ZC(143,L)
         M_BrCl   = ZC(146,L)
+        !// Marit, ClONO2, 29.02.20
+        M_ClONO2 = ZC(135,L)
 
         !// SOA chemistry: set concentrations
         if (LSOA) then

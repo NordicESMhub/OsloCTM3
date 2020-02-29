@@ -53,11 +53,10 @@ module chem_oslo_rates
        r_od_cfc11_a, r_od_cfc11_b, &
        r_od_hcfc123, r_od_hcfc141, r_od_hcfc142, r_od_hcl, &
        r_h2o_clono2, r_hcl_clono2, &
-       r_oh_bro_a, &
+       r_oh_bro_a
        !// Marit, HOBr depostition, 7.10.19
        !r_hobr_dep, vd, Lmix, beta, &
-       !// Marit, BrO + NO2 -> BrONO2, 8.10.19
-       r_no2_bro_m
+
        
 
 
@@ -338,7 +337,7 @@ contains
     ! r_hobr_dep = ( vd / Lmix ) * beta ![1/s]
 
     !// Reaction: BrO + NO2 (+M) -> BrONO2 (+M)
-     r_no2_bro_m = 3.89e-12_r8   ![molecules/cm3*s]
+    ! r_no2_bro_m = 3.89e-12_r8   ![molecules/cm3*s]
 !//================================================================
 
 
@@ -1255,7 +1254,11 @@ contains
        r_oh_hcohco_m_a, r_oh_hcohco_m_b, r_no2_ch3x_m, r_pan_m, &
        r_no_ho2_b, r_op_no_m, r_op_no2_m, &
        !// Marit, multiphase halogen reactions, 10.10.19
-       r_brono2_h2o_a, r_hobr_hcl_a, r_hobr_hbr_a, ZC_LOCAL, TRACER_ID_MAX)
+       r_brono2_h2o_a, r_hobr_hcl_a, r_hobr_hbr_a, ZC_LOCAL, TRACER_ID_MAX, &
+       !// Marit, BrO + NO2 -> BrONO2, 8.10.19
+       r_no2_bro_m, &
+       !// Marit, no2 + clo, 29.02.20
+       r_no2_clo_m)
     !// --------------------------------------------------------------------
     !// Find reaction rates, dependent upon pressure and temperature.
     !// Slightly modified TCRATE_TP, where J,L has been removed and
@@ -1293,7 +1296,11 @@ contains
 
     !// Marit, multiphase halogen reactions, 10.10.19
     real(r8), dimension(LM), intent(out) :: &
-         r_brono2_h2o_a(LM), r_hobr_hcl_a(LM), r_hobr_hbr_a(LM)
+         r_brono2_h2o_a(LM), r_hobr_hcl_a(LM), r_hobr_hbr_a(LM), &
+       !// Marit, BrO + NO2 -> BrONO2, 8.10.19
+       r_no2_bro_m, &
+       !// Marit, no2 + clo, 29.02.20
+       r_no2_clo_m
 
     integer, intent(in) :: TRACER_ID_MAX !// 300 - in cmn_size
     real(r8), intent(in)  :: &
@@ -1343,6 +1350,10 @@ contains
        r_brono2_h2o_a(:)= 0._r8
        r_hobr_hcl_a(:)  = 0._r8
        r_hobr_hbr_a(:)  = 0._r8
+       !// Marit, BrO + NO2 -> BrONO2, 8.10.19
+       r_no2_bro_m(:)  = 0._r8
+       !// Marit, no2 + clo, 29.02.20
+       r_no2_clo_m(:)  = 0._r8
     end if
 
     !// 3-body (T,p-dependent) calculations
@@ -1353,6 +1364,22 @@ contains
        TEM   = TEMP(L)
        ZTEM  = 1._r8 / TEM
        TZ300 = TEM / 300._r8
+
+       !//------Marit, ClONO2 and BrONO2, 29.02.20-------------------------
+
+       !// NO2 + ClO + M -> ClONO2 + M
+       !// JPL number: F8 (JPL06, 20080617)
+       r_no2_clo_m(L) = rate3B(311, TZ300, AIR_MOLEC(L), &
+            1.8e-31_r8, 3.4_r8, 1.5e-11_r8, 1.9_r8, 0.6_r8, 0)
+
+
+       !// BrO + NO2 + M -> BrONO2 + M
+       !// JPL number: G2 (JPL06, 20080617)
+       r_no2_bro_m(L) = rate3B(314, TZ300, AIR_MOLEC(L), &
+            5.2e-31_r8, 3.2_r8, 6.9e-12_r8, 2.9_r8, 0.6_r8, 0)
+
+       !//----------------------------------------------------------------
+
 
        !// OP + O2 + M --> O3 + M
        !// JPL number: A1 (JPL06, 20080618)
