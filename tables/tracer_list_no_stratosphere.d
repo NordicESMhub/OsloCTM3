@@ -58,7 +58,8 @@ Number    Name(8)  Weight
 112       'Cly'         35.450    'Sum of chlorine'
 116       'CH3Br'       94.934    'Methyl bromide'
 119       'Bry'         79.900    'Sum of bromine'
-133       'ClO'         51.450    
+133       'ClO'         51.450  
+135       'ClONO2'      97.550  
 136       'Cl2'         70.900    
 140       'HBr'         80.908    
 141       'BrONO2'     141.910    

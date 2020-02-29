@@ -245,7 +245,7 @@ module CMN_SIZE
 
   !// Tropospheric chemistry parameters
 #if defined(TROPCHEM)
-  integer, parameter :: NPAR_TROP     = 54
+  integer, parameter :: NPAR_TROP     = 55
   integer, parameter :: NOTRPAR_TROP  = 8
   logical, parameter :: LOSLOCTROP    = .true.
 #else
