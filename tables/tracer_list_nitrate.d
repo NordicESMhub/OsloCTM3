@@ -100,6 +100,9 @@ Number    Name(8)  Weight
 206       'SALT06'      58.440    'Sea salt mode 6'
 207       'SALT07'      58.440    'Sea salt mode 7'
 208       'SALT08'      58.440    'Sea salt mode 8'
+132       'Cl'          35.450    
+138       'Br'          79.900    
+139       'BrO'         95.900  
  -2- list of non-transported species (MUST match NOTRPAR in params.F)- - - - - -
 022       'CH3O2'       47.034    
 023       'C2H5O2'      61.060    
@@ -111,9 +114,6 @@ Number    Name(8)  Weight
 113       'H2'           2.016    
 120       'H2402'      259.820    '[C2Br2F4]'
 125       'H2Os'        18.016    
-130       'H'            1.008    
-132       'Cl'          35.450    
-138       'Br'          79.900    
-139       'BrO'         95.900    
+130       'H'            1.008      
  -3- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  0    Total number of reactions to dump chemical diagnostics for (reaction indices listed below)

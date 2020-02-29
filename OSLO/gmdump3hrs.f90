@@ -43,6 +43,7 @@ module gmdump3hrs
   integer, parameter,dimension(bfc_nr) :: &
        bfc_list = (/ 234, 235, 244, 245 /)
 
+
   !// Not included yet (usually put out as the sum, not every species)
   integer, parameter,dimension(soa_ant_nr) :: &
        soa_ant_list = (/ 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, &
