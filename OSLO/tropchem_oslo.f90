@@ -145,7 +145,10 @@ contains
           !// Marit, heterogeous halogen reactions, 10.10.19
           r_brono2_h2o_a, & !BrONO2 + H2O -->(aerosol) HOBr + HNO3
           r_hobr_hcl_a, &   !HOBr + HCl -->(aerosol) BrCl + H2O
-          r_hobr_hbr_a      !HOBr + HBr -->(aerosol) Br2 + H2O
+          r_hobr_hbr_a, &   !HOBr + HBr -->(aerosol) Br2 + H2O
+          !// Marit, NO2 + XO, 02.03.20
+          r_no2_bro_m, &
+          r_no2_clo_m
  
 
     !// Sulfur T,p reaction rates
@@ -429,7 +432,9 @@ contains
              r_no_ho2_b, r_op_no_m, r_op_no2_m, &
              !// Marit, heterogeous halogen reactions, 10.10.19
              r_brono2_h2o_a, r_hobr_hcl_a, r_hobr_hbr_a, ZC_LOCAL, &
-             TRACER_ID_MAX)
+             TRACER_ID_MAX, &
+             !// Marit, NO2 + XO, 02.03.20
+             r_no2_bro_m, r_no2_clo_m)
 
         !// Initialize/set sulphur reaction rates dependent on T & p
         !// and on dissolved fractions.
@@ -471,7 +476,9 @@ contains
              !// Marit, Bromine chemistry, 26.09.19
              POLL_CHBr3, &
              !// Marit, heterogenous halogen reactions, 10.10.19
-             r_brono2_h2o_a, r_hobr_hcl_a, r_hobr_hbr_a)
+             r_brono2_h2o_a, r_hobr_hcl_a, r_hobr_hbr_a, &
+             !// Marit, NO2 + XO, 02.03.20
+             r_no2_clo_m, r_no2_bro_m)
 
         !// Save negative O3 for this MP. This is reported after
         !// chemistry in diagnostic subroutine OC_REPORTS.

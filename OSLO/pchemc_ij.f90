@@ -56,7 +56,11 @@ contains
        !// Marit, ocean emissions, 26.09.19
        POLL_CHBr3, &
        !// Marit, heterogeneous halogen reactions, 10.10.19
-       r_brono2_h2o_a, r_hobr_hcl_a, r_hobr_hbr_a)
+       r_brono2_h2o_a, r_hobr_hcl_a, r_hobr_hbr_a, &
+       !// Marit, BrO + NO2 -> BrONO2, 8.10.19
+       r_no2_bro_m, &
+       !// Marit, ClO + NO2 -> ClONO2, 29.02.20
+       r_no2_clo_m)
     !// --------------------------------------------------------------------
     !//
     !// Column driver for integrating Oslo Chemistry in the troposphere using
@@ -92,10 +96,6 @@ contains
          r_no_c3h7o2, &
          !// Marit, HOBr deposition, 7.10.19
          !r_hobr_dep, &
-         !// Marit, BrO + NO2 -> BrONO2, 8.10.19
-         r_no2_bro_m, &
-         !// Marit, ClO + NO2 -> ClONO2, 29.02.20
-         r_no2_clo_m, &
          !// Temperature dependent rates
          r_od_m, r_od_h2o, r_op_no2, &
          r_o3_no, r_o3_no2, r_o3_oh, r_o3_ho2, r_o3_c2h4, r_o3_c3h6, &
@@ -158,6 +158,8 @@ contains
          r_oh_co_a, r_oh_co_b, r_oh_c2h4_m, r_oh_c3h6_m, r_ch3_o2_m, &
          r_oh_hcohco_m_a, r_oh_hcohco_m_b, r_no2_ch3x_m, r_pan_m, &
          r_no_ho2_b, r_op_no_m, r_op_no2_m, &
+         !// Marit, NO2 + XO, 02.03.20
+         r_no2_clo_m, r_no2_bro_m, &
          !// Marit, heterogenous halogen reactions, 10.10.19
          r_brono2_h2o_a, r_hobr_hcl_a, r_hobr_hbr_a, &
          RAQ0172, RAQ1572,  RAQ1772, &
@@ -1063,7 +1065,8 @@ contains
         PROD = k_o3_cl * M_O3 * M_Cl      !O3 + Cl -> ClO + O2
 
         LOSS = k_oh_clo_b * M_OH &        !ClO + OH -> HCl + O2
-             + k_oh_clo_a * M_OH          !ClO + OH -> Cl + HO2
+             + k_oh_clo_a * M_OH &        !ClO + OH -> Cl + HO2
+             + k_no2_clo_m*M_NO2          !NO2 + ClO -> ClONO2
 
         XCLO = M_ClO
         call QSSA(70,'XClO',DTCH,QLIN,ST,PROD,LOSS,XCLO)
@@ -1078,6 +1081,14 @@ contains
 
         BrClX = M_BrCl
         call QSSA(71,'BrClx',DTCH,QLIN,ST,PROD,LOSS,BrClX)
+
+        !//..ClONO2 ----------------------------------------------------------
+        !// Marit, 02.03.20
+        PROD = k_no2_clo_m*M_NO2*M_ClO !NO2 + ClO -> ClONO2
+
+        LOSS = 0._r8
+
+        call QSSA(80, 'ClONO2', DTCH, QLIN, ST, PROD, LOSS, M_ClONO2)
 
         !//..Bromine ---------------------------------------------------------
         !// Except BrCl, which was already done with chlorine(from strat)
@@ -1545,7 +1556,9 @@ contains
                 + k_o3_no2 * M_O3      &
                 + VDEP_L(44)        &!drydep
                 + RR_NO2_SOOT(L)    &!NO2 uptake on soot
-                + k_op_no2_m * M_O3P !// O3P + NO2 + M -> NO3
+                + k_op_no2_m * M_O3P&!// O3P + NO2 + M -> NO3
+                + k_no2_clo_m*M_ClO &!// NO2 + ClO -> ClONO2
+                + k_no2_bro_m*M_BrO  !// NO2 + BrO -> BrONO2
 
            !// For stability, production of NO2 from NO is treated as
            !// production rate times (NO+NO2) and also added to the
