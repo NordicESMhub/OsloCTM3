@@ -1291,7 +1291,7 @@ contains
                  print*,"k_brono2_h2o_a",k_brono2_h2o_a
                  print*,"M_BrO",M_BrO
                  print*,"M_BrONO2",M_BrONO2
-                 stop
+                 stop              
               end if
            end if
            M_BrONO2 = BrNO3X*SCAL
