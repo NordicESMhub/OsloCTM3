@@ -200,7 +200,7 @@ program pmain
 
   !// RESET SELECTED TRACERS
   !// Set CH4 to HYMN-results
-  !call set_ch4_stt()
+  call set_ch4_stt()
   !// Set (non-transported) H2 to Eurohydros-results
   !call set_h2_eurohydros()
   !// Set aircraft H2O to zero
