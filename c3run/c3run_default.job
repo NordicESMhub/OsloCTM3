@@ -164,8 +164,8 @@ echo 'Results copied to ${RESULTDIR}'
 #----------------------------------------------------------------------------
 # Organize the output
 #----------------------------------------------------------------------------
-subdirs=( "air_density" "emissions" "monthly_means" "seasalt" "nitrate" "trop_strat_exchange" "sulphur" "scavenging_daily" "trop_tracer" )
-files=( "air" "emis" "avgsav" "slt" "snn" "ste" "sul" "scavenging_daily" "trp" )
+subdirs=( "air_density" "emissions" "monthly_means" "seasalt" "nitrate" "trop_strat_exchange" "sulphur" "scavenging_daily" "trop_tracer" "non-transp" )
+files=( "air" "emis" "avgsav" "slt" "snn" "ste" "sul" "scavenging_daily" "trp" "ntr" )
 
 cd $RESULTDIR
 
