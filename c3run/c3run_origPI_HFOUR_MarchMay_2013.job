@@ -1,0 +1,190 @@
+#!/bin/bash
+# Script for running on Saga.
+# --------------------------------------------------------------------------
+# Job name (enter your distinct job name):
+#SBATCH --job-name=C3RUN_origPI_HFOUR_MarchMay_2013
+#
+# Project (enter your noturn project number):
+#SBATCH --account=nn9188k
+#
+# Wall clock limit (setting for one year 96:0:0):
+#SBATCH --time=15:0:0
+#
+# Does your job exceed one week, use "--partition=long":
+# ####SBATCH --partition=long
+#
+# Max memory usage:
+#SBATCH --mem-per-cpu=3000M
+#
+# Number of cores:
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=8
+#
+# Number of nodes:
+#SBATCH --nodes=1
+#
+#
+## Set up job environment:
+#set -o errexit  # Exit the script on any error
+set -o nounset  # Treat any unset variables as an error
+# --------------------------------------------------------------------------
+# No need to change this section
+#---------------------------------------------------------------------------
+# Must set large stack size (unlimited for simplicity)
+ulimit -s unlimited
+# Set ulimit also to unlimited (probably not necessary)
+ulimit unlimited
+# Print out information about ulimit
+ulimit -a
+
+# allocate specified memory to each thread (100M)
+export THREAD_STACKSIZE=300m
+#   ifort uses KMP_STACKSIZE
+export KMP_STACKSIZE=$THREAD_STACKSIZE
+
+# the PID number is first the date then an uniqe shell pid
+export PID=`date +"%d%m%y".$$`
+
+# --------------------------------------------------------------------------
+# Do changes here
+# --------------------------------------------------------------------------
+# Model input data
+export INPUT_DATA=$CTM3_INPUT
+
+# Model dir - enter your directory here
+export MODELDIR=$CTM3_ROOT
+
+# Project/scenario diectory (place of this file and your .inp)
+export SCENDIR=c3run
+
+# Scenario name (use job name or change to whatever you like)
+export SCEN=$SLURM_JOB_NAME
+
+# Scratch directory
+export SCRATCH=$WORK/$SCEN
+
+# Result directory (where your files end up)
+export RESULTDIR=$WORK/$SCEN.$PID
+
+# Restart directory (where restart files will be placed)
+export RESTARTDIR=$RESULTDIR/restart_$PID
+
+# Set input file name
+export INPUTFILE=origPI_HFOUR_MarchMay_2013.inp
+
+# Name of main program
+export PROGFILE=osloctm3
+
+# Job file (this file)
+export JOBFILENAME=c3run_origPI_HFOUR_MarchMay_2013.job
+
+# The dust file
+export DUSTFILE=OSLO/DEAD_COLUMN/dustinput/dst_T159.nc
+
+# Load a restart file 
+# ! In example.inp: LNCR T: use restart file in netCDF, F: old .sav format
+export RESTARTFILE=$CTM3_USR_INPUT/restart/ctm3_restart_PI_HFOUR_20010301.nc
+
+# --------------------------------------------------------------------------
+# Initialize the model run
+# --------------------------------------------------------------------------
+# Make the scratch directory if you're not already running this script from it
+if [ ! -d $SCRATCH ]; then mkdir $SCRATCH; fi 
+
+# Move the program and the necessary files to $SCRATCH
+cp $MODELDIR/$PROGFILE                  $SCRATCH/osloctm3
+# Replace env variables while moving the files
+sed 's^$CTM3_USR_INPUT^'$CTM3_USR_INPUT'^g; s^$CICERO^'$CICERO'^g; s^$CTM3_INPUT^'$CTM3_INPUT'^g' $MODELDIR/$SCENDIR/$INPUTFILE > $SCRATCH/$INPUTFILE
+# Copy the necessary tables and files  
+mkdir $SCRATCH/tables
+for each in `grep -rh "'tables/*" $MODELDIR/$SCENDIR/$INPUTFILE`; do 
+    if [[ $each =~ "'tables" ]]; then 
+        FILE=`echo $each | tr -d "'"`
+        echo "Copying $FILE"
+        # Replace env variables while moving the files
+        sed 's^$CTM3_USR_INPUT^'$CTM3_USR_INPUT'^g; s^$CICERO^'$CICERO'^g; s^$CTM3_INPUT^'$CTM3_INPUT'^g' $MODELDIR/$FILE > $SCRATCH/$FILE
+    fi 
+done
+# Link the input data
+ln -fs $INPUT_DATA                      $SCRATCH/
+cp $MODELDIR/$DUSTFILE                  $SCRATCH/
+ 
+# CTM3 restart
+echo "Coping $RESTARTFILE."
+echo "WARNING: LNCR in example.inp has to be set accordingly."
+if [[ $RESTARTFILE =~ ".sav" ]]; then 
+    echo "WARNING: This is an old restart file."
+    cp $RESTARTFILE                $SCRATCH/restart.sav
+else
+    cp $RESTARTFILE                $SCRATCH/restart.nc
+fi
+
+# if e90-tracer is used, may need restart file
+cp $INPUT_DATA/restart_e90.sav $SCRATCH/
+
+# Copy the executing job file to $SCRATCH
+cp $0                          $SCRATCH/$JOBFILENAME
+
+# Go to work directory
+cd $SCRATCH
+
+echo "Number of threads ${OMP_NUM_THREADS}"
+
+#----------------------------------------------------------------------------
+# Run the model
+#----------------------------------------------------------------------------
+./osloctm3 < $INPUTFILE > results.$PID
+#----------------------------------------------------------------------------
+
+
+#----------------------------------------------------------------------------
+# Finish the run
+#----------------------------------------------------------------------------
+# Make a result directory
+if [ ! -d $RESULTDIR ]; then mkdir $RESULTDIR; fi
+echo 'Program completed, copy to '$RESULTDIR
+
+# Copy restart files
+if [ ! -d $RESTARTDIR ]; then mkdir $RESTARTDIR; fi
+mv *restart*.nc     $RESTARTDIR/
+mv osloctm3         $RESTARTDIR/
+mv *.job            $RESTARTDIR/
+mv *.inp            $RESTARTDIR/
+mv *.sav            $RESTARTDIR/
+mv dst_*.nc         $RESTARTDIR/
+cp -r tables        $RESTARTDIR/
+echo 'Results copied to '$RESTARTDIR
+
+# Copy files to result directory
+mv results.$PID     $RESULTDIR/
+mv *.nc             $RESULTDIR/
+mv *dta             $RESULTDIR/
+mv *.dat            $RESULTDIR/
+mv OSLO/Ltracer*    $RESULTDIR/
+
+echo 'Results copied to ${RESULTDIR}'
+
+
+#----------------------------------------------------------------------------
+# Organize the output
+#----------------------------------------------------------------------------
+subdirs=( "air_density" "emissions" "monthly_means" "seasalt" "nitrate" "trop_strat_exchange" "sulphur" "scavenging_daily" "trop_tracer" )
+files=( "air" "emis" "avgsav" "slt" "snn" "ste" "sul" "scavenging_daily" "trp" )
+
+cd $RESULTDIR
+
+i=0
+for sdir in ${subdirs[@]}; do
+    if [ ! -d $sdir ]; then
+        mkdir $sdir
+    fi
+    output=${files[i]}
+    mv ${output}* $sdir
+    i=$(($i + 1))
+done
+
+echo "Done."
+#----------------------------------------------------------------------------
+# Done
+#----------------------------------------------------------------------------
+
