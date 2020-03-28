@@ -56,7 +56,8 @@ contains
        !// Marit, ocean emissions, 26.09.19
        POLL_CHBr3, &
        !// Marit, heterogeneous halogen reactions, 10.10.19
-       r_brono2_h2o_a, r_hobr_hcl_a, r_hobr_hbr_a, &
+       !// test: stop het. aerosol reactions, 27.03.20
+       !r_brono2_h2o_a, r_hobr_hcl_a, r_hobr_hbr_a, &
        !// Marit, BrO + NO2 -> BrONO2, 8.10.19
        r_no2_bro_m, &
        !// Marit, ClO + NO2 -> ClONO2, 29.02.20
@@ -161,7 +162,8 @@ contains
          !// Marit, NO2 + XO, 02.03.20
          r_no2_clo_m, r_no2_bro_m, &
          !// Marit, heterogenous halogen reactions, 10.10.19
-         r_brono2_h2o_a, r_hobr_hcl_a, r_hobr_hbr_a, &
+         !// Test: stop het. aerosol reactions, 27.03.20
+         !r_brono2_h2o_a, r_hobr_hcl_a, r_hobr_hbr_a, &
          RAQ0172, RAQ1572,  RAQ1772, &
          R4071b,  RTOT4072, RCATSO2
     !// Tracer info
@@ -316,9 +318,10 @@ contains
          !// Marit, BrO + NO2 -> BrONO2, 8.10.19
          k_no2_bro_m, &
          !// Marit, ClO + NO2 -> ClONO2, 29.02.20
-         k_no2_clo_m, &
+         k_no2_clo_m 
          !// Marit, heterogenous halogen reactions, 10.10.19
-         k_brono2_h2o_a, k_hobr_hcl_a, k_hobr_hbr_a
+         !// Test: stop het. aerosol reactions, 27.03.20
+         !k_brono2_h2o_a, k_hobr_hcl_a, k_hobr_hbr_a
 
     real(r8) :: &
          !// Aerosol uptake/conversion rates
@@ -573,9 +576,10 @@ contains
       k_op_no_m = r_op_no_m(L)
       k_op_no2_m = r_op_no2_m(L)
       !// Marit, heterogenous halogen reactions, 10.10.19
-      k_hobr_hcl_a = r_hobr_hcl_a(L)
-      k_hobr_hbr_a = r_hobr_hbr_a(L)
-      k_brono2_h2o_a = r_brono2_h2o_a(L) 
+      !// Test: stop het. aerosol reactions, 27.03.20
+      !k_hobr_hcl_a = r_hobr_hcl_a(L)
+      !k_hobr_hbr_a = r_hobr_hbr_a(L)
+      !k_brono2_h2o_a = r_brono2_h2o_a(L) 
       !// Marit, BrO + NO2 -> BrONO2, 8.10.19
       k_no2_bro_m = r_no2_bro_m(L)
       !// Marit, ClO + NO2 -> ClONO2, 29.02.20
@@ -993,7 +997,7 @@ contains
         PROD = k_oh_clo_b * M_OH * M_ClO &!OH + ClO -> HCl + O2
              + k_cl_ch4 * M_Cl * M_CH4    !Cl + CH4 -> HCl + CH3
         
-        LOSS = k_hobr_hcl_a * M_HOBr !HOBr + HCl ->(aerosol) BrCl + H2O
+        LOSS = 0._r8!k_hobr_hcl_a * M_HOBr !HOBr + HCl ->(aerosol) BrCl + H2O
         
         call QSSA(66, 'HCl', DTCH, QLIN, ST, PROD, LOSS, M_HCl)
         
@@ -1073,9 +1077,9 @@ contains
 
         !// Integrate BrCl
 
-        PROD = k_hobr_hcl_a * M_HOBr    &!HOBr + HCl (aerosol) -> BrCl + H2O
+        PROD = &!k_hobr_hcl_a * M_HOBr    &!HOBr + HCl (aerosol) -> BrCl + H2O
              !// Assume half of HOBr deposition yields Br2 and half BrCl
-             + 0.50_r8 * k_hobr_dep * M_HOBr !HOBr + H+ + Cl-(snow)-> BrCl + H2O
+              0.50_r8 * k_hobr_dep * M_HOBr !HOBr + H+ + Cl-(snow)-> BrCl + H2O
 
         LOSS = DBrCl            !BrCl + hv -> Br + Cl
 
@@ -1096,18 +1100,18 @@ contains
         !// Br2, HOBr (written sometimes as OHBr), BrNO3, HBr, Brz, Br, BrO
         !// Q[--] is not mulitiplied with [--], because of d[x]/dt = P - Q[x]
 
-        PBr2 = k_hobr_hbr_a * M_HOBr      &!HOBr + HBr (aerosol) -> Br2 + H2O
+        PBr2 =& !k_hobr_hbr_a * M_HOBr      &!HOBr + HBr (aerosol) -> Br2 + H2O
              !// Assume half of HOBr deposition yields Br2 and half BrCl
-             + 0.50_r8 * k_hobr_dep * M_HOBr !HOBr + h+ +Br-(snow)-> Br2 + H2O
+              0.50_r8 * k_hobr_dep * M_HOBr !HOBr + h+ +Br-(snow)-> Br2 + H2O
 
         QBr2 = DBr2                        !Br2 + hv -> 2Br
 
-        POHBr = k_brono2_h2o_a * M_BrONO2 &!BrONO2 + H2O(aerosol) -> HOBr + HNO3
-              + k_bro_ho2 * M_BrO * M_HO2  !BrO + HO2 -> HOBr + O2
+        POHBr = &!k_brono2_h2o_a * M_BrONO2 &!BrONO2 + H2O(aerosol) -> HOBr + HNO3
+               k_bro_ho2 * M_BrO * M_HO2  !BrO + HO2 -> HOBr + O2
 
         QOHBr = DHOBr                    &!HOBr + hv -> Br + OH
-              + k_hobr_hcl_a             &!HOBr + HCl (aerosol) -> BrCl + H2O
-              + k_hobr_hbr_a             &!HOBr + HBr (aerosol) -> Br2 + H2O
+              !+ k_hobr_hcl_a             &!HOBr + HCl (aerosol) -> BrCl + H2O
+              !+ k_hobr_hbr_a             &!HOBr + HBr (aerosol) -> Br2 + H2O
               + k_hobr_dep                !Deposition of HOBr onto the snow
 
         !// Written as PBrNO3 in the strat. part (line 2624), but as BrONO2
@@ -1119,7 +1123,7 @@ contains
 
         PHBr = k_br_ho2 * M_HO2 * M_Br    !Br + HO2 -> HBr + O2
 
-        QHBr = k_hobr_hbr_a               !HOBr + HBr (aerosol) -> Br2 + H2O
+        QHBr = 0._r8!k_hobr_hbr_a               !HOBr + HBr (aerosol) -> Br2 + H2O
 
         !// Model the sum of Br and BrO
         BrZ = M_Br + M_BrO
@@ -1132,8 +1136,8 @@ contains
              + k_oh_chbr3 * 3._r8 * M_CH3Br * M_OH   &!CHBr3 + OH -> 3Br + prod.
              + DCH3Br * M_CH3Br * 3._r8             !CHBr3 + hv -> 3Br + prod.
 
-        QBrZ = (k_brono2_h2o_a * M_BrONO2 &!BrONO2 + H2O(aerosol) -> HOBr + HNO3
-              + k_bro_ho2 * M_HO2        &!BrO + HO2 -> HOBr + O2
+        QBrZ = (&!k_brono2_h2o_a * M_BrONO2 &!BrONO2 + H2O(aerosol) -> HOBr + HNO3
+              k_bro_ho2 * M_HO2        &!BrO + HO2 -> HOBr + O2
               + k_no2_bro_m * M_NO2      &!BrO + NO2 (M) -> BrONO2 (+M)
               ) * M_BrO/BrZ              &
               + ( k_br_ho2 * M_HO2       &!Br + HO2 -> HBr + O2
@@ -1280,7 +1284,7 @@ contains
                  print*,'BrZX',BrZX
                  print*,'DTCH,QLIN,ST,PBr2,QBr2',DTCH,QLIN,ST,PBr2,QBr2
                  print*,'PBr2/QBr2',PBr2/QBr2
-                 print*,"k_hobr_hbr_a, k_hobr_hcl_a",k_hobr_hbr_a,k_hobr_hcl_a
+                 !print*,"k_hobr_hbr_a, k_hobr_hcl_a",k_hobr_hbr_a,k_hobr_hcl_a
                  print*,"DBr2",DBr2
                  print*,"DBrCl",DBrCl
                  print*,"BrZX",BrZX
@@ -1288,7 +1292,7 @@ contains
                  print*,"HBrX",HBrX
                  print*,"M_Br",M_Br
                  print*,"M_HOBr",M_HOBr
-                 print*,"k_brono2_h2o_a",k_brono2_h2o_a
+                 !print*,"k_brono2_h2o_a",k_brono2_h2o_a
                  print*,"M_BrO",M_BrO
                  print*,"M_BrONO2",M_BrONO2
                  stop              
@@ -3330,9 +3334,9 @@ contains
              + k_no3_dms * M_DMS * M_NO3 &
              + POLLX(4) &
              + 2._r8 * k_n2o5_h2o_aer * M_N2O5 &
-             + k_no_ho2_b * M_NO * M_HO2    &!NO + HO2 -> HNO3
+             + k_no_ho2_b * M_NO * M_HO2   ! &!NO + HO2 -> HNO3
              !// Marit, ozone etc., 05.11.19
-             + k_brono2_h2o_a * M_BrONO2  !BrONO2 + H2O(aerosol) -> HOBr + HNO3
+             !+ k_brono2_h2o_a * M_BrONO2  !BrONO2 + H2O(aerosol) -> HOBr + HNO3
 
 
         !// Sulphur reactions

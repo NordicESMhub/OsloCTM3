@@ -143,9 +143,10 @@ contains
           r_op_no_m, &     !OP + NO + M --> NO2
           r_op_no2_m,&     !OP + NO2 + M --> NO3
           !// Marit, heterogeous halogen reactions, 10.10.19
-          r_brono2_h2o_a, & !BrONO2 + H2O -->(aerosol) HOBr + HNO3
-          r_hobr_hcl_a, &   !HOBr + HCl -->(aerosol) BrCl + H2O
-          r_hobr_hbr_a, &   !HOBr + HBr -->(aerosol) Br2 + H2O
+          !// Test: Stop the het. aerosol reactions, 27.03.20
+          !r_brono2_h2o_a, & !BrONO2 + H2O -->(aerosol) HOBr + HNO3
+          !r_hobr_hcl_a, &   !HOBr + HCl -->(aerosol) BrCl + H2O
+          !r_hobr_hbr_a, &   !HOBr + HBr -->(aerosol) Br2 + H2O
           !// Marit, NO2 + XO, 02.03.20
           r_no2_bro_m, &
           r_no2_clo_m
@@ -431,7 +432,9 @@ contains
              r_oh_hcohco_m_a, r_oh_hcohco_m_b, r_no2_ch3x_m, r_pan_m, &
              r_no_ho2_b, r_op_no_m, r_op_no2_m, &
              !// Marit, heterogeous halogen reactions, 10.10.19
-             r_brono2_h2o_a, r_hobr_hcl_a, r_hobr_hbr_a, ZC_LOCAL, &
+             !// Test: stop het.aersosol reactions, 27.03.20
+             !r_brono2_h2o_a, r_hobr_hcl_a, r_hobr_hbr_a, 
+             ZC_LOCAL, &
              TRACER_ID_MAX, &
              !// Marit, NO2 + XO, 02.03.20
              r_no2_bro_m, r_no2_clo_m)
@@ -476,7 +479,8 @@ contains
              !// Marit, Bromine chemistry, 26.09.19
              POLL_CHBr3, &
              !// Marit, heterogenous halogen reactions, 10.10.19
-             r_brono2_h2o_a, r_hobr_hcl_a, r_hobr_hbr_a, &
+             !// Test: stop het.aerosol reactions, 27.03.20
+             !r_brono2_h2o_a, r_hobr_hcl_a, r_hobr_hbr_a, &
              !// Marit, NO2 + XO, 02.03.20
              r_no2_clo_m, r_no2_bro_m)
 
