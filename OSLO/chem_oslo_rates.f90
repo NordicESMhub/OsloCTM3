@@ -1254,10 +1254,7 @@ contains
        r_n2o5_m, r_ho2_no2_m, r_ho2no2_m, r_oh_hno3, r_oh_co_a, r_oh_co_b, &
        r_oh_c2h4_m, r_oh_c3h6_m, r_ch3_o2_m, &
        r_oh_hcohco_m_a, r_oh_hcohco_m_b, r_no2_ch3x_m, r_pan_m, &
-       r_no_ho2_b, r_op_no_m, r_op_no2_m, &
-       !// Marit, multiphase halogen reactions, 10.10.19
-       !// Test: stop het.aerosol reactions, 27.03.20
-       !r_brono2_h2o_a, r_hobr_hcl_a, r_hobr_hbr_a, 
+       r_no_ho2_b, r_op_no_m, r_op_no2_m, & 
        ZC_LOCAL, TRACER_ID_MAX, &
        !// Marit, BrO + NO2 -> BrONO2, 8.10.19
        r_no2_bro_m, &
@@ -1300,8 +1297,6 @@ contains
 
     !// Marit, multiphase halogen reactions, 10.10.19
     real(r8), dimension(LM), intent(out) :: &
-         !// Test: stop het.aerosol reactions, 27.03.20
-         !r_brono2_h2o_a(LM), r_hobr_hcl_a(LM), r_hobr_hbr_a(LM), &
        !// Marit, BrO + NO2 -> BrONO2, 8.10.19
        r_no2_bro_m, &
        !// Marit, no2 + clo, 29.02.20
@@ -1351,11 +1346,7 @@ contains
        r_oh_hcohco_m_b(:) = 0._r8
        r_no_ho2_b(:)      = 0._r8
        
-       !// Marit, heterogenour halogen reactions, 10.10.19
-       !// Test: stop het. aerosol reactions, 27.03.20
-       !r_brono2_h2o_a(:)= 0._r8
-       !r_hobr_hcl_a(:)  = 0._r8
-       !r_hobr_hbr_a(:)  = 0._r8
+  
        !// Marit, BrO + NO2 -> BrONO2, 8.10.19
        r_no2_bro_m(:)  = 0._r8
        !// Marit, no2 + clo, 29.02.20
