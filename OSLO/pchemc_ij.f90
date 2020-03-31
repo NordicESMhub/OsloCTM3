@@ -438,7 +438,7 @@ contains
       sea_multi = 1._r8
 
       if (L .eq. 1) then
-         k_hobr_dep = r_hobr_dep
+         k_hobr_dep = 0._r8 !r_hobr_dep
          POLL_CHBr3_L1 = POLL_CHBr3 * sea_multi
       else
          k_hobr_dep = 0._r8
@@ -573,9 +573,9 @@ contains
       k_op_no_m = r_op_no_m(L)
       k_op_no2_m = r_op_no2_m(L)
       !// Marit, heterogenous halogen reactions, 10.10.19
-      k_hobr_hcl_a = r_hobr_hcl_a(L)
-      k_hobr_hbr_a = r_hobr_hbr_a(L)
-      k_brono2_h2o_a = r_brono2_h2o_a(L) 
+      k_hobr_hcl_a = 0._r8 !r_hobr_hcl_a(L)
+      k_hobr_hbr_a = 0._r8 !r_hobr_hbr_a(L)
+      k_brono2_h2o_a = 0._r8 !r_brono2_h2o_a(L) 
       !// Marit, BrO + NO2 -> BrONO2, 8.10.19
       k_no2_bro_m = r_no2_bro_m(L)
       !// Marit, ClO + NO2 -> ClONO2, 29.02.20
