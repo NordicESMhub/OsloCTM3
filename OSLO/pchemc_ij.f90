@@ -573,7 +573,7 @@ contains
       k_op_no_m = r_op_no_m(L)
       k_op_no2_m = r_op_no2_m(L)
       !// Marit, heterogenous halogen reactions, 10.10.19
-      k_hobr_hcl_a = r_hobr_hcl_a(L)
+      k_hobr_hcl_a = 0._r8 ! r_hobr_hcl_a(L)
       k_hobr_hbr_a = r_hobr_hbr_a(L)
       k_brono2_h2o_a = r_brono2_h2o_a(L) 
       !// Marit, BrO + NO2 -> BrONO2, 8.10.19
@@ -1073,9 +1073,9 @@ contains
 
         !// Integrate BrCl
 
-        PROD = k_hobr_hcl_a * M_HOBr    &!HOBr + HCl (aerosol) -> BrCl + H2O
+        PROD = k_hobr_hcl_a * M_HOBr    !HOBr + HCl (aerosol) -> BrCl + H2O
              !// Assume half of HOBr deposition yields Br2 and half BrCl
-             + 0.50_r8 * k_hobr_dep * M_HOBr !HOBr + H+ + Cl-(snow)-> BrCl + H2O
+             !+ 0.50_r8 * k_hobr_dep * M_HOBr !HOBr + H+ + Cl-(snow)-> BrCl + H2O
 
         LOSS = DBrCl            !BrCl + hv -> Br + Cl
 
