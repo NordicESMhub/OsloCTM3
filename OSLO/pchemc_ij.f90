@@ -438,7 +438,7 @@ contains
       sea_multi = 1._r8
 
       if (L .eq. 1) then
-         k_hobr_dep = r_hobr_dep
+         k_hobr_dep = 0._r8!r_hobr_dep
          POLL_CHBr3_L1 = POLL_CHBr3 * sea_multi
       else
          k_hobr_dep = 0._r8
