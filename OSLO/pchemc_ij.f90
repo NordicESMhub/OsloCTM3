@@ -995,6 +995,12 @@ contains
         
         LOSS = k_hobr_hcl_a * M_HOBr !HOBr + HCl ->(aerosol) BrCl + H2O
         
+        !write(6,*) '--------------'
+        !write(6,*) 'Loss of HCl:  '
+        !write(6,*) LOSS
+        !write(6,*) 'reaction rate k_hobr_hcl_a: '
+        !write(6,*) k_hobr_hcl_a
+
         call QSSA(66, 'HCl', DTCH, QLIN, ST, PROD, LOSS, M_HCl)
         
         !// Marit, ozone etc., 05.11.19
@@ -1120,6 +1126,12 @@ contains
         PHBr = k_br_ho2 * M_HO2 * M_Br    !Br + HO2 -> HBr + O2
 
         QHBr = k_hobr_hbr_a               !HOBr + HBr (aerosol) -> Br2 + H2O
+
+        !write(6,*) '----------'
+        !write(6,*) 'Loss of HBr: '
+        !write(6,*) QHBr
+        !write(6,*) 'reaction rate k_hobr_hbr_a'
+        !write(6,*) k_hobr_hbr_a
 
         !// Model the sum of Br and BrO
         BrZ = M_Br + M_BrO

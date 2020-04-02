@@ -315,9 +315,9 @@ contains
             elseif (PLAND(I,J) .gt. 0._r8 .and. PLAND(I,J) .lt. 0.5_r8) then
                !//coast/islands
                  POLL_CHBr3 = 0.3e-13_r8 * 1.13_r8
-                 write(6,*) '--------------------------'
-                 write(6,*) 'coast/island above 50deg n/s, lat:'
-                 write(6,*) YDGRD(J)
+                 !write(6,*) '--------------------------'
+                 !write(6,*) 'coast/island above 50deg n/s, lat:'
+                 !write(6,*) YDGRD(J)
             end if
 
          elseif (abs(YDGRD(J)) .gt. 10._r8 .and. abs(YDGRD(J)) .le. 50._r8) then !// Latitude bands 50S-10S/50N-10N
@@ -326,9 +326,9 @@ contains
             elseif (PLAND(I,J) .gt. 0._r8 .and. PLAND(I,J) .lt. 0.5_r8) then
                !//coast/islands
                POLL_CHBr3 = 0.9e-13_r8 * 1.13_r8
-               write(6,*) '--------------------------'
-               write(6,*) 'coast/island between 10deg and 50deg n/s, lat:'
-               write(6,*) YDGRD(J)
+               !write(6,*) '--------------------------'
+               !write(6,*) 'coast/island between 10deg and 50deg n/s, lat:'
+               !write(6,*) YDGRD(J)
             end if
 
          elseif (abs(YDGRD(J)) .le. 10._r8) then
@@ -337,14 +337,25 @@ contains
             elseif (PLAND(I,J) .gt. 0._r8 .and. PLAND(I,J) .lt. 0.5_r8) then
                !//coast/islands
                POLL_CHBr3 = 0.9e-13_r8 * 1.13_r8
-               write(6,*) '--------------------------'
-               write(6,*) 'coast/island less than 10deg n/s, lat:'
-               write(6,*) YDGRD(J)
+               !write(6,*) '--------------------------'
+               !write(6,*) 'coast/island less than 10deg n/s, lat:'
+               !write(6,*) YDGRD(J)
             end if
 
         end if !//(abs(YDGRD(J)) .gt. 50._r8) then !// Latitude bands 90S-50S/50N-90N
         
-
+        if (YDGRD(J) .gt. 70._r8 .and. YDGRD(J) .lt. 78._r8) then
+            if (YDGRD(I) .gt. 10._r8 .and. YDGRD(I) .lt. 17._r8) then
+               write(6,*) 'lat:'
+               write(6,*) YDGRD(J)
+               write(6,*) 'lon:'
+               write(6,*) YDGRD(I)
+               write(6,*) 'r_hobr_hbr_a:'
+               write(6,*) r_hobr_hbr_a
+               write(6,*) 'r_hobr_hcl_a:'
+               write(6,*) r_hobr_hcl_a
+            end if
+        end if
 
           !//Converting from [kg/(m2*s)] to [molecules/(cm3*s)]
 
@@ -479,6 +490,7 @@ contains
              r_brono2_h2o_a, r_hobr_hcl_a, r_hobr_hbr_a, &
              !// Marit, NO2 + XO, 02.03.20
              r_no2_clo_m, r_no2_bro_m)
+
 
         !// Save negative O3 for this MP. This is reported after
         !// chemistry in diagnostic subroutine OC_REPORTS.

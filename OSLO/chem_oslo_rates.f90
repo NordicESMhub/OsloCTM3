@@ -1696,7 +1696,7 @@ contains
           v_HOBr = 1000 * sqrt( (8 * R * THE) / ( CPI * Mol_HOBr) )
 
           !//HBr calculations
-          P_HBr = (M_HBr * 1.0e3_r8 * R * THE) / AVOGNR  !Partial p., HBr(g),[atm}
+          P_HBr = (M_HBr * 1.0e3_r8 * R * THE) / AVOGNR  !Partial p., HBr(g),[atm]
           k1_HBr = k2_HBr * H_star_HBr * P_HBr     !1st order liq. rrc, [1/s]
           q_HBr = a * sqrt(k1_HBr /Dliq)      !Function for HBr, dimensionless
 
@@ -1709,7 +1709,7 @@ contains
              HBr_del = ( v_HOBr / &
                   ( 4 * H_star * R * THE * f_q_HBr &
                   * sqrt (k1_HBr * Dliq) ) ) !Dimensionless
-          endif
+          end if
 
           gamma_HBr = 1.0 / ((1 / alpha) + HBr_del)
           !HOBr uptake coef., diemensionless
@@ -1722,7 +1722,7 @@ contains
 
 
           !//HCl calculations
-          P_HCl = (M_HCl * 1.0e3_r8 * R * THE) / AVOGNR  !Partial p., HCl(g),[atm}
+          P_HCl = (M_HCl * 1.0e3_r8 * R * THE) / AVOGNR  !Partial p., HCl(g),[atm]
           k1_HCl = k2_HCl * H_star_HCl * P_HCl     !1st order liq. rrc, [1/s]
           q_HCl = a * sqrt(k1_HCl /Dliq)     !Function for HCl, dimensionless
 
@@ -1736,7 +1736,7 @@ contains
              HCl_del = ( v_HOBr / &
                   ( 4 * H_star * R * THE * f_q_HCl &
                   * sqrt (k1_HCl * Dliq) ) ) !Dimensionless
-          endif
+          end if
 
           gamma_HCl = 1.0 / ((1 / alpha) + HCl_del)
           !HOBr uptake coef., diemensionless
@@ -1746,7 +1746,16 @@ contains
           r_hobr_hcl_a(L) = ( 1.0 / ( (a / Dg) &
                      + ( 4.0 / ( v_HOBr * gamma_HCl)) ) ) &
                      * alpha_eff
-
+          if (L .gt. 17 .and. L .lt. 20) then
+             write(6,*) '--------------------'
+             write(6,*) 'L:'
+             write(6,*) L
+             write(6,*) 'Reaction rate of hobr_hcl'
+             write(6,*) r_hobr_hcl_a(L)
+             write(6,*) 'M_HCl [molec/cm3]'
+             write(6,*) M_HCl
+             write(6,*) '------------------'
+          end if
           !//BrONO2 calculations
           !//Reaction rate constant for BrONO2 + H2O (aerosol)-> HOBr + HNO3
           !// [1/s]
