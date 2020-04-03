@@ -1012,7 +1012,8 @@ contains
         PROD_Cly = DBrCl * M_BrCl
         PROD_Clx = PROD_Cly
 
-        LOSS = k_oh_clo_b * M_OH
+        LOSS = k_oh_clo_b * M_OH &!OH + ClO -> HCl + O2 
+             + k_cl_ch4 * M_CH4   !Cl + CH4 -> HCl + CH3
 
         !if (M_Clx .gt. 1.e-21_r8) then
         !   LOSS = PROD / M_Clx
