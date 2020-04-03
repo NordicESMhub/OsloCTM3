@@ -512,17 +512,17 @@ contains
       !// Marit, emissions from the ocean, 26.09.19
       k_oh_chbr3 = r_oh_chbr3(JTEMP)
       !// Marit, cl + ch4, 28.02.20
-      k_cl_ch4 = r_cl_ch4(JTEMP)
+      k_cl_ch4 = 0._r8 !r_cl_ch4(JTEMP)
       !// Marit, HCl, 13.10.19
-      k_oh_clo_a = r_oh_clo_a(JTEMP) !ClO + OH -> Cl + HO2
-      k_oh_clo_b = r_oh_clo_b(JTEMP) !OH + ClO -> HCl + O2
+      k_oh_clo_a = 0._r8 !r_oh_clo_a(JTEMP) !ClO + OH -> Cl + HO2
+      k_oh_clo_b = 0._r8 !r_oh_clo_b(JTEMP) !OH + ClO -> HCl + O2
       !// Marit, ozone etc., 05.11.19
-      k_br_o3 = r_br_o3(JTEMP)
-      k_bro_bro_a = r_bro_bro_a(JTEMP)
-      k_no_bro = r_no_bro(JTEMP)
-      k_bro_ho2 = r_bro_ho2(JTEMP)
-      k_br_ho2 = r_br_ho2(JTEMP)
-      k_o3_cl = r_o3_cl(JTEMP)
+      k_br_o3 = 0._r8 !r_br_o3(JTEMP)
+      k_bro_bro_a = 0._r8 !r_bro_bro_a(JTEMP)
+      k_no_bro = 0._r8 !r_no_bro(JTEMP)
+      k_bro_ho2 = 0._r8 !r_bro_ho2(JTEMP)
+      k_br_ho2 = 0._r8 !r_br_ho2(JTEMP)
+      k_o3_cl = 0._r8 !r_o3_cl(JTEMP)
 
       !// SOA JTEMP reactions
       k_o3_soaC1 = r_o3_soaC1(JTEMP)
@@ -573,13 +573,13 @@ contains
       k_op_no_m = r_op_no_m(L)
       k_op_no2_m = r_op_no2_m(L)
       !// Marit, heterogenous halogen reactions, 10.10.19
-      k_hobr_hcl_a = r_hobr_hcl_a(L)
-      k_hobr_hbr_a = r_hobr_hbr_a(L)
-      k_brono2_h2o_a = r_brono2_h2o_a(L) 
+      k_hobr_hcl_a = 0._r8 !r_hobr_hcl_a(L)
+      k_hobr_hbr_a = 0._r8 !r_hobr_hbr_a(L)
+      k_brono2_h2o_a = 0._r8 !r_brono2_h2o_a(L) 
       !// Marit, BrO + NO2 -> BrONO2, 8.10.19
-      k_no2_bro_m = r_no2_bro_m(L)
+      k_no2_bro_m = 0._r8 !r_no2_bro_m(L)
       !// Marit, ClO + NO2 -> ClONO2, 29.02.20
-      k_no2_clo_m = r_no2_clo_m(L)
+      k_no2_clo_m = 0._r8 !r_no2_clo_m(L)
 
       C4071b  = R4071b(L)
       CTOT4072= RTOT4072(L)
@@ -669,7 +669,7 @@ contains
       DHOBr  = JV(32,L)          !// HOBr + hv -> Br + OH
       DBrO   = JV(30,L)          !// BrO + hv -> Br + Cl
       !// Marit, emissions from sea, 26.09.19
-      DCH3Br = JV(42, L)         !// CHBr3 + hv -> 3Br + products
+      DCH3Br = 0._r8 !JV(42, L)         !// CHBr3 + hv -> 3Br + products
 
       
       !// Marit, ozone etc., 05.11.19
