@@ -1023,6 +1023,12 @@ contains
 
         call QSSA(67,'Clx',DTCH,QLIN,ST,PROD_Clx,LOSS,M_Clx)
 
+        !// Integrate Cly: 
+
+        LOSS = k_hobr_hcl_a * M_HOBr !HOBr + HCl -> (aerosol) BrCl + H2O 
+        
+        call QSSA(81,'Cly',DTCH,QLIN,ST,PROD_Cly,LOSS,M_Cly)
+
         !// Scaling of Clx and HCl with Cly:
         xCly = M_Clx + M_HCl
         M_Clx = M_Clx * M_Cly / xCly
