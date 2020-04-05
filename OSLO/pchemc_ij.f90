@@ -1874,7 +1874,8 @@ contains
                + k_no_isor2 * M_NO * M_ISOR2 * 0.67_r8 &
                + (k_ch3o2_isor1 * M_ISOR1 &
                   + k_ch3o2_isor2 * M_ISOR2) * M_CH3O2 &
-               + DHO2NO2 * M_HO2NO2         !HO2NO2 + hv -> HO2 + NO2
+               + DHO2NO2 * M_HO2NO2 &        !HO2NO2 + hv -> HO2 + NO2
+               + k_oh_clo_a * M_ClO * M_OH !OH + ClO -> Cl + HO2
 
           LOSS_HO2 = &
                k_no_ho2 * M_NO &
