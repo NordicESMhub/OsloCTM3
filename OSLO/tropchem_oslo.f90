@@ -344,18 +344,18 @@ contains
 
         end if !//(abs(YDGRD(J)) .gt. 50._r8) then !// Latitude bands 90S-50S/50N-90N
         
-        if (YDGRD(J) .gt. 70._r8 .and. YDGRD(J) .lt. 78._r8) then
-            if (YDGRD(I) .gt. 10._r8 .and. YDGRD(I) .lt. 17._r8) then
-               write(6,*) 'lat:'
-               write(6,*) YDGRD(J)
-               write(6,*) 'lon:'
-               write(6,*) YDGRD(I)
-               write(6,*) 'r_hobr_hbr_a:'
-               write(6,*) r_hobr_hbr_a
-               write(6,*) 'r_hobr_hcl_a:'
-               write(6,*) r_hobr_hcl_a
-            end if
-        end if
+        !if (YDGRD(J) .gt. 70._r8 .and. YDGRD(J) .lt. 78._r8) then
+        !    if (YDGRD(I) .gt. 10._r8 .and. YDGRD(I) .lt. 17._r8) then
+        !       write(6,*) 'lat:'
+        !       write(6,*) YDGRD(J)
+        !       write(6,*) 'lon:'
+        !       write(6,*) YDGRD(I)
+        !       write(6,*) 'r_hobr_hbr_a:'
+        !       write(6,*) r_hobr_hbr_a
+        !       write(6,*) 'r_hobr_hcl_a:'
+        !       write(6,*) r_hobr_hcl_a
+        !    end if
+        !end if
 
           !//Converting from [kg/(m2*s)] to [molecules/(cm3*s)]
 

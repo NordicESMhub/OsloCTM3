@@ -1269,6 +1269,8 @@ contains
     use utilities_oslo, only: RATE3B
     !// Marit, heterogenous halogen reactions, 10.10.19
     use cmn_parameters, only: AVOGNR, R_ATM, CPI
+    !// Marit, check for hbr and hcl, 02.04.20
+    use cmn_ctm, only: YDGRD, XDGRD
     !// --------------------------------------------------------------------
     implicit none
     !// --------------------------------------------------------------------
@@ -1746,15 +1748,27 @@ contains
           r_hobr_hcl_a(L) = ( 1.0 / ( (a / Dg) &
                      + ( 4.0 / ( v_HOBr * gamma_HCl)) ) ) &
                      * alpha_eff
-          if (L .gt. 17 .and. L .lt. 20) then
-             write(6,*) '--------------------'
-             write(6,*) 'L:'
-             write(6,*) L
-             write(6,*) 'Reaction rate of hobr_hcl'
-             write(6,*) r_hobr_hcl_a(L)
-             write(6,*) 'M_HCl [molec/cm3]'
-             write(6,*) M_HCl
-             write(6,*) '------------------'
+          if (L .gt. 18 .and. L .lt. 20) then
+             if (XDGRD(ICOL) .gt. 77._r8 .and. XDGRD(ICOL) .lt. 81._r8) then !Longitude
+                if (YDGRD(JCOL) .gt. 11._r8 .and. YDGRD(JCOL) .lt. 13._r8) then !Latitude
+
+                   write(6,*) '--------------------'
+                   write(6,*) 'XDGRD(ICOL), YDGRD(JCOL) (lon/lat): '
+                   write(6,*) XDGRD(ICOL), YDGRD(JCOL) 
+                   write(6,*) 'L:'
+                   write(6,*) L
+                   write(6,*) 'Reaction rate of hobr_hcl'
+                   write(6,*) r_hobr_hcl_a(L)
+                   write(6,*) 'M_HCl [molec/cm3]'
+                   write(6,*) M_HCl
+                   write(6,*) 'Reaction rate of hobr_hbr'
+                   write(6,*) r_hobr_hbr_a(L)
+                   write(6,*) 'M_HBr'
+                   write(6,*) M_HBr
+                   write(6,*) '------------------'
+          
+                 end if
+              end if
           end if
           !//BrONO2 calculations
           !//Reaction rate constant for BrONO2 + H2O (aerosol)-> HOBr + HNO3
