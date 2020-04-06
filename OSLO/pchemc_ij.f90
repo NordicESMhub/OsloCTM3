@@ -579,7 +579,7 @@ contains
       !// Marit, BrO + NO2 -> BrONO2, 8.10.19
       k_no2_bro_m = r_no2_bro_m(L)
       !// Marit, ClO + NO2 -> ClONO2, 29.02.20
-      k_no2_clo_m = r_no2_clo_m(L)
+      k_no2_clo_m = 0._r8 ! r_no2_clo_m(L)
 
       C4071b  = R4071b(L)
       CTOT4072= RTOT4072(L)
