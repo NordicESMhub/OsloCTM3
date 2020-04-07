@@ -364,9 +364,12 @@ contains
 
           r_hobr_dep = 0._r8
           beta = 1.4             !Ratio (surface offered / flat area)(1 or bigger)
-          Lmix = 200             !Height of stable BL, standard is 200 [m]
-    !Lmix=1000 -> vd=0.00491
-          vd = 0.00605           !Deposition velocity for Lmix=200 -> vd = 0.00605, [m/s]
+          !Lmix = 200             !Height of stable BL, standard is 200 [m]
+          !Lmix=1000 -> vd=0.00491
+          !// Test: Lower Lmix to just above first layer of CTM3 (approx 23 m at 0 degrees), 07.04.20
+          Lmix = 25
+          vd = 0.00824           !Deposition velocity for Lmix = 25 -> vd = 0.00692, [m/s]
+          !vd = 0.00605           !Deposition velocity for Lmix=200 -> vd = 0.00605, [m/s]
           !// separate treatement for NH and SH; get day and info about
           !// spring and summer
           !call be_getspringsummer(YDGRD(J), JDAY, &
