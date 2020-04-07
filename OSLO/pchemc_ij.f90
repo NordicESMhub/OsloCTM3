@@ -1005,7 +1005,7 @@ contains
         
         !// Marit, ozone etc., 05.11.19
         
-        !// Integrate Clx:
+        !// Integrate Clx (= Cl + ClO):
         !// Loss of the is what is produced of HCl
         !// Testing value of M_Clx
         !// Cly is from the CFC-gas section, not really nessecary here
@@ -1013,7 +1013,8 @@ contains
         PROD_Clx = PROD_Cly
 
         LOSS = k_oh_clo_b * M_OH &!OH + ClO -> HCl + O2 
-             + k_cl_ch4 * M_CH4   !Cl + CH4 -> HCl + CH3
+             + k_cl_ch4 * M_CH4  &!Cl + CH4 -> HCl + CH3
+             + k_no2_clo_m * M_NO2 !NO2 + ClO + M -> ClONO2 + M
 
         !if (M_Clx .gt. 1.e-21_r8) then
         !   LOSS = PROD / M_Clx
@@ -1023,9 +1024,10 @@ contains
 
         call QSSA(67,'Clx',DTCH,QLIN,ST,PROD_Clx,LOSS,M_Clx)
 
-        !// Integrate Cly: 
+        !// Integrate Cly (= Cl + ClO + HCl): 
 
-        LOSS = k_hobr_hcl_a * M_HOBr !HOBr + HCl -> (aerosol) BrCl + H2O 
+        LOSS = k_hobr_hcl_a * M_HOBr &!HOBr + HCl -> (aerosol) BrCl + H2O
+               k_no2_clo_m * M_NO2 !NO2 + ClO + M -> ClONO2 + M
         
         call QSSA(81,'Cly',DTCH,QLIN,ST,PROD_Cly,LOSS,M_Cly)
 
