@@ -58,9 +58,9 @@ contains
        !// Marit, heterogeneous halogen reactions, 10.10.19
        r_brono2_h2o_a, r_hobr_hcl_a, r_hobr_hbr_a, &
        !// Marit, BrO + NO2 -> BrONO2, 8.10.19
-       r_no2_bro_m) !, &
+       r_no2_bro_m, &
        !// Marit, ClO + NO2 -> ClONO2, 29.02.20
-       !r_no2_clo_m)
+       r_no2_clo_m)
     !// --------------------------------------------------------------------
     !//
     !// Column driver for integrating Oslo Chemistry in the troposphere using
@@ -159,8 +159,7 @@ contains
          r_oh_hcohco_m_a, r_oh_hcohco_m_b, r_no2_ch3x_m, r_pan_m, &
          r_no_ho2_b, r_op_no_m, r_op_no2_m, &
          !// Marit, NO2 + XO, 02.03.20
-         !r_no2_clo_m, 
-         r_no2_bro_m, &
+         r_no2_clo_m, r_no2_bro_m, &
          !// Marit, heterogenous halogen reactions, 10.10.19
          r_brono2_h2o_a, r_hobr_hcl_a, r_hobr_hbr_a, &
          RAQ0172, RAQ1572,  RAQ1772, &
@@ -246,7 +245,7 @@ contains
          M_CH3Br, M_Bry, sea_multi, &
          AIRMOLEC, &
          !// Marit, ClONO2, 29.02.20
-         !M_ClONO2, &
+         M_ClONO2, &
          !// Short-lived, steady state, not transported
          M_CH3, M_CH3O, M_CHO, M_O3NO, &
          XNOX,   XHO2NO2, &
@@ -317,7 +316,7 @@ contains
          !// Marit, BrO + NO2 -> BrONO2, 8.10.19
          k_no2_bro_m, &
          !// Marit, ClO + NO2 -> ClONO2, 29.02.20
-         !k_no2_clo_m, &
+         k_no2_clo_m, &
          !// Marit, heterogenous halogen reactions, 10.10.19
          k_brono2_h2o_a, k_hobr_hcl_a, k_hobr_hbr_a
 
@@ -580,7 +579,7 @@ contains
       !// Marit, BrO + NO2 -> BrONO2, 8.10.19
       k_no2_bro_m = r_no2_bro_m(L)
       !// Marit, ClO + NO2 -> ClONO2, 29.02.20
-      !k_no2_clo_m = r_no2_clo_m(L)
+      k_no2_clo_m = 0._r8 ! r_no2_clo_m(L)
 
       C4071b  = R4071b(L)
       CTOT4072= RTOT4072(L)
@@ -805,7 +804,7 @@ contains
         M_Br2    = ZC(143,L)
         M_BrCl   = ZC(146,L)
         !// Marit, ClONO2, 29.02.20
-        !M_ClONO2 = ZC(135,L)
+        M_ClONO2 = ZC(135,L)
 
         !// SOA chemistry: set concentrations
         if (LSOA) then
@@ -1079,8 +1078,8 @@ contains
         PROD = k_o3_cl * M_O3 * M_Cl      !O3 + Cl -> ClO + O2
 
         LOSS = k_oh_clo_b * M_OH &        !ClO + OH -> HCl + O2
-             + k_oh_clo_a * M_OH !&        !ClO + OH -> Cl + HO2
-             !+ k_no2_clo_m*M_NO2          !NO2 + ClO -> ClONO2
+             + k_oh_clo_a * M_OH &        !ClO + OH -> Cl + HO2
+             + k_no2_clo_m*M_NO2          !NO2 + ClO -> ClONO2
 
         XCLO = M_ClO
         call QSSA(70,'XClO',DTCH,QLIN,ST,PROD,LOSS,XCLO)
@@ -1098,11 +1097,11 @@ contains
 
         !//..ClONO2 ----------------------------------------------------------
         !// Marit, 02.03.20
-        !PROD = k_no2_clo_m*M_NO2*M_ClO !NO2 + ClO -> ClONO2
+        PROD = k_no2_clo_m*M_NO2*M_ClO !NO2 + ClO -> ClONO2
 
-        !LOSS = 0._r8
+        LOSS = 0._r8
 
-        !call QSSA(80, 'ClONO2', DTCH, QLIN, ST, PROD, LOSS, M_ClONO2)
+        call QSSA(80, 'ClONO2', DTCH, QLIN, ST, PROD, LOSS, M_ClONO2)
 
         !//..Bromine ---------------------------------------------------------
         !// Except BrCl, which was already done with chlorine(from strat)
@@ -1577,7 +1576,7 @@ contains
                 + VDEP_L(44)        &!drydep
                 + RR_NO2_SOOT(L)    &!NO2 uptake on soot
                 + k_op_no2_m * M_O3P&!// O3P + NO2 + M -> NO3
-                !+ k_no2_clo_m*M_ClO &!// NO2 + ClO -> ClONO2
+                + k_no2_clo_m*M_ClO &!// NO2 + ClO -> ClONO2
                 + k_no2_bro_m*M_BrO  !// NO2 + BrO -> BrONO2
 
            !// For stability, production of NO2 from NO is treated as
