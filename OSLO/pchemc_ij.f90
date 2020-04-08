@@ -182,6 +182,8 @@ contains
     real(r8)  :: BrClx, BrZx, BrNO3X, OHBrx, HBrX, BrX, BrOX
     integer   :: ISCALE, scalemod
     real(R8)  :: SCAL
+    !// Marit, Cl-components, 07.04.20
+    real(r8)  :: XHCl
 
     !// Meteorological variables
     real(r8), dimension(LM), intent(in) :: TEMP  !// Temperature
@@ -356,6 +358,8 @@ contains
          QBrO, PBr2, QBr2, POHBr, &
          QOHBr, PBrNO3, QBrNO3, &
          BrZ, QBrZ, Br2X, BrTOT, BrTST, &
+         !// Marit, Cl-components, 08.04.20
+         ClZ, &
          !// balancing Nitrogen components
          XJNO,XJNO2, RELATN,EKSTRSN, O3TEST, &
          !// help variables
@@ -1002,7 +1006,10 @@ contains
         !write(6,*) 'reaction rate k_hobr_hcl_a: '
         !write(6,*) k_hobr_hcl_a
 
-        call QSSA(66, 'HCl', DTCH, QLIN, ST, PROD, LOSS, M_HCl)
+        !// Marit, Cl-components, 08.04.20
+        XHCl = M_HCl
+        call QSSA(66, 'XHCl', DTCH, QLIN, ST, PROD, LOSS, XHCl)
+        !call QSSA(66, 'HCl', DTCH, QLIN, ST, PROD, LOSS, M_HCl)
         
         !// Marit, ozone etc., 05.11.19
         
