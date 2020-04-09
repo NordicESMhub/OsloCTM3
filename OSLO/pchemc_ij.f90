@@ -359,7 +359,7 @@ contains
          QOHBr, PBrNO3, QBrNO3, &
          BrZ, QBrZ, Br2X, BrTOT, BrTST, &
          !// Marit, Cl-components, 08.04.20
-         ClZ, &
+         ClZ, ClZx, &
          !// balancing Nitrogen components
          XJNO,XJNO2, RELATN,EKSTRSN, O3TEST, &
          !// help variables
@@ -1094,6 +1094,17 @@ contains
         XCLO = M_ClO
         call QSSA(70,'XClO',DTCH,QLIN,ST,PROD,LOSS,XCLO)
 
+        !// Model the sum of Cl and ClO, 09.04.20
+        ClZ = M_Cl + M_ClO
+
+        PROD = DBrCl * M_BrCl !BrCl + hv -> Br + Cl
+
+        LOSS = k_oh_clo_b * M_OH * M_ClO/ClZ & !OH + ClO -> HCl + O2
+             + k_cl_ch4 * M_CH4 *M_Cl/ClZ      !Cl + CH4 -> HCl + CH3
+
+        ClZx = ClZ
+        call QSSA(80,'ClZx',DTCH,QLIN,ST,PROD,LOSS,ClZx)
+
         !// Integrate BrCl
 
         PROD = k_hobr_hcl_a * M_HOBr    &!HOBr + HCl (aerosol) -> BrCl + H2O
@@ -1329,6 +1340,16 @@ contains
            M_HOBr = OHBrX*SCAL
            M_BrCl = BrClx*SCAL
            !// No need for else
+        end if
+
+        !// Test: largest ClZ species set with the 
+        !// integrated sum of Cl and ClO, 09.04.20
+        if (XCl .gt. XClO) then
+           M_ClO = XClO
+           M_Cl = ClZ - XClO
+        else
+           M_ClO = ClZ - XCl
+           M_Cl = XCl
         end if
 
         !// Largest Brz species is set with the
