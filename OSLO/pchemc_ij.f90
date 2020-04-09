@@ -995,10 +995,10 @@ contains
 
         !//..HCl------------------------------------------------------------
         
-        PROD = k_oh_clo_b * M_OH * M_ClO &!OH + ClO -> HCl + O2
-             + k_cl_ch4 * M_Cl * M_CH4    !Cl + CH4 -> HCl + CH3
+        !PROD = k_oh_clo_b * M_OH * M_ClO &!OH + ClO -> HCl + O2
+        !     + k_cl_ch4 * M_Cl * M_CH4    !Cl + CH4 -> HCl + CH3
         
-        LOSS = k_hobr_hcl_a * M_HOBr !HOBr + HCl ->(aerosol) BrCl + H2O
+        !LOSS = k_hobr_hcl_a * M_HOBr !HOBr + HCl ->(aerosol) BrCl + H2O
         
         !write(6,*) '--------------'
         !write(6,*) 'Loss of HCl:  '
@@ -1007,8 +1007,8 @@ contains
         !write(6,*) k_hobr_hcl_a
 
         !// Marit, Cl-components, 08.04.20
-        XHCl = M_HCl
-        call QSSA(66, 'XHCl', DTCH, QLIN, ST, PROD, LOSS, XHCl)
+        !XHCl = M_HCl
+        !call QSSA(66, 'XHCl', DTCH, QLIN, ST, PROD, LOSS, XHCl)
         !call QSSA(66, 'HCl', DTCH, QLIN, ST, PROD, LOSS, M_HCl)
         
         !// Marit, ozone etc., 05.11.19
@@ -1104,6 +1104,16 @@ contains
 
         ClZx = ClZ
         call QSSA(80,'ClZx',DTCH,QLIN,ST,PROD,LOSS,ClZx)
+
+        !// Integrate HCl
+        
+        PROD = k_oh_clo_b * M_OH * M_ClO &!OH + ClO -> HCl + O2
+             + k_cl_ch4 * M_Cl * M_CH4    !Cl + CH4 -> HCl + CH3
+
+        LOSS = k_hobr_hcl_a * M_HOBr !HOBr + HCl -> (aerosol) BrCl + H2O
+
+        XHCl = M_HCl
+        call QSSA(66,'XHCl',DTCH,QLIN,ST,PROD,LOSS,XHCl) 
 
         !// Integrate BrCl
 
