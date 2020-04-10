@@ -1387,13 +1387,12 @@ contains
 
               !// Clx:
               XClx = M_Clx
-              YClx = M_Cl + M_ClO + M_BrCL
+              YClx = M_Cl + M_ClO
 
               FACN = XClx / YClx
 
               M_Cl   = M_Cl * FACN
               M_ClO  = M_ClO * FACN
-              M_BrCl = M_BrCl * FACN
 
            end do !// do ISCALE = 1, 3
 
