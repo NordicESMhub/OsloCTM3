@@ -315,9 +315,9 @@ contains
             elseif (PLAND(I,J) .gt. 0._r8 .and. PLAND(I,J) .lt. 0.5_r8) then
                !//coast/islands
                  POLL_CHBr3 = 0.3e-13_r8 * 1.13_r8
-                 write(6,*) '--------------------------'
-                 write(6,*) 'coast/island above 50deg n/s, lat:'
-                 write(6,*) YDGRD(J)
+                 !write(6,*) '--------------------------'
+                 !write(6,*) 'coast/island above 50deg n/s, lat:'
+                 !write(6,*) YDGRD(J)
             end if
 
          elseif (abs(YDGRD(J)) .gt. 10._r8 .and. abs(YDGRD(J)) .le. 50._r8) then !// Latitude bands 50S-10S/50N-10N
@@ -326,9 +326,9 @@ contains
             elseif (PLAND(I,J) .gt. 0._r8 .and. PLAND(I,J) .lt. 0.5_r8) then
                !//coast/islands
                POLL_CHBr3 = 0.9e-13_r8 * 1.13_r8
-               write(6,*) '--------------------------'
-               write(6,*) 'coast/island between 10deg and 50deg n/s, lat:'
-               write(6,*) YDGRD(J)
+               !write(6,*) '--------------------------'
+               !write(6,*) 'coast/island between 10deg and 50deg n/s, lat:'
+               !write(6,*) YDGRD(J)
             end if
 
          elseif (abs(YDGRD(J)) .le. 10._r8) then
@@ -337,9 +337,9 @@ contains
             elseif (PLAND(I,J) .gt. 0._r8 .and. PLAND(I,J) .lt. 0.5_r8) then
                !//coast/islands
                POLL_CHBr3 = 0.9e-13_r8 * 1.13_r8
-               write(6,*) '--------------------------'
-               write(6,*) 'coast/island less than 10deg n/s, lat:'
-               write(6,*) YDGRD(J)
+               !write(6,*) '--------------------------'
+               !write(6,*) 'coast/island less than 10deg n/s, lat:'
+               !write(6,*) YDGRD(J)
             end if
 
         end if !//(abs(YDGRD(J)) .gt. 50._r8) then !// Latitude bands 90S-50S/50N-90N
@@ -364,15 +364,17 @@ contains
 
           r_hobr_dep = 0._r8
           beta = 1.4             !Ratio (surface offered / flat area)(1 or bigger)
-          Lmix = 200             !Height of stable BL, standard is 200 [m]
+          !Lmix = 200             !Height of stable BL, standard is 200 [m]
           !Lmix=1000 -> vd=0.00491
           !// Test: Lower Lmix to just above first layer of CTM3 (approx 23 m at 0 degrees), 07.04.20
           !Lmix = 25
           !vd = 0.00824           !Deposition velocity for Lmix = 25 -> vd = 0.00692, [m/s]
-          vd = 0.00605           !Deposition velocity for Lmix=200 -> vd = 0.00605, [m/s]
+          !vd = 0.00605           !Deposition velocity for Lmix=200 -> vd = 0.00605, [m/s]
           !// Test: Lmix = 100 m, 07.04.20
           !Lmix = 100
           !vd = 0.00667       !Deposition velocity for Lmix = 100 -> vd = 0.00667 [m/s]
+          Lmix = 50
+          vd = 0.0074
           !// separate treatement for NH and SH; get day and info about
           !// spring and summer
           !call be_getspringsummer(YDGRD(J), JDAY, &

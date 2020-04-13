@@ -1031,7 +1031,9 @@ contains
         !// Setting 0.50_r8 to 1.0_r8, all dependence on Bry
         PROD_Bry = & 
              !// Assume half of HOBr deposition yields Br2 and half BrCl
-             + 0.50_r8 * k_hobr_dep * M_HOBr &!HOBr + H+ + Br-(snow)-> Br2 + H20
+            
+             !+ 0.50_r8 * k_hobr_dep * M_HOBr &!HOBr + H+ + Br-(snow)-> Br2 + H20
+             + k_hobr_dep * M_HOBr &!HOBr + H+ + Br-(snow)-> Br2 + H20
              + PROD_Bry                   !Sources from CHBr3
 
         !// No loss in the strat, but there is loss in trop.
@@ -1098,8 +1100,8 @@ contains
 
         PBr2 = k_hobr_hbr_a * M_HOBr      &!HOBr + HBr (aerosol) -> Br2 + H2O
              !// Assume half of HOBr deposition yields Br2 and half BrCl
-             + 0.50_r8 * k_hobr_dep * M_HOBr !HOBr + h+ +Br-(snow)-> Br2 + H2O
-
+             !+ 0.50_r8 * k_hobr_dep * M_HOBr !HOBr + h+ +Br-(snow)-> Br2 + H2O
+             + k_hobr_dep * M_HOBr !HOBr + H+ + Br-(snow)-> Br2 + H20
         QBr2 = DBr2                        !Br2 + hv -> 2Br
 
         POHBr = k_brono2_h2o_a * M_BrONO2 &!BrONO2 + H2O(aerosol) -> HOBr + HNO3
@@ -1299,6 +1301,7 @@ contains
            BrZ = BrZX*SCAL
            M_HOBr = OHBrX*SCAL
            M_BrCl = BrClx*SCAL
+           M_Br2 = Br2x*SCAL
            !// No need for else
         end if
 
