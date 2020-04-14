@@ -371,10 +371,10 @@ contains
           !vd = 0.00824           !Deposition velocity for Lmix = 25 -> vd = 0.00692, [m/s]
           !vd = 0.00605           !Deposition velocity for Lmix=200 -> vd = 0.00605, [m/s]
           !// Test: Lmix = 100 m, 07.04.20
-          !Lmix = 100
-          !vd = 0.00667       !Deposition velocity for Lmix = 100 -> vd = 0.00667 [m/s]
-          Lmix = 50
-          vd = 0.0074
+          Lmix = 100
+          vd = 0.00667       !Deposition velocity for Lmix = 100 -> vd = 0.00667 [m/s]
+          !Lmix = 50
+          !vd = 0.0074
           !// separate treatement for NH and SH; get day and info about
           !// spring and summer
           !call be_getspringsummer(YDGRD(J), JDAY, &

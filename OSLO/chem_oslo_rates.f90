@@ -1685,7 +1685,7 @@ contains
 
           M_HCl = ZC_LOCAL(111,L) ! HCl [molec/cm3]
           M_HBr = ZC_LOCAL(140,L) ! HBr [molec/cm3]
-
+          
        !// Only calculate when aerosols are present
 !       if (PARTAREA(L).gt.0._r8) then
 

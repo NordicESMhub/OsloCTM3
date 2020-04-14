@@ -792,7 +792,12 @@ contains
         M_HOBr  = ZC(142,L)
         !// Marit, heterogenous halogen chemistry, 10.10.19
         M_HCl   = ZC(111, L)
-        M_HBr   = ZC(140, L)
+        if (NST .eq. 1) then
+           M_HBr = 8.059e8_r8 !Test - set inital concentration of HBr -> 30 ppt = 8.059e8 molec/cm3 (273.15K)
+        else
+           M_HBr   = ZC(140, L)
+        end if
+        !M_HBr   = 8.059e8_r8 !Test - set constant M_HBr --> 30 ppt
         M_BrONO2= ZC(141, L)
         !// Marit, the rest of them, 13.10.19
         M_Clx    = ZC(108,L)
