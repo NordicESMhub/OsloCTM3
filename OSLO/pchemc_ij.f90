@@ -786,7 +786,7 @@ contains
         !// Stratospheric components included in troposphere
         M_H2    = ZC(113,L)
         !// Marit, emissions from sea, 26.09.19
-        M_Bry   = ZC(119,L)
+        !M_Bry   = ZC(119,L)
         M_CH3Br = ZC(116,L)
         !// Marit, HOBr deposition, 7.10.19
         M_HOBr  = ZC(142,L)
@@ -797,7 +797,7 @@ contains
         else
            M_HBr   = ZC(140, L)
         end if
-        !M_HBr   = 8.059e8_r8 !Test - set constant M_HBr --> 30 ppt
+        !M_HBr   = ZC(140, L)
         M_BrONO2= ZC(141, L)
         !// Marit, the rest of them, 13.10.19
         M_Clx    = ZC(108,L)
@@ -808,6 +808,7 @@ contains
         M_BrO    = ZC(139,L)
         M_Br2    = ZC(143,L)
         M_BrCl   = ZC(146,L)
+        M_Bry = M_HOBr + M_HBr + M_BrONO2 + 3*M_Br2 + M_BrCl + M_BrO + M_Br
         !// Marit, ClONO2, 29.02.20
         M_ClONO2 = ZC(135,L)
 
