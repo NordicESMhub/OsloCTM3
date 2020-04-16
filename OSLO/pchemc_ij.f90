@@ -792,8 +792,14 @@ contains
         M_HOBr  = ZC(142,L)
         !// Marit, heterogenous halogen chemistry, 10.10.19
         M_HCl   = ZC(111, L)
+        
         if (NST .eq. 1) then
-           M_HBr = 8.059e8_r8 !Test - set inital concentration of HBr -> 30 ppt = 8.059e8 molec/cm3 (273.15K)
+           !write(6,*) 'conc of M_HBr'
+           !write(6,*) M_HBr
+           !M_HBr = 8.059e8_r8 !Test - set inital concentration of HBr -> 30 ppt = 8.059e8 molec/cm3 (273.15K)
+           !M_HBr = 2.67e5_r8 !New test - M_HBr = 0.01 ppt (Cao)
+           !M_HBr = 1.34e8_r8 !New test - M_HBr = 5 ppt
+           M_HBr = 2.69e8_r8 !New test - M_HBr = 10 ppt
         else
            M_HBr   = ZC(140, L)
         end if
@@ -808,7 +814,7 @@ contains
         M_BrO    = ZC(139,L)
         M_Br2    = ZC(143,L)
         M_BrCl   = ZC(146,L)
-        M_Bry = M_HOBr + M_HBr + M_BrONO2 + 3*M_Br2 + M_BrCl + M_BrO + M_Br
+        M_Bry = M_HOBr + M_HBr + M_BrONO2 + 2*M_Br2 + M_BrCl + M_BrO + M_Br
         !// Marit, ClONO2, 29.02.20
         M_ClONO2 = ZC(135,L)
 

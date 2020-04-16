@@ -1684,7 +1684,7 @@ contains
        !// from ground to top of trop.
 
           M_HCl = ZC_LOCAL(111,L) ! HCl [molec/cm3]
-          M_HBr = ZC_LOCAL(140,L) ! HBr [molec/cm3]
+          M_HBr = 8.059e8_r8 !ZC_LOCAL(140,L) ! HBr [molec/cm3]
           
        !// Only calculate when aerosols are present
 !       if (PARTAREA(L).gt.0._r8) then
@@ -1756,7 +1756,8 @@ contains
 
 !       end if !//(PARTAREA(L).gt.0._r8) then
     end do !///L = 1, LMTROP
-
+    write(6,*) 'r_hobr_hbr_a in layer 1:'
+    write(6,*) r_hobr_hbr_a(1)
 
 !---------------------------------------------------------------------------
 
