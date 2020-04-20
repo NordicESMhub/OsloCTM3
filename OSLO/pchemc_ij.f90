@@ -119,6 +119,8 @@ contains
          r_o3_soaC7, r_oh_soaC7, r_no3_soaC7, &
          r_o3_soaC8, r_oh_soaC8, r_no3_soaC8, &
          r_oh_benzene, &
+         !// Marit, cycling oh HOBr, 20.04.20
+         r_oh_br2, &
          !// Marit, ocean emissions, 26.09.19
          r_oh_chbr3, &
          !// Marit, cl + ch4, 28.02.20
@@ -283,6 +285,8 @@ contains
          k_ho2_ch3o2, k_ho2_ch3x, k_ho2_radical, &
          k_ch3o2_ch3o2, k_ch3o2_ch3x_a, k_ch3o2_ch3x_b, k_ch3x_ch3x, &
          k_ch3o_o2, &
+         !// Marit, cycling of HOBr, 20.04.20
+         k_oh_br2, &
          !// Marit, emissions from sea, 26.09.19
          k_oh_chbr3, &
          !// Marit, cl + ch4, 28.02.20
@@ -509,6 +513,8 @@ contains
       k_ch3o2_ch3x_b = r_ch3o2_ch3x_b(JTEMP)
       k_ch3x_ch3x = r_ch3x_ch3x(JTEMP)
       k_ch3o_o2 = r_ch3o_o2(JTEMP)
+      !// Marit, cycling of HOBr, 20.04.20
+      k_oh_br2 = r_oh_br2(JTEMP)
       !// Marit, emissions from the ocean, 26.09.19
       k_oh_chbr3 = r_oh_chbr3(JTEMP)
       !// Marit, cl + ch4, 28.02.20
@@ -793,17 +799,17 @@ contains
         !// Marit, heterogenous halogen chemistry, 10.10.19
         M_HCl   = ZC(111, L)
         
-        if (NST .eq. 1) then
+        !if (NST .eq. 1) then
            !write(6,*) 'conc of M_HBr'
            !write(6,*) M_HBr
            !M_HBr = 8.059e8_r8 !Test - set inital concentration of HBr -> 30 ppt = 8.059e8 molec/cm3 (273.15K)
            !M_HBr = 2.67e5_r8 !New test - M_HBr = 0.01 ppt (Cao)
            !M_HBr = 1.34e8_r8 !New test - M_HBr = 5 ppt
-           M_HBr = 2.69e8_r8 !New test - M_HBr = 10 ppt
-        else
-           M_HBr   = ZC(140, L)
-        end if
-        !M_HBr   = ZC(140, L)
+        !   M_HBr = 2.69e8_r8 !New test - M_HBr = 10 ppt
+        !else
+        !   M_HBr   = ZC(140, L)
+        !end if
+        M_HBr   = ZC(140, L)
         M_BrONO2= ZC(141, L)
         !// Marit, the rest of them, 13.10.19
         M_Clx    = ZC(108,L)
@@ -1114,10 +1120,12 @@ contains
              !// Assume half of HOBr deposition yields Br2 and half BrCl
              !+ 0.50_r8 * k_hobr_dep * M_HOBr !HOBr + h+ +Br-(snow)-> Br2 + H2O
              + k_hobr_dep * M_HOBr !HOBr + H+ + Br-(snow)-> Br2 + H20
-        QBr2 = DBr2                        !Br2 + hv -> 2Br
+        QBr2 = DBr2  &                      !Br2 + hv -> 2Br
+             + k_oh_br2 * M_OH     ! OH + Br2 -> HOBr + Br
 
         POHBr = k_brono2_h2o_a * M_BrONO2 &!BrONO2 + H2O(aerosol) -> HOBr + HNO3
-              + k_bro_ho2 * M_BrO * M_HO2  !BrO + HO2 -> HOBr + O2
+              + k_bro_ho2 * M_BrO * M_HO2 &!BrO + HO2 -> HOBr + O2
+              + k_oh_br2 * M_OH * M_br2 ! OH + Br2 -> HOBr + Br
 
         QOHBr = DHOBr                    &!HOBr + hv -> Br + OH
               + k_hobr_hcl_a             &!HOBr + HCl (aerosol) -> BrCl + H2O
@@ -1144,7 +1152,8 @@ contains
 !             + k_oh_ch3br * M_CH3Br * M_OH         &!CH3Br + OH -> Br + prod.
 !             + k_oh_ch2br2 * 2._r8 * M_CH2Br2 * M_OH &!CH2Br2 + OH ->2Br + prod.
              + k_oh_chbr3 * 3._r8 * M_CH3Br * M_OH   &!CHBr3 + OH -> 3Br + prod.
-             + DCH3Br * M_CH3Br * 3._r8             !CHBr3 + hv -> 3Br + prod.
+             + DCH3Br * M_CH3Br * 3._r8            & !CHBr3 + hv -> 3Br + prod.
+             + k_oh_br2 * M_OH * M_Br2   ! OH + Br2 -> HOBr + Br
 
         QBrZ = (k_brono2_h2o_a * M_BrONO2 &!BrONO2 + H2O(aerosol) -> HOBr + HNO3
               + k_bro_ho2 * M_HO2        &!BrO + HO2 -> HOBr + O2
@@ -1153,6 +1162,12 @@ contains
               + ( k_br_ho2 * M_HO2       &!Br + HO2 -> HBr + O2
               ) * M_Br / BrZ
 
+        !if (NST .eq. 1) then 
+        !   write(6,*) 'reaction rate bro_bro'
+        !   write(6,*) k_bro_bro_a
+        !   write(6,*) 'reaction rate DBrO'
+        !   write(6,*) DBrO
+        !end if
 
         PBr = DHOBr * M_HOBr                      &!HOBr + hv -> Br + OH
             + DBr2 * M_Br2                        &!Br2 + hv -> 2Br
@@ -1163,7 +1178,8 @@ contains
 !            + k_oh_ch3br * M_CH3Br * M_OH         &!CH3Br + OH -> Br + prod.
 !            + k_oh_ch2br2 * 2._r8 * M_CH2Br2 * M_OH &!CH2Br2 + OH ->2Br + prod.
             + k_oh_chbr3 * 3._r8 * M_CH3Br * M_OH   &!CHBr3 + OH -> 3Br + prod.
-            + DCH3Br * M_CH3Br * 3._r8             !CHBr3 + hv -> 3Br + prod.
+            + DCH3Br * M_CH3Br * 3._r8             &!CHBr3 + hv -> 3Br + prod.
+            + k_oh_br2 * M_OH * M_Br2              ! OH + Br2 -> HOBr + Br
 
         QBr = k_br_o3 * M_O3             &!Br + O3 -> BrO + O2
             + k_br_ho2 * M_HO2            !Br + HO2 -> HBr + O2
@@ -1822,7 +1838,9 @@ contains
                + k_oh_chbr3 * M_CH3Br    &!CHBr3 + OH -> 3Br + products
                !// Marit, ozone etc., 05.11.19
                + k_oh_clo_a * M_ClO     &!ClO + OH -> Cl + HO2
-               + k_oh_clo_b * M_ClO      !OH + ClO -> HCl + O2
+               + k_oh_clo_b * M_ClO     &!OH + ClO -> HCl + O2
+               !// Marit, cycling of HOBr, 20.04.20
+               + k_oh_br2 * M_Br2    ! OH + Br2 -> HOBr + Br
 
           !// Sulphur reactions
           if (LSULPHUR) LOSS_OH = LOSS_OH &
