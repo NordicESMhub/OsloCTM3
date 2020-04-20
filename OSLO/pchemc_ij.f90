@@ -1134,10 +1134,12 @@ contains
 
         !// Written as PBrNO3 in the strat. part (line 2624), but as BrONO2
         !// in the comment
-        PBrNO3 = k_no2_bro_m * M_NO2     &!BrO + NO2 + M -> BrONO2 + M
-               * ( M_BrO + M_BrONO2 )
+        PBrNO3 = k_no2_bro_m * M_NO2 * M_BrO ! BrO + NO2 + M -> BrONO2 + M
+               !k_no2_bro_m * M_NO2     &!BrO + NO2 + M -> BrONO2 + M
+               !* ( M_BrO + M_BrONO2 )
 
-        QBrNO3 = k_no2_bro_m * M_NO2      !BrO + NO2 + M -> BrONO2 + M
+        QBrNO3 = k_brono2_h2o_a          !BrONO2 + H2O(aerosol) -> HOBr + HNO3 
+               !k_no2_bro_m * M_NO2      !BrO + NO2 + M -> BrONO2 + M
 
         PHBr = k_br_ho2 * M_HO2 * M_Br    !Br + HO2 -> HBr + O2
 
