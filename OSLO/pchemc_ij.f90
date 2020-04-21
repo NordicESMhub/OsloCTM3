@@ -119,7 +119,9 @@ contains
          r_o3_soaC7, r_oh_soaC7, r_no3_soaC7, &
          r_o3_soaC8, r_oh_soaC8, r_no3_soaC8, &
          r_oh_benzene, &
-         !// Marit, cycling oh HOBr, 20.04.20
+         !// Marit, cycling of HBr, 21.04.20
+         r_oh_hbr, &
+         !// Marit, cycling of HOBr, 20.04.20
          r_oh_br2, &
          !// Marit, ocean emissions, 26.09.19
          r_oh_chbr3, &
@@ -285,6 +287,8 @@ contains
          k_ho2_ch3o2, k_ho2_ch3x, k_ho2_radical, &
          k_ch3o2_ch3o2, k_ch3o2_ch3x_a, k_ch3o2_ch3x_b, k_ch3x_ch3x, &
          k_ch3o_o2, &
+         !// Marit, cycling of HBr, 21.04.20
+         k_oh_hbr, & 
          !// Marit, cycling of HOBr, 20.04.20
          k_oh_br2, &
          !// Marit, emissions from sea, 26.09.19
@@ -513,6 +517,8 @@ contains
       k_ch3o2_ch3x_b = r_ch3o2_ch3x_b(JTEMP)
       k_ch3x_ch3x = r_ch3x_ch3x(JTEMP)
       k_ch3o_o2 = r_ch3o_o2(JTEMP)
+      !// Marit, cycling of HBr, 20.04.20
+      k_oh_hbr = r_oh_hbr(JTEMP)
       !// Marit, cycling of HOBr, 20.04.20
       k_oh_br2 = r_oh_br2(JTEMP)
       !// Marit, emissions from the ocean, 26.09.19
@@ -1143,8 +1149,8 @@ contains
 
         PHBr = k_br_ho2 * M_HO2 * M_Br    !Br + HO2 -> HBr + O2
 
-        QHBr = k_hobr_hbr_a               !HOBr + HBr (aerosol) -> Br2 + H2O
-
+        QHBr = k_hobr_hbr_a             &!HOBr + HBr (aerosol) -> Br2 + H2O
+             + k_oh_hbr * M_OH           !OH + HBr -> H2O + Br
         !// Model the sum of Br and BrO
         BrZ = M_Br + M_BrO
 
@@ -1155,8 +1161,8 @@ contains
 !             + k_oh_ch2br2 * 2._r8 * M_CH2Br2 * M_OH &!CH2Br2 + OH ->2Br + prod.
              + k_oh_chbr3 * 3._r8 * M_CH3Br * M_OH   &!CHBr3 + OH -> 3Br + prod.
              + DCH3Br * M_CH3Br * 3._r8            & !CHBr3 + hv -> 3Br + prod.
-             + k_oh_br2 * M_OH * M_Br2   ! OH + Br2 -> HOBr + Br
-
+             + k_oh_br2 * M_OH * M_Br2   &! OH + Br2 -> HOBr + Br
+             + k_oh_hbr * M_OH * M_HBr
         QBrZ = (k_brono2_h2o_a * M_BrONO2 &!BrONO2 + H2O(aerosol) -> HOBr + HNO3
               + k_bro_ho2 * M_HO2        &!BrO + HO2 -> HOBr + O2
               + k_no2_bro_m * M_NO2      &!BrO + NO2 (M) -> BrONO2 (+M)
@@ -1164,12 +1170,12 @@ contains
               + ( k_br_ho2 * M_HO2       &!Br + HO2 -> HBr + O2
               ) * M_Br / BrZ
 
-        !if (NST .eq. 1) then 
-        !   write(6,*) 'reaction rate bro_bro'
+        if (NST .eq. 1) then 
+           write(6,*) 'Photolysis rate, DHOBr: ', DHOBr
         !   write(6,*) k_bro_bro_a
         !   write(6,*) 'reaction rate DBrO'
         !   write(6,*) DBrO
-        !end if
+        end if
 
         PBr = DHOBr * M_HOBr                      &!HOBr + hv -> Br + OH
             + DBr2 * M_Br2                        &!Br2 + hv -> 2Br
@@ -1181,7 +1187,8 @@ contains
 !            + k_oh_ch2br2 * 2._r8 * M_CH2Br2 * M_OH &!CH2Br2 + OH ->2Br + prod.
             + k_oh_chbr3 * 3._r8 * M_CH3Br * M_OH   &!CHBr3 + OH -> 3Br + prod.
             + DCH3Br * M_CH3Br * 3._r8             &!CHBr3 + hv -> 3Br + prod.
-            + k_oh_br2 * M_OH * M_Br2              ! OH + Br2 -> HOBr + Br
+            + k_oh_br2 * M_OH * M_Br2              &! OH + Br2 -> HOBr + Br
+            + k_oh_hbr * M_OH * M_HBr
 
         QBr = k_br_o3 * M_O3             &!Br + O3 -> BrO + O2
             + k_br_ho2 * M_HO2            !Br + HO2 -> HBr + O2
@@ -1842,8 +1849,9 @@ contains
                + k_oh_clo_a * M_ClO     &!ClO + OH -> Cl + HO2
                + k_oh_clo_b * M_ClO     &!OH + ClO -> HCl + O2
                !// Marit, cycling of HOBr, 20.04.20
-               + k_oh_br2 * M_Br2    ! OH + Br2 -> HOBr + Br
-
+               + k_oh_br2 * M_Br2    &! OH + Br2 -> HOBr + Br
+               !// Marit, cycling of HBr, 20.04.20
+               + k_oh_hbr * M_HBr     ! OH + HBr -> H2O + Br
           !// Sulphur reactions
           if (LSULPHUR) LOSS_OH = LOSS_OH &
                + k_oh_dms_a * M_DMS  &!OH + DMS -> H2O + CH3SCH2
