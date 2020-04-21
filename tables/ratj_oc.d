@@ -24,28 +24,28 @@
    18 PAN        PHOTON     MeCO3      NO2                  0.00E+00  0.00    100.0  PAN      
    19 CH3COX     PHOTON                                     0.00E+00  0.00    100.0  MEKeto   
    20 CH3COY     PHOTON                                     0.00E+00  0.00    100.0  MGlyxl   
-   21 O2         PHOTON     O(3P)      O(3P)                0.00E+00  0.00    100.0  O2       
-   22 NO         PHOTON     N          O                    0.00E+00  0.00    100.0  NO       
-   23 HNO2       PHOTON                                     0.00E+00  0.00    100.0  HNO2     
-   24 ClONO2     PHOTON     NO3        Cl                   0.00E+00  0.00    100.0  ClNO3a  
-   25 Cl2        PHOTON     Cl         Cl                   0.00E+00  0.00    100.0  Cl2      
-   26 HOCl       PHOTON                                     0.00E+00  0.00    100.0  HOCl     
-   27 OClO       PHOTON                                     0.00E+00  0.00    100.0  OClO     
-   28 Cl2O2      PHOTON                                     0.00E+00  0.00    100.0  Cl2O2    
-   29 ClO        PHOTON                                     0.00E+00  0.00    100.0  ClO      
-   30 BrO        PHOTON                                     0.00E+00  0.00    100.0  BrO      
-   31 BrONO2     PHOTON                                     0.00E+00  0.00    100.0  BrNO3    
-   32 HOBr       PHOTON                                     0.00E+00  0.00    100.0  HOBr     
-   33 N2O        PHOTON                                     0.00E+00  0.00    100.0  N2O      
-   34 CFCl3      PHOTON                                     0.00E+00  0.00    100.0  CFCl3    
-   35 CF2Cl2     PHOTON                                     0.00E+00  0.00    100.0  CF2Cl2   
-   36 CFC113     PHOTON                                     0.00E+00  0.00    100.0  F113     
-   37 CFC114     PHOTON                                     0.00E+00  0.00    100.0  F114     
-   38 CFC115     PHOTON                                     0.00E+00  0.00    100.0  F115     
-   39 CCl4       PHOTON                                     0.00E+00  0.00    100.0  CCl4     
-   40 CH3Cl      PHOTON                                     0.00E+00  0.00    100.0  CH3Cl    
-   41 CH3CCl3    PHOTON                                     0.00E+00  0.00    100.0  MeCCl3   
-   42 CH3Br      PHOTON                                     0.00E+00  0.00    100.0  CH3Br    
+   21 HOBr 	 PHOTON					    0.00E+00  0.00    100.0  HOBr
+   22 BrO 	 PHOTON 				    0.00E+00  0.00    100.0  BrO
+   23 CH3Br      PHOTON					    0.00E+00  0.00    100.0  CH3Br
+   24 O2         PHOTON     O(3P)      O(3P)                0.00E+00  0.00    100.0  O2       
+   25 NO         PHOTON     N          O                    0.00E+00  0.00    100.0  NO       
+   26 HNO2       PHOTON                                     0.00E+00  0.00    100.0  HNO2     
+   27 ClONO2     PHOTON     NO3        Cl                   0.00E+00  0.00    100.0  ClNO3a  
+   28 Cl2        PHOTON     Cl         Cl                   0.00E+00  0.00    100.0  Cl2      
+   29 HOCl       PHOTON                                     0.00E+00  0.00    100.0  HOCl     
+   30 OClO       PHOTON                                     0.00E+00  0.00    100.0  OClO     
+   31 Cl2O2      PHOTON                                     0.00E+00  0.00    100.0  Cl2O2    
+   32 ClO        PHOTON                                     0.00E+00  0.00    100.0  ClO           
+   33 BrONO2     PHOTON                                     0.00E+00  0.00    100.0  BrNO3         
+   34 N2O        PHOTON                                     0.00E+00  0.00    100.0  N2O      
+   35 CFCl3      PHOTON                                     0.00E+00  0.00    100.0  CFCl3    
+   36 CF2Cl2     PHOTON                                     0.00E+00  0.00    100.0  CF2Cl2   
+   37 CFC113     PHOTON                                     0.00E+00  0.00    100.0  F113     
+   38 CFC114     PHOTON                                     0.00E+00  0.00    100.0  F114     
+   39 CFC115     PHOTON                                     0.00E+00  0.00    100.0  F115     
+   40 CCl4       PHOTON                                     0.00E+00  0.00    100.0  CCl4     
+   41 CH3Cl      PHOTON                                     0.00E+00  0.00    100.0  CH3Cl    
+   42 CH3CCl3    PHOTON                                     0.00E+00  0.00    100.0  MeCCl3      
    43 CF2ClBr    PHOTON                                     0.00E+00  0.00    100.0  H1211    
    44 CF3Br      PHOTON                                     0.00E+00  0.00    100.0  H1301    
    45 H2402      PHOTON                                     0.00E+00  0.00    100.0  H2402    
