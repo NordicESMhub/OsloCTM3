@@ -676,12 +676,11 @@ contains
       DCH3COY= JV(20,L)          !// CH3COCOCH3 + hv -> 2 CH3CO
                                  !// Uses J-value from CH3COCHO
 
-      !// Marit, forgotten components, 08.01.20
-      ! DBr2   = 0._r8             !// Br2 + hv -> 2Br
-      DHOBr  = JV(32,L)          !// HOBr + hv -> Br + OH
-      DBrO   = JV(30,L)          !// BrO + hv -> Br + Cl
+     
+      !DHOBr  = JV(21,L)          !// HOBr + hv -> Br + OH
+      !DBrO   = JV(22,L)          !// BrO + hv -> Br + Cl
       !// Marit, emissions from sea, 26.09.19
-      DCH3Br = JV(42, L)         !// CHBr3 + hv -> 3Br + products
+      !DCH3Br = JV(23, L)         !// CHBr3 + hv -> 3Br + products
 
       
       !// Marit, ozone etc., 05.11.19
@@ -689,6 +688,9 @@ contains
       !// BrCl + hv -> Br + Cl not included in the pchem_str_ij.f90 before if.
       !// When daylight --> J_BrCl = 0.1, else: J_BrCl = 0
       if (DO3 .gt. 0._r8) then
+         DHOBr = 3.e-4_r8
+         DBrO  = 0.014_r8
+         DCH3Br = 0.05e-6_r8
          DBrCl = 0.1_r8
          DBr2  = 0.1_r8
       else
@@ -697,11 +699,11 @@ contains
       end if
 
 
-      if (LOSLOCSTRAT) then
-         DO2    = JV(21,L)    !// O2 + hv  -> O3P + O3P
-      else
-         DO2    = 0._r8
-      end if
+      !if (LOSLOCSTRAT) then
+      !   DO2    = JV(21,L)    !// O2 + hv  -> O3P + O3P
+      !else
+      DO2    = 0._r8
+      !end if
 
       !// Old treatment, lacking J-values for acetone
       DACETON_A = 0.7_r8*DCH3COX         !// CH3COCH3 + hv -> CH3CO + CH3
@@ -1171,7 +1173,7 @@ contains
               ) * M_Br / BrZ
 
         if (NST .eq. 1) then 
-           write(6,*) 'Photolysis rate, DHOBr: ', DHOBr
+           write(6,*) 'Photolysis rate, DHOBr: ', DHOBr, 'DO3: ', DO3, 'DBrO: ', DBrO, 'DCH3Br', DCH3Br
         !   write(6,*) k_bro_bro_a
         !   write(6,*) 'reaction rate DBrO'
         !   write(6,*) DBrO

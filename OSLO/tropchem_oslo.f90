@@ -374,7 +374,7 @@ contains
           Lmix = 100
           vd = 0.00667       !Deposition velocity for Lmix = 100 -> vd = 0.00667 [m/s]
           !Lmix = 50
-          !vd = 0.0074
+          !vd = 0.0074   !Depotsition velocity for Lmix = 50 --> vd = 0.0074,[m/s]
           !// separate treatement for NH and SH; get day and info about
           !// spring and summer
           !call be_getspringsummer(YDGRD(J), JDAY, &
@@ -385,6 +385,7 @@ contains
              r_hobr_dep = 0._r8
           elseif (CI(I,J) .gt. 0.7_r8) then
              r_hobr_dep = ( vd / Lmix ) * beta
+             write(6,*) 'Latitude: ', YDGRD(J), 'Longitude: ', XDGRD(I), 'hobr_dep: ', r_hobr_dep 
           end if
           !// Assume sea if PLAND < seafraclim
           !LSEA_BOX = PLAND(I,J) .lt. seafraclim
