@@ -585,7 +585,7 @@ contains
       k_op_no_m = r_op_no_m(L)
       k_op_no2_m = r_op_no2_m(L)
       !// Marit, heterogenous halogen reactions, 10.10.19
-      k_hobr_hcl_a =  r_hobr_hcl_a(L)
+      k_hobr_hcl_a = 0._r8! r_hobr_hcl_a(L)
       k_hobr_hbr_a = r_hobr_hbr_a(L)
       k_brono2_h2o_a = r_brono2_h2o_a(L) 
       !// Marit, BrO + NO2 -> BrONO2, 8.10.19
@@ -694,6 +694,9 @@ contains
          DBrCl = 0.1_r8
          DBr2  = 0.1_r8
       else
+         DHOBr = 0._r8
+         DBrO  = 0._r8
+         DCH3Br = 0._r8
          DBrCl = 0._r8
          DBr2  = 0._r8
       end if
@@ -811,7 +814,7 @@ contains
            !write(6,*) 'conc of M_HBr'
            !write(6,*) M_HBr
            !M_HBr = 8.059e8_r8 !Test - set inital concentration of HBr -> 30 ppt = 8.059e8 molec/cm3 (273.15K)
-           !M_HBr = 2.67e5_r8 !New test - M_HBr = 0.01 ppt (Cao)
+        !   M_HBr = 2.67e5_r8 !New test - M_HBr = 0.01 ppt (Cao)
            !M_HBr = 1.34e8_r8 !New test - M_HBr = 5 ppt
         !   M_HBr = 2.69e8_r8 !New test - M_HBr = 10 ppt
         !else
@@ -1058,8 +1061,8 @@ contains
         PROD_Bry = & 
              !// Assume half of HOBr deposition yields Br2 and half BrCl
             
-             + 0.50_r8 * k_hobr_dep * M_HOBr &!HOBr + H+ + Br-(snow)-> Br2 + H20
-             !+ k_hobr_dep * M_HOBr &!HOBr + H+ + Br-(snow)-> Br2 + H20
+             !+ 0.50_r8 * k_hobr_dep * M_HOBr &!HOBr + H+ + Br-(snow)-> Br2 + H20
+             + k_hobr_dep * M_HOBr &!HOBr + H+ + Br-(snow)-> Br2 + H20
              + PROD_Bry                   !Sources from CHBr3
 
         !// No loss in the strat, but there is loss in trop.
@@ -1101,10 +1104,10 @@ contains
 
         !// Integrate BrCl
 
-        PROD = k_hobr_hcl_a * M_HOBr    !HOBr + HCl (aerosol) -> BrCl + H2O
+        PROD = 0._r8!k_hobr_hcl_a * M_HOBr  & !HOBr + HCl (aerosol) -> BrCl + H2O
              !// Assume half of HOBr deposition yields Br2 and half BrCl
-             + 0.50_r8 * k_hobr_dep * M_HOBr !HOBr + H+ + Cl-(snow)-> BrCl + H2O
-
+             !+ 0.50_r8 * k_hobr_dep * M_HOBr !HOBr + H+ + Cl-(snow)-> BrCl + H2O
+             
         LOSS = DBrCl            !BrCl + hv -> Br + Cl
 
         BrClX = M_BrCl
@@ -1126,8 +1129,8 @@ contains
 
         PBr2 = k_hobr_hbr_a * M_HOBr      &!HOBr + HBr (aerosol) -> Br2 + H2O
              !// Assume half of HOBr deposition yields Br2 and half BrCl
-             + 0.50_r8 * k_hobr_dep * M_HOBr !HOBr + h+ +Br-(snow)-> Br2 + H2O
-             !+ k_hobr_dep * M_HOBr !HOBr + H+ + Br-(snow)-> Br2 + H20
+             !+ 0.50_r8 * k_hobr_dep * M_HOBr !HOBr + h+ +Br-(snow)-> Br2 + H2O
+             + k_hobr_dep * M_HOBr !HOBr + H+ + Br-(snow)-> Br2 + H20
         QBr2 = DBr2  &                      !Br2 + hv -> 2Br
              + k_oh_br2 * M_OH     ! OH + Br2 -> HOBr + Br
 
@@ -1136,7 +1139,7 @@ contains
               + k_oh_br2 * M_OH * M_br2 ! OH + Br2 -> HOBr + Br
 
         QOHBr = DHOBr                    &!HOBr + hv -> Br + OH
-              + k_hobr_hcl_a             &!HOBr + HCl (aerosol) -> BrCl + H2O
+              !+ k_hobr_hcl_a             &!HOBr + HCl (aerosol) -> BrCl + H2O
               + k_hobr_hbr_a             &!HOBr + HBr (aerosol) -> Br2 + H2O
               + k_hobr_dep                !Deposition of HOBr onto the snow
 
