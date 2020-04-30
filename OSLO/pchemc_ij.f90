@@ -1175,12 +1175,12 @@ contains
               + ( k_br_ho2 * M_HO2       &!Br + HO2 -> HBr + O2
               ) * M_Br / BrZ
 
-        if (NST .eq. 1) then 
-           write(6,*) 'Photolysis rate, DHOBr: ', DHOBr, 'DO3: ', DO3, 'DBrO: ', DBrO, 'DCH3Br', DCH3Br
+        !if (NST .eq. 1) then 
+        !   write(6,*) 'Photolysis rate, DHOBr: ', DHOBr, 'DO3: ', DO3, 'DBrO: ', DBrO, 'DCH3Br', DCH3Br
         !   write(6,*) k_bro_bro_a
         !   write(6,*) 'reaction rate DBrO'
         !   write(6,*) DBrO
-        end if
+        !end if
 
         PBr = DHOBr * M_HOBr                      &!HOBr + hv -> Br + OH
             + DBr2 * M_Br2                        &!Br2 + hv -> 2Br

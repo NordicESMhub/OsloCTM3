@@ -385,7 +385,7 @@ contains
              r_hobr_dep = 0._r8
           elseif (CI(I,J) .gt. 0.7_r8) then
              r_hobr_dep = ( vd / Lmix ) * beta
-             write(6,*) 'Latitude: ', YDGRD(J), 'Longitude: ', XDGRD(I), 'hobr_dep: ', r_hobr_dep 
+             !write(6,*) 'Latitude: ', YDGRD(J), 'Longitude: ', XDGRD(I), 'hobr_dep: ', r_hobr_dep 
           end if
           !// Assume sea if PLAND < seafraclim
           !LSEA_BOX = PLAND(I,J) .lt. seafraclim
