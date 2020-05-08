@@ -1567,9 +1567,9 @@ contains
           !// CH2O
           !// Regular expression, but enhanced
           HSTAR = 1.97_r8 * KHA * exp(KHB * TEMPFAC)
-       else
-          write(6,'(a,i5)') f90file//':'//subr// &
-               ': Hard coded Henry not defined for component ID ',chem_idx
+       !else
+          !write(6,'(a,i5)') f90file//':'//subr// &
+          !     ': Hard coded Henry not defined for component ID ',chem_idx
        end if
 
     else
