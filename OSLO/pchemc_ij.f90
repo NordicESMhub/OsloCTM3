@@ -688,7 +688,7 @@ contains
       !// BrCl + hv -> Br + Cl not included in the pchem_str_ij.f90 before if.
       !// When daylight --> J_BrCl = 0.1, else: J_BrCl = 0
       if (DO3 .gt. 0._r8) then
-         DHOBr = 3.e-3_r8
+         DHOBr = 3.e-4_r8
          DBrO  = 0.014_r8
          DCH3Br = 0.05e-6_r8
          DBrCl = 0.1_r8
